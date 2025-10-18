@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -170,13 +170,33 @@ function SeriesEventsCalculator() {
     );
 }
 
+interface NormalDistResult {
+    probBetween: number;
+    probOutside: number;
+    probLeft: number;
+    probRight: number;
+}
+const confidenceIntervals = [
+    { level: 0.6828, z: 1.0 },
+    { level: 0.80, z: 1.28155 },
+    { level: 0.90, z: 1.64485 },
+    { level: 0.95, z: 1.95996 },
+    { level: 0.98, z: 2.32635 },
+    { level: 0.99, z: 2.57583 },
+    { level: 0.995, z: 2.80703 },
+    { level: 0.998, z: 3.09023 },
+    { level: 0.999, z: 3.29053 },
+    { level: 0.9999, z: 3.89059 },
+    { level: 0.99999, z: 4.41717 },
+];
+
 function NormalDistributionCalculator() {
     const { toast } = useToast();
     const [mean, setMean] = useState('0');
     const [std, setStd] = useState('1');
     const [lb, setLb] = useState('-1');
     const [rb, setRb] = useState('1');
-    const [result, setResult] = useState<string | null>(null);
+    const [result, setResult] = useState<NormalDistResult | null>(null);
 
     const calculate = () => {
         const mean_num = parseFloat(mean);
@@ -195,19 +215,34 @@ function NormalDistributionCalculator() {
             return;
         }
 
-        const cdfLB = (lb_num === -Infinity) ? 0 : jStat.normal.cdf(lb_num, mean_num, std_num);
-        const cdfRB = (rb_num === Infinity) ? 1 : jStat.normal.cdf(rb_num, mean_num, std_num);
+        const probLeft = (lb_num === -Infinity) ? 0 : jStat.normal.cdf(lb_num, mean_num, std_num);
+        const probRightCDF = (rb_num === Infinity) ? 1 : jStat.normal.cdf(rb_num, mean_num, std_num);
         
-        const prob = cdfRB - cdfLB;
+        const probBetween = probRightCDF - probLeft;
+        const probOutside = 1 - probBetween;
+        const probRight = 1 - probRightCDF;
 
-        setResult(`Probability between ${lb} and ${rb}: ${prob.toFixed(4)}`);
+        setResult({ probBetween, probOutside, probLeft, probRight });
     }
+    
+    const confidenceTable = useMemo(() => {
+        const mean_num = parseFloat(mean);
+        const std_num = parseFloat(std);
+        if (isNaN(mean_num) || isNaN(std_num) || std_num <= 0) return [];
+
+        return confidenceIntervals.map(({ level, z }) => {
+            const lower = mean_num - z * std_num;
+            const upper = mean_num + z * std_num;
+            return { level, range: `${lower.toFixed(5)}–${upper.toFixed(5)}`, z: z };
+        });
+    }, [mean, std]);
 
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle>Normal Distribution Probability</CardTitle>
+                 <CardDescription>Find the area under the normal distribution curve and see confidence intervals.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                  <div className="grid grid-cols-2 gap-4">
@@ -222,17 +257,50 @@ function NormalDistributionCalculator() {
                      <div className="space-y-2">
                         <Label htmlFor="lb">Left Bound (Lb)</Label>
                         <Input id="lb" value={lb} onChange={e => setLb(e.target.value)} placeholder="-inf" />
+                         <p className="text-xs text-muted-foreground">For negative infinity, use -inf</p>
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="rb">Right Bound (Rb)</Label>
                         <Input id="rb" value={rb} onChange={e => setRb(e.target.value)} placeholder="inf" />
+                         <p className="text-xs text-muted-foreground">For positive infinity, use inf</p>
                     </div>
                  </div>
                  <Button onClick={calculate}>Calculate</Button>
             </CardContent>
             {result && (
-                <CardFooter>
-                    <p>{result}</p>
+                <CardFooter className="flex-col items-start gap-4">
+                    <div>
+                        <h3 className="font-semibold text-lg mb-2">Result</h3>
+                        <div className="space-y-1 font-mono text-sm p-4 bg-muted rounded-md">
+                            <p>The probability between {lb} and {rb} is <b>{result.probBetween.toFixed(5)}</b></p>
+                            <p>The probability outside of {lb} and {rb} is <b>{result.probOutside.toFixed(5)}</b></p>
+                            <p>The probability of {lb} or less (≤ {lb}) is <b>{result.probLeft.toFixed(5)}</b></p>
+                            <p>The probability of {rb} or more (≥ {rb}) is <b>{result.probRight.toFixed(5)}</b></p>
+                        </div>
+                    </div>
+                    {confidenceTable.length > 0 && (
+                        <div>
+                            <h3 className="font-semibold text-lg mb-2">Confidence Intervals Table</h3>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Confidence</TableHead>
+                                        <TableHead>Range</TableHead>
+                                        <TableHead className="text-right">Z-score</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {confidenceTable.map(item => (
+                                        <TableRow key={item.level}>
+                                            <TableCell>{(item.level * 100).toFixed(4)}%</TableCell>
+                                            <TableCell>{item.range}</TableCell>
+                                            <TableCell className="text-right">{item.z.toFixed(5)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    )}
                 </CardFooter>
             )}
         </Card>
@@ -260,3 +328,5 @@ export default function ProbabilityCalculator() {
     </Tabs>
   );
 }
+
+    
