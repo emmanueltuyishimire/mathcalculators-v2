@@ -91,7 +91,6 @@ const MatrixDisplay = ({
 const parseMatrix = (matrix: Matrix): number[][] => {
     return matrix.map((row, r) => row.map((cell, c) => {
         try {
-            // Evaluates fractions e.g. "1/2"
             if(typeof cell === 'string' && cell.includes('/')) {
                 const parts = cell.split('/');
                 if(parts.length === 2) {
@@ -197,13 +196,13 @@ export default function RrefCalculator() {
         for (let r = 0; r < rows; r++) {
             if (lead >= cols) break;
             let i = r;
-            while (numMatrix[i][lead] === 0) {
+            while (Math.abs(numMatrix[i][lead]) < 1e-9) {
                 i++;
                 if (i === rows) {
                     i = r;
                     lead++;
                     if (cols === lead) {
-                        const finalRrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(4))));
+                        const finalRrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(10))));
                         setRrefMatrix(finalRrefMatrix);
                         analyzeSolution(finalRrefMatrix);
                         toast({ title: "RREF Calculated", description: "The matrix is now in row-reduced echelon form." });
@@ -362,12 +361,12 @@ export default function RrefCalculator() {
         </CardContent>
       </Card>
 
-      {(rrefMatrix || matrix) && (
+      {rrefMatrix && (
         <MatrixDisplay
-          matrix={rrefMatrix || matrix}
-          rows={(rrefMatrix || matrix).length}
-          cols={(rrefMatrix || matrix)[0]?.length || 0}
-          title={rrefMatrix ? "Reduced Row Echelon Form (RREF)" : "Current Matrix"}
+          matrix={rrefMatrix}
+          rows={rrefMatrix.length}
+          cols={rrefMatrix[0]?.length || 0}
+          title="Reduced Row Echelon Form (RREF)"
         />
       )}
       
@@ -384,3 +383,5 @@ export default function RrefCalculator() {
     </div>
   );
 }
+
+    
