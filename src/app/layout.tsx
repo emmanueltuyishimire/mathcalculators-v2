@@ -4,11 +4,12 @@ import './globals.css';
 import { AppLayout } from '@/components/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
+import { cn } from '@/lib/utils';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Math Calculators',
+  title: 'MathMaster Calculators',
   description: 'A web application focused on mathematics calculators, from basic arithmetic to advanced functions.',
 };
 
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
-      <body className={`${inter.variable} font-body antialiased`} suppressHydrationWarning>
+      <body className={cn(inter.variable, "font-body antialiased")} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

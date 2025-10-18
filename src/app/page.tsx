@@ -1,39 +1,27 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical } from 'lucide-react';
+import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical } from 'lucide-react';
 import BasicCalculator from '@/components/calculators/basic-calculator';
 
 const tools = [
   {
-    href: '/scientific',
-    label: 'Scientific',
-    icon: FlaskConical,
+    href: '/geometry',
+    label: 'Geometry',
+    icon: Square,
+    description: 'Calculate area, volume, and more.',
+  },
+  {
+    href: '/trigonometry',
+    label: 'Trigonometry',
+    icon: MoreVertical,
     description: 'Advanced functions and operations.',
-  },
-  {
-    href: '/algebra',
-    label: 'Algebra',
-    icon: FunctionSquare,
-    description: 'Solve linear equations with ease.',
-  },
-  {
-    href: '/calculus',
-    label: 'Calculus',
-    icon: InfinityIcon,
-    description: 'Derivatives, integrals, and limits.',
   },
   {
     href: '/statistics',
     label: 'Statistics',
     icon: BarChartHorizontal,
     description: 'Mean, median, mode, and more.',
-  },
-  {
-    href: '/converter',
-    label: 'Converter',
-    icon: Milestone,
-    description: 'Convert units of measurement.',
   },
 ];
 
@@ -44,10 +32,10 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-              Free Online Math Calculators
+              MathMaster: Simple & Powerful Calculators
             </h1>
             <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-              Your one-stop solution for all mathematical calculations. From basic arithmetic to advanced calculus.
+              Your one-stop solution for all mathematical calculations. From basic arithmetic to advanced functions.
             </p>
             <Button asChild variant="secondary" size="lg">
               <Link href="#basic-calculator">Get Started</Link>

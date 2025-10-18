@@ -5,13 +5,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Calculator,
-  FunctionSquare,
-  InfinityIcon,
-  BarChartHorizontal,
-  Milestone,
+  Square,
   SigmaSquare,
   Menu,
-  FlaskConical,
+  MoreVertical,
+  BarChartHorizontal,
 } from 'lucide-react';
 import {
   Sheet,
@@ -23,16 +21,16 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const navItems = [
-  { href: '/#basic-calculator', label: 'Basic', icon: Calculator, tooltip: 'Basic Arithmetic' },
-  { href: '/scientific', label: 'Scientific', icon: FlaskConical, tooltip: 'Scientific Calculator' },
-  { href: '/algebra', label: 'Algebra', icon: FunctionSquare, tooltip: 'Algebra Solver' },
-  { href: '/calculus', label: 'Calculus', icon: InfinityIcon, tooltip: 'Calculus Tools' },
+  { href: '/', label: 'Simple', icon: Calculator, tooltip: 'Simple Calculators' },
+  { href: '/geometry', label: 'Geometry', icon: Square, tooltip: 'Geometry Calculators' },
+  { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical, tooltip: 'Trigonometry Calculator' },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal, tooltip: 'Statistics Calculator' },
-  { href: '/converter', label: 'Converter', icon: Milestone, tooltip: 'Unit Converter' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+
+  const isHome = pathname === '/';
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -43,13 +41,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <SigmaSquare className="h-6 w-6" />
-            <span className="">Math Calculators</span>
+            <span className="">MathMaster</span>
           </Link>
           {navItems.map((item) => (
              <Link
               key={item.href}
               href={item.href}
-              className={cn("transition-colors hover:text-foreground", pathname === item.href ? "text-foreground" : "text-muted-foreground")}
+              className={cn("transition-colors hover:text-foreground", (pathname === item.href || (item.href === "/" && isHome)) ? "text-foreground" : "text-muted-foreground")}
             >
               {item.label}
             </Link>
@@ -73,13 +71,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 className="flex items-center gap-2 text-lg font-semibold"
               >
                 <SigmaSquare className="h-6 w-6" />
-                <span className="">Math Calculators</span>
+                <span className="">MathMaster</span>
               </Link>
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("hover:text-foreground", pathname === item.href ? "text-foreground" : "text-muted-foreground")}
+                  className={cn("hover:text-foreground", (pathname === item.href || (item.href === "/" && isHome)) ? "text-foreground" : "text-muted-foreground")}
 
                 >
                   {item.label}
