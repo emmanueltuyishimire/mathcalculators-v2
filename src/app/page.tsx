@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace } from 'lucide-react';
+import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star } from 'lucide-react';
 
 const tools = [
   {
@@ -70,6 +70,12 @@ const tools = [
     label: 'Diagonalize Matrix',
     icon: Table,
     description: 'Find eigenvalues and diagonalize matrices.',
+  },
+  {
+    href: '/destiny-matrix',
+    label: 'Destiny Matrix',
+    icon: Star,
+    description: 'Numerology and personality insights.',
   },
 ];
 
