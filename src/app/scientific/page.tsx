@@ -1,7 +1,6 @@
 import { PageHeader } from '@/components/page-header';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -166,17 +165,6 @@ export default function ScientificPage() {
                             <li>Press <code className="bg-card p-1 rounded-sm">=</code> → Result = 5.</li>
                         </ol>
                     </div>
-                </div>
-
-                <div className="my-6">
-                    <Image 
-                        src="https://picsum.photos/seed/calculator-ui/800/450" 
-                        alt="Online scientific calculator with trigonometry and logarithms"
-                        data-ai-hint="calculator user interface"
-                        width={800}
-                        height={450}
-                        className="rounded-lg shadow-lg mx-auto"
-                    />
                 </div>
 
                 <h2 className="text-3xl font-bold">Key Features of Our Scientific Calculator</h2>
