@@ -15,26 +15,30 @@ const numeric = {
   // Function to find eigenvalues and eigenvectors.
   // This is a very simplified implementation and may not work for all matrices.
   // A robust solution would use a library like numeric.js or similar.
-  eig: (matrix: Matrix): { E: { x: Matrix, y: Matrix }, V: { x: Matrix, y: Matrix } } => {
+  eig: (matrix: Matrix): { E: { x: Vector, y: Vector }, V: { x: Matrix, y: Matrix } } => {
     // This is a dummy implementation.
     // For a 2x2 matrix [[a, b], [c, d]]
-    if (matrix.length === 2) {
+    if (matrix.length === 2 && matrix[0].length === 2) {
       const [[a, b], [c, d]] = matrix;
       const trace = a + d;
       const det = a * d - b * c;
-      const discriminant = Math.sqrt(trace * trace - 4 * det);
+      const discriminant = trace * trace - 4 * det;
 
-      const eig1 = (trace + discriminant) / 2;
-      const eig2 = (trace - discriminant) / 2;
+      if (discriminant < 0) {
+        throw new Error("Matrix has complex eigenvalues, which are not supported in this demo.");
+      }
+
+      const eig1 = (trace + Math.sqrt(discriminant)) / 2;
+      const eig2 = (trace - Math.sqrt(discriminant)) / 2;
 
       let vec1: Vector, vec2: Vector;
 
-      if (b !== 0) {
-        vec1 = [b, eig1 - a];
-        vec2 = [b, eig2 - a];
-      } else if (c !== 0) {
+      if (Math.abs(c) > 1e-9) {
         vec1 = [eig1 - d, c];
         vec2 = [eig2 - d, c];
+      } else if (Math.abs(b) > 1e-9) {
+        vec1 = [b, eig1 - a];
+        vec2 = [b, eig2 - a];
       } else { // Diagonal matrix
         vec1 = [1, 0];
         vec2 = [0, 1];
@@ -45,6 +49,11 @@ const numeric = {
       
       vec1 = vec1.map(v => v/norm1);
       vec2 = vec2.map(v => v/norm2);
+
+      // Check if eigenvectors are linearly independent
+      if (Math.abs(vec1[0] * vec2[1] - vec1[1] * vec2[0]) < 1e-9) {
+          throw new Error("Matrix is not diagonalizable (eigenvectors are not linearly independent).");
+      }
 
 
       return {
@@ -160,6 +169,7 @@ export default function DiagonalizeMatrixCalculator() {
   const [matrixA, setMatrixA] = useState<Matrix>(() => [[4, 1], [2, 3]]);
 
   const [eigenvalues, setEigenvalues] = useState<number[] | null>(null);
+  const [eigenvectors, setEigenvectors] = useState<Matrix | null>(null);
   const [matrixP, setMatrixP] = useState<Matrix | null>(null);
   const [matrixD, setMatrixD] = useState<Matrix | null>(null);
 
@@ -178,13 +188,17 @@ export default function DiagonalizeMatrixCalculator() {
     const parsedSize = Math.max(2, Math.min(newSize, 4));
     setSize(parsedSize);
     setMatrixA(m => resizeMatrix(parsedSize, m));
+    // Reset results on size change
+    setEigenvalues(null);
+    setEigenvectors(null);
+    setMatrixP(null);
+    setMatrixD(null);
   };
   
   const handleDiagonalize = () => {
     try {
-      if (size !== 2) {
-        toast({ variant: 'destructive', title: "Limitation", description: "This demo only supports 2x2 matrices for diagonalization."});
-        return;
+      if (matrixA.length !== size || matrixA[0].length !== size) {
+        throw new Error("Matrix must be square.");
       }
       
       const { E, V } = numeric.eig(matrixA);
@@ -194,6 +208,7 @@ export default function DiagonalizeMatrixCalculator() {
       const d = Array(size).fill(0).map((_, i) => Array(size).fill(0).map((_, j) => i === j ? eigs[i] : 0));
       
       setEigenvalues(eigs);
+      setEigenvectors(p); // Eigenvectors are the columns of P
       setMatrixP(p);
       setMatrixD(d);
 
@@ -202,10 +217,20 @@ export default function DiagonalizeMatrixCalculator() {
     } catch (e: any) {
       toast({ variant: 'destructive', title: "Error", description: e.message });
       setEigenvalues(null);
+      setEigenvectors(null);
       setMatrixP(null);
       setMatrixD(null);
     }
   }
+
+  const handleClear = () => {
+    setMatrixA(resizeMatrix(size, []));
+    setEigenvalues(null);
+    setEigenvectors(null);
+    setMatrixP(null);
+    setMatrixD(null);
+    toast({ title: "Cleared", description: "All inputs and results have been cleared." });
+  };
 
 
   return (
@@ -224,19 +249,31 @@ export default function DiagonalizeMatrixCalculator() {
                 <CardTitle>Actions</CardTitle>
                 <CardDescription>Calculate the diagonalization of matrix A.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-wrap gap-2">
                 <Button onClick={handleDiagonalize}>Diagonalize A</Button>
+                <Button variant="outline" onClick={handleClear}>Clear</Button>
             </CardContent>
         </Card>
       </div>
       
-      <div className="space-y-4">
-        <VectorDisplay vector={eigenvalues} title="Eigenvalues (λ)" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MatrixDisplay matrix={matrixP} title="Matrix P (Eigenvectors)" />
-            <MatrixDisplay matrix={matrixD} title="Matrix D (Diagonal)" />
+      {(eigenvalues || matrixP || matrixD) && (
+        <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>Results</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <VectorDisplay vector={eigenvalues} title="Eigenvalues (λ)" />
+              <MatrixDisplay matrix={eigenvectors} title="Eigenvectors (columns)" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <MatrixDisplay matrix={matrixP} title="Matrix P (Eigenvectors)" />
+                  <MatrixDisplay matrix={matrixD} title="Matrix D (Diagonal)" />
+              </div>
+              <p className="text-sm text-muted-foreground pt-2">Verification: P⁻¹AP = D</p>
+            </CardContent>
+          </Card>
         </div>
-      </div>
+      )}
     </div>
   );
 }
