@@ -1,10 +1,28 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table } from 'lucide-react';
+import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace } from 'lucide-react';
 import BasicCalculator from '@/components/calculators/basic-calculator';
 
 const tools = [
+  {
+    href: '/scientific',
+    label: 'Scientific',
+    icon: FlaskConical,
+    description: 'Advanced functions and operations.',
+  },
+  {
+    href: '/algebra',
+    label: 'Algebra',
+    icon: Type,
+    description: 'Solve equations and inequalities.',
+  },
+  {
+    href: '/calculus',
+    label: 'Calculus',
+    icon: Sigma,
+    description: 'Derivatives, integrals, and limits.',
+  },
   {
     href: '/geometry',
     label: 'Geometry',
@@ -15,7 +33,7 @@ const tools = [
     href: '/trigonometry',
     label: 'Trigonometry',
     icon: MoreVertical,
-    description: 'Advanced functions and operations.',
+    description: 'Sine, cosine, tangent, and more.',
   },
   {
     href: '/statistics',
@@ -28,7 +46,19 @@ const tools = [
     label: 'Matrix',
     icon: Table,
     description: 'Matrix operations and calculations.',
-  }
+  },
+  {
+    href: '/rref',
+    label: 'RREF',
+    icon: Table,
+    description: 'Augmented matrix and RREF solver.',
+  },
+  {
+    href: '/converter',
+    label: 'Unit Converter',
+    icon: Replace,
+    description: 'Convert between different units.',
+  },
 ];
 
 export default function Home() {
@@ -59,7 +89,7 @@ export default function Home() {
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {tools.map((tool) => (
                 <Link href={tool.href} key={tool.href} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
