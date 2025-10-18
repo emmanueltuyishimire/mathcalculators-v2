@@ -49,14 +49,18 @@ export default function DestinyMatrixCalculator() {
 
   const calculateMatrix = () => {
     try {
+      if (!birthDate) {
+        throw new Error("Please enter a valid birth date.");
+      }
       const [year, month, day] = birthDate.split('-');
-      if (!year || !month || !day) {
+      if (!year || !month || !day || isNaN(parseInt(day)) || isNaN(parseInt(month)) || isNaN(parseInt(year))) {
         throw new Error("Invalid date format. Please use YYYY-MM-DD.");
       }
 
       const dayNum = sumDigits(day);
       const monthNum = sumDigits(month);
-      const yearNum = sumDigits(year);
+      const yearString = String(parseInt(year));
+      const yearNum = sumDigits(yearString);
       
       const lifePathNum = sumDigits(String(dayNum + monthNum + yearNum));
 
