@@ -4,6 +4,13 @@ import StatisticsCalculator from '@/components/calculators/statistics-calculator
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Sigma, Percent } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Statistics Calculator – Mean, Median, Mode & More',
+    description: 'A comprehensive statistics calculator to find mean, median, mode, standard deviation, count, and sum from a data set. Includes related tools for more advanced analysis.',
+};
+
 
 const statisticsTools = [
     {

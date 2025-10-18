@@ -1,6 +1,13 @@
 
 import { PageHeader } from '@/components/page-header';
 import DestinyMatrixCalculator from '@/components/calculators/destiny-matrix-calculator';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Destiny Matrix Calculator – Numerology Insights',
+    description: 'Discover your personality traits, strengths, and life path with our Destiny Matrix Calculator. Enter your birth date to get a personalized numerology reading.',
+};
+
 
 export default function DestinyMatrixPage() {
   return (

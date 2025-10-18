@@ -13,6 +13,12 @@ const tools = [
     description: 'Advanced functions and operations.',
   },
   {
+    href: '/basic',
+    label: 'Basic',
+    icon: Calculator,
+    description: 'Simple arithmetic operations.',
+  },
+  {
     href: '/algebra',
     label: 'Algebra',
     icon: Type,

@@ -50,16 +50,22 @@ function TwoEventsCalculator() {
     setResults({ pAnot, pBnot, pAandB, pAorB, pXorB, pNeither, pAnotB, pBnotA });
   };
   
-  const resultEntries = results ? [
-      { label: "Probability of A NOT occuring: P(A')", value: results.pAnot, formula: `1 - P(A) = 1 - ${pA} = ${results.pAnot.toFixed(4)}`},
-      { label: "Probability of B NOT occuring: P(B')", value: results.pBnot, formula: `1 - P(B) = 1 - ${pB} = ${results.pBnot.toFixed(4)}`},
-      { label: "Probability of A and B both occuring: P(A∩B)", value: results.pAandB, formula: `P(A) × P(B) = ${pA} × ${pB} = ${results.pAandB.toFixed(4)}`},
-      { label: "Probability that A or B or both occur: P(A∪B)", value: results.pAorB, formula: `P(A) + P(B) - P(A∩B) = ${pA} + ${pB} - ${results.pAandB.toFixed(4)} = ${results.pAorB.toFixed(4)}`},
-      { label: "Probability that A or B occurs but NOT both: P(AΔB)", value: results.pXorB, formula: `P(A) + P(B) - 2P(A∩B) = ${pA} + ${pB} - 2×${results.pAandB.toFixed(4)} = ${results.pXorB.toFixed(4)}`},
+  const resultEntries = useMemo(() => {
+    if (!results) return [];
+    const pA_num = parseFloat(pA);
+    const pB_num = parseFloat(pB);
+
+    return [
+      { label: "Probability of A NOT occuring: P(A')", value: results.pAnot, formula: `1 - P(A) = 1 - ${pA_num} = ${results.pAnot.toFixed(4)}`},
+      { label: "Probability of B NOT occuring: P(B')", value: results.pBnot, formula: `1 - P(B) = 1 - ${pB_num} = ${results.pBnot.toFixed(4)}`},
+      { label: "Probability of A and B both occuring: P(A∩B)", value: results.pAandB, formula: `P(A) × P(B) = ${pA_num} × ${pB_num} = ${results.pAandB.toFixed(4)}`},
+      { label: "Probability that A or B or both occur: P(A∪B)", value: results.pAorB, formula: `P(A) + P(B) - P(A∩B) = ${pA_num} + ${pB_num} - ${results.pAandB.toFixed(4)} = ${results.pAorB.toFixed(4)}`},
+      { label: "Probability that A or B occurs but NOT both: P(AΔB)", value: results.pXorB, formula: `P(A) + P(B) - 2P(A∩B) = ${pA_num} + ${pB_num} - 2×${results.pAandB.toFixed(4)} = ${results.pXorB.toFixed(4)}`},
       { label: "Probability of neither A nor B occuring: P((A∪B)')", value: results.pNeither, formula: `1 - P(A∪B) = 1 - ${results.pAorB.toFixed(4)} = ${results.pNeither.toFixed(4)}`},
-      { label: "Probability of A occuring but NOT B:", value: results.pAnotB, formula: `P(A) × (1- P(B)) = ${pA} × (1 - ${pB}) = ${results.pAnotB.toFixed(4)}`},
-      { label: "Probability of B occuring but NOT A:", value: results.pBnotA, formula: `(1 - P(A)) × P(B) = (1 - ${pA}) × ${pB} = ${results.pBnotA.toFixed(4)}`},
-  ] : [];
+      { label: "Probability of A occuring but NOT B:", value: results.pAnotB, formula: `P(A) × (1- P(B)) = ${pA_num} × (1 - ${pB_num}) = ${results.pAnotB.toFixed(4)}`},
+      { label: "Probability of B occuring but NOT A:", value: results.pBnotA, formula: `(1 - P(A)) × P(B) = (1 - ${pA_num}) × ${pB_num} = ${results.pBnotA.toFixed(4)}`},
+  ]
+  }, [results, pA, pB]);
 
   return (
     <Card>
@@ -328,5 +334,3 @@ export default function ProbabilityCalculator() {
     </Tabs>
   );
 }
-
-    

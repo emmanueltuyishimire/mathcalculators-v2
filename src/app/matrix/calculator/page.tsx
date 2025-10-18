@@ -1,6 +1,12 @@
 
 import Link from 'next/link';
 import MatrixCalculator from '@/components/calculators/matrix-calculator';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Matrix Calculator – Add, Multiply, Transpose, and Invert Matrices',
+    description: 'A powerful online matrix calculator for students and professionals. Perform addition, multiplication, transpose, inverse, and determinant calculations with ease.',
+};
 
 export default function MatrixCalculatorPage() {
   return (

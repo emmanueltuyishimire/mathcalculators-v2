@@ -1,5 +1,11 @@
 import { PageHeader } from '@/components/page-header';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Algebra Calculator',
+  description: 'Solve linear equations with our easy-to-use algebra calculator. Enter your equation and get the solution for x instantly.',
+};
 
 export default function AlgebraPage() {
   return (

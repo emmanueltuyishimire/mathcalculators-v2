@@ -1,5 +1,11 @@
 import { PageHeader } from '@/components/page-header';
 import UnitConverter from '@/components/calculators/unit-converter';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Unit Converter',
+    description: 'A versatile unit converter for length, mass, temperature, and more. Quickly and accurately convert between different units of measurement.',
+};
 
 export default function ConverterPage() {
   return (

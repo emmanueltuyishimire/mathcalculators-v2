@@ -1,4 +1,10 @@
 import { PageHeader } from '@/components/page-header';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Geometry Calculators',
+  description: 'A comprehensive set of geometry calculators for calculating area, volume, and other geometric properties. Coming soon!',
+};
 
 export default function GeometryPage() {
   return (

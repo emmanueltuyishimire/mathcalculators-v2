@@ -1,6 +1,14 @@
 
 import { PageHeader } from '@/components/page-header';
 import DesmosMatrixCalculator from '@/components/calculators/desmos-matrix-calculator';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+    title: 'Desmos Matrix Calculator – Interactive Online Tool',
+    description: 'A free, interactive Desmos-style matrix calculator. Perform matrix operations, visualize transformations, and learn linear algebra with an intuitive interface.',
+};
+
 
 export default function DesmosMatrixPage() {
   return (
@@ -79,7 +87,7 @@ export default function DesmosMatrixPage() {
                     <ul className="list-disc list-inside pl-4 mt-2">
                         <li>Start with small matrices (2×2 or 3×3) to understand operations.</li>
                         <li>Verify your results by checking that multiplication or inversion produces expected outcomes.</li>
-                        <li>Use visualization to connect matrix math with geometric transformations.</li>
+                         <li>For more advanced operations like RREF or diagonalization, check out our other <Link href="/matrix" className="text-primary hover:underline">matrix calculators</Link>.</li>
                     </ul>
                 </div>
             </section>

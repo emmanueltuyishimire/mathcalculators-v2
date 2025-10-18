@@ -14,6 +14,7 @@ import {
   Table,
   Milestone,
   Percent,
+  FlaskConical,
 } from 'lucide-react';
 import {
   Sheet,
@@ -25,7 +26,8 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const navItems = [
-  { href: '/scientific', label: 'Scientific', icon: Calculator },
+  { href: '/scientific', label: 'Scientific', icon: FlaskConical },
+  { href: '/basic', label: 'Basic', icon: Calculator },
   { href: '/sequences', label: 'Sequences', icon: Milestone },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },

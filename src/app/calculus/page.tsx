@@ -1,5 +1,11 @@
 import { PageHeader } from '@/components/page-header';
 import CalculusCalculator from '@/components/calculators/calculus-calculator';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Calculus Calculator',
+  description: 'Solve calculus problems including derivatives, integrals, and limits with our powerful online calculator. Supports a wide range of functions.',
+};
 
 export default function CalculusPage() {
   return (

@@ -1,6 +1,14 @@
 
 import { PageHeader } from '@/components/page-header';
 import RrefCalculator from '@/components/calculators/rref-calculator';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
+export const metadata: Metadata = {
+    title: 'Augmented Matrix & RREF Calculator – Solve Linear Systems',
+    description: 'An online calculator to solve systems of linear equations using an augmented matrix and computing the Reduced Row Echelon Form (RREF). Includes step-by-step options.',
+};
+
 
 export default function RrefPage() {
   return (
@@ -100,6 +108,7 @@ export default function RrefPage() {
                     <li>Start small with 2x2 or 3x3 matrices to understand the process.</li>
                     <li>Verify your solution by substituting it back into the original equations.</li>
                     <li>Use free/random fill options to practice multiple systems quickly.</li>
+                    <li>For other matrix operations, try our main <Link href="/matrix/calculator" className="text-primary hover:underline">Matrix Calculator</Link>.</li>
                 </ul>
                 
                 <h2 className="text-3xl font-bold text-foreground">FAQs – Augmented Matrix & RREF Calculator</h2>

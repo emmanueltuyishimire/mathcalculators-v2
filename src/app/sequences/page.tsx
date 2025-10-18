@@ -3,6 +3,12 @@ import { PageHeader } from '@/components/page-header';
 import SequenceCalculators from '@/components/calculators/sequence-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sequence Calculators – Arithmetic, Geometric, and Fibonacci',
+  description: 'A collection of sequence calculators for finding terms and sums of Arithmetic, Geometric, and Fibonacci sequences. Includes formulas and explanations.',
+};
 
 const HowToUse = () => (
     <Card>
