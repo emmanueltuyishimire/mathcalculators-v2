@@ -21,19 +21,19 @@ const EducationalContent = () => (
             <div>
                 <h3 className="text-xl font-semibold text-foreground">What is a Z-score?</h3>
                 <p className="text-muted-foreground mt-2">
-                    The z-score, also referred to as standard score, z-value, and normal score, among other things, is a dimensionless quantity that is used to indicate the signed, fractional, number of standard deviations by which an event is above the mean value being measured. Values above the mean have positive z-scores, while values below the mean have negative z-scores.
+                    A z-score, often called a standard score, is a statistical measure that tells you how far a specific data point is from the average (or mean) of its dataset, measured in units of standard deviation. It is a dimensionless value, meaning it allows for the comparison of scores from different distributions.
                 </p>
                 <p className="text-muted-foreground mt-2">
-                    The z-score can be calculated by subtracting the population mean from the raw score, or data point in question (a test score, height, age, etc.), then dividing the difference by the population standard deviation:
+                    If a z-score is positive, it means the data point is above the mean. If it's negative, the data point is below the mean. A z-score of zero indicates the data point is exactly the mean.
                 </p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">
                     z = (x - μ) / σ
                 </p>
                 <p className="text-muted-foreground">
-                    where x is the raw score, μ is the population mean, and σ is the population standard deviation. For a sample, the formula is similar, except that the sample mean and sample standard deviation are used.
+                    In this formula, <b>x</b> is the individual data point (like a test score or height), <b>μ</b> is the mean of the population, and <b>σ</b> is the standard deviation of the population. When working with a sample instead of an entire population, the sample mean and sample standard deviation are used.
                 </p>
                 <p className="text-muted-foreground mt-2">
-                    The z-score has numerous applications and can be used to perform a z-test, calculate prediction intervals, process control applications, comparison of scores on different scales, and more.
+                    Z-scores are incredibly versatile and are used for many purposes, including z-tests, creating prediction intervals, and comparing values across different scales.
                 </p>
             </div>
 
