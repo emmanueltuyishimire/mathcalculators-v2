@@ -91,6 +91,7 @@ const scalarMultiply = (matrix: Matrix, scalar: number): Matrix => {
 // #endregion
 
 const OperationDialog = ({matrix, onNewMatrix, operation}: {matrix: MatrixObject, onNewMatrix: (m: Matrix, name?: string) => void, operation: 'scalar'}) => {
+    const {toast} = useToast();
     const [value, setValue] = useState(2);
     
     const opDetails = {
@@ -358,6 +359,7 @@ export default function DesmosMatrixCalculator() {
     { id: 'A', name: 'A', matrix: [[1, 2], [3, 4]] },
   ]);
   const { toast } = useToast();
+  const nextIdCounter = React.useRef(0);
 
   const getNextMatrixName = () => {
     let i = 0;
@@ -368,11 +370,21 @@ export default function DesmosMatrixCalculator() {
     } while(matrices.some(m => m.name === nextChar));
     return nextChar;
   }
+  
+  const getUniqueId = (prefix: string) => {
+    const newId = `${prefix}-${nextIdCounter.current++}`;
+    // Fallback if the generated ID somehow already exists
+    if (matrices.some(m => m.id === newId)) {
+        return `${newId}-${Date.now()}`;
+    }
+    return newId;
+  }
 
   const addMatrix = (matrix?: Matrix, name?: string) => {
     const newName = name || getNextMatrixName();
+    const newId = getUniqueId(newName);
     const newMatrix: MatrixObject = {
-      id: newName,
+      id: newId,
       name: newName,
       matrix: matrix || [[0, 0], [0, 0]],
     };
