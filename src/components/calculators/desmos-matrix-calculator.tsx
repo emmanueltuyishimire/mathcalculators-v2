@@ -76,12 +76,12 @@ const multiplyMatrices = (a: Matrix, b: Matrix): Matrix => {
 };
 
 const addMatrices = (a: Matrix, b: Matrix): Matrix => {
-  if (a.length !== b.length || a[0].length !== b[0].length) throw new Error("Matrices must have the same dimensions for addition.");
+  if (a.length !== b.length || (a[0]?.length || 0) !== (b[0]?.length || 0)) throw new Error("Matrices must have the same dimensions for addition.");
   return a.map((row, r) => row.map((cell, c) => cell + b[r][c]));
 }
 
 const subtractMatrices = (a: Matrix, b: Matrix): Matrix => {
-  if (a.length !== b.length || a[0].length !== b[0].length) throw new Error("Matrices must have the same dimensions for subtraction.");
+  if (a.length !== b.length || (a[0]?.length || 0) !== (b[0]?.length || 0)) throw new Error("Matrices must have the same dimensions for subtraction.");
   return a.map((row, r) => row.map((cell, c) => cell - b[r][c]));
 }
 
@@ -343,9 +343,9 @@ const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], o
                     </DropdownMenuContent>
                 </DropdownMenu>
                 
-                 <Button onClick={() => handleOperation('add')}>A+B</Button>
-                 <Button onClick={() => handleOperation('subtract')}>A-B</Button>
-                 <Button onClick={() => handleOperation('multiply')}>A×B</Button>
+                 <Button onClick={() => handleOperation('add')}>{inputA}+{inputB}</Button>
+                 <Button onClick={() => handleOperation('subtract')}>{inputA}-{inputB}</Button>
+                 <Button onClick={() => handleOperation('multiply')}>{inputA}×{inputB}</Button>
 
                  <Button variant="outline" onClick={() => { const temp = inputA; setInputA(inputB); setInputB(temp); }}>
                     <Replace className="h-4 w-4" />
@@ -377,21 +377,26 @@ export default function DesmosMatrixCalculator() {
   
   const getUniqueId = (prefix: string) => {
     let newId = `${prefix}-${nextIdCounter.current++}`;
-    if (matrices.some(m => m.id === newId)) {
+    if (matrices.some(m => m.id === newId || m.name === newId)) {
         newId = `${newId}-${Date.now()}`;
     }
     return newId;
   }
 
   const addMatrix = (matrix?: Matrix, name?: string) => {
-    const newName = name || getNextMatrixName();
-    const newId = getUniqueId(newName);
-
+    let newName = name;
+    if (!newName) {
+      newName = getNextMatrixName();
+    }
+    
     if (matrices.some(m => m.name === newName)) {
       // If name is not unique, create a unique one
-      addMatrix(matrix, `${newName}'`);
+      const uniqueName = `${newName}'`;
+      addMatrix(matrix, uniqueName);
       return;
     }
+    
+    const newId = getUniqueId(newName);
 
     const newMatrix: MatrixObject = {
       id: newId,
