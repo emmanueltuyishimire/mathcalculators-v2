@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star } from 'lucide-react';
+import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
   {
@@ -87,6 +88,13 @@ export default function Home() {
       </section>
 
       <main className="flex-1 p-4 md:p-6">
+        <section className="w-full py-12">
+            <div className="container px-4 md:px-6">
+                <div className="mx-auto max-w-4xl space-y-12">
+                    <ScientificCalculator />
+                </div>
+            </div>
+        </section>
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from 'react';
@@ -23,7 +24,7 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 const navItems = [
-  { href: '/', label: 'Basic', icon: Calculator },
+  { href: '/scientific', label: 'Scientific', icon: Calculator },
   { href: '/sequences', label: 'Sequences', icon: Milestone },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
