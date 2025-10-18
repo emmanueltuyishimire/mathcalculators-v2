@@ -86,7 +86,7 @@ function ZScoreProbabilityConverter() {
         
         const p_less = jStat.normal.cdf(z, 0, 1);
         const p_greater = 1 - p_less;
-        const p_0_to_z = z >= 0 ? p_less - 0.5 : 0.5 - p_less;
+        const p_0_to_z = Math.abs(p_less - 0.5);
         const p_between = jStat.normal.cdf(Math.abs(z), 0, 1) - jStat.normal.cdf(-Math.abs(z), 0, 1);
         const p_outside = 1 - p_between;
 
