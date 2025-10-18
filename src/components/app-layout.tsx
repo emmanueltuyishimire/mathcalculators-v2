@@ -33,7 +33,6 @@ const navItems = [
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
   { href: '/matrix', label: 'Matrix', icon: Table },
-  { href: '/rref', label: 'RREF', icon: Table },
   { href: '/converter', label: 'Converter', icon: Replace },
 ];
 

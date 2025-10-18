@@ -48,12 +48,6 @@ const tools = [
     description: 'Matrix operations and calculations.',
   },
   {
-    href: '/rref',
-    label: 'RREF',
-    icon: Table,
-    description: 'Augmented matrix and RREF solver.',
-  },
-  {
     href: '/converter',
     label: 'Unit Converter',
     icon: Replace,
