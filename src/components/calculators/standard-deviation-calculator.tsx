@@ -11,26 +11,30 @@ import { Button } from '@/components/ui/button';
 
 interface Stats {
   mean: number;
+  median: number;
+  mode: string;
   variance: number;
   stdDev: number;
   sum: number;
   count: number;
+  largest: number;
+  smallest: number;
+  range: number;
+  geoMean: number | string;
   sumOfSquares: number;
   sem: number;
   frequency: { [key: string]: number };
+  sortedData: string;
   type: 'population' | 'sample';
 }
 
-const StatCard = ({ title, value }: { title: string; value: number | string }) => (
-  <Card className="bg-secondary/50">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-2xl font-bold">{typeof value === 'number' ? value.toFixed(4) : value}</div>
-    </CardContent>
-  </Card>
+const StatDisplay = ({ label, value }: { label: string; value: string | number }) => (
+    <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+        <span className="text-sm font-medium text-muted-foreground">{label}</span>
+        <span className="text-sm font-mono font-semibold">{typeof value === 'number' ? value.toFixed(4) : value}</span>
+    </div>
 );
+
 
 const confidenceLevels = [
     { level: "68.3%", z: 1.0 },
@@ -65,7 +69,30 @@ export default function StandardDeviationCalculator() {
     const count = numbers.length;
     const sum = numbers.reduce((acc, n) => acc + n, 0);
     const mean = sum / count;
+
+    const sorted = [...numbers].sort((a,b) => a-b);
+    let median;
+    if (count % 2 === 0) {
+        median = (sorted[count/2 - 1] + sorted[count/2]) / 2;
+    } else {
+        median = sorted[Math.floor(count/2)];
+    }
     
+    const frequency: { [key: string]: number } = {};
+    numbers.forEach(n => frequency[String(n)] = (frequency[String(n)] || 0) + 1);
+    const maxFreq = Math.max(...Object.values(frequency));
+    const modes = Object.keys(frequency).filter(n => frequency[String(n)] === maxFreq);
+    const modeStr = `${modes.join(', ')}, appeared ${maxFreq} times`;
+
+    const largest = Math.max(...numbers);
+    const smallest = Math.min(...numbers);
+    const range = largest - smallest;
+
+    let geoMean: number | string = 'N/A';
+    if(numbers.every(n => n > 0)) {
+       geoMean = Math.pow(numbers.reduce((a,b) => a*b, 1), 1/count);
+    }
+
     const sumOfSquares = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0);
     
     const divisor = type === 'population' ? count : count -1;
@@ -78,12 +105,10 @@ export default function StandardDeviationCalculator() {
     const stdDev = Math.sqrt(variance);
     const sem = stdDev / Math.sqrt(count);
 
-    const frequency: { [key: string]: number } = {};
-    for (const num of numbers) {
-        frequency[String(num)] = (frequency[String(num)] || 0) + 1;
-    }
-
-    setCalculatedStats({ mean, variance, stdDev, sum, count, sumOfSquares, sem, frequency, type });
+    setCalculatedStats({ 
+        mean, median, mode: modeStr, variance, stdDev, sum, count, largest, smallest, range, geoMean,
+        sumOfSquares, sem, frequency, sortedData: sorted.join(', '), type 
+    });
   };
   
   const stats = calculatedStats;
@@ -127,16 +152,25 @@ export default function StandardDeviationCalculator() {
             <CardHeader>
                 <CardTitle>Results</CardTitle>
                 <CardDescription>
-                    Standard Deviation (σ): {stats.stdDev.toFixed(8)}
+                    Here is a complete statistical analysis of your dataset.
                 </CardDescription>
             </CardHeader>
-            <CardContent>
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-2">
-                    <StatCard title="Count (N)" value={stats.count} />
-                    <StatCard title="Sum (Σx)" value={stats.sum} />
-                    <StatCard title="Mean (μ)" value={stats.mean} />
-                    <StatCard title="Variance (σ²)" value={stats.variance} />
-                </div>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                <StatDisplay label="Count" value={stats.count} />
+                <StatDisplay label="Sum" value={stats.sum} />
+                <StatDisplay label="Mean" value={stats.mean} />
+                <StatDisplay label="Median" value={stats.median} />
+                <StatDisplay label="Mode" value={stats.mode} />
+                <StatDisplay label="Largest" value={stats.largest} />
+                <StatDisplay label="Smallest" value={stats.smallest} />
+                <StatDisplay label="Range" value={stats.range} />
+                <StatDisplay label="Geometric Mean" value={stats.geoMean} />
+                <StatDisplay label={`Variance (${stats.type === 'population' ? 'σ²' : 's²'})`} value={stats.variance} />
+                <StatDisplay label={`Std. Deviation (${stats.type === 'population' ? 'σ' : 's'})`} value={stats.stdDev} />
+                 <div className="md:col-span-2 space-y-1 pt-2">
+                    <Label className="text-sm font-medium text-muted-foreground">Sorted Data</Label>
+                    <p className="text-sm font-mono p-2 bg-muted rounded-md">{stats.sortedData}</p>
+                 </div>
             </CardContent>
         </Card>
     )}
@@ -152,16 +186,16 @@ export default function StandardDeviationCalculator() {
                     <p>μ = Σx / N = {stats.sum} / {stats.count} = {stats.mean.toFixed(4)}</p>
                 </div>
                 <div>
-                    <p className="font-semibold">2. Find the Variance (σ²):</p>
-                    <p>σ² = Σ(xᵢ - μ)² / {stats.type === 'population' ? 'N' : '(N-1)'}</p>
-                    <p>σ² = {stats.sumOfSquares.toFixed(4)} / {stats.type === 'population' ? stats.count : stats.count - 1}</p>
-                    <p>σ² = {stats.variance.toFixed(4)}</p>
+                    <p className="font-semibold">2. Find the Variance ({stats.type === 'population' ? 'σ²' : 's²'}):</p>
+                    <p>{stats.type === 'population' ? 'σ²' : 's²'} = Σ(xᵢ - μ)² / {stats.type === 'population' ? 'N' : '(N-1)'}</p>
+                    <p>{stats.type === 'population' ? 'σ²' : 's²'} = {stats.sumOfSquares.toFixed(4)} / {stats.type === 'population' ? stats.count : stats.count - 1}</p>
+                    <p>{stats.type === 'population' ? 'σ²' : 's²'} = {stats.variance.toFixed(4)}</p>
                 </div>
                  <div>
-                    <p className="font-semibold">3. Find the Standard Deviation (σ):</p>
-                    <p>σ = √σ²</p>
-                    <p>σ = √{stats.variance.toFixed(4)}</p>
-                    <p>σ = {stats.stdDev.toFixed(8)}</p>
+                    <p className="font-semibold">3. Find the Standard Deviation ({stats.type === 'population' ? 'σ' : 's'}):</p>
+                    <p>{stats.type === 'population' ? 'σ' : 's'} = √{stats.type === 'population' ? 'σ²' : 's²'}</p>
+                    <p>{stats.type === 'population' ? 'σ' : 's'} = √{stats.variance.toFixed(4)}</p>
+                    <p>{stats.type === 'population' ? 'σ' : 's'} = {stats.stdDev.toFixed(8)}</p>
                 </div>
             </CardContent>
         </Card>
@@ -226,3 +260,5 @@ export default function StandardDeviationCalculator() {
     </div>
   );
 }
+
+    
