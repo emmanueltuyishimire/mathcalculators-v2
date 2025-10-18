@@ -8,143 +8,130 @@ export default function MatrixPage() {
         <div className="mx-auto max-w-7xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Online Matrix Calculator – Free & Easy to Use
+                    Matrix Calculator – Tips, Tricks, and How to Use It Effectively
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A matrix calculator is a powerful tool that allows you to perform matrix operations quickly and accurately. Whether you are solving problems in linear algebra, engineering, physics, or computer science, this online tool makes it easy to handle matrix addition, multiplication, determinants, inverses, and more.
+                    A matrix calculator is an essential tool for students, engineers, and professionals working with linear algebra, computer graphics, physics, or data analysis. It saves time, reduces errors, and helps you understand complex operations like determinants, inverses, and matrix multiplication.
                 </p>
                  <p className="mt-2 text-lg text-muted-foreground">
-                    Our matrix calculator is free, user-friendly, and works on both desktop and mobile devices.
+                    Here’s how to make the most out of your online matrix calculator.
                 </p>
             </section>
             
             <MatrixCalculator />
 
             <section className="space-y-8">
-                <h2 className="text-3xl font-bold">How to Use the Matrix Calculator</h2>
-                <div className="space-y-6 text-muted-foreground">
-                    <div className="space-y-2">
-                        <h3 className="text-xl font-semibold text-foreground">Step 1: Input Your Matrices</h3>
-                        <ul className="list-disc list-inside space-y-1">
-                            <li>Select the number of rows and columns for Matrix A and Matrix B.</li>
-                            <li>Enter numbers directly into the grid.</li>
-                            <li>Use quick fill buttons:
-                                <ul className="list-disc list-inside pl-6">
-                                    <li><strong>Clear All / 0 All</strong> → reset cells to 0</li>
-                                    <li><strong>1 All</strong> → fill all cells with 1</li>
-                                    <li><strong>Random</strong> → fill with random numbers</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="space-y-2">
-                        <h3 className="text-xl font-semibold text-foreground">Step 2: Choose an Operation</h3>
-                        <p>Our calculator supports a variety of operations for one or two matrices:</p>
-                        <div className="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <h4 className="font-semibold text-foreground">Single Matrix Operations:</h4>
-                                <ul className="list-disc list-inside space-y-1">
-                                    <li><strong>Transpose</strong> → swap rows with columns</li>
-                                    <li><strong>Power of n</strong> → multiply the matrix by itself n times</li>
-                                    <li><strong>Determinant</strong> → compute det(A)</li>
-                                    <li><strong>Inverse</strong> → calculate A⁻¹ (only if determinant ≠ 0)</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 className="font-semibold text-foreground">Two Matrix Operations:</h4>
-                                <ul className="list-disc list-inside space-y-1">
-                                    <li><strong>A + B</strong> → matrix addition (same dimensions)</li>
-                                    <li><strong>A – B</strong> → matrix subtraction (same dimensions)</li>
-                                    <li><strong>AB</strong> → matrix multiplication (columns of A = rows of B)</li>
-                                    <li><strong>A ↔ B</strong> → swap the two matrices</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <h3 className="text-xl font-semibold text-foreground">Step 3: View Results</h3>
-                        <ul className="list-disc list-inside space-y-1">
-                            <li>The resulting matrix or value is displayed in the output grid.</li>
-                            <li>For determinants, a single numeric value is shown.</li>
-                            <li>For inverses, powers, or arithmetic operations, the entire resulting matrix is displayed.</li>
-                        </ul>
-                    </div>
-                </div>
+                <h2 className="text-3xl font-bold">1. Getting Started: Enter Your Matrices</h2>
+                <p className="text-muted-foreground">
+                    Start by selecting the number of rows and columns for Matrix A and Matrix B. Fill in the numbers manually, or use the quick-fill buttons:
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Clear All / 0 All</strong> → reset all cells to zero</li>
+                    <li><strong>1 All</strong> → fill all cells with ones</li>
+                    <li><strong>Random</strong> → fill with random numbers (great for practice or testing)</li>
+                </ul>
+                <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                    <strong>Tip:</strong> For large matrices, using the Random button can help quickly test multiplication, determinant, or inverse functions.
+                </p>
 
-                <h2 className="text-3xl font-bold">Matrix Operations Explained</h2>
+                <h2 className="text-3xl font-bold">2. Understanding Matrix Operations</h2>
                 <div className="space-y-6">
                     <div>
-                        <h3 className="text-2xl font-semibold">1. Addition and Subtraction</h3>
+                        <h3 className="text-2xl font-semibold">A. Addition and Subtraction</h3>
                         <p className="text-muted-foreground mt-2">
-                           Matrices must have the same dimensions. The operation is performed element-wise.
+                           Only possible if matrices have the same dimensions.
                         </p>
                         <p className="font-mono text-center my-2 text-lg">C[i][j] = A[i][j] ± B[i][j]</p>
+                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                            <strong>Actionable Tip:</strong> Always double-check the dimensions of the matrices before pressing A + B or A – B. If dimensions mismatch, the operation will fail.
+                        </p>
                     </div>
                     <div>
-                        <h3 className="text-2xl font-semibold">2. Multiplication</h3>
+                        <h3 className="text-2xl font-semibold">B. Multiplication</h3>
                         <p className="text-muted-foreground mt-2">
-                            Valid if the number of columns of A equals the number of rows of B.
+                            Matrix multiplication is valid if columns of A = rows of B.
                         </p>
                          <p className="font-mono text-center my-2 text-lg">C[i][j] = Σ A[i][k] * B[k][j]</p>
-                    </div>
-                    <div>
-                        <h3 className="text-2xl font-semibold">3. Determinant</h3>
-                        <p className="text-muted-foreground mt-2">
-                           A scalar value that can be computed from the elements of a square matrix.
+                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                            <strong>Actionable Tip:</strong> Use the swap button (A ↔ B) if the multiplication fails due to incompatible dimensions. This is helpful for experimenting with different combinations.
                         </p>
                     </div>
                     <div>
-                        <h3 className="text-2xl font-semibold">4. Inverse</h3>
+                        <h3 className="text-2xl font-semibold">C. Determinant</h3>
                         <p className="text-muted-foreground mt-2">
-                           The inverse of a square matrix A is a matrix A⁻¹ such that A * A⁻¹ = I (the identity matrix). It exists only if the determinant is non-zero.
+                           Only square matrices have determinants.
+                        </p>
+                         <p className="font-mono text-center my-2 text-lg">det([[a, b], [c, d]]) = a*d – b*c</p>
+                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                            <strong>Actionable Tip:</strong> Check determinant before calculating the inverse. If det(A) = 0, the matrix does not have an inverse.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 className="text-2xl font-semibold">D. Inverse</h3>
+                        <p className="text-muted-foreground mt-2">
+                           Only square matrices with non-zero determinant can be inverted.
+                        </p>
+                        <p className="font-mono text-center my-2 text-lg">A⁻¹ = 1/det(A) * adj(A)</p>
+                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                           <strong>Actionable Tip:</strong> Use the step-by-step output (if available) to learn how inverses are calculated. This helps you understand linear algebra concepts instead of just getting the result.
                         </p>
                     </div>
                      <div>
-                        <h3 className="text-2xl font-semibold">5. Transpose</h3>
+                        <h3 className="text-2xl font-semibold">E. Transpose</h3>
                         <p className="text-muted-foreground mt-2">
-                           The transpose of a matrix is an operator which flips a matrix over its diagonal.
+                           Swap rows and columns with A<sup>T</sup>. Useful for solving systems of equations, dot products, and orthogonal matrices.
+                        </p>
+                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                           <strong>Actionable Tip:</strong> Use transpose to convert row vectors to column vectors when preparing matrices for multiplication.
                         </p>
                     </div>
                      <div>
-                        <h3 className="text-2xl font-semibold">6. Power of n</h3>
+                        <h3 className="text-2xl font-semibold">F. Power of n</h3>
                         <p className="text-muted-foreground mt-2">
-                           Raises a square matrix to an integer power n by multiplying it by itself n times.
+                           Multiply a square matrix by itself n times. Valid only for square matrices.
+                        </p>
+                        <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                           <strong>Actionable Tip:</strong> Use this to quickly calculate matrix powers for repeated transformations, such as rotation matrices in graphics.
                         </p>
                     </div>
                 </div>
                 
-                 <div>
-                    <h2 className="text-3xl font-bold mb-4">Tips for Using the Matrix Calculator</h2>
+                <div>
+                    <h2 className="text-3xl font-bold mb-4">3. Best Practices for Using the Matrix Calculator</h2>
                     <ul className="list-disc list-inside text-muted-foreground space-y-2">
-                        <li>Always check matrix dimensions before performing operations.</li>
-                        <li>Only square matrices can have determinants, inverses, or powers.</li>
-                        <li>Use the Random button to quickly test different matrix scenarios.</li>
-                        <li>The "Copy to A/B" buttons are useful for multi-step calculations.</li>
+                        <li><strong>Always check dimensions first:</strong> Before any operation, ensure the matrices are compatible.</li>
+                        <li><strong>Use the swap button (A ↔ B):</strong> Quick fix when multiplication or subtraction fails due to dimensions.</li>
+                        <li><strong>Fill with random numbers for practice:</strong> Great for students to test multiple operations and understand patterns.</li>
+                        <li><strong>Start small, then scale:</strong> Begin with 2x2 or 3x3 matrices to understand operations before moving to larger matrices.</li>
+                        <li><strong>Use determinant before inverse:</strong> Avoid errors by verifying det(A) ≠ 0.</li>
+                        <li><strong>Transpose for alignment:</strong> Helps align matrices correctly for multiplication or solving equations.</li>
+                        <li><strong>Check outputs visually:</strong> For complex matrices, glance at the output to catch obvious mistakes.</li>
+                    </ul>
+                </div>
+                
+                 <div>
+                    <h2 className="text-3xl font-bold mb-4">4. Real-World Uses of the Matrix Calculator</h2>
+                    <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                        <li><strong>Linear algebra homework:</strong> Quickly solve addition, subtraction, and multiplication problems.</li>
+                        <li><strong>Physics and engineering:</strong> Work with transformations, rotations, or systems of equations.</li>
+                        <li><strong>Computer graphics:</strong> Apply matrix powers and inverses for image transformations.</li>
+                        <li><strong>Data analysis:</strong> Compute covariance matrices, trace, or rank efficiently.</li>
                     </ul>
                 </div>
 
-                <h2 className="text-3xl font-bold">FAQs</h2>
-                <div className="space-y-6">
-                    <div>
-                        <h3 className="text-xl font-semibold">Q1: What is a matrix calculator?</h3>
-                        <p className="text-muted-foreground">A matrix calculator is a tool that performs mathematical operations on matrices, including addition, multiplication, determinants, and inverses.</p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold">Q2: Can I multiply any two matrices?</h3>
-                        <p className="text-muted-foreground">No. Matrix multiplication is only possible if the number of columns in Matrix A equals the number of rows in Matrix B.</p>
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold">Q3: Can I find the inverse of any matrix?</h3>
-                        <p className="text-muted-foreground">No. Only square matrices with a non-zero determinant have an inverse.</p>
-                    </div>
-                     <div>
-                        <h3 className="text-xl font-semibold">Q4: Is this matrix calculator free?</h3>
-                        <p className="text-muted-foreground">Yes! You can use it online for free without registration or downloads.</p>
-                    </div>
-                     <div>
-                        <h3 className="text-xl font-semibold">Q5: Can I use this calculator on my phone or tablet?</h3>
-                        <p className="text-muted-foreground">Yes, it’s fully responsive and works on mobile devices and tablets.</p>
-                    </div>
+                 <div>
+                    <h2 className="text-3xl font-bold mb-4">5. Quick Tips for Efficiency</h2>
+                    <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                        <li>Use keyboard shortcuts if your calculator supports them.</li>
+                        <li>Use copy-paste to input large matrices quickly.</li>
+                        <li>Keep frequently used matrices saved if the app has a history or memory feature.</li>
+                        <li>Practice with edge cases like zero matrices, identity matrices, and diagonal matrices to see how operations behave.</li>
+                    </ul>
+                </div>
+
+                <div className="p-4 bg-primary/10 text-primary-foreground rounded-md">
+                    <h3 className="font-bold text-lg">✅ Pro Tip:</h3>
+                    <p>Combining multiple operations, such as Transpose → Multiply → Inverse, can be done quickly with this calculator and helps reinforce understanding of linear algebra concepts.</p>
                 </div>
             </section>
         </div>
