@@ -3,7 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import StatisticsCalculator from '@/components/calculators/statistics-calculator';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sigma } from 'lucide-react';
+import { Sigma, Percent } from 'lucide-react';
 
 const statisticsTools = [
     {
@@ -11,6 +11,12 @@ const statisticsTools = [
         label: 'Standard Deviation Calculator',
         icon: Sigma,
         description: 'Calculate standard deviation, variance, mean, and more.',
+    },
+    {
+        href: '/statistics/sample-size',
+        label: 'Sample Size Calculator',
+        icon: Percent,
+        description: 'Determine the minimum sample size for your study.',
     }
 ]
 
