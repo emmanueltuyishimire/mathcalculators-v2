@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { X, ArrowRight, RefreshCw, Replace } from 'lucide-react';
+import { X, ArrowRight, RefreshCw, Replace, Copy } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -282,6 +282,24 @@ export default function MatrixCalculator() {
          toast({ variant: "destructive", title: "Operation Error", description: e.message });
     }
   }
+
+  const handleCopyToA = () => {
+    if (resultMatrix) {
+      setMatrixA(resultMatrix);
+      setRowsA(resultMatrix.length);
+      setColsA(resultMatrix[0]?.length || 0);
+      toast({ title: "Result copied to Matrix A" });
+    }
+  };
+
+  const handleCopyToB = () => {
+    if (resultMatrix) {
+      setMatrixB(resultMatrix);
+      setRowsB(resultMatrix.length);
+      setColsB(resultMatrix[0]?.length || 0);
+      toast({ title: "Result copied to Matrix B" });
+    }
+  };
   
   const PowerDialog = ({matrixRef}: {matrixRef: 'A' | 'B'}) => {
     const [power, setPower] = useState(2);
@@ -403,6 +421,12 @@ export default function MatrixCalculator() {
                 <p className="text-xl font-mono p-4 bg-muted rounded-md">{resultScalar}</p>
             )}
           </CardContent>
+           {resultMatrix && (
+            <CardFooter className="flex flex-wrap gap-2">
+                <Button variant="outline" size="sm" onClick={handleCopyToA}><Copy className="mr-2 h-4 w-4"/> Copy to A</Button>
+                <Button variant="outline" size="sm" onClick={handleCopyToB}><Copy className="mr-2 h-4 w-4"/> Copy to B</Button>
+            </CardFooter>
+           )}
         </Card>
       )}
     </div>
