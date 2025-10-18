@@ -117,7 +117,7 @@ export default function DiagonalizeMatrixPage() {
                     <li>Automatically forms the P (eigenvector) and D (eigenvalue) matrices.</li>
                     <li>Verifies the diagonalization P⁻¹AP = D.</li>
                     <li>Supports 2×2, 3×3, and larger matrices for learning and application.</li>
-                    <li>Related tools: <Link href="/matrix" className="text-primary hover:underline">Matrix Calculator</Link>, <Link href="/desmos-matrix" className="text-primary hover:underline">Desmos Matrix Calculator</Link>, and <Link href="/rref" className="text-primary hover:underline">RREF Calculator</Link>.</li>
+                    <li>Related tools: <Link href="/matrix/calculator" className="text-primary hover:underline">Matrix Calculator</Link>, <Link href="/desmos-matrix" className="text-primary hover:underline">Desmos Matrix Calculator</Link>, and <Link href="/rref" className="text-primary hover:underline">RREF Calculator</Link>.</li>
                 </ul>
 
                 <h2 className="text-3xl font-bold text-foreground">Actionable Tips</h2>

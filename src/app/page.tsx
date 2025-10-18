@@ -48,28 +48,10 @@ const tools = [
     description: 'Matrix operations and calculations.',
   },
   {
-    href: '/rref',
-    label: 'RREF',
-    icon: Sigma,
-    description: 'Solve systems of linear equations.',
-  },
-  {
     href: '/converter',
     label: 'Unit Converter',
     icon: Replace,
     description: 'Convert between different units.',
-  },
-  {
-    href: '/desmos-matrix',
-    label: 'Desmos Matrix',
-    icon: Table,
-    description: 'A Desmos-style matrix calculator.',
-  },
-  {
-    href: '/diagonalize-matrix',
-    label: 'Diagonalize Matrix',
-    icon: Table,
-    description: 'Find eigenvalues and diagonalize matrices.',
   },
   {
     href: '/destiny-matrix',

@@ -10,6 +10,7 @@ import {
   Menu,
   MoreVertical,
   BarChartHorizontal,
+  Table,
 } from 'lucide-react';
 import {
   Sheet,
@@ -22,6 +23,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 const navItems = [
   { href: '/', label: 'Basic', icon: Calculator },
+  { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
@@ -47,7 +49,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
              <Link
               key={item.href}
               href={item.href}
-              className={cn("transition-colors hover:text-foreground", (pathname === item.href || (item.href === "/" && isHome && item.label === 'Basic')) ? "text-foreground" : "text-muted-foreground")}
+              className={cn("transition-colors hover:text-foreground", (pathname.startsWith(item.href) && item.href !== '/') || (isHome && item.href === '/') ? "text-foreground" : "text-muted-foreground")}
             >
               {item.label}
             </Link>
@@ -78,7 +80,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("hover:text-foreground", (pathname === item.href || (item.href === "/" && isHome && item.label === 'Basic')) ? "text-foreground" : "text-muted-foreground")}
+                  className={cn("hover:text-foreground", (pathname.startsWith(item.href) && item.href !== '/') || (isHome && item.href === '/') ? "text-foreground" : "text-muted-foreground")}
 
                 >
                   {item.label}
