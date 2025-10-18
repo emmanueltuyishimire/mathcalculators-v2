@@ -68,26 +68,46 @@ const HowToUseGuide = () => (
 const EducationalContent = () => (
     <Card>
         <CardHeader>
-            <CardTitle>Understanding Mean, Median, Mode, and Range</CardTitle>
+            <CardTitle>Understanding Mean, Median, Mode, and Range: How They Help You Analyze Data</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
+            <p className="text-muted-foreground">When working with numbers, it’s not enough to just list them—you need to understand what they tell you about your data. The Mean, Median, Mode, and Range Calculator helps you do exactly that. Here’s why each statistic is useful and how it can guide better decisions.</p>
             <div>
-                <h3 className="text-xl font-semibold text-foreground">What is the Mean?</h3>
-                <p className="text-muted-foreground mt-1">The <strong>mean</strong> is the average of all numbers in the dataset. It's calculated by summing all the numbers and dividing by the count of numbers.</p>
-                <p className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">Mean = Sum of all numbers / Count of numbers</p>
+                <h3 className="text-xl font-semibold text-foreground">1. Mean (Average)</h3>
+                <p className="text-muted-foreground mt-1">The mean is the most commonly used measure of central tendency. It gives a single value that represents the “typical” value in a dataset.</p>
+                <p className="font-semibold text-sm mt-1">Use Case: Calculating average test scores, average sales, or average expenses.</p>
+                <p className="text-sm text-muted-foreground mt-1">Important Note: The mean can be affected by extremely high or low values (outliers), so always check the dataset for anomalies.</p>
             </div>
              <div>
-                <h3 className="text-xl font-semibold text-foreground">What is the Median?</h3>
-                <p className="text-muted-foreground mt-1">The <strong>median</strong> is the middle value in a dataset that has been sorted in ascending order. If the dataset has an even number of values, the median is the average of the two middle numbers.</p>
+                <h3 className="text-xl font-semibold text-foreground">2. Median</h3>
+                <p className="text-muted-foreground mt-1">The median is the middle number when the data is sorted in ascending order. It is especially useful when the dataset has outliers or skewed values because it is not affected by extreme numbers.</p>
+                <p className="font-semibold text-sm mt-1">Use Case: Determining typical income in a region where a few people earn much more than the rest.</p>
             </div>
              <div>
-                <h3 className="text-xl font-semibold text-foreground">What is the Mode?</h3>
-                <p className="text-muted-foreground mt-1">The <strong>mode</strong> is the number that appears most frequently in a dataset. A dataset can have one mode, more than one mode, or no mode at all.</p>
+                <h3 className="text-xl font-semibold text-foreground">3. Mode</h3>
+                <p className="text-muted-foreground mt-1">The mode is the value that appears most frequently in the dataset. There can be more than one mode (multimodal) or none at all if all numbers are unique.</p>
+                <p className="font-semibold text-sm mt-1">Use Case: Identifying the most popular product, most common survey answer, or repeated measurements.</p>
             </div>
              <div>
-                <h3 className="text-xl font-semibold text-foreground">What is the Range?</h3>
-                <p className="text-muted-foreground mt-1">The <strong>range</strong> is the difference between the highest and lowest values in a dataset. It provides a simple measure of the spread of the data.</p>
-                 <p className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">Range = Largest Value - Smallest Value</p>
+                <h3 className="text-xl font-semibold text-foreground">4. Range</h3>
+                <p className="text-muted-foreground mt-1">The range shows the spread of your data by subtracting the smallest value from the largest.</p>
+                <p className="font-semibold text-sm mt-1">Use Case: Understanding the variability or consistency of a dataset, such as temperature fluctuations or test scores.</p>
+                <p className="text-sm text-muted-foreground mt-1">Important Note: The range is very sensitive to outliers and should be considered alongside mean or median.</p>
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">5. Why It Matters</h3>
+                <p className="text-muted-foreground mt-1">Using mean, median, mode, and range together gives a complete picture of your dataset:</p>
+                <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
+                    <li><b>Mean:</b> Overall average</li>
+                    <li><b>Median:</b> Central tendency resistant to outliers</li>
+                    <li><b>Mode:</b> Most common values</li>
+                    <li><b>Range:</b> Spread of the data</li>
+                </ul>
+                <p className="text-muted-foreground mt-2">By analyzing all four statistics, you can make better-informed decisions, detect anomalies, and understand patterns in your data.</p>
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Conclusion</h3>
+                <p className="text-muted-foreground mt-1">Whether you’re a student analyzing test scores, a business tracking sales, or just curious about your own data, the Mean, Median, Mode, Range Calculator helps you quickly compute these key statistics and interpret your dataset efficiently.</p>
             </div>
         </CardContent>
     </Card>
