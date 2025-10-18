@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription }
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Stats {
   mean: number;
@@ -16,6 +17,7 @@ interface Stats {
   sumOfSquares: number;
   sem: number;
   frequency: { [key: string]: number };
+  type: 'population' | 'sample';
 }
 
 const StatCard = ({ title, value }: { title: string; value: number | string }) => (
@@ -43,6 +45,7 @@ const confidenceLevels = [
 
 export default function StandardDeviationCalculator() {
   const [data, setData] = useState('10, 12, 23, 23, 16, 23, 21, 16');
+  const [type, setType] = useState<'population' | 'sample'>('population');
 
   const stats: Stats | null = useMemo(() => {
     const numbers = data
@@ -59,7 +62,11 @@ export default function StandardDeviationCalculator() {
     const mean = sum / count;
     
     const sumOfSquares = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0);
-    const variance = sumOfSquares / count;
+    
+    const divisor = type === 'population' ? count : count -1;
+    if (divisor <= 0) return null; // Avoid division by zero for sample with 1 or 0 items
+    
+    const variance = sumOfSquares / divisor;
     const stdDev = Math.sqrt(variance);
     const sem = stdDev / Math.sqrt(count);
 
@@ -68,8 +75,8 @@ export default function StandardDeviationCalculator() {
         frequency[String(num)] = (frequency[String(num)] || 0) + 1;
     }
 
-    return { mean, variance, stdDev, sum, count, sumOfSquares, sem, frequency };
-  }, [data]);
+    return { mean, variance, stdDev, sum, count, sumOfSquares, sem, frequency, type };
+  }, [data, type]);
 
   return (
     <div className="space-y-6">
@@ -88,6 +95,18 @@ export default function StandardDeviationCalculator() {
             className="h-24 font-mono"
             aria-label="Enter numbers separated by commas"
           />
+        </div>
+        <div className="space-y-2">
+            <Label htmlFor="type">It is a</Label>
+            <Select value={type} onValueChange={(val) => setType(val as 'population' | 'sample')}>
+                <SelectTrigger id="type" className="w-[180px]">
+                    <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="population">Population</SelectItem>
+                    <SelectItem value="sample">Sample</SelectItem>
+                </SelectContent>
+            </Select>
         </div>
       </CardContent>
     </Card>
@@ -119,9 +138,9 @@ export default function StandardDeviationCalculator() {
             <CardContent className="font-mono text-sm space-y-4">
                 <div>
                     <p className="font-semibold">Variance (σ²):</p>
-                    <p>σ² = Σ(xi - μ)² / N</p>
-                    <p>σ² = ( (10 - {stats.mean})² + ... + (16 - {stats.mean})² ) / {stats.count}</p>
-                    <p>σ² = {stats.sumOfSquares.toFixed(4)} / {stats.count}</p>
+                    <p>σ² = Σ(xi - μ)² / {stats.type === 'population' ? 'N' : 'N-1'}</p>
+                    <p>σ² = ( (10 - {stats.mean})² + ... + (16 - {stats.mean})² ) / {stats.type === 'population' ? stats.count : stats.count - 1}</p>
+                    <p>σ² = {stats.sumOfSquares.toFixed(4)} / {stats.type === 'population' ? stats.count : stats.count - 1}</p>
                     <p>σ² = {stats.variance.toFixed(4)}</p>
                 </div>
                  <div>
