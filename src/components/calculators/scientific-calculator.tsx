@@ -250,13 +250,24 @@ export default function ScientificCalculator() {
       default: onClick = () => handleButtonClick(label);
     }
 
-    return <Button key={label} variant={variant} className={`text-lg h-12 ${className}`} onClick={onClick}>{label}</Button>;
+    const button3dClasses = 'border-b-4 active:border-b-0 active:translate-y-1';
+    let variantClasses = '';
+    switch(variant) {
+      case 'default': variantClasses = `bg-primary text-primary-foreground hover:bg-primary/90 border-primary/70`; break;
+      case 'secondary': variantClasses = `bg-secondary text-secondary-foreground hover:bg-secondary/90 border-secondary/70`; break;
+      case 'destructive': variantClasses = `bg-destructive text-destructive-foreground hover:bg-destructive/90 border-destructive/70`; break;
+      case 'accent': variantClasses = 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent/70'; break;
+      default: variantClasses = 'bg-card hover:bg-muted border-border';
+    }
+
+
+    return <Button key={label} variant={null} className={cn('text-lg h-12 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick}>{label}</Button>;
   }
 
   return (
-    <Card className="shadow-lg max-w-2xl mx-auto">
+    <Card className="shadow-xl max-w-2xl mx-auto bg-card/80 backdrop-blur-sm border-border/50">
       <CardContent className="flex flex-col items-center gap-2 p-4">
-        <div className="w-full mb-2 rounded-lg border bg-muted p-4 text-right text-4xl font-mono text-foreground break-all h-24 flex items-end justify-end">
+        <div className="w-full mb-2 rounded-lg border bg-muted/80 p-4 text-right text-4xl font-mono text-foreground break-all h-24 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
@@ -264,14 +275,14 @@ export default function ScientificCalculator() {
             <Button variant="outline" className="h-10 text-sm" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
             <Button variant="outline" className="h-10 text-sm" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
             {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-10 text-sm'))}
-            <Button variant="destructive" className="h-10 text-sm" onClick={handleBackspace}>⌫</Button>
+            <Button variant="destructive" className="h-10 text-sm transition-transform transform border-b-4 border-destructive/70 active:border-b-0 active:translate-y-1" onClick={handleBackspace}>⌫</Button>
         </div>
 
         <div className="w-full grid grid-cols-7 gap-2">
             {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-10 text-sm'))}
-            <Button variant="secondary" className="h-10 text-sm" onClick={() => handleButtonClick('(')}>(</Button>
-            <Button variant="secondary" className="h-10 text-sm" onClick={() => handleButtonClick(')')}>)</Button>
-            <Button variant="secondary" className="h-10 text-sm" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
+            <Button variant="secondary" className="h-10 text-sm transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
+            <Button variant="secondary" className="h-10 text-sm transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
+            <Button variant="secondary" className="h-10 text-sm transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
         </div>
         
         <div className="w-full grid grid-cols-7 gap-2">
@@ -287,11 +298,11 @@ export default function ScientificCalculator() {
                 })}
             </div>
             <div className="col-span-1 grid grid-cols-1 gap-2">
-                {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent', 'bg-accent text-accent-foreground hover:bg-accent/90'))}
+                {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
             </div>
              <div className="col-span-1 grid grid-cols-1 gap-2">
-                <Button variant="destructive" className="h-full text-lg" onClick={handleAllClear}>AC</Button>
-                {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full bg-primary hover:bg-primary/90')}
+                <Button variant={null} className="h-full text-lg transition-transform transform bg-destructive text-destructive-foreground hover:bg-destructive/90 border-b-4 border-destructive/70 active:border-b-0 active:translate-y-1" onClick={handleAllClear}>AC</Button>
+                {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
             </div>
         </div>
          <div className="w-full grid grid-cols-7 gap-2 mt-2">
