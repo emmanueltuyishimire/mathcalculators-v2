@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '../ui/input';
 
@@ -20,15 +19,6 @@ interface Stats {
   sum: number;
   sumOfSquares: number;
 }
-
-const StatDisplay = ({ title, value, unit }: { title: string; value: number | string; unit?: string }) => (
-    <div className="flex justify-between items-center p-2 bg-muted rounded-md">
-        <span className="text-sm font-medium text-muted-foreground">{title}</span>
-        <span className="text-sm font-mono font-semibold">
-            {typeof value === 'number' ? value.toFixed(4) : value} {unit}
-        </span>
-    </div>
-);
 
 export default function StatisticsCalculator() {
   const [display, setDisplay] = useState('0');
@@ -52,8 +42,11 @@ export default function StatisticsCalculator() {
     const sampleVariance = n > 1 ? sumOfSquaredDiffs / (n - 1) : 0;
     const sampleStdDev = n > 1 ? Math.sqrt(sampleVariance) : 0;
     
-    const product = dataset.reduce((acc, val) => acc * val, 1);
-    const geoMean = Math.pow(product, 1 / n);
+    let geoMean = NaN;
+    if (dataset.every(v => v > 0)) {
+        const product = dataset.reduce((acc, val) => acc * val, 1);
+        geoMean = Math.pow(product, 1 / n);
+    }
 
     return { 
         count: n,
@@ -69,18 +62,30 @@ export default function StatisticsCalculator() {
   }, [dataset]);
 
   const handleKeypad = (key: string) => {
+    if (display.includes('E') && key === 'EXP') return;
+    if (display.includes('.') && key === '.') return;
+
+    if (key === 'EXP') {
+      setDisplay(prev => prev + 'E');
+      return;
+    }
+    if (key === '±') {
+      setDisplay(prev => prev.startsWith('-') ? prev.substring(1) : '-' + prev);
+      return;
+    }
+
     if (display === '0' && key !== '.') setDisplay(key);
     else setDisplay(prev => prev + key);
   };
   
-  const handleClear = () => setDisplay('0');
+  const handleClear = () => setDisplay(''); // CAD
   
   const handleAllClear = () => {
     setDisplay('0');
     setDataset([]);
     setCsvData('');
     toast({ title: 'Cleared', description: 'All data has been cleared.'});
-  };
+  }; // C
 
   const handleAdd = () => {
     const value = parseFloat(display);
@@ -111,54 +116,98 @@ export default function StatisticsCalculator() {
       }
   }
 
-  const keypadButtons = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.', '±'];
+  const handleStatButton = (stat: 'Σx' | 'Σx²' | 'σ' | 'σ²' | 's' | 's²' | 'GM') => {
+      if (!stats) {
+          toast({ variant: 'destructive', title: "No Data", description: "Please add numbers to the dataset first."});
+          return;
+      }
+      let value: number | string;
+      switch(stat) {
+          case 'Σx': value = stats.sum; break;
+          case 'Σx²': value = stats.sumOfSquares; break;
+          case 'σ': value = stats.popStdDev; break;
+          case 'σ²': value = stats.popVariance; break;
+          case 's': value = stats.sampleStdDev; break;
+          case 's²': value = stats.sampleVariance; break;
+          case 'GM': 
+            value = isNaN(stats.geoMean) ? "Invalid" : stats.geoMean;
+            if (isNaN(stats.geoMean)) toast({ variant: 'destructive', title: "Calculation Error", description: "Geometric Mean requires all values to be positive."});
+            break;
+      }
+      setDisplay(typeof value === 'number' ? value.toFixed(4) : value);
+  }
+
+  const handleImmediateOp = (op: 'x²') => {
+    const value = parseFloat(display);
+    if (!isNaN(value)) {
+      if (op === 'x²') {
+        setDisplay(String(value * value));
+      }
+    }
+  }
+
+  const keypadRow1 = ['7', '8', '9'];
+  const keypadRow2 = ['4', '5', '6'];
+  const keypadRow3 = ['1', '2', '3'];
+  const keypadRow4 = ['0', '.', 'EXP'];
+  const keypadRow5 = ['CAD', 'C', 'ADD', '±', 'GM'];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <Card className="shadow-lg">
-      <CardHeader>
-        <CardTitle>Statistics Calculator</CardTitle>
-        <CardDescription>Input numbers via the keypad or as a comma-separated list.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Keypad section */}
-        <div className="p-2 border rounded-lg">
-            <Input 
-              readOnly 
-              value={display} 
-              className="mb-2 h-12 text-right text-3xl font-mono bg-muted" 
-              aria-label="Current number input"
-            />
-            <div className="grid grid-cols-3 gap-2">
-                {keypadButtons.map(key => (
-                    <Button key={key} variant="outline" onClick={() => handleKeypad(key)}>
-                        {key}
-                    </Button>
-                ))}
-            </div>
-             <div className="grid grid-cols-2 gap-2 mt-2">
-                <Button variant="destructive" onClick={handleClear}>Clear Entry</Button>
-                <Button className="bg-accent hover:bg-accent/90" onClick={handleAdd}>Add to Data</Button>
-            </div>
-        </div>
+      <Card className="shadow-lg">
+        <CardHeader>
+          <CardTitle>Statistics Calculator</CardTitle>
+          <CardDescription>Input numbers via the keypad or as a comma-separated list.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="p-2 border rounded-lg">
+              <Input 
+                readOnly 
+                value={display} 
+                className="mb-2 h-12 text-right text-3xl font-mono bg-muted" 
+                aria-label="Current number input"
+              />
+              <div className="grid grid-cols-5 gap-2">
+                  {/* Row 1 */}
+                  {keypadRow1.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
+                  <Button variant="secondary" disabled>x</Button>
+                  <Button variant="secondary" onClick={() => handleImmediateOp('x²')}>x²</Button>
+                  {/* Row 2 */}
+                  {keypadRow2.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
+                  <Button variant="secondary" onClick={() => handleStatButton('Σx')}>Σx</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('Σx²')}>Σx²</Button>
+                  {/* Row 3 */}
+                  {keypadRow3.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
+                  <Button variant="secondary" onClick={() => handleStatButton('σ')}>σ</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('σ²')}>σ²</Button>
+                  {/* Row 4 */}
+                  {keypadRow4.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
+                  <Button variant="secondary" onClick={() => handleStatButton('s')}>s</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('s²')}>s²</Button>
+                   {/* Row 5 */}
+                   <Button variant="destructive" onClick={handleClear}>CAD</Button>
+                   <Button variant="destructive" onClick={handleAllClear}>C</Button>
+                   <Button className="bg-accent hover:bg-accent/90" onClick={handleAdd}>ADD</Button>
+                   <Button variant="outline" onClick={() => handleKeypad('±')}>±</Button>
+                   <Button variant="secondary" onClick={() => handleStatButton('GM')}>GM</Button>
+              </div>
+          </div>
 
-        {/* CSV Input section */}
-        <div className="space-y-2">
-            <Label htmlFor="csvData">Or Provide Comma-Separated Values</Label>
-            <Textarea
-                id="csvData"
-                value={csvData}
-                onChange={(e) => setCsvData(e.target.value)}
-                placeholder="e.g., 10, 2, 38, 23, 38, 23, 21"
-                className="h-24 font-mono"
-            />
-            <Button onClick={handleLoadCsv} className="w-full">Load Data</Button>
-        </div>
-        <Button onClick={handleAllClear} variant="secondary" className="w-full">Clear All Data</Button>
-      </CardContent>
-    </Card>
+          <div className="space-y-2">
+              <Label htmlFor="csvData">Or Provide Comma-Separated Values</Label>
+              <Textarea
+                  id="csvData"
+                  value={csvData}
+                  onChange={(e) => setCsvData(e.target.value)}
+                  placeholder="e.g., 10, 2, 38, 23, 38, 23, 21"
+                  className="h-24 font-mono"
+              />
+              <Button onClick={handleLoadCsv} className="w-full">Load Data</Button>
+          </div>
+        </CardContent>
+      </Card>
 
-    <Card>
+      <Card>
         <CardHeader>
             <CardTitle>Results</CardTitle>
             <CardDescription>
@@ -166,19 +215,46 @@ export default function StatisticsCalculator() {
             </CardDescription>
         </CardHeader>
         {stats && (
-            <CardContent className="space-y-2">
-                <StatDisplay title="Count" value={stats.count} />
-                <StatDisplay title="Sum (Σx)" value={stats.sum} />
-                <StatDisplay title="Sum of Squares (Σx²)" value={stats.sumOfSquares} />
-                <hr/>
-                <StatDisplay title="Mean" value={stats.mean} />
-                <StatDisplay title="Geometric Mean (GM)" value={stats.geoMean} />
-                <hr/>
-                <StatDisplay title="Population Variance (σ²)" value={stats.popVariance} />
-                <StatDisplay title="Population Std. Dev. (σ)" value={stats.popStdDev} />
-                <hr/>
-                <StatDisplay title="Sample Variance (s²)" value={stats.sampleVariance} />
-                <StatDisplay title="Sample Std. Dev. (s)" value={stats.sampleStdDev} />
+            <CardContent className="space-y-1">
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Count</span>
+                    <span className="text-sm font-mono font-semibold">{stats.count}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Sum (Σx)</span>
+                    <span className="text-sm font-mono font-semibold">{stats.sum.toFixed(4)}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Sum of Squares (Σx²)</span>
+                    <span className="text-sm font-mono font-semibold">{stats.sumOfSquares.toFixed(4)}</span>
+                </div>
+                <hr className="my-1"/>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Mean</span>
+                    <span className="text-sm font-mono font-semibold">{stats.mean.toFixed(4)}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Geometric Mean (GM)</span>
+                    <span className="text-sm font-mono font-semibold">{isNaN(stats.geoMean) ? 'N/A' : stats.geoMean.toFixed(4)}</span>
+                </div>
+                <hr className="my-1"/>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Population Variance (σ²)</span>
+                    <span className="text-sm font-mono font-semibold">{stats.popVariance.toFixed(4)}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Population Std. Dev. (σ)</span>
+                    <span className="text-sm font-mono font-semibold">{stats.popStdDev.toFixed(4)}</span>
+                </div>
+                <hr className="my-1"/>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Sample Variance (s²)</span>
+                    <span className="text-sm font-mono font-semibold">{stats.sampleVariance.toFixed(4)}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+                    <span className="text-sm font-medium text-muted-foreground">Sample Std. Dev. (s)</span>
+                    <span className="text-sm font-mono font-semibold">{stats.sampleStdDev.toFixed(4)}</span>
+                </div>
             </CardContent>
         )}
         <CardFooter>
@@ -186,7 +262,7 @@ export default function StatisticsCalculator() {
                 Population stats are for a complete dataset. Sample stats are for a subset of a larger population.
             </p>
         </CardFooter>
-    </Card>
+      </Card>
     </div>
   );
 }
