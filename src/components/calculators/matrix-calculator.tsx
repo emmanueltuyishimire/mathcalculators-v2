@@ -104,11 +104,11 @@ const MatrixInput = ({
 
   return (
     <Card>
-      <CardHeader className="p-4">
-        <CardTitle>{title}</CardTitle>
+      <CardHeader className="p-2 md:p-4">
+        <CardTitle className="text-base md:text-lg">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-2 p-4">
-        <div className="flex items-center gap-2">
+      <CardContent className="space-y-2 p-2 md:p-4">
+        <div className="flex items-center gap-1 md:gap-2">
           <Label htmlFor={`${idPrefix}-rows`} className="text-xs">Rows</Label>
           <Input
             id={`${idPrefix}-rows`}
@@ -117,7 +117,7 @@ const MatrixInput = ({
             max="8"
             value={rows}
             onChange={(e) => onRowsChange(parseInt(e.target.value))}
-            className="w-16 h-8"
+            className="w-12 h-8 md:w-16"
           />
           <X className="h-4 w-4 text-muted-foreground" />
           <Label htmlFor={`${idPrefix}-cols`} className="text-xs">Cols</Label>
@@ -128,10 +128,10 @@ const MatrixInput = ({
             max="8"
             value={cols}
             onChange={(e) => onColsChange(parseInt(e.target.value))}
-            className="w-16 h-8"
+            className="w-12 h-8 md:w-16"
           />
         </div>
-        <div className="grid gap-1 overflow-x-auto" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+        <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
           {matrix.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <Input
@@ -139,15 +139,15 @@ const MatrixInput = ({
                 type="number"
                 value={cell}
                 onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
-                className="min-w-[3.5rem] h-9 text-center text-sm"
+                className="min-w-[2.5rem] h-8 text-center text-sm md:min-w-[3.5rem] md:h-9"
               />
             ))
           )}
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1 md:gap-2">
           <Button variant="outline" size="xs" onClick={() => fillMatrix(0)}>Clear</Button>
           <Button variant="outline" size="xs" onClick={() => fillMatrix(1)}>All 1s</Button>
-          <Button variant="outline" size="xs" onClick={() => fillMatrix('random')}>Random</Button>
+          <Button variant="outline" size="xs" onClick={() => fillMatrix('random')}>Rand</Button>
         </div>
       </CardContent>
     </Card>
@@ -306,7 +306,7 @@ export default function MatrixCalculator() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="secondary" size="sm">Power</Button>
+                <Button variant="secondary" size="xs">Power</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -343,7 +343,7 @@ export default function MatrixCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-2 gap-2 md:gap-4">
         <div className='space-y-2'>
             <MatrixInput
               title="Matrix A"
@@ -355,11 +355,11 @@ export default function MatrixCalculator() {
               onRowsChange={handleRowsAChange}
               onColsChange={handleColsAChange}
             />
-            <div className="flex flex-wrap gap-2">
-                <Button variant="secondary" size="sm" onClick={() => handleUnaryOperation('A', 'transpose')}>Transpose</Button>
+            <div className="flex flex-wrap gap-1 md:gap-2">
+                <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('A', 'transpose')}>Transpose</Button>
                 <PowerDialog matrixRef="A" />
-                <Button variant="secondary" size="sm" onClick={() => handleUnaryOperation('A', 'determinant')}>Determinant</Button>
-                <Button variant="secondary" size="sm" onClick={() => handleUnaryOperation('A', 'inverse')}>Inverse</Button>
+                <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('A', 'determinant')}>Det</Button>
+                <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('A', 'inverse')}>Inverse</Button>
             </div>
         </div>
         <div className='space-y-2'>
@@ -373,35 +373,35 @@ export default function MatrixCalculator() {
               onRowsChange={handleRowsBChange}
               onColsChange={handleColsBChange}
             />
-            <div className="flex flex-wrap gap-2">
-                <Button variant="secondary" size="sm" onClick={() => handleUnaryOperation('B', 'transpose')}>Transpose</Button>
+            <div className="flex flex-wrap gap-1 md:gap-2">
+                <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('B', 'transpose')}>Transpose</Button>
                 <PowerDialog matrixRef="B" />
-                <Button variant="secondary" size="sm" onClick={() => handleUnaryOperation('B', 'determinant')}>Determinant</Button>
-                <Button variant="secondary" size="sm" onClick={() => handleUnaryOperation('B', 'inverse')}>Inverse</Button>
+                <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('B', 'determinant')}>Det</Button>
+                <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('B', 'inverse')}>Inverse</Button>
             </div>
         </div>
       </div>
       
       <Card>
-        <CardHeader className="p-4">
-          <CardTitle>Operations</CardTitle>
+        <CardHeader className="p-2 md:p-4">
+          <CardTitle className="text-base md:text-lg">Operations</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-wrap items-center gap-2 p-4">
-            <Button size="sm" onClick={() => handleOperation('add')}>A + B</Button>
-            <Button size="sm" onClick={() => handleOperation('subtract')}>A - B</Button>
-            <Button size="sm" onClick={() => handleOperation('multiply')}>A × B</Button>
-            <Button size="sm" onClick={handleSwap} variant="outline"><Replace className="mr-2 h-4 w-4" /> A ↔ B</Button>
+        <CardContent className="flex flex-wrap items-center gap-1 md:gap-2 p-2 md:p-4">
+            <Button size="xs" onClick={() => handleOperation('add')}>A + B</Button>
+            <Button size="xs" onClick={() => handleOperation('subtract')}>A - B</Button>
+            <Button size="xs" onClick={() => handleOperation('multiply')}>A × B</Button>
+            <Button size="xs" onClick={handleSwap} variant="outline"><Replace className="mr-1 h-3 w-3 md:mr-2 md:h-4 md:w-4" /> A ↔ B</Button>
         </CardContent>
       </Card>
       
       {(resultMatrix || resultScalar !== null) && (
         <Card>
-          <CardHeader className="p-4">
-            <CardTitle>Result</CardTitle>
+          <CardHeader className="p-2 md:p-4">
+            <CardTitle className="text-base md:text-lg">Result</CardTitle>
           </CardHeader>
-          <CardContent className="p-4">
+          <CardContent className="p-2 md:p-4">
             {resultMatrix && (
-              <div className="grid gap-1 overflow-x-auto" style={{ gridTemplateColumns: `repeat(${resultMatrix[0].length}, minmax(0, 1fr))` }}>
+              <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${resultMatrix[0].length}, minmax(0, 1fr))` }}>
                 {resultMatrix.map((row, rowIndex) =>
                   row.map((cell, colIndex) => (
                     <Input
@@ -409,7 +409,7 @@ export default function MatrixCalculator() {
                       type="text"
                       readOnly
                       value={cell.toFixed(3)}
-                      className="min-w-[3.5rem] h-9 text-center bg-muted text-sm"
+                      className="min-w-[2.5rem] h-8 text-center bg-muted text-sm md:min-w-[3.5rem] md:h-9"
                       aria-label={`Result matrix cell at row ${rowIndex+1} column ${colIndex+1}`}
                     />
                   ))
@@ -421,7 +421,7 @@ export default function MatrixCalculator() {
             )}
           </CardContent>
            {resultMatrix && (
-            <CardFooter className="flex flex-wrap gap-2 p-4">
+            <CardFooter className="flex flex-wrap gap-2 p-2 md:p-4">
                 <Button variant="outline" size="sm" onClick={handleCopyToA}><Copy className="mr-2 h-4 w-4"/> Copy to A</Button>
                 <Button variant="outline" size="sm" onClick={handleCopyToB}><Copy className="mr-2 h-4 w-4"/> Copy to B</Button>
             </CardFooter>
