@@ -5,10 +5,11 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
+import { ZTable } from '@/components/z-table';
 
 export const metadata: Metadata = {
     title: 'Probability Calculator',
-    description: 'Calculate probabilities for two events, series of events, and normal distributions.',
+    description: 'Calculate probabilities for two events, series of events, normal distributions, and view Z-Tables.',
 };
 
 const HowToUseGuide = () => (
@@ -137,13 +138,46 @@ const EducationalContent = () => (
     </Card>
 );
 
+const ZTableSection = () => (
+    <div className="space-y-8">
+        <section className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Z-Table (0 to Z)
+            </h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              This table shows the area under the standard normal curve from the mean (0) to a positive Z-score.
+            </p>
+        </section>
+        <ZTable />
+        <Card>
+            <CardHeader>
+              <CardTitle>How to Use the Z-Table</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 text-muted-foreground">
+              <div>
+                <h3 className="font-semibold text-foreground">1. Find Your Z-Score</h3>
+                <p>Your Z-score should be in the format `X.Y` (e.g., 1.23). The row indicates the integer and first decimal place (e.g., `1.2`), and the column gives the second decimal place (e.g., `0.03`).</p>
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">2. Locate the Value in the Table</h3>
+                <p>Find the row for `1.2` and the column for `0.03`. The intersecting cell contains the area, which is `0.39065`.</p>
+              </div>
+               <div>
+                <h3 className="font-semibold text-foreground">3. Interpret the Area</h3>
+                <p>The value `0.39065` means there is a 39.07% probability of a random variable falling between the mean (0) and a Z-score of 1.23.</p>
+              </div>
+            </CardContent>
+        </Card>
+    </div>
+);
+
 
 export default function ProbabilityPage() {
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader title="Probability Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
+        <div className="mx-auto max-w-4xl space-y-8">
             <section className="text-center">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                     Probability Calculator
@@ -155,6 +189,8 @@ export default function ProbabilityPage() {
             <ProbabilityCalculator />
             <HowToUseGuide />
             <EducationalContent />
+            <Separator className="my-12" />
+            <ZTableSection />
         </div>
       </main>
     </div>
