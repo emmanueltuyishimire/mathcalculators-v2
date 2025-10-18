@@ -73,6 +73,12 @@ const tools = [
     description: 'Calculate nPr and nCr.',
   },
   {
+    href: '/z-score',
+    label: 'Z-Score',
+    icon: Sigma,
+    description: 'Z-score calculations and conversions.'
+  },
+  {
     href: '/converter',
     label: 'Unit Converter',
     icon: Replace,

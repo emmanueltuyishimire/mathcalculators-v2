@@ -34,6 +34,7 @@ const navItems = [
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
   { href: '/probability', label: 'Probability', icon: Percent },
+  { href: '/z-score', label: 'Z-Score', icon: Sigma },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
