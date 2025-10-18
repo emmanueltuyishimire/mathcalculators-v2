@@ -10,6 +10,7 @@ import {
   Menu,
   MoreVertical,
   BarChartHorizontal,
+  Table,
 } from 'lucide-react';
 import {
   Sheet,
@@ -25,6 +26,7 @@ const navItems = [
   { href: '/geometry', label: 'Geometry', icon: Square, tooltip: 'Geometry Calculators' },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical, tooltip: 'Trigonometry Calculator' },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal, tooltip: 'Statistics Calculator' },
+  { href: '/matrix', label: 'Matrix', icon: Table, tooltip: 'Matrix Calculator' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
@@ -59,6 +61,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               variant="outline"
               size="icon"
               className="shrink-0 md:hidden"
+              aria-label="Toggle navigation menu"
             >
               <Menu className="h-5 w-5" />
               <span className="sr-only">Toggle navigation menu</span>

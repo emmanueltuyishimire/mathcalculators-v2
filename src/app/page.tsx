@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical } from 'lucide-react';
+import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table } from 'lucide-react';
 import BasicCalculator from '@/components/calculators/basic-calculator';
 
 const tools = [
@@ -23,6 +23,12 @@ const tools = [
     icon: BarChartHorizontal,
     description: 'Mean, median, mode, and more.',
   },
+  {
+    href: '/matrix',
+    label: 'Matrix',
+    icon: Table,
+    description: 'Matrix operations and calculations.',
+  }
 ];
 
 export default function Home() {
@@ -53,7 +59,7 @@ export default function Home() {
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {tools.map((tool) => (
                 <Link href={tool.href} key={tool.href} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
