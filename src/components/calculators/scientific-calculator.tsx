@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
 
 // Helper for factorial
 const factorial = (n: number): number => {
@@ -230,7 +231,7 @@ export default function ScientificCalculator() {
   
   const operatorButtons = ['÷', '×', '-', '+'];
   
-  const renderButton = (btnConfig: any, variant: "default" | "secondary" | "destructive" | "outline" | "ghost" | "link" | null | undefined = 'outline', className: string = "") => {
+  const renderButton = (btnConfig: any, variant: "default" | "secondary" | "destructive" | "outline" | "ghost" | "link" | "accent" | null | undefined = 'outline', className: string = "") => {
     const isString = typeof btnConfig === 'string';
     const label = isString ? btnConfig : btnConfig.label;
     const type = isString ? 'char' : btnConfig.type;
