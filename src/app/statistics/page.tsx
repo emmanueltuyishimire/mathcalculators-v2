@@ -3,7 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import StatisticsCalculator from '@/components/calculators/statistics-calculator';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Sigma, Percent } from 'lucide-react';
+import { Sigma, Percent, Activity } from 'lucide-react';
 import type { Metadata } from 'next';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
@@ -14,6 +14,12 @@ export const metadata: Metadata = {
 
 
 const statisticsTools = [
+    {
+        href: '/statistics/mean-median-mode',
+        label: 'Mean, Median, Mode Calculator',
+        icon: Activity,
+        description: 'Calculate mean, median, mode, and range for a dataset.',
+    },
     {
         href: '/statistics/standard-deviation',
         label: 'Standard Deviation Calculator',
@@ -183,45 +189,31 @@ export default function StatisticsPage() {
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-4xl space-y-8">
             <section className="space-y-4">
-                <h1 className="text-3xl md:text-4xl font-bold text-center">Statistics Calculator – Your Quick & Reliable Tool</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-center">Statistics Calculators</h1>
                 <p className="text-lg text-muted-foreground text-center">
-                    Our Statistics Calculator is a versatile, easy-to-use tool that helps you quickly compute important statistical measures for any dataset. Whether you are a student, researcher, or professional, this calculator saves time and ensures accuracy in your calculations.
+                    A collection of tools to perform statistical analysis, from basic measures to more complex calculations.
                 </p>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Why Use This Calculator?</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2 text-muted-foreground">
-                        <p><strong>Fast and Easy:</strong> Enter numbers quickly via the keypad or by pasting a list of values.</p>
-                        <p><strong>Comprehensive Statistics:</strong> Instantly calculate mean, population and sample standard deviation, variance, sum, sum of squares, and geometric mean.</p>
-                        <p><strong>Accurate Results:</strong> The calculator automatically handles large datasets and provides precise calculations.</p>
-                        <p><strong>Flexible Input:</strong> Works with numbers entered one by one or as a comma-separated list.</p>
-                    </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    {statisticsTools.map((tool) => (
+                        <Link href={tool.href} key={tool.href} className="group">
+                        <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                            <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                            <div className="rounded-full bg-primary/10 p-3 text-primary">
+                                <tool.icon className="h-6 w-6" />
+                            </div>
+                            <CardTitle className="text-base">{tool.label}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                            <p className="text-sm text-muted-foreground">{tool.description}</p>
+                            </CardContent>
+                        </Card>
+                        </Link>
+                    ))}
+                </div>
             </section>
           <StatisticsCalculator />
           <HowToUseGuide />
           <StatisticsEducationalContent />
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Related Tools</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {statisticsTools.map((tool) => (
-                    <Link href={tool.href} key={tool.href} className="group">
-                    <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                        <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                        <div className="rounded-full bg-primary/10 p-3 text-primary">
-                            <tool.icon className="h-6 w-6" />
-                        </div>
-                        <CardTitle>{tool.label}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                        <p className="text-sm text-muted-foreground">{tool.description}</p>
-                        </CardContent>
-                    </Card>
-                    </Link>
-                ))}
-            </div>
-          </div>
         </div>
       </main>
     </div>
