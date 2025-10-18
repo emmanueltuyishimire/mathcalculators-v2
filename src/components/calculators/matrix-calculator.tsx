@@ -156,13 +156,13 @@ const MatrixInput = ({
 
 export default function MatrixCalculator() {
   const { toast } = useToast();
-  const [rowsA, setRowsA] = useState(2);
-  const [colsA, setColsA] = useState(2);
-  const [matrixA, setMatrixA] = useState<Matrix>(() => Array(2).fill(0).map(() => Array(2).fill(0)));
+  const [rowsA, setRowsA] = useState(3);
+  const [colsA, setColsA] = useState(3);
+  const [matrixA, setMatrixA] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(3).fill(0)));
 
-  const [rowsB, setRowsB] = useState(2);
-  const [colsB, setColsB] = useState(2);
-  const [matrixB, setMatrixB] = useState<Matrix>(() => Array(2).fill(0).map(() => Array(2).fill(0)));
+  const [rowsB, setRowsB] = useState(3);
+  const [colsB, setColsB] = useState(3);
+  const [matrixB, setMatrixB] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(3).fill(0)));
   
   const [resultMatrix, setResultMatrix] = useState<Matrix | null>(null);
   const [resultScalar, setResultScalar] = useState<number | string | null>(null);
