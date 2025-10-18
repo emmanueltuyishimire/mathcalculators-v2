@@ -9,12 +9,24 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { jStat } from 'jstat';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
+interface TwoEventResult {
+    pAnot: number;
+    pBnot: number;
+    pAandB: number;
+    pAorB: number;
+    pXorB: number;
+    pNeither: number;
+    pAnotB: number;
+    pBnotA: number;
+}
 
 function TwoEventsCalculator() {
   const { toast } = useToast();
   const [pA, setPA] = useState('0.5');
   const [pB, setPB] = useState('0.4');
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<TwoEventResult | null>(null);
 
   const calculate = () => {
     const pA_num = parseFloat(pA);
@@ -31,14 +43,29 @@ function TwoEventsCalculator() {
     const pAorB = pA_num + pB_num - pAandB;
     const pXorB = pA_num + pB_num - 2 * pAandB;
     const pNeither = pAnot * pBnot;
+    const pAnotB = pA_num * (1 - pB_num);
+    const pBnotA = (1 - pA_num) * pB_num;
 
-    setResults({ pAnot, pBnot, pAandB, pAorB, pXorB, pNeither });
+
+    setResults({ pAnot, pBnot, pAandB, pAorB, pXorB, pNeither, pAnotB, pBnotA });
   };
+  
+  const resultEntries = results ? [
+      { label: "Probability of A NOT occuring: P(A')", value: results.pAnot, formula: `1 - P(A) = 1 - ${pA} = ${results.pAnot.toFixed(4)}`},
+      { label: "Probability of B NOT occuring: P(B')", value: results.pBnot, formula: `1 - P(B) = 1 - ${pB} = ${results.pBnot.toFixed(4)}`},
+      { label: "Probability of A and B both occuring: P(A∩B)", value: results.pAandB, formula: `P(A) × P(B) = ${pA} × ${pB} = ${results.pAandB.toFixed(4)}`},
+      { label: "Probability that A or B or both occur: P(A∪B)", value: results.pAorB, formula: `P(A) + P(B) - P(A∩B) = ${pA} + ${pB} - ${results.pAandB.toFixed(4)} = ${results.pAorB.toFixed(4)}`},
+      { label: "Probability that A or B occurs but NOT both: P(AΔB)", value: results.pXorB, formula: `P(A) + P(B) - 2P(A∩B) = ${pA} + ${pB} - 2×${results.pAandB.toFixed(4)} = ${results.pXorB.toFixed(4)}`},
+      { label: "Probability of neither A nor B occuring: P((A∪B)')", value: results.pNeither, formula: `1 - P(A∪B) = 1 - ${results.pAorB.toFixed(4)} = ${results.pNeither.toFixed(4)}`},
+      { label: "Probability of A occuring but NOT B:", value: results.pAnotB, formula: `P(A) × (1- P(B)) = ${pA} × (1 - ${pB}) = ${results.pAnotB.toFixed(4)}`},
+      { label: "Probability of B occuring but NOT A:", value: results.pBnotA, formula: `(1 - P(A)) × P(B) = (1 - ${pA}) × ${pB} = ${results.pBnotA.toFixed(4)}`},
+  ] : [];
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Probability of Two Independent Events</CardTitle>
+        <CardDescription>To find out the union, intersection, and other related probabilities of two independent events.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-4">
@@ -54,13 +81,28 @@ function TwoEventsCalculator() {
         <Button onClick={calculate}>Calculate</Button>
       </CardContent>
       {results && (
-        <CardFooter className="flex-col items-start gap-2">
-          <p>P(A') = {results.pAnot.toFixed(4)}</p>
-          <p>P(B') = {results.pBnot.toFixed(4)}</p>
-          <p>P(A ∩ B) = {results.pAandB.toFixed(4)}</p>
-          <p>P(A ∪ B) = {results.pAorB.toFixed(4)}</p>
-          <p>P(A Δ B) = {results.pXorB.toFixed(4)}</p>
-          <p>P((A ∪ B)') = {results.pNeither.toFixed(4)}</p>
+        <CardFooter className="flex-col items-start gap-4">
+            <div>
+                <h3 className="font-semibold text-lg mb-2">Result</h3>
+                 <Table>
+                    <TableBody>
+                        {resultEntries.map(entry => (
+                             <TableRow key={entry.label}>
+                                <TableCell className="font-medium">{entry.label}</TableCell>
+                                <TableCell className="text-right">{entry.value.toFixed(4)}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+            <div>
+                <h3 className="font-semibold text-lg mb-2">Steps</h3>
+                <div className="font-mono text-sm space-y-2 bg-muted p-4 rounded-md">
+                     {resultEntries.map(entry => (
+                        <p key={entry.label}><b>{entry.label.split(':')[0]}:</b> {entry.formula}</p>
+                    ))}
+                </div>
+            </div>
         </CardFooter>
       )}
     </Card>
