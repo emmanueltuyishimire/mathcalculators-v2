@@ -101,6 +101,81 @@ const StatisticsEducationalContent = () => (
     </Card>
 );
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Statistics Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <p>This calculator lets you enter numbers via keypad or comma-separated input and compute common statistics like mean, standard deviation, variance, and geometric mean.</p>
+            
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">1. Entering Numbers</h3>
+                <div className="mt-2 space-y-2">
+                    <h4 className="font-semibold">Option 1: Keypad</h4>
+                    <ul className="list-disc list-inside pl-4">
+                        <li>Use the number keys (0–9) to enter digits.</li>
+                        <li>Use <strong>.</strong> for decimals and <strong>EXP</strong> for scientific notation.</li>
+                        <li>Use <strong>±</strong> to toggle the sign of the number.</li>
+                        <li>Press <strong>ADD</strong> to save the number to the dataset.</li>
+                    </ul>
+
+                    <h4 className="font-semibold mt-4">Option 2: Comma-Separated Input</h4>
+                     <p>Enter your dataset as numbers separated by commas in the input box and press <strong>Load Data</strong>.</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">2. Key Functions</h3>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                    <div>
+                        <h4 className="font-semibold">Basic & Input</h4>
+                        <ul className="list-disc list-inside pl-4">
+                           <li><strong>0-9, . , EXP</strong>: Enter numbers</li>
+                           <li><strong>±</strong>: Toggle sign</li>
+                           <li><strong>ADD</strong>: Add number to dataset</li>
+                           <li><strong>CAD</strong>: Clear current entry</li>
+                           <li><strong>C</strong>: Clear entire dataset</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold">Statistical Calculations</h4>
+                         <ul className="list-disc list-inside pl-4">
+                           <li><strong>Σx</strong>: Sum of all numbers</li>
+                           <li><strong>Σx²</strong>: Sum of squares</li>
+                           <li><strong>σ</strong>: Population standard deviation</li>
+                           <li><strong>s</strong>: Sample standard deviation</li>
+                           <li><strong>σ²</strong>: Population variance</li>
+                           <li><strong>s²</strong>: Sample variance</li>
+                           <li><strong>GM</strong>: Geometric mean</li>
+                        </ul>
+                    </div>
+                 </div>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">3. Steps to Compute Statistics</h3>
+                 <ol className="list-decimal list-inside pl-4 mt-2 space-y-1">
+                    <li>Enter all numbers using either the keypad (pressing <strong>ADD</strong> after each) or the CSV input (pressing <strong>Load Data</strong>).</li>
+                    <li>Press the button corresponding to the statistic you want to calculate.</li>
+                    <li>The result will appear on the display.</li>
+                    <li>To start a new calculation, press <strong>C</strong>.</li>
+                </ol>
+            </div>
+            
+             <div className="p-4 bg-accent/10 rounded-lg text-accent-foreground">
+                <h4 className="font-semibold">Notes and Tips</h4>
+                <ul className="list-disc list-inside text-sm mt-2">
+                    <li><strong>Geometric Mean (GM)</strong> only works for positive numbers.</li>
+                    <li><strong>Variance (σ² or s²)</strong> is the square of the standard deviation.</li>
+                    <li>Use <strong>σ</strong> for full population data and <strong>s</strong> for sample data.</li>
+                    <li>You can continuously add numbers and recalculate statistics in real-time.</li>
+                </ul>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 export default function StatisticsPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -108,6 +183,7 @@ export default function StatisticsPage() {
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-4xl space-y-8">
           <StatisticsCalculator />
+          <HowToUseGuide />
           <StatisticsEducationalContent />
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">Related Tools</h2>
