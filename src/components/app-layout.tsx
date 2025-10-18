@@ -11,6 +11,7 @@ import {
   Milestone,
   SigmaSquare,
   Menu,
+  FlaskConical,
 } from 'lucide-react';
 import {
   Sheet,
@@ -22,6 +23,7 @@ import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/#basic-calculator', label: 'Basic', icon: Calculator, tooltip: 'Basic Arithmetic' },
+  { href: '/scientific', label: 'Scientific', icon: FlaskConical, tooltip: 'Scientific Calculator' },
   { href: '/algebra', label: 'Algebra', icon: FunctionSquare, tooltip: 'Algebra Solver' },
   { href: '/calculus', label: 'Calculus', icon: InfinityIcon, tooltip: 'Calculus Tools' },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal, tooltip: 'Statistics Calculator' },
