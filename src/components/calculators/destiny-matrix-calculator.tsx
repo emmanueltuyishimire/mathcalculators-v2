@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { DestinyMatrixDiagram } from './destiny-matrix-diagram';
 
 type Matrix = number[][];
 
@@ -35,16 +36,11 @@ const numberInterpretations: { [key: number]: string } = {
   33: "Master teacher, compassionate, spiritual, healing."
 };
 
-const MatrixCell = ({ value }: { value: number }) => (
-    <div className="flex items-center justify-center h-16 w-16 md:h-20 md:w-20 border bg-primary/10 text-primary text-2xl font-bold rounded-lg">
-        {value}
-    </div>
-);
 
 export default function DestinyMatrixCalculator() {
   const { toast } = useToast();
   const [birthDate, setBirthDate] = useState('1990-08-15');
-  const [matrix, setMatrix] = useState<Matrix | null>(null);
+  const [matrixPoints, setMatrixPoints] = useState<{[key:string]: number} | null>(null);
   const [analysis, setAnalysis] = useState<{ [key: string]: string }>({});
 
   const calculateMatrix = () => {
@@ -57,39 +53,27 @@ export default function DestinyMatrixCalculator() {
         throw new Error("Invalid date format. Please use YYYY-MM-DD.");
       }
 
-      const dayNum = sumDigits(day);
-      const monthNum = sumDigits(month);
-      const yearString = String(parseInt(year));
-      const yearNum = sumDigits(yearString);
+      const a = sumDigits(day);
+      const b = sumDigits(month);
+      const c = sumDigits(String(parseInt(year)));
       
-      const lifePathNum = sumDigits(String(dayNum + monthNum + yearNum));
-
-      // Simplified matrix construction based on common numerology patterns
-      const a = dayNum;
-      const b = monthNum;
-      const c = yearNum;
-      const d = lifePathNum;
+      const d = sumDigits(String(a + b + c));
       
       const e = sumDigits(String(a + b + c + d));
       
-      // More derived points
-      const p1 = sumDigits(String(a+e));
-      const p2 = sumDigits(String(b+e));
-      const p3 = sumDigits(String(c+e));
-      const p4 = sumDigits(String(d+e));
+      const f = sumDigits(String(a+e));
+      const g = sumDigits(String(b+e));
+      const h = sumDigits(String(c+e));
+      const i = sumDigits(String(d+e));
 
-      const newMatrix: Matrix = [
-        [a, p1, b],
-        [p3, e, p2],
-        [c, p4, d]
-      ];
-      setMatrix(newMatrix);
+      const points = { a, b, c, d, e, f, g, h, i };
+      setMatrixPoints(points);
       
       const newAnalysis = {
-        "Life Path Number": `${lifePathNum}: ${numberInterpretations[lifePathNum] || 'Your unique path.'}`,
-        "Day Number": `${dayNum}: ${numberInterpretations[dayNum] || 'Your personal essence.'}`,
-        "Month Number": `${monthNum}: ${numberInterpretations[monthNum] || 'Your emotional nature.'}`,
-        "Year Number": `${yearNum}: ${numberInterpretations[yearNum] || 'Your life\'s theme.'}`
+        "Life Path Number": `${d}: ${numberInterpretations[d] || 'Your unique path.'}`,
+        "Day Number": `${a}: ${numberInterpretations[a] || 'Your personal essence.'}`,
+        "Month Number": `${b}: ${numberInterpretations[b] || 'Your emotional nature.'}`,
+        "Year Number": `${c}: ${numberInterpretations[c] || 'Your life\'s theme.'}`
       };
       setAnalysis(newAnalysis);
 
@@ -97,14 +81,14 @@ export default function DestinyMatrixCalculator() {
 
     } catch (e: any) {
       toast({ variant: 'destructive', title: "Error", description: e.message });
-      setMatrix(null);
+      setMatrixPoints(null);
       setAnalysis({});
     }
   };
 
   const handleClear = () => {
     setBirthDate('');
-    setMatrix(null);
+    setMatrixPoints(null);
     setAnalysis({});
     toast({ title: "Cleared", description: "Inputs and results have been cleared." });
   };
@@ -134,17 +118,13 @@ export default function DestinyMatrixCalculator() {
         </CardContent>
       </Card>
       
-      {matrix && (
+      {matrixPoints && (
         <Card>
           <CardHeader>
-            <CardTitle>Your Destiny Matrix</CardTitle>
+            <CardTitle>Your Destiny Matrix Diagram</CardTitle>
           </CardHeader>
-          <CardContent className="flex justify-center">
-            <div className="grid grid-cols-3 gap-2">
-              {matrix.flat().map((num, index) => (
-                <MatrixCell key={index} value={num} />
-              ))}
-            </div>
+          <CardContent className="flex justify-center items-center">
+            <DestinyMatrixDiagram points={matrixPoints} />
           </CardContent>
         </Card>
       )}
