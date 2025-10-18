@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 const navItems = [
   { href: '/#basic-calculator', label: 'Basic', icon: Calculator, tooltip: 'Basic Arithmetic' },
@@ -88,7 +89,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </SheetContent>
         </Sheet>
         <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          {/* Future user-related items can go here */}
+          <ThemeToggle />
         </div>
       </header>
       <div className="flex flex-1 flex-col">{children}</div>
