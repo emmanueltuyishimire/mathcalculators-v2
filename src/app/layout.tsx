@@ -4,7 +4,7 @@ import { AppLayout } from '@/components/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Online Math Calculators',
+  title: 'Math Calculators',
   description: 'A web application focused on mathematics calculators, from basic arithmetic to advanced functions.',
 };
 

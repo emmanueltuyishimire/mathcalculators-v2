@@ -47,7 +47,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <SigmaSquare className="h-6 w-6" />
-            <span className="">Online Math Calculators</span>
+            <span className="">Math Calculators</span>
           </Link>
           {navItems.map((item) => (
              <Link
@@ -77,7 +77,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 className="flex items-center gap-2 text-lg font-semibold"
               >
                 <SigmaSquare className="h-6 w-6" />
-                <span className="">Online Math Calculators</span>
+                <span className="">Math Calculators</span>
               </Link>
               {navItems.map((item) => (
                 <Link
