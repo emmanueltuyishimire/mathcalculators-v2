@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '../ui/input';
+import { X } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 interface Stats {
   mean: number;
@@ -78,7 +80,7 @@ export default function StatisticsCalculator() {
     else setDisplay(prev => prev + key);
   };
   
-  const handleClear = () => setDisplay(''); // CAD
+  const handleClear = () => setDisplay('0'); // CAD
   
   const handleAllClear = () => {
     setDisplay('0');
@@ -96,6 +98,11 @@ export default function StatisticsCalculator() {
     } else {
       toast({ variant: 'destructive', title: "Invalid Number", description: "Could not add value to dataset."});
     }
+  };
+
+  const handleDelete = (indexToDelete: number) => {
+    setDataset(prev => prev.filter((_, index) => index !== indexToDelete));
+    toast({ title: "Value Removed", description: "A value has been removed from the dataset." });
   };
   
   const handleLoadCsv = () => {
@@ -216,6 +223,19 @@ export default function StatisticsCalculator() {
         </CardHeader>
         {stats && (
             <CardContent className="space-y-1">
+                <div className="space-y-2">
+                    <Label>Current Dataset</Label>
+                    <div className="flex flex-wrap gap-1 p-2 bg-muted rounded-md min-h-[40px]">
+                        {dataset.map((val, index) => (
+                            <Badge key={index} variant="secondary" className="gap-1">
+                                {val}
+                                <button onClick={() => handleDelete(index)} className="rounded-full hover:bg-destructive/20 p-0.5">
+                                    <X className="h-3 w-3" />
+                                </button>
+                            </Badge>
+                        ))}
+                    </div>
+                </div>
                 <div className="flex justify-between items-center p-2 bg-muted rounded-md">
                     <span className="text-sm font-medium text-muted-foreground">Count</span>
                     <span className="text-sm font-mono font-semibold">{stats.count}</span>
