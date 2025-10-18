@@ -1,14 +1,11 @@
 "use client";
-import React, { useState, useCallback, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import { X, ArrowRight, RefreshCw, Replace, Copy } from 'lucide-react';
+import { Replace, Copy } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -17,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 type Matrix = number[][];
 
@@ -28,7 +25,7 @@ const getMinor = (matrix: Matrix, row: number, col: number): Matrix =>
 const determinant = (matrix: Matrix): number => {
   const n = matrix.length;
   if (n === 0) return 1;
-  if (n !== matrix[0].length) throw new Error("Matrix must be square.");
+  if (n !== (matrix[0]?.length || 0)) throw new Error("Matrix must be square.");
   if (n === 1) return matrix[0][0];
   if (n === 2) return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 
@@ -40,7 +37,7 @@ const determinant = (matrix: Matrix): number => {
 };
 
 const cofactor = (matrix: Matrix): Matrix => {
-    if (matrix.length !== matrix[0].length) throw new Error("Matrix must be square.");
+    if (matrix.length !== (matrix[0]?.length || 0)) throw new Error("Matrix must be square.");
     return matrix.map((row, r) =>
         row.map((_, c) => Math.pow(-1, r + c) * determinant(getMinor(matrix, r, c)))
     );
@@ -52,7 +49,7 @@ const transpose = (matrix: Matrix): Matrix => {
 };
 
 const multiplyMatrices = (a: Matrix, b: Matrix): Matrix => {
-    const rowsA = a.length, colsA = a[0].length, rowsB = b.length, colsB = b[0].length;
+    const rowsA = a.length, colsA = a[0]?.length || 0, rowsB = b.length, colsB = b[0]?.length || 0;
     if (colsA !== rowsB) throw new Error("Columns of A must match rows of B.");
     
     let result: Matrix = Array(rowsA).fill(0).map(() => Array(colsB).fill(0));
@@ -117,9 +114,9 @@ const MatrixInput = ({
             max="8"
             value={rows}
             onChange={(e) => onRowsChange(parseInt(e.target.value))}
-            className="w-12 h-8 md:w-16"
+            className="h-8 w-12 text-xs"
           />
-          <X className="h-4 w-4 text-muted-foreground" />
+          <span className="text-muted-foreground">×</span>
           <Label htmlFor={`${idPrefix}-cols`} className="text-xs">Cols</Label>
           <Input
             id={`${idPrefix}-cols`}
@@ -128,7 +125,7 @@ const MatrixInput = ({
             max="8"
             value={cols}
             onChange={(e) => onColsChange(parseInt(e.target.value))}
-            className="w-12 h-8 md:w-16"
+             className="h-8 w-12 text-xs"
           />
         </div>
         <div className="grid gap-1" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
@@ -139,7 +136,7 @@ const MatrixInput = ({
                 type="number"
                 value={cell}
                 onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
-                className="min-w-[2.5rem] h-8 text-center text-sm md:min-w-[3.5rem] md:h-9"
+                className="h-8 min-w-[2rem] text-center text-xs"
               />
             ))
           )}
@@ -158,14 +155,15 @@ export default function MatrixCalculator() {
   const { toast } = useToast();
   const [rowsA, setRowsA] = useState(3);
   const [colsA, setColsA] = useState(3);
-  const [matrixA, setMatrixA] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(3).fill(0)));
+  const [matrixA, setMatrixA] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(3).fill(1)));
 
   const [rowsB, setRowsB] = useState(3);
   const [colsB, setColsB] = useState(3);
   const [matrixB, setMatrixB] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(3).fill(0)));
   
   const [resultMatrix, setResultMatrix] = useState<Matrix | null>(null);
-  const [resultScalar, setResultScalar] = useState<number | string | null>(null);
+  const [resultScalar, setResultScalar] = useState<string | null>(null);
+  const [resultTitle, setResultTitle] = useState<string>('Result');
 
   const resizeMatrix = (newRows: number, newCols: number, currentMatrix: Matrix): Matrix => {
       newRows = Math.max(1, Math.min(newRows, 8));
@@ -180,21 +178,25 @@ export default function MatrixCalculator() {
   };
   
   const handleRowsAChange = (newRows: number) => {
-    setRowsA(newRows);
-    setMatrixA(resizeMatrix(newRows, colsA, matrixA));
+    const parsedRows = Math.max(1, Math.min(newRows, 8))
+    setRowsA(parsedRows);
+    setMatrixA(resizeMatrix(parsedRows, colsA, matrixA));
   };
   const handleColsAChange = (newCols: number) => {
-    setColsA(newCols);
-    setMatrixA(resizeMatrix(rowsA, newCols, matrixA));
+    const parsedCols = Math.max(1, Math.min(newCols, 8));
+    setColsA(parsedCols);
+    setMatrixA(resizeMatrix(rowsA, parsedCols, matrixA));
   };
 
   const handleRowsBChange = (newRows: number) => {
-    setRowsB(newRows);
-    setMatrixB(resizeMatrix(newRows, colsB, matrixB));
+    const parsedRows = Math.max(1, Math.min(newRows, 8));
+    setRowsB(parsedRows);
+    setMatrixB(resizeMatrix(parsedRows, colsB, matrixB));
   };
   const handleColsBChange = (newCols: number) => {
-    setColsB(newCols);
-    setMatrixB(resizeMatrix(rowsB, newCols, matrixB));
+    const parsedCols = Math.max(1, Math.min(newCols, 8));
+    setColsB(parsedCols);
+    setMatrixB(resizeMatrix(rowsB, parsedCols, matrixB));
   };
   
   const handleSwap = () => {
@@ -217,6 +219,7 @@ export default function MatrixCalculator() {
       
       try {
         let result: Matrix;
+        let title = '';
         if (operation === 'add' || operation === 'subtract') {
             if (rowsA !== rowsB || colsA !== colsB) {
                 throw new Error("Matrices must have the same dimensions for addition/subtraction.");
@@ -226,47 +229,53 @@ export default function MatrixCalculator() {
                     operation === 'add' ? matrixA[i][j] + matrixB[i][j] : matrixA[i][j] - matrixB[i][j]
                 )
             );
+            title = operation === 'add' ? 'A + B' : 'A - B';
         } else { // multiply
             result = multiplyMatrices(matrixA, matrixB);
+            title = 'A × B';
         }
         setResultMatrix(result);
+        setResultTitle(title);
       } catch (e: any) {
         toast({ variant: "destructive", title: "Operation Error", description: e.message });
       }
   }
 
-  const handleUnaryOperation = (matrixRef: 'A' | 'B', operation: 'transpose' | 'power' | 'determinant' | 'inverse', powerValue?: number) => {
+  const handleUnaryOperation = (matrixRef: 'A' | 'B', operation: 'transpose' | 'power' | 'determinant' | 'inverse' | 'scalar', value?: number) => {
     setResultMatrix(null);
     setResultScalar(null);
     const matrix = matrixRef === 'A' ? matrixA : matrixB;
 
     try {
-        if (['determinant', 'inverse', 'power'].includes(operation) && matrix.length !== matrix[0]?.length) {
+        if (['determinant', 'inverse', 'power'].includes(operation) && matrix.length !== (matrix[0]?.length || 0)) {
             throw new Error("Matrix must be square for this operation.");
         }
 
+        let title = '';
         switch (operation) {
             case 'transpose':
                 setResultMatrix(transpose(matrix));
+                title = `(${matrixRef})ᵀ`;
                 break;
             case 'power':
-                if (powerValue === undefined || !Number.isInteger(powerValue) || powerValue < 0) {
+                if (value === undefined || !Number.isInteger(value) || value < 0) {
                     throw new Error("Power must be a non-negative integer.");
                 }
-                if (powerValue === 0) {
-                    // Identity matrix
+                if (value === 0) {
                     const identity = Array(matrix.length).fill(0).map((_, i) => Array(matrix.length).fill(0).map((_, j) => i === j ? 1 : 0));
                     setResultMatrix(identity);
-                    return;
+                } else {
+                    let res = matrix;
+                    for (let i = 1; i < value; i++) {
+                        res = multiplyMatrices(res, matrix);
+                    }
+                    setResultMatrix(res);
                 }
-                let res = matrix;
-                for (let i = 1; i < powerValue; i++) {
-                    res = multiplyMatrices(res, matrix);
-                }
-                setResultMatrix(res);
+                title = `${matrixRef}^${value}`;
                 break;
             case 'determinant':
-                setResultScalar(`Determinant: ${determinant(matrix)}`);
+                setResultScalar(`${determinant(matrix)}`);
+                title = `det(${matrixRef})`;
                 break;
             case 'inverse':
                 const det = determinant(matrix);
@@ -276,64 +285,73 @@ export default function MatrixCalculator() {
                 const adj = transpose(cofactor(matrix));
                 const inv = adj.map(row => row.map(cell => cell / det));
                 setResultMatrix(inv);
+                title = `${matrixRef}⁻¹`;
                 break;
+            case 'scalar':
+                 if (value === undefined) throw new Error("Scalar value is required.");
+                 setResultMatrix(matrix.map(row => row.map(cell => cell * value)));
+                 title = `${value} × ${matrixRef}`;
+                 break;
         }
+        setResultTitle(title);
     } catch(e: any) {
          toast({ variant: "destructive", title: "Operation Error", description: e.message });
     }
   }
 
-  const handleCopyToA = () => {
+  const handleCopyTo = (matrixRef: 'A' | 'B') => {
     if (resultMatrix) {
-      setMatrixA(resultMatrix);
-      setRowsA(resultMatrix.length);
-      setColsA(resultMatrix[0]?.length || 0);
-      toast({ title: "Result copied to Matrix A" });
-    }
-  };
-
-  const handleCopyToB = () => {
-    if (resultMatrix) {
-      setMatrixB(resultMatrix);
-      setRowsB(resultMatrix.length);
-      setColsB(resultMatrix[0]?.length || 0);
-      toast({ title: "Result copied to Matrix B" });
+      if (matrixRef === 'A') {
+        setMatrixA(resultMatrix);
+        setRowsA(resultMatrix.length);
+        setColsA(resultMatrix[0]?.length || 0);
+        toast({ title: "Result copied to Matrix A" });
+      } else {
+        setMatrixB(resultMatrix);
+        setRowsB(resultMatrix.length);
+        setColsB(resultMatrix[0]?.length || 0);
+        toast({ title: "Result copied to Matrix B" });
+      }
     }
   };
   
-  const PowerDialog = ({matrixRef}: {matrixRef: 'A' | 'B'}) => {
-    const [power, setPower] = useState(2);
+  const OperationDialog = ({matrixRef, operation}: {matrixRef: 'A' | 'B', operation: 'power' | 'scalar'}) => {
+    const [value, setValue] = useState(2);
+    const opDetails = {
+        power: { title: 'Raise to Power', description: 'Enter an integer exponent.', label: 'Exponent', unit: '' },
+        scalar: { title: 'Scalar Multiplication', description: 'Enter a number to multiply the matrix by.', label: 'Scalar', unit: '×' }
+    }
+    const currentOp = opDetails[operation];
+
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="secondary" size="xs">Power</Button>
+                <Button variant="secondary" size="xs">{operation === 'power' ? 'Power' : 'Scalar ×'}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                <DialogTitle>Raise Matrix {matrixRef} to Power</DialogTitle>
-                <DialogDescription>
-                    Enter an integer exponent. The matrix must be square.
-                </DialogDescription>
+                <DialogTitle>{currentOp.title}</DialogTitle>
+                <DialogDescription>{currentOp.description}</DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="exponent" className="text-right">
-                        Exponent
+                        {currentOp.label}
                         </Label>
                         <Input
                         id="exponent"
                         type="number"
-                        value={power}
-                        onChange={(e) => setPower(parseInt(e.target.value))}
+                        value={value}
+                        onChange={(e) => setValue(parseFloat(e.target.value) || 0)}
                         className="col-span-3"
-                        step="1"
-                        min="0"
+                        step={operation === 'power' ? "1" : "any"}
+                        min={operation === 'power' ? "0" : undefined}
                         />
                     </div>
                 </div>
                 <DialogFooter>
                   <DialogTrigger asChild>
-                    <Button onClick={() => handleUnaryOperation(matrixRef, 'power', power)}>Calculate</Button>
+                    <Button onClick={() => handleUnaryOperation(matrixRef, operation, value)}>Calculate</Button>
                    </DialogTrigger>
                 </DialogFooter>
             </DialogContent>
@@ -342,8 +360,8 @@ export default function MatrixCalculator() {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-2 md:gap-4">
+    <div className="space-y-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         <div className='space-y-2'>
             <MatrixInput
               title="Matrix A"
@@ -355,9 +373,10 @@ export default function MatrixCalculator() {
               onRowsChange={handleRowsAChange}
               onColsChange={handleColsAChange}
             />
-            <div className="flex flex-wrap gap-1 md:gap-2">
+            <div className="flex flex-wrap gap-1">
                 <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('A', 'transpose')}>Transpose</Button>
-                <PowerDialog matrixRef="A" />
+                <OperationDialog matrixRef="A" operation="power" />
+                <OperationDialog matrixRef="A" operation="scalar" />
                 <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('A', 'determinant')}>Det</Button>
                 <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('A', 'inverse')}>Inverse</Button>
             </div>
@@ -373,9 +392,10 @@ export default function MatrixCalculator() {
               onRowsChange={handleRowsBChange}
               onColsChange={handleColsBChange}
             />
-            <div className="flex flex-wrap gap-1 md:gap-2">
+             <div className="flex flex-wrap gap-1">
                 <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('B', 'transpose')}>Transpose</Button>
-                <PowerDialog matrixRef="B" />
+                <OperationDialog matrixRef="B" operation="power" />
+                <OperationDialog matrixRef="B" operation="scalar" />
                 <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('B', 'determinant')}>Det</Button>
                 <Button variant="secondary" size="xs" onClick={() => handleUnaryOperation('B', 'inverse')}>Inverse</Button>
             </div>
@@ -390,14 +410,14 @@ export default function MatrixCalculator() {
             <Button size="xs" onClick={() => handleOperation('add')}>A + B</Button>
             <Button size="xs" onClick={() => handleOperation('subtract')}>A - B</Button>
             <Button size="xs" onClick={() => handleOperation('multiply')}>A × B</Button>
-            <Button size="xs" onClick={handleSwap} variant="outline"><Replace className="mr-1 h-3 w-3 md:mr-2 md:h-4 md:w-4" /> A ↔ B</Button>
+            <Button size="xs" onClick={handleSwap} variant="outline"><Replace className="mr-1 h-3 w-3" /> A ↔ B</Button>
         </CardContent>
       </Card>
       
       {(resultMatrix || resultScalar !== null) && (
         <Card>
           <CardHeader className="p-2 md:p-4">
-            <CardTitle className="text-base md:text-lg">Result</CardTitle>
+            <CardTitle className="text-base md:text-lg">{resultTitle}</CardTitle>
           </CardHeader>
           <CardContent className="p-2 md:p-4">
             {resultMatrix && (
@@ -408,8 +428,8 @@ export default function MatrixCalculator() {
                       key={`result-${rowIndex}-${colIndex}`}
                       type="text"
                       readOnly
-                      value={cell.toFixed(3)}
-                      className="min-w-[2.5rem] h-8 text-center bg-muted text-sm md:min-w-[3.5rem] md:h-9"
+                      value={Number.isInteger(cell) ? String(cell) : cell.toFixed(3)}
+                      className="h-8 min-w-[2rem] text-center bg-muted text-xs"
                       aria-label={`Result matrix cell at row ${rowIndex+1} column ${colIndex+1}`}
                     />
                   ))
@@ -422,8 +442,8 @@ export default function MatrixCalculator() {
           </CardContent>
            {resultMatrix && (
             <CardFooter className="flex flex-wrap gap-2 p-2 md:p-4">
-                <Button variant="outline" size="sm" onClick={handleCopyToA}><Copy className="mr-2 h-4 w-4"/> Copy to A</Button>
-                <Button variant="outline" size="sm" onClick={handleCopyToB}><Copy className="mr-2 h-4 w-4"/> Copy to B</Button>
+                <Button variant="outline" size="sm" onClick={() => handleCopyTo('A')}><Copy className="mr-2 h-4 w-4"/> Copy to A</Button>
+                <Button variant="outline" size="sm" onClick={() => handleCopyTo('B')}><Copy className="mr-2 h-4 w-4"/> Copy to B</Button>
             </CardFooter>
            )}
         </Card>
