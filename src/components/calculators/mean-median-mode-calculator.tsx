@@ -55,17 +55,22 @@ export default function MeanMedianModeCalculator() {
         median = sorted[Math.floor(count/2)];
     }
     
-    const frequency: { [key: string]: number } = {};
-    numbers.forEach(n => frequency[String(n)] = (frequency[String(n)] || 0) + 1);
+    const frequency: { [key: number]: number } = {};
+    numbers.forEach(n => frequency[n] = (frequency[n] || 0) + 1);
     const maxFreq = Math.max(...Object.values(frequency));
-    const modes = Object.keys(frequency).filter(n => frequency[String(n)] === maxFreq);
-    let modeStr = "N/A";
+    const modes = Object.keys(frequency).filter(n => frequency[Number(n)] === maxFreq).map(Number);
+    let modeStr: string;
+    
     if (maxFreq > 1 && modes.length < count) {
-        modeStr = `${modes.join(', ')}`;
+        modeStr = `${modes.join(', ')} (×${maxFreq} each)`;
     } else if (modes.length === count && count > 1) {
         modeStr = "No mode";
+    } else if (count === 1) {
+        modeStr = `${modes[0]}`;
     }
-
+    else {
+        modeStr = "No mode";
+    }
 
     const largest = Math.max(...numbers);
     const smallest = Math.min(...numbers);
