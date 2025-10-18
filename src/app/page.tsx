@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace } from 'lucide-react';
-import BasicCalculator from '@/components/calculators/basic-calculator';
 
 const tools = [
   {
@@ -58,6 +57,12 @@ const tools = [
     label: 'Unit Converter',
     icon: Replace,
     description: 'Convert between different units.',
+  },
+  {
+    href: '/desmos-matrix',
+    label: 'Desmos Matrix',
+    icon: Table,
+    description: 'A Desmos-style matrix calculator.',
   },
 ];
 
