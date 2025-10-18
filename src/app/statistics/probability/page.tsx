@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
 import { ZTable } from '@/components/z-table';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Probability Calculator',
@@ -191,6 +192,14 @@ export default function ProbabilityPage() {
             <EducationalContent />
             <Separator className="my-12" />
             <ZTableSection />
+             <section className="text-center text-sm text-muted-foreground">
+                <h3 className="font-semibold text-foreground">Related Calculators</h3>
+                <div className="flex justify-center gap-4 mt-2">
+                    <Link href="/statistics/permutation-combination" className="text-primary hover:underline">Permutation & Combination</Link>
+                    <Link href="/statistics/z-score" className="text-primary hover:underline">Z-Score Calculator</Link>
+                    <Link href="/statistics/confidence-interval" className="text-primary hover:underline">Confidence Interval Calculator</Link>
+                </div>
+            </section>
         </div>
       </main>
     </div>

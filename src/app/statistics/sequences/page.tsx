@@ -4,6 +4,7 @@ import SequenceCalculators from '@/components/calculators/sequence-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Sequence Calculators – Arithmetic, Geometric, and Fibonacci',
@@ -201,6 +202,14 @@ export default function SequencesPage() {
             <HowToUse />
 
             <SequenceEducationalContent />
+
+            <section className="text-center text-sm text-muted-foreground">
+                <h3 className="font-semibold text-foreground">Related Calculators</h3>
+                <div className="flex justify-center gap-4 mt-2">
+                    <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
+                    <Link href="/statistics/mean-median-mode" className="text-primary hover:underline">Mean, Median, Mode Calculator</Link>
+                </div>
+            </section>
         </div>
       </main>
     </div>
