@@ -48,6 +48,12 @@ const tools = [
     description: 'Matrix operations and calculations.',
   },
   {
+    href: '/rref',
+    label: 'RREF',
+    icon: Sigma,
+    description: 'Solve systems of linear equations.',
+  },
+  {
     href: '/converter',
     label: 'Unit Converter',
     icon: Replace,
@@ -68,18 +74,13 @@ export default function Home() {
               Your one-stop solution for all mathematical calculations. From basic arithmetic to advanced functions.
             </p>
             <Button asChild variant="secondary" size="lg">
-              <Link href="#basic-calculator">Get Started</Link>
+              <Link href="#tools">Get Started</Link>
             </Button>
           </div>
         </div>
       </section>
 
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <section id="basic-calculator" className="mx-auto max-w-4xl py-12">
-            <h2 className="text-3xl font-bold text-center mb-8">Basic Arithmetic</h2>
-            <BasicCalculator />
-        </section>
-
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
