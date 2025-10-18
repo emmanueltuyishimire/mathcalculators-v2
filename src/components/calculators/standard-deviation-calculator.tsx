@@ -2,9 +2,10 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 interface Stats {
   mean: number;
@@ -12,6 +13,9 @@ interface Stats {
   stdDev: number;
   sum: number;
   count: number;
+  sumOfSquares: number;
+  sem: number;
+  frequency: { [key: string]: number };
 }
 
 const StatCard = ({ title, value }: { title: string; value: number | string }) => (
@@ -25,6 +29,18 @@ const StatCard = ({ title, value }: { title: string; value: number | string }) =
   </Card>
 );
 
+const confidenceLevels = [
+    { level: "68.3%", z: 1.0 },
+    { level: "90%", z: 1.645 },
+    { level: "95%", z: 1.960 },
+    { level: "99%", z: 2.576 },
+    { level: "99.9%", z: 3.291 },
+    { level: "99.99%", z: 3.891 },
+    { level: "99.999%", z: 4.417 },
+    { level: "99.9999%", z: 4.892 },
+];
+
+
 export default function StandardDeviationCalculator() {
   const [data, setData] = useState('10, 12, 23, 23, 16, 23, 21, 16');
 
@@ -36,19 +52,27 @@ export default function StandardDeviationCalculator() {
       .map(Number)
       .filter(n => !isNaN(n));
 
-    if (numbers.length < 2) return null;
+    if (numbers.length === 0) return null;
 
     const count = numbers.length;
     const sum = numbers.reduce((acc, n) => acc + n, 0);
     const mean = sum / count;
     
-    const variance = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0) / (count - 1);
+    const sumOfSquares = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0);
+    const variance = sumOfSquares / count;
     const stdDev = Math.sqrt(variance);
+    const sem = stdDev / Math.sqrt(count);
 
-    return { mean, variance, stdDev, sum, count };
+    const frequency: { [key: string]: number } = {};
+    for (const num of numbers) {
+        frequency[String(num)] = (frequency[String(num)] || 0) + 1;
+    }
+
+    return { mean, variance, stdDev, sum, count, sumOfSquares, sem, frequency };
   }, [data]);
 
   return (
+    <div className="space-y-6">
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle>Calculate Statistical Values</CardTitle>
@@ -66,20 +90,106 @@ export default function StandardDeviationCalculator() {
           />
         </div>
       </CardContent>
-      {stats && (
-        <CardFooter>
-            <div className="w-full space-y-4">
-                <h3 className="text-lg font-semibold">Results</h3>
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                <StatCard title="Standard Deviation" value={stats.stdDev} />
-                <StatCard title="Variance" value={stats.variance} />
-                <StatCard title="Mean" value={stats.mean} />
-                <StatCard title="Sum" value={stats.sum} />
-                <StatCard title="Count" value={stats.count} />
-                </div>
-            </div>
-        </CardFooter>
-      )}
     </Card>
+
+    {stats && (
+        <Card>
+            <CardHeader>
+                <CardTitle>Results</CardTitle>
+                <CardDescription>
+                    Standard Deviation (σ): {stats.stdDev.toFixed(8)}
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-2">
+                    <StatCard title="Count (N)" value={stats.count} />
+                    <StatCard title="Sum (Σx)" value={stats.sum} />
+                    <StatCard title="Mean (μ)" value={stats.mean} />
+                    <StatCard title="Variance (σ²)" value={stats.variance} />
+                </div>
+            </CardContent>
+        </Card>
+    )}
+
+    {stats && (
+        <Card>
+            <CardHeader>
+                <CardTitle>Steps</CardTitle>
+            </CardHeader>
+            <CardContent className="font-mono text-sm space-y-4">
+                <div>
+                    <p className="font-semibold">Variance (σ²):</p>
+                    <p>σ² = Σ(xi - μ)² / N</p>
+                    <p>σ² = ( (10 - {stats.mean})² + ... + (16 - {stats.mean})² ) / {stats.count}</p>
+                    <p>σ² = {stats.sumOfSquares.toFixed(4)} / {stats.count}</p>
+                    <p>σ² = {stats.variance.toFixed(4)}</p>
+                </div>
+                 <div>
+                    <p className="font-semibold">Standard Deviation (σ):</p>
+                    <p>σ = √σ²</p>
+                    <p>σ = √{stats.variance.toFixed(4)}</p>
+                    <p>σ = {stats.stdDev.toFixed(8)}</p>
+                </div>
+            </CardContent>
+        </Card>
+    )}
+    
+    {stats && (
+        <Card>
+            <CardHeader>
+                <CardTitle>Margin of Error (Confidence Interval)</CardTitle>
+                 <CardDescription>
+                    Standard Error of the Mean (SEM) = σ/√N = {stats.sem.toFixed(8)}
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead>Confidence Level</TableHead>
+                        <TableHead>Margin of Error</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {confidenceLevels.map(({level, z}) => {
+                            const margin = z * stats.sem;
+                            const percentage = (margin / stats.mean) * 100;
+                            return (
+                                <TableRow key={level}>
+                                <TableCell>{level}, {z}σx̄</TableCell>
+                                <TableCell>{stats.mean.toFixed(2)} ± {margin.toFixed(3)} (±{percentage.toFixed(2)}%)</TableCell>
+                                </TableRow>
+                            )
+                        })}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    )}
+
+     {stats && Object.keys(stats.frequency).length > 0 && (
+        <Card>
+            <CardHeader><CardTitle>Frequency Table</CardTitle></CardHeader>
+            <CardContent>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead>Value</TableHead>
+                        <TableHead>Frequency</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {Object.entries(stats.frequency).sort((a,b) => Number(a[0]) - Number(b[0])).map(([value, freq]) => (
+                            <TableRow key={value}>
+                                <TableCell>{value}</TableCell>
+                                <TableCell>{freq} ({((freq / stats.count) * 100).toFixed(1)}%)</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    )}
+    </div>
   );
 }
