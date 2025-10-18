@@ -44,7 +44,7 @@ const EducationalContent = () => (
                 <p className="text-muted-foreground">
                     Use this when your dataset includes <b>every member</b> of the group or category you are analyzing.
                 </p>
-                <pre className="font-mono bg-background p-2 rounded-md mt-2 text-sm">σ = √(Σ(xᵢ − μ)² / N)</pre>
+                <pre className="font-mono bg-background p-2 rounded-md mt-2 text-sm">σ = √[ Σ(xᵢ − μ)² / N ]</pre>
                 <p className="text-muted-foreground mt-1">Here, we divide by <b>N</b> (the total number of data points).</p>
             </div>
             <div>
@@ -52,7 +52,7 @@ const EducationalContent = () => (
                 <p className="text-muted-foreground">
                     Use this when your dataset is a <b>sample</b> from a larger population — not the entire population itself.
                 </p>
-                <pre className="font-mono bg-background p-2 rounded-md mt-2 text-sm">s = √(Σ(xᵢ − x̄)² / (N − 1))</pre>
+                <pre className="font-mono bg-background p-2 rounded-md mt-2 text-sm">s = √[ Σ(xᵢ − x̄)² / (N − 1) ]</pre>
                 <p className="text-muted-foreground mt-1">
                     Here, we divide by <b>(N − 1)</b> instead of <b>N</b>. This small adjustment is called the <b>Bessel’s correction</b> and it helps make the result more accurate for limited sample sizes.
                 </p>
@@ -115,75 +115,23 @@ export default function StandardDeviationPage() {
             </div>
 
             <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 3: Click “Calculate”</h3>
-                <p>Press the Calculate button. The calculator will instantly show all the computed values below.</p>
+                <h3 className="text-xl font-semibold text-foreground">Step 3: Read the Results</h3>
+                <p>The calculator will instantly show all the computed values below.</p>
             </div>
             
              <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 4: Read the Results</h3>
-                <p>You’ll see:</p>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Statistic</TableHead>
-                            <TableHead>Description</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>Standard Deviation (σ)</TableCell>
-                            <TableCell>How spread out your data is.</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Count (N)</TableCell>
-                            <TableCell>How many numbers you entered.</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Sum (Σx)</TableCell>
-                            <TableCell>The total of all your numbers.</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Mean (μ)</TableCell>
-                            <TableCell>The average value.</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Variance (σ²)</TableCell>
-                            <TableCell>The square of the standard deviation.</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </div>
-            
-             <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 5: Understand the Steps</h3>
+                <h3 className="text-xl font-semibold text-foreground">Step 4: Understand the Steps</h3>
                 <p>The “Steps” section shows the formula and exact calculations used to get the variance and standard deviation — perfect if you want to check or learn the math behind it.</p>
             </div>
 
             <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 6: Check the Margin of Error</h3>
+                <h3 className="text-xl font-semibold text-foreground">Step 5: Check the Margin of Error</h3>
                 <p>Below the steps, you’ll see Margin of Error (Confidence Intervals) for various confidence levels (68%, 90%, 95%, etc.). This tells you how much your sample mean might differ from the true population mean.</p>
-                <p className="font-mono bg-muted p-2 rounded-md my-2">95%, 1.960σx̄ → 18 ±3.395 (±18.86%)</p>
-                <p>This means the true mean is likely between 14.605 and 21.395 with 95% confidence.</p>
             </div>
 
              <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 7: Review the Frequency Table</h3>
+                <h3 className="text-xl font-semibold text-foreground">Step 6: Review the Frequency Table</h3>
                 <p>Finally, the Frequency Table shows how many times each unique value appears in your data, along with its percentage share.</p>
-                 <Table>
-                    <TableHeader>
-                        <TableRow>
-                        <TableHead>Value</TableHead>
-                        <TableHead>Frequency</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow><TableCell>10</TableCell><TableCell>1 (12.5%)</TableCell></TableRow>
-                        <TableRow><TableCell>12</TableCell><TableCell>1 (12.5%)</TableCell></TableRow>
-                        <TableRow><TableCell>16</TableCell><TableCell>2 (25%)</TableCell></TableRow>
-                        <TableRow><TableCell>21</TableCell><TableCell>1 (12.5%)</TableCell></TableRow>
-                        <TableRow><TableCell>23</TableCell><TableCell>3 (37.5%)</TableCell></TableRow>
-                    </TableBody>
-                </Table>
             </div>
           </section>
 

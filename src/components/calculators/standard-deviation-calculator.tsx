@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 
 interface Stats {
   mean: number;
@@ -46,8 +47,9 @@ const confidenceLevels = [
 export default function StandardDeviationCalculator() {
   const [data, setData] = useState('10, 12, 23, 23, 16, 23, 21, 16');
   const [type, setType] = useState<'population' | 'sample'>('population');
+  const [calculatedStats, setCalculatedStats] = useState<Stats | null>(null);
 
-  const stats: Stats | null = useMemo(() => {
+  const calculate = () => {
     const numbers = data
       .split(/[\s,]+/)
       .map(s => s.trim())
@@ -55,7 +57,10 @@ export default function StandardDeviationCalculator() {
       .map(Number)
       .filter(n => !isNaN(n));
 
-    if (numbers.length === 0) return null;
+    if (numbers.length === 0) {
+        setCalculatedStats(null);
+        return;
+    }
 
     const count = numbers.length;
     const sum = numbers.reduce((acc, n) => acc + n, 0);
@@ -64,7 +69,10 @@ export default function StandardDeviationCalculator() {
     const sumOfSquares = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0);
     
     const divisor = type === 'population' ? count : count -1;
-    if (divisor <= 0) return null; // Avoid division by zero for sample with 1 or 0 items
+    if (divisor <= 0) {
+        setCalculatedStats(null);
+        return;
+    };
     
     const variance = sumOfSquares / divisor;
     const stdDev = Math.sqrt(variance);
@@ -75,8 +83,10 @@ export default function StandardDeviationCalculator() {
         frequency[String(num)] = (frequency[String(num)] || 0) + 1;
     }
 
-    return { mean, variance, stdDev, sum, count, sumOfSquares, sem, frequency, type };
-  }, [data, type]);
+    setCalculatedStats({ mean, variance, stdDev, sum, count, sumOfSquares, sem, frequency, type });
+  };
+  
+  const stats = calculatedStats;
 
   return (
     <div className="space-y-6">
@@ -108,6 +118,7 @@ export default function StandardDeviationCalculator() {
                 </SelectContent>
             </Select>
         </div>
+         <Button onClick={calculate} className="w-full">Calculate</Button>
       </CardContent>
     </Card>
 
@@ -137,14 +148,17 @@ export default function StandardDeviationCalculator() {
             </CardHeader>
             <CardContent className="font-mono text-sm space-y-4">
                 <div>
-                    <p className="font-semibold">Variance (σ²):</p>
-                    <p>σ² = Σ(xi - μ)² / {stats.type === 'population' ? 'N' : 'N-1'}</p>
-                    <p>σ² = ( (10 - {stats.mean})² + ... + (16 - {stats.mean})² ) / {stats.type === 'population' ? stats.count : stats.count - 1}</p>
+                    <p className="font-semibold">1. Find the Mean (μ):</p>
+                    <p>μ = Σx / N = {stats.sum} / {stats.count} = {stats.mean.toFixed(4)}</p>
+                </div>
+                <div>
+                    <p className="font-semibold">2. Find the Variance (σ²):</p>
+                    <p>σ² = Σ(xᵢ - μ)² / {stats.type === 'population' ? 'N' : '(N-1)'}</p>
                     <p>σ² = {stats.sumOfSquares.toFixed(4)} / {stats.type === 'population' ? stats.count : stats.count - 1}</p>
                     <p>σ² = {stats.variance.toFixed(4)}</p>
                 </div>
                  <div>
-                    <p className="font-semibold">Standard Deviation (σ):</p>
+                    <p className="font-semibold">3. Find the Standard Deviation (σ):</p>
                     <p>σ = √σ²</p>
                     <p>σ = √{stats.variance.toFixed(4)}</p>
                     <p>σ = {stats.stdDev.toFixed(8)}</p>
@@ -153,12 +167,12 @@ export default function StandardDeviationCalculator() {
         </Card>
     )}
     
-    {stats && (
+    {stats && stats.type === 'sample' && (
         <Card>
             <CardHeader>
                 <CardTitle>Margin of Error (Confidence Interval)</CardTitle>
                  <CardDescription>
-                    Standard Error of the Mean (SEM) = σ/√N = {stats.sem.toFixed(8)}
+                    Standard Error of the Mean (SEM) = s/√N = {stats.sem.toFixed(8)}
                 </CardDescription>
             </CardHeader>
             <CardContent>
