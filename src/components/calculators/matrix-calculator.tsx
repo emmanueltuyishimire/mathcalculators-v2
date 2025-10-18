@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -9,8 +9,63 @@ import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { X, ArrowRight, RefreshCw, Replace } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 type Matrix = number[][];
+
+// #region Matrix Logic
+const getMinor = (matrix: Matrix, row: number, col: number): Matrix =>
+  matrix.filter((_, r) => r !== row).map(r => r.filter((_, c) => c !== col));
+
+const determinant = (matrix: Matrix): number => {
+  const n = matrix.length;
+  if (n === 0) return 1;
+  if (n !== matrix[0].length) throw new Error("Matrix must be square.");
+  if (n === 1) return matrix[0][0];
+  if (n === 2) return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+
+  let det = 0;
+  for (let j = 0; j < n; j++) {
+    det += matrix[0][j] * Math.pow(-1, j) * determinant(getMinor(matrix, 0, j));
+  }
+  return det;
+};
+
+const cofactor = (matrix: Matrix): Matrix => {
+    if (matrix.length !== matrix[0].length) throw new Error("Matrix must be square.");
+    return matrix.map((row, r) =>
+        row.map((_, c) => Math.pow(-1, r + c) * determinant(getMinor(matrix, r, c)))
+    );
+};
+
+const transpose = (matrix: Matrix): Matrix => {
+  if (matrix.length === 0) return [];
+  return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
+};
+
+const multiplyMatrices = (a: Matrix, b: Matrix): Matrix => {
+    const rowsA = a.length, colsA = a[0].length, rowsB = b.length, colsB = b[0].length;
+    if (colsA !== rowsB) throw new Error("Columns of A must match rows of B.");
+    
+    let result: Matrix = Array(rowsA).fill(0).map(() => Array(colsB).fill(0));
+    for (let i = 0; i < rowsA; i++) {
+        for (let j = 0; j < colsB; j++) {
+            for (let k = 0; k < colsA; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+    return result;
+};
+// #endregion
 
 const MatrixInput = ({
   matrix,
@@ -20,6 +75,7 @@ const MatrixInput = ({
   onRowsChange,
   onColsChange,
   title,
+  idPrefix
 }: {
   matrix: Matrix;
   onMatrixChange: (matrix: Matrix) => void;
@@ -28,13 +84,15 @@ const MatrixInput = ({
   onRowsChange: (rows: number) => void;
   onColsChange: (cols: number) => void;
   title: string;
+  idPrefix: string;
 }) => {
   const handleInputChange = (rowIndex: number, colIndex: number, value: string) => {
-    const newMatrix = matrix.map((row) => [...row]);
-    newMatrix[rowIndex][colIndex] = parseFloat(value) || 0;
+    const newMatrix = matrix.map((row, rIdx) => 
+      rIdx === rowIndex ? row.map((cell, cIdx) => cIdx === colIndex ? (parseFloat(value) || 0) : cell) : row
+    );
     onMatrixChange(newMatrix);
   };
-
+  
   const fillMatrix = (value: number | 'random') => {
     const newMatrix = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, () =>
@@ -47,13 +105,13 @@ const MatrixInput = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title} Input</CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-2">
-          <Label htmlFor={`${title}-rows`}>Rows</Label>
+          <Label htmlFor={`${idPrefix}-rows`}>Rows</Label>
           <Input
-            id={`${title}-rows`}
+            id={`${idPrefix}-rows`}
             type="number"
             min="1"
             max="8"
@@ -61,10 +119,10 @@ const MatrixInput = ({
             onChange={(e) => onRowsChange(parseInt(e.target.value))}
             className="w-20"
           />
-          <X className="h-4 w-4" />
-          <Label htmlFor={`${title}-cols`}>Columns</Label>
+          <X className="h-4 w-4 text-muted-foreground" />
+          <Label htmlFor={`${idPrefix}-cols`}>Columns</Label>
           <Input
-            id={`${title}-cols`}
+            id={`${idPrefix}-cols`}
             type="number"
             min="1"
             max="8"
@@ -88,8 +146,7 @@ const MatrixInput = ({
         </div>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" size="sm" onClick={() => fillMatrix(0)}>Clear</Button>
-          <Button variant="outline" size="sm" onClick={() => fillMatrix(0)}>All 0</Button>
-          <Button variant="outline" size="sm" onClick={() => fillMatrix(1)}>All 1</Button>
+          <Button variant="outline" size="sm" onClick={() => fillMatrix(1)}>All 1s</Button>
           <Button variant="outline" size="sm" onClick={() => fillMatrix('random')}>Random</Button>
         </div>
       </CardContent>
@@ -99,52 +156,53 @@ const MatrixInput = ({
 
 export default function MatrixCalculator() {
   const { toast } = useToast();
-  const [rowsA, setRowsA] = useState(4);
-  const [colsA, setColsA] = useState(4);
-  const [matrixA, setMatrixA] = useState<Matrix>(Array(4).fill(Array(4).fill(0)));
+  const [rowsA, setRowsA] = useState(2);
+  const [colsA, setColsA] = useState(2);
+  const [matrixA, setMatrixA] = useState<Matrix>(() => Array(2).fill(0).map(() => Array(2).fill(0)));
 
-  const [rowsB, setRowsB] = useState(4);
-  const [colsB, setColsB] = useState(4);
-  const [matrixB, setMatrixB] = useState<Matrix>(Array(4).fill(Array(4).fill(0)));
+  const [rowsB, setRowsB] = useState(2);
+  const [colsB, setColsB] = useState(2);
+  const [matrixB, setMatrixB] = useState<Matrix>(() => Array(2).fill(0).map(() => Array(2).fill(0)));
   
   const [resultMatrix, setResultMatrix] = useState<Matrix | null>(null);
-  const [resultScalar, setResultScalar] = useState<number | null>(null);
+  const [resultScalar, setResultScalar] = useState<number | string | null>(null);
 
-  const updateMatrixA = (setter: (prev: Matrix) => Matrix) => setMatrixA(setter);
-  const updateMatrixB = (setter: (prev: Matrix) => Matrix) => setMatrixB(setter);
-
+  const resizeMatrix = (newRows: number, newCols: number, currentMatrix: Matrix): Matrix => {
+      newRows = Math.max(1, Math.min(newRows, 8));
+      newCols = Math.max(1, Math.min(newCols, 8));
+      const newMatrix = Array(newRows).fill(0).map(() => Array(newCols).fill(0));
+      for(let i=0; i<Math.min(newRows, currentMatrix.length); i++) {
+        for (let j = 0; j < Math.min(newCols, currentMatrix[0]?.length || 0); j++) {
+            newMatrix[i][j] = currentMatrix[i][j];
+        }
+      }
+      return newMatrix;
+  };
+  
   const handleRowsAChange = (newRows: number) => {
-    if (newRows > 0 && newRows <= 8) {
-      setRowsA(newRows);
-      setMatrixA(Array(newRows).fill(Array(colsA).fill(0)));
-    }
+    setRowsA(newRows);
+    setMatrixA(resizeMatrix(newRows, colsA, matrixA));
   };
   const handleColsAChange = (newCols: number) => {
-    if (newCols > 0 && newCols <= 8) {
-      setColsA(newCols);
-      setMatrixA(Array(rowsA).fill(Array(newCols).fill(0)));
-    }
+    setColsA(newCols);
+    setMatrixA(resizeMatrix(rowsA, newCols, matrixA));
   };
 
   const handleRowsBChange = (newRows: number) => {
-    if (newRows > 0 && newRows <= 8) {
-      setRowsB(newRows);
-      setMatrixB(Array(newRows).fill(Array(colsB).fill(0)));
-    }
+    setRowsB(newRows);
+    setMatrixB(resizeMatrix(newRows, colsB, matrixB));
   };
   const handleColsBChange = (newCols: number) => {
-    if (newCols > 0 && newCols <= 8) {
-      setColsB(newCols);
-      setMatrixB(Array(rowsB).fill(Array(newCols).fill(0)));
-    }
+    setColsB(newCols);
+    setMatrixB(resizeMatrix(rowsB, newCols, matrixB));
   };
   
   const handleSwap = () => {
-    const tempMatrixA = matrixA;
+    const tempMatrixA = JSON.parse(JSON.stringify(matrixA));
     const tempRowsA = rowsA;
     const tempColsA = colsA;
 
-    setMatrixA(matrixB);
+    setMatrixA(JSON.parse(JSON.stringify(matrixB)));
     setRowsA(rowsB);
     setColsA(colsB);
 
@@ -152,21 +210,118 @@ export default function MatrixCalculator() {
     setRowsB(tempRowsA);
     setColsB(tempColsA);
   };
-  
+
   const handleOperation = (operation: 'add' | 'subtract' | 'multiply') => {
       setResultMatrix(null);
       setResultScalar(null);
-      // Mock operation
-      toast({ title: "Operation not implemented", description: "This is a UI demo." });
+      
+      try {
+        let result: Matrix;
+        if (operation === 'add' || operation === 'subtract') {
+            if (rowsA !== rowsB || colsA !== colsB) {
+                throw new Error("Matrices must have the same dimensions for addition/subtraction.");
+            }
+            result = Array(rowsA).fill(0).map((_, i) =>
+                Array(colsA).fill(0).map((_, j) =>
+                    operation === 'add' ? matrixA[i][j] + matrixB[i][j] : matrixA[i][j] - matrixB[i][j]
+                )
+            );
+        } else { // multiply
+            result = multiplyMatrices(matrixA, matrixB);
+        }
+        setResultMatrix(result);
+      } catch (e: any) {
+        toast({ variant: "destructive", title: "Operation Error", description: e.message });
+      }
   }
 
-  const handleUnaryOperation = (matrix: 'A' | 'B', operation: 'transpose' | 'power' | 'determinant' | 'inverse') => {
+  const handleUnaryOperation = (matrixRef: 'A' | 'B', operation: 'transpose' | 'power' | 'determinant' | 'inverse', powerValue?: number) => {
     setResultMatrix(null);
     setResultScalar(null);
-    // Mock operation
-    toast({ title: "Operation not implemented", description: "This is a UI demo." });
-  }
+    const matrix = matrixRef === 'A' ? matrixA : matrixB;
 
+    try {
+        if (['determinant', 'inverse', 'power'].includes(operation) && matrix.length !== matrix[0]?.length) {
+            throw new Error("Matrix must be square for this operation.");
+        }
+
+        switch (operation) {
+            case 'transpose':
+                setResultMatrix(transpose(matrix));
+                break;
+            case 'power':
+                if (powerValue === undefined || !Number.isInteger(powerValue) || powerValue < 0) {
+                    throw new Error("Power must be a non-negative integer.");
+                }
+                if (powerValue === 0) {
+                    // Identity matrix
+                    const identity = Array(matrix.length).fill(0).map((_, i) => Array(matrix.length).fill(0).map((_, j) => i === j ? 1 : 0));
+                    setResultMatrix(identity);
+                    return;
+                }
+                let res = matrix;
+                for (let i = 1; i < powerValue; i++) {
+                    res = multiplyMatrices(res, matrix);
+                }
+                setResultMatrix(res);
+                break;
+            case 'determinant':
+                setResultScalar(`Determinant: ${determinant(matrix)}`);
+                break;
+            case 'inverse':
+                const det = determinant(matrix);
+                if (det === 0) {
+                    throw new Error("Matrix is not invertible (determinant is 0).");
+                }
+                const adj = transpose(cofactor(matrix));
+                const inv = adj.map(row => row.map(cell => cell / det));
+                setResultMatrix(inv);
+                break;
+        }
+    } catch(e: any) {
+         toast({ variant: "destructive", title: "Operation Error", description: e.message });
+    }
+  }
+  
+  const PowerDialog = ({matrixRef}: {matrixRef: 'A' | 'B'}) => {
+    const [power, setPower] = useState(2);
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="secondary">Power</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                <DialogTitle>Raise Matrix {matrixRef} to Power</DialogTitle>
+                <DialogDescription>
+                    Enter an integer exponent. The matrix must be square.
+                </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="exponent" className="text-right">
+                        Exponent
+                        </Label>
+                        <Input
+                        id="exponent"
+                        type="number"
+                        value={power}
+                        onChange={(e) => setPower(parseInt(e.target.value))}
+                        className="col-span-3"
+                        step="1"
+                        min="0"
+                        />
+                    </div>
+                </div>
+                <DialogFooter>
+                  <DialogTrigger asChild>
+                    <Button onClick={() => handleUnaryOperation(matrixRef, 'power', power)}>Calculate</Button>
+                   </DialogTrigger>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -174,6 +329,7 @@ export default function MatrixCalculator() {
         <div className='space-y-4'>
             <MatrixInput
               title="Matrix A"
+              idPrefix="A"
               matrix={matrixA}
               onMatrixChange={setMatrixA}
               rows={rowsA}
@@ -183,7 +339,7 @@ export default function MatrixCalculator() {
             />
             <div className="flex flex-wrap gap-2">
                 <Button variant="secondary" onClick={() => handleUnaryOperation('A', 'transpose')}>Transpose</Button>
-                <Button variant="secondary" onClick={() => handleUnaryOperation('A', 'power')}>Power of 2</Button>
+                <PowerDialog matrixRef="A" />
                 <Button variant="secondary" onClick={() => handleUnaryOperation('A', 'determinant')}>Determinant</Button>
                 <Button variant="secondary" onClick={() => handleUnaryOperation('A', 'inverse')}>Inverse</Button>
             </div>
@@ -191,6 +347,7 @@ export default function MatrixCalculator() {
         <div className='space-y-4'>
             <MatrixInput
               title="Matrix B"
+              idPrefix="B"
               matrix={matrixB}
               onMatrixChange={setMatrixB}
               rows={rowsB}
@@ -200,7 +357,7 @@ export default function MatrixCalculator() {
             />
             <div className="flex flex-wrap gap-2">
                 <Button variant="secondary" onClick={() => handleUnaryOperation('B', 'transpose')}>Transpose</Button>
-                <Button variant="secondary" onClick={() => handleUnaryOperation('B', 'power')}>Power of 2</Button>
+                <PowerDialog matrixRef="B" />
                 <Button variant="secondary" onClick={() => handleUnaryOperation('B', 'determinant')}>Determinant</Button>
                 <Button variant="secondary" onClick={() => handleUnaryOperation('B', 'inverse')}>Inverse</Button>
             </div>
@@ -210,8 +367,9 @@ export default function MatrixCalculator() {
       <Card>
         <CardHeader>
           <CardTitle>Operations</CardTitle>
+          <CardDescription>Perform arithmetic operations between Matrix A and Matrix B.</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-4">
+        <CardContent className="flex flex-wrap items-center gap-4">
             <Button onClick={() => handleOperation('add')}>A + B</Button>
             <Button onClick={() => handleOperation('subtract')}>A - B</Button>
             <Button onClick={() => handleOperation('multiply')}>A × B</Button>
@@ -233,15 +391,16 @@ export default function MatrixCalculator() {
                       key={`result-${rowIndex}-${colIndex}`}
                       type="text"
                       readOnly
-                      value={cell.toFixed(2)}
+                      value={cell.toFixed(3)}
                       className="min-w-[4rem] text-center bg-muted"
+                      aria-label={`Result matrix cell at row ${rowIndex+1} column ${colIndex+1}`}
                     />
                   ))
                 )}
               </div>
             )}
             {resultScalar !== null && (
-                <p className="text-2xl font-bold">{resultScalar.toFixed(4)}</p>
+                <p className="text-xl font-mono p-4 bg-muted rounded-md">{resultScalar}</p>
             )}
           </CardContent>
         </Card>
