@@ -13,20 +13,17 @@ const HowToUseGuide = () => (
     </CardHeader>
     <CardContent className="space-y-6">
       <p className="text-muted-foreground">
-        This tool helps you determine either the minimum sample size for a desired margin of error, or the margin of error for a given sample size.
+        Use the calculators to determine either the minimum sample size for a desired margin of error, or the margin of error for a given sample size.
       </p>
 
       <div>
         <h3 className="text-lg font-semibold text-foreground mb-2">🔹 To Find Sample Size</h3>
         <ol className="list-decimal list-inside space-y-4 text-muted-foreground">
           <li>
-            <span className="font-semibold text-foreground">Leave the "Sample Size" field blank.</span>
+            <span className="font-semibold text-foreground">Select a Confidence Level</span> (e.g., 95%).
           </li>
           <li>
             <span className="font-semibold text-foreground">Enter the desired Margin of Error (%).</span>
-          </li>
-          <li>
-            <span className="font-semibold text-foreground">Select a Confidence Level</span> (e.g., 95%).
           </li>
           <li>
             <span className="font-semibold text-foreground">Enter the Population Proportion (%)</span> (use 50% if unsure).
@@ -35,7 +32,7 @@ const HowToUseGuide = () => (
             <span className="font-semibold text-foreground">Optionally, enter the Population Size</span> if it's a small, known group.
           </li>
           <li>
-            <span className="font-semibold text-foreground">Click "Calculate".</span> The required sample size will be displayed.
+            <span className="font-semibold text-foreground">Click "Calculate Sample Size".</span> The required sample size will be displayed.
           </li>
         </ol>
       </div>
@@ -43,14 +40,11 @@ const HowToUseGuide = () => (
        <div>
         <h3 className="text-lg font-semibold text-foreground mb-2">🔹 To Find Margin of Error</h3>
         <ol className="list-decimal list-inside space-y-4 text-muted-foreground">
-           <li>
-            <span className="font-semibold text-foreground">Leave the "Margin of Error" field blank.</span>
+          <li>
+            <span className="font-semibold text-foreground">Select a Confidence Level.</span>
           </li>
           <li>
             <span className="font-semibold text-foreground">Enter your Sample Size.</span>
-          </li>
-          <li>
-            <span className="font-semibold text-foreground">Select a Confidence Level.</span>
           </li>
            <li>
             <span className="font-semibold text-foreground">Enter the Population Proportion.</span>
@@ -59,7 +53,7 @@ const HowToUseGuide = () => (
             <span className="font-semibold text-foreground">Optionally, enter the Population Size.</span>
           </li>
           <li>
-            <span className="font-semibold text-foreground">Click "Calculate".</span> The resulting margin of error will be displayed.
+            <span className="font-semibold text-foreground">Click "Calculate Margin of Error".</span> The resulting margin of error will be displayed.
           </li>
         </ol>
       </div>
@@ -67,10 +61,6 @@ const HowToUseGuide = () => (
       <div>
         <h3 className="text-lg font-semibold text-foreground mb-2">💡 User Tips</h3>
         <ul className="space-y-2 text-muted-foreground">
-          <li className="flex items-start">
-            <CheckCircle className="h-5 w-5 mr-2 mt-0.5 text-primary flex-shrink-0"/>
-            The calculator will solve for the empty field (either sample size or margin of error).
-          </li>
           <li className="flex items-start">
             <CheckCircle className="h-5 w-5 mr-2 mt-0.5 text-primary flex-shrink-0"/>
             A higher confidence level or smaller margin of error requires a larger sample size.
@@ -149,7 +139,7 @@ export default function SampleSizePage() {
               Sample Size Calculator
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              Calculate the minimum sample size required for your study based on confidence level, margin of error, and population size. Or, find the margin of error for a given sample size.
+              Calculate the minimum sample size required for your study or the margin of error for a given sample size.
             </p>
           </section>
 

@@ -25,145 +25,161 @@ const confidenceLevels = [
     { label: "99.999%", value: "4.42" },
 ];
 
-interface ResultState {
-    sampleSize?: number;
-    marginOfError?: number;
-    z: number;
-    p: number;
-    N: number | string;
-}
-
-export default function SampleSizeCalculator() {
+function FindSampleSize() {
     const { toast } = useToast();
     const [confidence, setConfidence] = useState("1.96");
-    const [marginError, setMarginError] = useState("");
-    const [sampleSize, setSampleSize] = useState("100");
-    const [popProp, setPopProp] = useState("60");
+    const [marginError, setMarginError] = useState("5");
+    const [popProp, setPopProp] = useState("50");
     const [popSize, setPopSize] = useState("");
-    const [result, setResult] = useState<ResultState | null>(null);
+    const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {
         const z = parseFloat(confidence);
+        const e = parseFloat(marginError) / 100;
         const p = parseFloat(popProp) / 100;
         const N = popSize ? parseFloat(popSize) : Infinity;
 
-        if (isNaN(z) || isNaN(p) || p < 0 || p > 1) {
+        if (isNaN(z) || isNaN(e) || isNaN(p) || p < 0 || p > 1 || e <= 0) {
             toast({
                 variant: 'destructive',
                 title: "Invalid Input",
-                description: "Please check your proportion. It must be between 0-100.",
+                description: "Please check your inputs. Margin of error must be positive and proportion between 0-100.",
             });
             return;
         }
 
-        if (sampleSize && !marginError) {
-            // Calculate Margin of Error
-            const n = parseFloat(sampleSize);
-            if(isNaN(n) || n <= 0) {
-                 toast({ variant: 'destructive', title: "Invalid Sample Size", description: "Sample size must be a positive number."});
-                 return;
-            }
+        const n0 = (Math.pow(z, 2) * p * (1 - p)) / Math.pow(e, 2);
+        let n = N !== Infinity ? (n0 * N) / (n0 + N - 1) : n0;
+        n = Math.ceil(n);
 
-            let e;
-            if (N === Infinity) {
-                e = z * Math.sqrt((p * (1 - p)) / n);
-            } else {
-                e = z * Math.sqrt((p * (1 - p)) / n) * Math.sqrt((N - n) / (N - 1));
-            }
-            
-            setResult({
-                marginOfError: e * 100,
-                z,
-                p: p * 100,
-                N: N === Infinity ? 'Unlimited' : N,
-                sampleSize: n,
-            });
-
-        } else if (marginError && !sampleSize) {
-            // Calculate Sample Size
-            const e = parseFloat(marginError) / 100;
-            if(isNaN(e) || e <= 0) {
-                 toast({ variant: 'destructive', title: "Invalid Margin of Error", description: "Margin of error must be a positive number."});
-                 return;
-            }
-            
-            const n0 = (Math.pow(z, 2) * p * (1 - p)) / Math.pow(e, 2);
-            let n = N !== Infinity ? (n0 * N) / (n0 + N - 1) : n0;
-            n = Math.ceil(n);
-            
-            setResult({
-                sampleSize: n,
-                z,
-                marginOfError: e * 100,
-                p: p * 100,
-                N: N === Infinity ? 'Unlimited' : N,
-            });
-        } else {
-            toast({
-                variant: 'destructive',
-                title: "Invalid Input",
-                description: "Please fill either 'Sample Size' or 'Margin of Error', but not both.",
-            });
-        }
+        setResult(n);
     };
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Calculator</CardTitle>
-                <CardDescription>Enter details to find sample size or margin of error.</CardDescription>
+                <CardTitle>Find Out The Sample Size</CardTitle>
+                <CardDescription>This calculator computes the minimum number of necessary samples to meet the desired statistical constraints.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="confidence">Confidence Level</Label>
-                        <Select value={confidence} onValueChange={setConfidence}>
-                            <SelectTrigger id="confidence"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                                {confidenceLevels.map(c => (
-                                    <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
-                     <div className="space-y-2">
-                        <Label htmlFor="sampleSize">Sample Size</Label>
-                        <Input id="sampleSize" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} placeholder="e.g., 100" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="marginError">Margin of Error (%)</Label>
-                        <Input id="marginError" type="number" value={marginError} onChange={(e) => setMarginError(e.target.value)} placeholder="e.g., 5" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="popProp">Population Proportion (%)</Label>
-                        <Input id="popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} />
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
-                        <Label htmlFor="popSize">Population Size (optional)</Label>
-                        <Input id="popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" />
-                    </div>
+                <div className="space-y-2">
+                    <Label htmlFor="ss-confidence">Confidence Level</Label>
+                    <Select value={confidence} onValueChange={setConfidence}>
+                        <SelectTrigger id="ss-confidence"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            {confidenceLevels.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
+                        </SelectContent>
+                    </Select>
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
+                <div className="space-y-2">
+                    <Label htmlFor="ss-marginError">Margin of Error (%)</Label>
+                    <Input id="ss-marginError" type="number" value={marginError} onChange={(e) => setMarginError(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="ss-popProp">Population Proportion (%)</Label>
+                    <Input id="ss-popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} />
+                    <p className="text-xs text-muted-foreground">Use 50% if not sure</p>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="ss-popSize">Population Size</Label>
+                    <Input id="ss-popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" />
+                </div>
+                <Button onClick={calculate} className="w-full">Calculate Sample Size</Button>
             </CardContent>
-            {result && (
+            {result !== null && (
                 <CardFooter>
                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                        {result.sampleSize && !result.marginOfError && (
-                             <h3 className="font-bold text-lg">Required Sample Size: <span className="text-primary">{result.sampleSize}</span></h3>
-                        )}
-                        {result.marginOfError && (
-                             <h3 className="font-bold text-lg">Margin of Error: <span className="text-primary">±{result.marginOfError.toFixed(2)}%</span></h3>
-                        )}
-                        <div className="text-sm text-muted-foreground mt-2 space-y-1">
-                             {result.sampleSize && <p>Sample Size: {result.sampleSize}</p>}
-                            <p>Confidence Level: {confidenceLevels.find(c => c.value === String(result.z))?.label} (z={result.z})</p>
-                             {result.marginOfError && <p>Margin of Error: {result.marginOfError.toFixed(2)}%</p>}
-                            <p>Population Proportion: {result.p}%</p>
-                            <p>Population Size: {result.N}</p>
-                        </div>
+                        <h3 className="font-bold text-lg">Required Sample Size: <span className="text-primary">{result}</span></h3>
                     </div>
                 </CardFooter>
             )}
         </Card>
     );
+}
+
+function FindMarginOfError() {
+    const { toast } = useToast();
+    const [confidence, setConfidence] = useState("1.96");
+    const [sampleSize, setSampleSize] = useState("100");
+    const [popProp, setPopProp] = useState("60");
+    const [popSize, setPopSize] = useState("");
+    const [result, setResult] = useState<number | null>(null);
+
+    const calculate = () => {
+        const z = parseFloat(confidence);
+        const n = parseFloat(sampleSize);
+        const p = parseFloat(popProp) / 100;
+        const N = popSize ? parseFloat(popSize) : Infinity;
+
+        if (isNaN(z) || isNaN(n) || isNaN(p) || p < 0 || p > 1 || n <= 0) {
+            toast({
+                variant: 'destructive',
+                title: "Invalid Input",
+                description: "Please check your inputs. Sample size must be positive and proportion between 0-100.",
+            });
+            return;
+        }
+
+        let e;
+        if (N === Infinity) {
+            e = z * Math.sqrt((p * (1 - p)) / n);
+        } else {
+            if (n > N) {
+                toast({ variant: 'destructive', title: "Invalid Input", description: "Sample size cannot be larger than population size."});
+                return;
+            }
+            e = z * Math.sqrt(((p * (1 - p)) / n) * ((N - n) / (N - 1)));
+        }
+
+        setResult(e * 100);
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Find Out the Margin of Error</CardTitle>
+                <CardDescription>This calculator gives out the margin of error or confidence interval of observation or survey.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                 <div className="space-y-2">
+                    <Label htmlFor="moe-confidence">Confidence Level</Label>
+                    <Select value={confidence} onValueChange={setConfidence}>
+                        <SelectTrigger id="moe-confidence"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            {confidenceLevels.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="moe-sampleSize">Sample Size</Label>
+                    <Input id="moe-sampleSize" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="moe-popProp">Population Proportion (%)</Label>
+                    <Input id="moe-popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="moe-popSize">Population Size</Label>
+                    <Input id="moe-popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" />
+                </div>
+                <Button onClick={calculate} className="w-full">Calculate Margin of Error</Button>
+            </CardContent>
+            {result !== null && (
+                <CardFooter>
+                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <h3 className="font-bold text-lg">Margin of Error: <span className="text-primary">±{result.toFixed(2)}%</span></h3>
+                    </div>
+                </CardFooter>
+            )}
+        </Card>
+    );
+}
+
+export default function SampleSizeCalculator() {
+    return (
+        <div className="space-y-8">
+            <FindSampleSize />
+            <FindMarginOfError />
+        </div>
+    )
 }
