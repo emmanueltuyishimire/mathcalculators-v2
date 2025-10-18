@@ -17,7 +17,7 @@ const faqSchema = {
       "name": "What is a scientific calculator?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A scientific calculator is a type of electronic calculator, usually but not always handheld, designed to calculate problems in science, engineering, and mathematics. They have completely replaced slide rules in traditional applications, and are widely used in both education and professional settings."
+        "text": "A scientific calculator is a tool designed to solve complex mathematical problems, including trigonometry, logarithms, exponents, fractions, and statistical calculations. Unlike a basic calculator, it provides advanced functions for students, engineers, and professionals."
       }
     },
     {
@@ -25,16 +25,72 @@ const faqSchema = {
       "name": "How do I use a scientific calculator online?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "To use our online scientific calculator, simply type in your expression using your keyboard or click the buttons on the calculator interface. The calculator supports a wide range of functions including basic arithmetic, trigonometric, logarithmic, and exponential functions. Press the '=' button to see the result."
+        "text": "To use a scientific calculator online, simply enter numbers using the keypad, choose the operation or function, use parentheses for complex calculations, and press = to see the result. You can also use memory functions (M+, M-, MR, MC) to store values."
       }
     },
     {
       "@type": "Question",
-      "name": "Which is the best scientific calculator for students?",
+      "name": "Can I use a scientific calculator for fractions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The best scientific calculator for students often depends on their level of study. Popular models include the Casio FX-991EX and the Texas Instruments TI-36X Pro. Our online scientific calculator aims to provide many of the features found in these popular models, making it a great free alternative for students."
+        "text": "Yes! Many online and app-based scientific calculators support fractions and mixed numbers. You can enter fractions directly or use the division / key, and the calculator can display the result as a fraction or decimal."
       }
+    },
+    {
+        "@type": "Question",
+        "name": "Which is better: Casio or TI scientific calculators?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both Casio and Texas Instruments (TI) are reliable brands. Casio calculators are often simpler and more affordable, while TI calculators like the TI-84 or TI-36X Pro offer advanced functions and graphing capabilities."
+        }
+    },
+    {
+        "@type": "Question",
+        "name": "Do I need to switch between degrees and radians?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, when performing trigonometric calculations, you must select the correct angle mode (Degrees or Radians) depending on your problem. Most online calculators have a toggle for this."
+        }
+    },
+    {
+        "@type": "Question",
+        "name": "Is this online scientific calculator free to use?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely! Our online scientific calculator is completely free and does not require any downloads. It supports a wide range of mathematical functions."
+        }
+    },
+    {
+        "@type": "Question",
+        "name": "Can I use memory functions on the calculator?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, memory functions (M+, M-, MR, MC) allow you to store, recall, add to, or subtract from a stored value, which is useful for multi-step calculations."
+        }
+    },
+    {
+        "@type": "Question",
+        "name": "Can I use this scientific calculator on mobile devices?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! The calculator is fully responsive, meaning it works seamlessly on mobile phones, tablets, and desktops. You can solve calculations anywhere without downloading an app."
+        }
+    },
+    {
+        "@type": "Question",
+        "name": "What types of calculations can I do with a scientific calculator?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can perform basic arithmetic, trigonometric functions, logarithms, exponentials, roots, factorials, fractions, and memory-based calculations."
+        }
+    },
+    {
+        "@type": "Question",
+        "name": "Is this scientific calculator safe and accurate?",
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Our online scientific calculator is accurate, reliable, and safe to use. All calculations happen directly in your browser, so no personal data is stored."
+        }
     }
   ]
 };
@@ -200,19 +256,79 @@ export default function ScientificPage() {
                     When it comes to physical calculators, models from <a href="https://www.casio.com/us/scientific-calculators/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Casio</a> and <a href="https://education.ti.com/en/products/calculators/scientific-calculators" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Texas Instruments (TI)</a> are industry standards. For online tools, Desmos offers a great graphing calculator. Our goal is to provide a free scientific calculator that combines the most-used features of these powerful tools in a convenient online format. This makes it one of the best scientific calculator app alternatives available online.
                 </p>
 
-                <h2 className="text-3xl font-bold">FAQs</h2>
-                <div className="space-y-4">
+                <h2 className="text-3xl font-bold">FAQs – Scientific Calculator Online</h2>
+                <div className="space-y-6">
                     <div>
-                        <h3 className="text-xl font-semibold">What is a scientific calculator?</h3>
-                        <p className="text-muted-foreground">A scientific calculator is designed for complex problems in science, engineering, and mathematics, including functions for trigonometry, logarithms, and more.</p>
+                        <h3 className="text-xl font-semibold">Q1: What is a scientific calculator?</h3>
+                        <p className="text-muted-foreground">A scientific calculator is a tool designed to solve complex mathematical problems, including trigonometry, logarithms, exponents, fractions, and statistical calculations. Unlike a basic calculator, it provides advanced functions for students, engineers, and professionals.</p>
                     </div>
                     <div>
-                        <h3 className="text-xl font-semibold">How do I use a scientific calculator online?</h3>
-                        <p className="text-muted-foreground">Simply type or click your equation into the input field. The calculator supports keyboard input and clickable buttons. Press '=' to get your answer.</p>
+                        <h3 className="text-xl font-semibold">Q2: How do I use a scientific calculator online?</h3>
+                        <p className="text-muted-foreground">To use a scientific calculator online, simply:</p>
+                        <ul className="list-disc list-inside text-muted-foreground ml-4">
+                            <li>Enter numbers using the keypad.</li>
+                            <li>Choose the operation or function (addition, sin, log, etc.).</li>
+                            <li>Use parentheses () for complex calculations.</li>
+                            <li>Press = to see the result.</li>
+                            <li>Optional: Use memory functions (M+, M-, MR, MC) to store values.</li>
+                        </ul>
                     </div>
                     <div>
-                        <h3 className="text-xl font-semibold">Which is the best scientific calculator for students?</h3>
-                        <p className="text-muted-foreground">While physical calculators like the Casio FX-991EX or TI-36X Pro are popular, our free online calculator is a powerful and convenient option for students at all levels.</p>
+                        <h3 className="text-xl font-semibold">Q3: Can I use a scientific calculator for fractions?</h3>
+                        <p className="text-muted-foreground">Yes! Many online and app-based scientific calculators support fractions and mixed numbers. You can enter fractions directly or use the division / key, and the calculator can display the result as a fraction or decimal.</p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Q4: Which is better: Casio or TI scientific calculators?</h3>
+                        <p className="text-muted-foreground">Both brands are reliable:</p>
+                        <ul className="list-disc list-inside text-muted-foreground ml-4">
+                            <li>Casio calculators are simple, affordable, and widely used in schools.</li>
+                            <li>Texas Instruments (TI) calculators, like the TI-84 or TI-36X Pro, offer advanced functions and graphing capabilities.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Q5: Do I need to switch between degrees and radians?</h3>
+                        <p className="text-muted-foreground">Yes, when performing trigonometric calculations, you need to select the correct angle mode:</p>
+                         <ul className="list-disc list-inside text-muted-foreground ml-4">
+                            <li>Degrees for problems in degrees</li>
+                            <li>Radians for problems in radians</li>
+                        </ul>
+                        <p className="text-muted-foreground mt-2">Most online calculators have a toggle button to switch between these modes.</p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Q6: Is this online scientific calculator free to use?</h3>
+                        <p className="text-muted-foreground">Absolutely! Our online scientific calculator is completely free and does not require any downloads. It supports basic arithmetic, advanced math, trigonometry, logarithms, fractions, and more.</p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Q7: Can I use memory functions on the calculator?</h3>
+                        <p className="text-muted-foreground">Yes, memory functions allow you to store, recall, add, or subtract values for complex calculations. Use:</p>
+                        <ul className="list-disc list-inside text-muted-foreground ml-4">
+                            <li>M+ – add to memory</li>
+                            <li>M- – subtract from memory</li>
+                            <li>MR – recall memory</li>
+                            <li>MC – clear memory</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Q8: Can I use this scientific calculator on mobile devices?</h3>
+                        <p className="text-muted-foreground">Yes! The calculator is fully responsive, meaning it works seamlessly on mobile phones, tablets, and desktops. You can solve calculations anywhere without downloading an app.</p>
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold">Q9: What types of calculations can I do with a scientific calculator?</h3>
+                        <p className="text-muted-foreground">You can perform:</p>
+                        <ul className="list-disc list-inside text-muted-foreground ml-4">
+                            <li>Basic arithmetic (+ - * / %)</li>
+                            <li>Trigonometric functions (sin, cos, tan, cot, sec, csc)</li>
+                            <li>Logarithms (ln, log, log base n)</li>
+                            <li>Exponentials (x^y, e^x)</li>
+                            <li>Roots (√x, ∛x, x^(1/n))</li>
+                            <li>Factorials (n!)</li>
+                            <li>Fractions and mixed numbers</li>
+                            <li>Memory-based calculations</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 className="text-xl font-semibold">Q10: Is this scientific calculator safe and accurate?</h3>
+                        <p className="text-muted-foreground">Yes! Our online scientific calculator is accurate, reliable, and safe to use. All calculations happen directly in your browser, so no personal data is stored.</p>
                     </div>
                 </div>
                 <div className="text-center pt-8">
