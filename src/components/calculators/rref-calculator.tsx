@@ -120,6 +120,10 @@ export default function RrefCalculator() {
   const [solution, setSolution] = useState<string>('');
   const [rrefMatrix, setRrefMatrix] = useState<Matrix | null>(null);
 
+  const [row1, setRow1] = useState('1');
+  const [row2, setRow2] = useState('2');
+  const [scalar, setScalar] = useState('1');
+
   const resizeMatrix = useCallback((newRows: number, newCols: number, currentMatrix: Matrix): Matrix => {
     newRows = Math.max(1, Math.min(newRows, 8));
     newCols = Math.max(2, Math.min(newCols, 9));
@@ -140,6 +144,49 @@ export default function RrefCalculator() {
     setCols(newCols);
     setMatrix(m => resizeMatrix(rows, newCols, m));
   };
+
+  const updateCurrentMatrix = (newMatrix: Matrix, toastTitle: string, toastDescription: string) => {
+    setHistory(prev => [...prev, matrix]);
+    setMatrix(newMatrix);
+    setRrefMatrix(null);
+    setSolution('');
+    toast({ title: toastTitle, description: toastDescription });
+  };
+  
+  const handleRowOperation = (op: 'swap' | 'scale' | 'add') => {
+    try {
+        let numMatrix = parseMatrix(matrix);
+        const r1 = parseInt(row1) - 1;
+        const r2 = parseInt(row2) - 1;
+        const k = parseFloat(scalar);
+
+        if (r1 < 0 || r1 >= rows || (op !== 'scale' && (r2 < 0 || r2 >= rows))) {
+            throw new Error("Invalid row index selected.");
+        }
+
+        switch (op) {
+            case 'swap':
+                if (r1 === r2) return;
+                [numMatrix[r1], numMatrix[r2]] = [numMatrix[r2], numMatrix[r1]];
+                updateCurrentMatrix(numMatrix, "Rows Swapped", `Row ${r1+1} and Row ${r2+1} were exchanged.`);
+                break;
+            case 'scale':
+                if (isNaN(k)) throw new Error("Invalid scalar value.");
+                numMatrix[r1] = numMatrix[r1].map(cell => cell * k);
+                updateCurrentMatrix(numMatrix, "Row Scaled", `Row ${r1+1} was multiplied by ${k}.`);
+                break;
+            case 'add':
+                if (isNaN(k)) throw new Error("Invalid scalar value.");
+                numMatrix[r1] = numMatrix[r1].map((cell, j) => cell + k * numMatrix[r2][j]);
+                updateCurrentMatrix(numMatrix, "Row Operation", `${k} * R${r2+1} was added to R${r1+1}.`);
+                break;
+        }
+
+    } catch (e: any) {
+        toast({ variant: "destructive", title: "Operation Error", description: e.message });
+    }
+  }
+
 
   const handleRREF = () => {
     try {
@@ -179,7 +226,7 @@ export default function RrefCalculator() {
             lead++;
         }
         
-        const finalRrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(4))));
+        const finalRrefMatrix = numMatrix.map(row => row.map(cell => parseFloat(cell.toPrecision(10))));
         setRrefMatrix(finalRrefMatrix);
         analyzeSolution(finalRrefMatrix);
         toast({ title: "RREF Calculated", description: "The matrix is now in row-reduced echelon form." });
@@ -208,10 +255,12 @@ export default function RrefCalculator() {
     }
     
     let pivotCount = 0;
+    const pivotCols: boolean[] = Array(numVars).fill(false);
     for(let r=0; r<rows; r++) {
        const firstNonZero = rrefMtx[r].findIndex(val => Math.abs(val) > 1e-9);
        if(firstNonZero !== -1 && firstNonZero < numVars) {
            pivotCount++;
+           pivotCols[firstNonZero] = true;
        }
     }
 
@@ -236,6 +285,8 @@ export default function RrefCalculator() {
     }
   }
 
+  const rowOptions = Array.from({ length: rows }, (_, i) => String(i + 1));
+
   return (
     <div className="space-y-4">
       <MatrixDisplay
@@ -254,18 +305,69 @@ export default function RrefCalculator() {
           <CardTitle>Operations</CardTitle>
           <CardDescription>Perform automatic or manual row operations.</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap items-center gap-2">
-            <Button onClick={handleRREF} className="bg-accent hover:bg-accent/90">Calculate RREF</Button>
-            <Button onClick={handleUndo} variant="outline" disabled={history.length === 0}>Undo</Button>
+        <CardContent className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+                <Button onClick={handleRREF} className="bg-accent hover:bg-accent/90">Calculate RREF</Button>
+                <Button onClick={handleUndo} variant="outline" disabled={history.length === 0}>Undo</Button>
+            </div>
+            <div className="space-y-2">
+                <h4 className="font-medium">Manual Row Operations</h4>
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-2">
+                    <div className="flex items-center gap-2">
+                        <Select value={row1} onValueChange={setRow1}>
+                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                        </Select>
+                        <span className="font-bold">&harr;</span>
+                        <Select value={row2} onValueChange={setRow2}>
+                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r2-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                        </Select>
+                    </div>
+                    <Button variant="secondary" onClick={() => handleRowOperation('swap')}>Swap</Button>
+                </div>
+                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-2">
+                    <div className="flex items-center gap-2">
+                        <Input value={scalar} onChange={e => setScalar(e.target.value)} className="w-20" placeholder="k" />
+                        <span className="font-bold">&times;</span>
+                        <Select value={row1} onValueChange={setRow1}>
+                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-scale-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                        </Select>
+                    </div>
+                    <Button variant="secondary" onClick={() => handleRowOperation('scale')}>Scale Row</Button>
+                </div>
+                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                        <Select value={row1} onValueChange={setRow1}>
+                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-add-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                        </Select>
+                         <span className="font-bold">&larr;</span>
+                        <Select value={row1} onValueChange={setRow1}>
+                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-add2-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                        </Select>
+                        <span className="font-bold">+</span>
+                        <Input value={scalar} onChange={e => setScalar(e.target.value)} className="w-20" placeholder="k" />
+                         <span className="font-bold">&times;</span>
+                        <Select value={row2} onValueChange={setRow2}>
+                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r2-add-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                        </Select>
+                    </div>
+                    <Button variant="secondary" onClick={() => handleRowOperation('add')}>Add to Row</Button>
+                </div>
+            </div>
         </CardContent>
       </Card>
 
-      {rrefMatrix && (
+      {(rrefMatrix || matrix) && (
         <MatrixDisplay
-          matrix={rrefMatrix}
-          rows={rrefMatrix.length}
-          cols={rrefMatrix[0]?.length || 0}
-          title="Reduced Row Echelon Form (RREF)"
+          matrix={rrefMatrix || matrix}
+          rows={(rrefMatrix || matrix).length}
+          cols={(rrefMatrix || matrix)[0]?.length || 0}
+          title={rrefMatrix ? "Reduced Row Echelon Form (RREF)" : "Current Matrix"}
         />
       )}
       
