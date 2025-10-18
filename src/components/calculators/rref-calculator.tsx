@@ -48,19 +48,19 @@ const MatrixDisplay = ({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
+      <CardHeader className="p-2 md:p-4">
+        <CardTitle className="text-base md:text-lg">{title}</CardTitle>
         {isInput && onRowsChange && onColsChange && (
-          <div className="flex items-center gap-2 pt-2">
-            <Label htmlFor="rows">Rows</Label>
-            <Input id="rows" type="number" min="1" max="8" value={rows} onChange={(e) => onRowsChange(parseInt(e.target.value))} className="h-8 w-16" />
-            <Label htmlFor="cols">Cols</Label>
-            <Input id="cols" type="number" min="2" max="9" value={cols} onChange={(e) => onColsChange(parseInt(e.target.value))} className="h-8 w-16" />
+          <div className="flex items-center gap-1 pt-2">
+            <Label htmlFor="rows" className="text-xs">Rows</Label>
+            <Input id="rows" type="number" min="1" max="8" value={rows} onChange={(e) => onRowsChange(parseInt(e.target.value))} className="h-8 w-14" />
+            <Label htmlFor="cols" className="text-xs">Cols</Label>
+            <Input id="cols" type="number" min="2" max="9" value={cols} onChange={(e) => onColsChange(parseInt(e.target.value))} className="h-8 w-14" />
           </div>
         )}
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid gap-2 overflow-x-auto" style={{ gridTemplateColumns: `repeat(${cols}, minmax(3rem, 1fr))` }}>
+      <CardContent className="space-y-2 p-2 md:p-4">
+        <div className="grid gap-1 overflow-x-auto" style={{ gridTemplateColumns: `repeat(${cols}, minmax(2.5rem, 1fr))` }}>
           {matrix.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <Input
@@ -69,17 +69,17 @@ const MatrixDisplay = ({
                 value={cell}
                 readOnly={!isInput}
                 onChange={(e) => isInput && handleInputChange(rowIndex, colIndex, e.target.value)}
-                className={`h-10 text-center ${colIndex === cols - 1 ? 'bg-muted border-l-2 border-dashed' : ''} ${!isInput ? 'bg-muted' : ''}`}
+                className={`h-9 text-center text-xs ${colIndex === cols - 1 ? 'bg-muted border-l-2 border-dashed' : ''} ${!isInput ? 'bg-muted' : ''}`}
                 aria-label={`Row ${rowIndex + 1}, Column ${colIndex + 1}`}
               />
             ))
           )}
         </div>
         {isInput && (
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" onClick={() => fillMatrix(0)}>Clear</Button>
-            <Button variant="outline" size="sm" onClick={() => fillMatrix(1)}>1s</Button>
-            <Button variant="outline" size="sm" onClick={() => fillMatrix('random')}>Random</Button>
+          <div className="flex flex-wrap gap-1">
+            <Button variant="outline" size="xs" onClick={() => fillMatrix(0)}>Clear</Button>
+            <Button variant="outline" size="xs" onClick={() => fillMatrix(1)}>1s</Button>
+            <Button variant="outline" size="xs" onClick={() => fillMatrix('random')}>Rand</Button>
           </div>
         )}
       </CardContent>
@@ -287,7 +287,7 @@ export default function RrefCalculator() {
   const rowOptions = Array.from({ length: rows }, (_, i) => String(i + 1));
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <MatrixDisplay
         matrix={matrix}
         rows={rows}
@@ -300,62 +300,54 @@ export default function RrefCalculator() {
       />
       
       <Card>
-        <CardHeader>
-          <CardTitle>Operations</CardTitle>
-          <CardDescription>Perform automatic or manual row operations.</CardDescription>
+        <CardHeader className="p-2 md:p-4">
+          <CardTitle className="text-base md:text-lg">Operations</CardTitle>
+          <CardDescription className="text-xs md:text-sm">Perform automatic or manual row operations.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-2 p-2 md:p-4">
             <div className="flex flex-wrap items-center gap-2">
-                <Button onClick={handleRREF} className="bg-accent hover:bg-accent/90">Calculate RREF</Button>
-                <Button onClick={handleUndo} variant="outline" disabled={history.length === 0}>Undo</Button>
+                <Button onClick={handleRREF} size="sm" className="bg-accent hover:bg-accent/90">Calculate RREF</Button>
+                <Button onClick={handleUndo} size="sm" variant="outline" disabled={history.length === 0}>Undo</Button>
             </div>
-            <div className="space-y-2">
-                <h4 className="font-medium">Manual Row Operations</h4>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-2">
-                    <div className="flex items-center gap-2">
+            <div className="space-y-2 pt-2">
+                <h4 className="font-medium text-sm">Manual Row Operations</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="flex items-center gap-1">
                         <Select value={row1} onValueChange={setRow1}>
-                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
-                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                            <SelectTrigger className="w-24 h-9 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-${r}`} value={r}>R{r}</SelectItem>)}</SelectContent>
                         </Select>
                         <span className="font-bold">&harr;</span>
                         <Select value={row2} onValueChange={setRow2}>
-                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
-                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r2-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                            <SelectTrigger className="w-24 h-9 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r2-${r}`} value={r}>R{r}</SelectItem>)}</SelectContent>
                         </Select>
+                        <Button variant="secondary" size="sm" onClick={() => handleRowOperation('swap')}>Swap</Button>
                     </div>
-                    <Button variant="secondary" onClick={() => handleRowOperation('swap')}>Swap</Button>
-                </div>
-                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-2">
-                    <div className="flex items-center gap-2">
-                        <Input value={scalar} onChange={e => setScalar(e.target.value)} className="w-20" placeholder="k" />
+                    <div className="flex items-center gap-1">
+                        <Input value={scalar} onChange={e => setScalar(e.target.value)} className="w-16 h-9 text-xs" placeholder="k" />
                         <span className="font-bold">&times;</span>
-                        <Select value={row1} onValueChange={setRow1}>
-                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
-                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-scale-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                         <Select value={row1} onValueChange={setRow1}>
+                            <SelectTrigger className="w-24 h-9 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-scale-${r}`} value={r}>R{r}</SelectItem>)}</SelectContent>
                         </Select>
+                         <Button variant="secondary" size="sm" onClick={() => handleRowOperation('scale')}>Scale</Button>
                     </div>
-                    <Button variant="secondary" onClick={() => handleRowOperation('scale')}>Scale Row</Button>
-                </div>
-                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
+                     <div className="flex flex-wrap items-center gap-1 col-span-1 sm:col-span-2">
                         <Select value={row1} onValueChange={setRow1}>
-                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
-                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-add-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                            <SelectTrigger className="w-24 h-9 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-add-${r}`} value={r}>R{r}</SelectItem>)}</SelectContent>
                         </Select>
-                         <span className="font-bold">&larr;</span>
-                        <Select value={row1} onValueChange={setRow1}>
-                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
-                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r1-add2-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
-                        </Select>
-                        <span className="font-bold">+</span>
-                        <Input value={scalar} onChange={e => setScalar(e.target.value)} className="w-20" placeholder="k" />
-                         <span className="font-bold">&times;</span>
+                        <span className="font-bold"> +</span>
+                        <Input value={scalar} onChange={e => setScalar(e.target.value)} className="w-16 h-9 text-xs" placeholder="k" />
+                        <span className="font-bold">&times;</span>
                         <Select value={row2} onValueChange={setRow2}>
-                            <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
-                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r2-add-${r}`} value={r}>Row {r}</SelectItem>)}</SelectContent>
+                            <SelectTrigger className="w-24 h-9 text-xs"><SelectValue /></SelectTrigger>
+                            <SelectContent>{rowOptions.map(r => <SelectItem key={`r2-add-${r}`} value={r}>R{r}</SelectItem>)}</SelectContent>
                         </Select>
+                         <span className="font-bold"> &rarr; R{row1}</span>
+                        <Button variant="secondary" size="sm" onClick={() => handleRowOperation('add')}>Add</Button>
                     </div>
-                    <Button variant="secondary" onClick={() => handleRowOperation('add')}>Add to Row</Button>
                 </div>
             </div>
         </CardContent>
@@ -372,16 +364,14 @@ export default function RrefCalculator() {
       
       {solution && (
         <Card>
-          <CardHeader>
-            <CardTitle>Solution Analysis</CardTitle>
+          <CardHeader className="p-2 md:p-4">
+            <CardTitle className="text-base md:text-lg">Solution Analysis</CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-lg font-mono p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">{solution}</p>
+          <CardContent className="p-2 md:p-4">
+            <p className="text-sm font-mono p-2 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">{solution}</p>
           </CardContent>
         </Card>
       )}
     </div>
   );
 }
-
-    
