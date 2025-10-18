@@ -24,6 +24,12 @@ const tools = [
     description: 'Derivatives, integrals, and limits.',
   },
   {
+    href: '/sequences',
+    label: 'Sequences',
+    icon: Milestone,
+    description: 'Arithmetic, geometric, and Fibonacci.',
+  },
+  {
     href: '/geometry',
     label: 'Geometry',
     icon: Square,
