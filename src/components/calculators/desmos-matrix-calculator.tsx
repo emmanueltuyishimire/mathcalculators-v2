@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -37,7 +37,7 @@ const getMinor = (matrix: Matrix, row: number, col: number): Matrix =>
 const determinant = (matrix: Matrix): number => {
   const n = matrix.length;
   if (n === 0) return 1;
-  if (n !== (matrix[0]?.length || 0)) throw new Error("Matrix must be square.");
+  if (n !== (matrix[0]?.length || 0)) throw new Error("Matrix must be square for determinant.");
   if (n === 1) return matrix[0][0];
   if (n === 2) return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
 
@@ -49,7 +49,7 @@ const determinant = (matrix: Matrix): number => {
 };
 
 const cofactor = (matrix: Matrix): Matrix => {
-    if (matrix.length !== (matrix[0]?.length || 0)) throw new Error("Matrix must be square.");
+    if (matrix.length !== (matrix[0]?.length || 0)) throw new Error("Matrix must be square for cofactor.");
     return matrix.map((row, r) =>
         row.map((_, c) => Math.pow(-1, r + c) * determinant(getMinor(matrix, r, c)))
     );
@@ -62,7 +62,7 @@ const transpose = (matrix: Matrix): Matrix => {
 
 const multiplyMatrices = (a: Matrix, b: Matrix): Matrix => {
     const rowsA = a.length, colsA = a[0]?.length || 0, rowsB = b.length, colsB = b[0]?.length || 0;
-    if (colsA !== rowsB) throw new Error("Columns of A must match rows of B.");
+    if (colsA !== rowsB) throw new Error("Columns of first matrix must match rows of second matrix.");
     
     let result: Matrix = Array(rowsA).fill(0).map(() => Array(colsB).fill(0));
     for (let i = 0; i < rowsA; i++) {
@@ -287,28 +287,31 @@ const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], o
     const { toast } = useToast();
 
     const handleOperation = (op: 'add' | 'subtract' | 'multiply') => {
-        const matrixA = matrices.find(m => m.name === inputA);
-        const matrixB = matrices.find(m => m.name === inputB);
+        const matrixAObj = matrices.find(m => m.name === inputA);
+        const matrixBObj = matrices.find(m => m.name === inputB);
 
-        if (!matrixA || !matrixB) {
+        if (!matrixAObj || !matrixBObj) {
             toast({ variant: 'destructive', title: "Error", description: "Matrix not found" });
             return;
         }
+        
+        const matrixA = matrixAObj.matrix;
+        const matrixB = matrixBObj.matrix;
 
         try {
             let result: Matrix;
             let resultName: string;
             switch(op) {
                 case 'add': 
-                  result = addMatrices(matrixA.matrix, matrixB.matrix);
+                  result = addMatrices(matrixA, matrixB);
                   resultName = `${inputA}+${inputB}`;
                   break;
                 case 'subtract': 
-                  result = subtractMatrices(matrixA.matrix, matrixB.matrix);
+                  result = subtractMatrices(matrixA, matrixB);
                   resultName = `${inputA}-${inputB}`;
                   break;
                 case 'multiply': 
-                  result = multiplyMatrices(matrixA.matrix, matrixB.matrix);
+                  result = multiplyMatrices(matrixA, matrixB);
                   resultName = `${inputA}×${inputB}`;
                   break;
             }
@@ -364,18 +367,18 @@ export default function DesmosMatrixCalculator() {
   const getNextMatrixName = () => {
     let i = 0;
     let nextChar: string;
+    const existingNames = new Set(matrices.map(m => m.name));
     do {
       nextChar = String.fromCharCode(65 + i);
       i++;
-    } while(matrices.some(m => m.name === nextChar));
+    } while(existingNames.has(nextChar));
     return nextChar;
   }
   
   const getUniqueId = (prefix: string) => {
-    const newId = `${prefix}-${nextIdCounter.current++}`;
-    // Fallback if the generated ID somehow already exists
+    let newId = `${prefix}-${nextIdCounter.current++}`;
     if (matrices.some(m => m.id === newId)) {
-        return `${newId}-${Date.now()}`;
+        newId = `${newId}-${Date.now()}`;
     }
     return newId;
   }
@@ -383,6 +386,13 @@ export default function DesmosMatrixCalculator() {
   const addMatrix = (matrix?: Matrix, name?: string) => {
     const newName = name || getNextMatrixName();
     const newId = getUniqueId(newName);
+
+    if (matrices.some(m => m.name === newName)) {
+      // If name is not unique, create a unique one
+      addMatrix(matrix, `${newName}'`);
+      return;
+    }
+
     const newMatrix: MatrixObject = {
       id: newId,
       name: newName,
@@ -441,9 +451,14 @@ export default function DesmosMatrixCalculator() {
           newName = `${name}ᵀ`;
       } else { // inverse
           const det = determinant(matrix);
-          if (det === 0) throw new Error("Matrix is not invertible (determinant is 0).");
-          const adj = transpose(cofactor(matrix));
-          newMatrix = adj.map(row => row.map(cell => cell / det));
+          if (Math.abs(det) < 1e-9) throw new Error("Matrix is not invertible (determinant is 0).");
+          
+          if (matrix.length === 1) {
+            newMatrix = [[1/matrix[0][0]]];
+          } else {
+            const adj = transpose(cofactor(matrix));
+            newMatrix = adj.map(row => row.map(cell => cell / det));
+          }
           newName = `${name}⁻¹`;
       }
       addMatrix(newMatrix, newName);
