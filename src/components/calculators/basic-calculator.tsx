@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 export default function BasicCalculator() {
@@ -49,10 +49,7 @@ export default function BasicCalculator() {
 
   return (
     <Card className="shadow-lg">
-      <CardHeader>
-        <CardTitle>Calculator</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col items-center gap-4">
+      <CardContent className="flex flex-col items-center gap-4 p-6">
         <div className="w-full rounded-lg border bg-muted p-4 text-right text-3xl font-mono text-foreground transition-all duration-300">
           {displayValue}
         </div>

@@ -18,17 +18,10 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 
 const navItems = [
-  { href: '/', label: 'Basic', icon: Calculator, tooltip: 'Basic Arithmetic' },
+  { href: '/#basic-calculator', label: 'Basic', icon: Calculator, tooltip: 'Basic Arithmetic' },
   { href: '/algebra', label: 'Algebra', icon: FunctionSquare, tooltip: 'Algebra Solver' },
   { href: '/calculus', label: 'Calculus', icon: InfinityIcon, tooltip: 'Calculus Tools' },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal, tooltip: 'Statistics Calculator' },
@@ -40,7 +33,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
           <Link
             href="/"
@@ -96,7 +89,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Future user-related items can go here */}
         </div>
       </header>
-      <main className="flex flex-1 flex-col">{children}</main>
+      <div className="flex flex-1 flex-col">{children}</div>
     </div>
   );
 }
