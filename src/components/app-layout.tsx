@@ -15,6 +15,7 @@ import {
   Milestone,
   Percent,
   FlaskConical,
+  ShieldCheck,
 } from 'lucide-react';
 import {
   Sheet,
@@ -35,6 +36,7 @@ const navItems = [
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
   { href: '/probability', label: 'Probability', icon: Percent },
   { href: '/z-score', label: 'Z-Score', icon: Sigma },
+  { href: '/confidence-interval', label: 'Confidence Interval', icon: ShieldCheck },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {

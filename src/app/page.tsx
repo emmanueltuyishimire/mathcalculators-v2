@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, Percent } from 'lucide-react';
+import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, Percent, ShieldCheck } from 'lucide-react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
@@ -77,6 +77,12 @@ const tools = [
     label: 'Z-Score',
     icon: Sigma,
     description: 'Z-score calculations and conversions.'
+  },
+  {
+    href: '/confidence-interval',
+    label: 'Confidence Interval',
+    icon: ShieldCheck,
+    description: 'Calculate confidence intervals.',
   },
   {
     href: '/converter',
