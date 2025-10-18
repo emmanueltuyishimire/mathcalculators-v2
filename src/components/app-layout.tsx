@@ -10,10 +10,6 @@ import {
   Menu,
   MoreVertical,
   BarChartHorizontal,
-  Table,
-  FlaskConical,
-  Type,
-  Replace,
 } from 'lucide-react';
 import {
   Sheet,
@@ -26,15 +22,9 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 const navItems = [
   { href: '/', label: 'Basic', icon: Calculator },
-  { href: '/scientific', label: 'Scientific', icon: FlaskConical },
-  { href: '/algebra', label: 'Algebra', icon: Type },
-  { href: '/calculus', label: 'Calculus', icon: Sigma },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
-  { href: '/matrix', label: 'Matrix', icon: Table },
-  { href: '/rref', label: 'RREF', icon: Sigma }, // Replaced Milestone with Sigma
-  { href: '/converter', label: 'Converter', icon: Replace },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
