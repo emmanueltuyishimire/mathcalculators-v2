@@ -67,7 +67,11 @@ const HowToUseGuide = () => (
           </li>
           <li className="flex items-start">
             <CheckCircle className="h-5 w-5 mr-2 mt-0.5 text-primary flex-shrink-0"/>
-            A population proportion of 50% is the most conservative choice for sample size calculation.
+            A population proportion of 50% is the most conservative choice for sample size calculation as it maximizes variability.
+          </li>
+           <li className="flex items-start">
+            <CheckCircle className="h-5 w-5 mr-2 mt-0.5 text-primary flex-shrink-0"/>
+            For small populations, always enter the population size to get a more accurate, often smaller, required sample size.
           </li>
         </ul>
       </div>
@@ -99,21 +103,40 @@ const EducationalContent = () => (
                 </p>
             </div>
             <Separator />
-            <div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">🔹 Sample Size Formula (Simplified)</h3>
-                <p className="text-muted-foreground">For unlimited population:</p>
-                <pre className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">n = (z² * p * (1-p)) / ε²</pre>
-                <p className="text-muted-foreground mt-4">For finite population:</p>
-                <pre className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">n_adj = (N * n) / (N + n - 1)</pre>
-                <p className="text-muted-foreground mt-2">Where n is the sample size for unlimited population, and N is the population size.</p>
+             <div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Core Logic & Formulas</h3>
+                <p className="text-muted-foreground mb-4">
+                    The calculators use z-scores from the normal distribution, based on the Central Limit Theorem.
+                </p>
+                <div className="space-y-4">
+                    <div>
+                        <h4 className="font-medium text-foreground">A. Sample Size Formula (Unlimited Population)</h4>
+                        <pre className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">n = (z² * p * (1-p)) / ε²</pre>
+                        <ul className="list-disc list-inside text-sm text-muted-foreground mt-2 space-y-1">
+                            <li><b>z:</b> z-score for confidence level (e.g., 1.96 for 95%).</li>
+                            <li><b>p:</b> Estimated population proportion (as a decimal).</li>
+                            <li><b>ε:</b> Margin of error (as a decimal).</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h4 className="font-medium text-foreground">B. Finite Population Correction</h4>
+                        <p className="text-muted-foreground text-sm">If the population (N) is small, this formula adjusts the sample size:</p>
+                        <pre className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">n_adj = (N * n) / (N + n - 1)</pre>
+                    </div>
+                     <div>
+                        <h4 className="font-medium text-foreground">C. Margin of Error Formula</h4>
+                         <p className="text-muted-foreground text-sm">For an infinite population:</p>
+                        <pre className="font-mono bg-muted p-2 rounded-md mt-2 text-sm">ε = z * √((p * (1-p)) / n)</pre>
+                         <p className="text-muted-foreground text-sm mt-2">This is then multiplied by a correction factor for finite populations.</p>
+                    </div>
+                </div>
             </div>
-             <Separator />
+            <Separator />
             <div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">🔹 Why Use This Calculator?</h3>
                 <ul className="list-disc list-inside text-muted-foreground space-y-1">
                     <li>Saves time and prevents over- or under-sampling.</li>
-                    <li>Ensures statistically valid results.</li>
-                    <li>Helps in survey planning, experiments, and polls.</li>
+                    <li>Ensures statistically valid results for surveys, experiments, and polls.</li>
                     <li>Guides decision-making in marketing, research, education, and social studies.</li>
                 </ul>
             </div>
