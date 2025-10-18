@@ -1,96 +1,192 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useToast } from '@/hooks/use-toast';
+import { Input } from '../ui/input';
 
 interface Stats {
-  mean: number | string;
-  median: number | string;
-  mode: string;
-  stdDev: number | string;
+  mean: number;
+  popStdDev: number;
+  sampleStdDev: number;
+  popVariance: number;
+  sampleVariance: number;
+  geoMean: number;
   count: number;
   sum: number;
+  sumOfSquares: number;
 }
 
-const StatCard = ({ title, value }: { title: string; value: number | string }) => (
-  <Card className="bg-secondary/50">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium">{title}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="text-2xl font-bold">{typeof value === 'number' ? value.toFixed(2) : value}</div>
-    </CardContent>
-  </Card>
+const StatDisplay = ({ title, value, unit }: { title: string; value: number | string; unit?: string }) => (
+    <div className="flex justify-between items-center p-2 bg-muted rounded-md">
+        <span className="text-sm font-medium text-muted-foreground">{title}</span>
+        <span className="text-sm font-mono font-semibold">
+            {typeof value === 'number' ? value.toFixed(4) : value} {unit}
+        </span>
+    </div>
 );
 
 export default function StatisticsCalculator() {
-  const [data, setData] = useState('8, 12, 12, 15, 18, 22, 25');
-  const [isLoading, setIsLoading] = useState(false);
+  const [display, setDisplay] = useState('0');
+  const [dataset, setDataset] = useState<number[]>([]);
+  const [csvData, setCsvData] = useState('10, 2, 38, 23, 38, 23, 21');
+  const { toast } = useToast();
 
   const stats: Stats | null = useMemo(() => {
-    const numbers = data
-      .split(/[\s,]+/)
-      .map(Number)
-      .filter(n => !isNaN(n));
+    if (dataset.length === 0) return null;
 
-    if (numbers.length === 0) return null;
-
-    const count = numbers.length;
-    const sum = numbers.reduce((acc, n) => acc + n, 0);
-    const mean = sum / count;
-
-    const sorted = [...numbers].sort((a, b) => a - b);
-    const mid = Math.floor(count / 2);
-    const median = count % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-
-    const frequency: { [key: number]: number } = {};
-    let maxFreq = 0;
-    for (const num of numbers) {
-      frequency[num] = (frequency[num] || 0) + 1;
-      if (frequency[num] > maxFreq) {
-        maxFreq = frequency[num];
-      }
-    }
-    const mode = maxFreq > 1 ? Object.keys(frequency).filter(key => frequency[Number(key)] === maxFreq).join(', ') : 'N/A';
+    const n = dataset.length;
+    const sum = dataset.reduce((acc, val) => acc + val, 0);
+    const mean = sum / n;
     
-    const stdDev = Math.sqrt(numbers.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / count);
+    const sumOfSquaredDiffs = dataset.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
+    const sumOfSquares = dataset.reduce((acc, val) => acc + val*val, 0);
 
-    return { mean, median, mode, stdDev, count, sum };
-  }, [data]);
+    const popVariance = sumOfSquaredDiffs / n;
+    const popStdDev = Math.sqrt(popVariance);
+    
+    const sampleVariance = n > 1 ? sumOfSquaredDiffs / (n - 1) : 0;
+    const sampleStdDev = n > 1 ? Math.sqrt(sampleVariance) : 0;
+    
+    const product = dataset.reduce((acc, val) => acc * val, 1);
+    const geoMean = Math.pow(product, 1 / n);
+
+    return { 
+        count: n,
+        sum,
+        sumOfSquares,
+        mean,
+        popStdDev,
+        sampleStdDev,
+        popVariance,
+        sampleVariance,
+        geoMean
+    };
+  }, [dataset]);
+
+  const handleKeypad = (key: string) => {
+    if (display === '0' && key !== '.') setDisplay(key);
+    else setDisplay(prev => prev + key);
+  };
+  
+  const handleClear = () => setDisplay('0');
+  
+  const handleAllClear = () => {
+    setDisplay('0');
+    setDataset([]);
+    setCsvData('');
+    toast({ title: 'Cleared', description: 'All data has been cleared.'});
+  };
+
+  const handleAdd = () => {
+    const value = parseFloat(display);
+    if (!isNaN(value)) {
+      setDataset(prev => [...prev, value]);
+      setDisplay('0');
+      toast({ title: "Value Added", description: `${value} has been added to the dataset.`});
+    } else {
+      toast({ variant: 'destructive', title: "Invalid Number", description: "Could not add value to dataset."});
+    }
+  };
+  
+  const handleLoadCsv = () => {
+      try {
+        const numbers = csvData
+            .split(/[\s,]+/)
+            .map(s => s.trim())
+            .filter(Boolean)
+            .map(Number)
+            .filter(n => !isNaN(n));
+        
+        if (numbers.length === 0) throw new Error("No valid numbers found in input.");
+        
+        setDataset(numbers);
+        toast({ title: 'Dataset Loaded', description: `${numbers.length} values have been loaded.`});
+      } catch (e: any) {
+        toast({ variant: 'destructive', title: "Error Loading Data", description: e.message });
+      }
+  }
+
+  const keypadButtons = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.', '±'];
 
   return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle>Statistics Calculator</CardTitle>
-        <CardDescription>Enter numbers separated by commas or spaces.</CardDescription>
+        <CardDescription>Input numbers via the keypad or as a comma-separated list.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="data">Data Set</Label>
-          <Textarea
-            id="data"
-            value={data}
-            onChange={(e) => setData(e.target.value)}
-            placeholder="e.g., 5, 10, 15, 20"
-            className="h-24 font-mono"
-          />
-        </div>
-        {stats && (
-          <div className="space-y-4 pt-4">
-            <div className="grid grid-cols-2 gap-4">
-              <StatCard title="Mean" value={stats.mean} />
-              <StatCard title="Median" value={stats.median} />
-              <StatCard title="Mode" value={stats.mode} />
-              <StatCard title="Standard Deviation" value={stats.stdDev} />
-              <StatCard title="Count" value={stats.count} />
-              <StatCard title="Sum" value={stats.sum} />
+        {/* Keypad section */}
+        <div className="p-2 border rounded-lg">
+            <Input 
+              readOnly 
+              value={display} 
+              className="mb-2 h-12 text-right text-3xl font-mono bg-muted" 
+              aria-label="Current number input"
+            />
+            <div className="grid grid-cols-3 gap-2">
+                {keypadButtons.map(key => (
+                    <Button key={key} variant="outline" onClick={() => handleKeypad(key)}>
+                        {key}
+                    </Button>
+                ))}
             </div>
-          </div>
-        )}
+             <div className="grid grid-cols-2 gap-2 mt-2">
+                <Button variant="destructive" onClick={handleClear}>Clear Entry</Button>
+                <Button className="bg-accent hover:bg-accent/90" onClick={handleAdd}>Add to Data</Button>
+            </div>
+        </div>
+
+        {/* CSV Input section */}
+        <div className="space-y-2">
+            <Label htmlFor="csvData">Or Provide Comma-Separated Values</Label>
+            <Textarea
+                id="csvData"
+                value={csvData}
+                onChange={(e) => setCsvData(e.target.value)}
+                placeholder="e.g., 10, 2, 38, 23, 38, 23, 21"
+                className="h-24 font-mono"
+            />
+            <Button onClick={handleLoadCsv} className="w-full">Load Data</Button>
+        </div>
+        <Button onClick={handleAllClear} variant="secondary" className="w-full">Clear All Data</Button>
       </CardContent>
     </Card>
+
+    <Card>
+        <CardHeader>
+            <CardTitle>Results</CardTitle>
+            <CardDescription>
+                {stats ? `Analysis for ${stats.count} data points.` : 'No data to analyze.'}
+            </CardDescription>
+        </CardHeader>
+        {stats && (
+            <CardContent className="space-y-2">
+                <StatDisplay title="Count" value={stats.count} />
+                <StatDisplay title="Sum (Σx)" value={stats.sum} />
+                <StatDisplay title="Sum of Squares (Σx²)" value={stats.sumOfSquares} />
+                <hr/>
+                <StatDisplay title="Mean" value={stats.mean} />
+                <StatDisplay title="Geometric Mean (GM)" value={stats.geoMean} />
+                <hr/>
+                <StatDisplay title="Population Variance (σ²)" value={stats.popVariance} />
+                <StatDisplay title="Population Std. Dev. (σ)" value={stats.popStdDev} />
+                <hr/>
+                <StatDisplay title="Sample Variance (s²)" value={stats.sampleVariance} />
+                <StatDisplay title="Sample Std. Dev. (s)" value={stats.sampleStdDev} />
+            </CardContent>
+        )}
+        <CardFooter>
+            <p className="text-xs text-muted-foreground">
+                Population stats are for a complete dataset. Sample stats are for a subset of a larger population.
+            </p>
+        </CardFooter>
+    </Card>
+    </div>
   );
 }
