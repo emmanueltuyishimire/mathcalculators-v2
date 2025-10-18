@@ -72,13 +72,43 @@ export default function DiagonalizeMatrixPage() {
 
             <section className="space-y-8 text-muted-foreground">
                 <h2 className="text-3xl font-bold text-foreground">How to Use the Diagonalize Matrix Calculator</h2>
-                <ol className="list-decimal list-inside space-y-2">
-                    <li>Input a square matrix (n × n).</li>
-                    <li>Click <strong>Calculate Eigenvalues</strong> to find λ₁, λ₂, …, λₙ.</li>
-                    <li>Click <strong>Calculate Eigenvectors</strong> to find corresponding eigenvectors.</li>
-                    <li>Click <strong>Diagonalize Matrix</strong> to generate P and D matrices.</li>
-                    <li>Verify diagonalization by checking P⁻¹AP = D.</li>
-                </ol>
+                <p>The Diagonalize Matrix Calculator allows you to convert any square matrix into its diagonal form, compute eigenvalues and eigenvectors, and verify the diagonalization process. Follow these steps to use it effectively:</p>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 1: Input Your Matrix</h3>
+                    <p>Select the size of your square matrix (e.g., 2×2, 3×3). Enter the matrix elements manually into the grid.</p>
+                    <p><strong>Tip:</strong> Only square matrices (same number of rows and columns) can be diagonalized.</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 2: Calculate Eigenvalues</h3>
+                    <p>Click the <strong>Calculate Eigenvalues</strong> button. The calculator will solve the characteristic equation det(A – λI) = 0 to find all eigenvalues (λ1, λ2, …, λn).</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 3: Calculate Eigenvectors</h3>
+                    <p>Click <strong>Calculate Eigenvectors</strong>. For each eigenvalue, the calculator solves (A – λI)v = 0 to find the corresponding eigenvector. Eigenvectors are displayed as columns in matrix P.</p>
+                     <p><strong>Tip:</strong> Ensure eigenvectors are linearly independent; otherwise, the matrix may not be diagonalizable.</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 4: Diagonalize the Matrix</h3>
+                    <p>Click <strong>Diagonalize Matrix</strong>. The calculator forms P (matrix of eigenvectors) and D (diagonal matrix of eigenvalues), showing A = P D P⁻¹.</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 5: Verify Diagonalization</h3>
+                    <p>Click <strong>Verify</strong>. The calculator computes P⁻¹ A P and checks if it equals D. A confirmation will indicate correctness.</p>
+                  </div>
+                   <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 6: Optional Step-by-Step Mode</h3>
+                    <p>Enable <strong>Step-by-Step Mode</strong> to view the characteristic polynomial, eigenvalue calculation, eigenvector computation, and construction of P and D matrices.</p>
+                  </div>
+                </div>
+
+                <h2 className="text-3xl font-bold text-foreground">Pro Tips</h2>
+                <ul className="list-disc list-inside space-y-2">
+                  <li>Always start with smaller matrices (2×2 or 3×3) to understand the process.</li>
+                  <li>For repeated eigenvalues, check if you have enough independent eigenvectors to diagonalize.</li>
+                  <li>Use the Step-by-Step panel to learn how each calculation is performed.</li>
+                  <li>Verify the result by confirming P⁻¹ A P = D.</li>
+                </ul>
                 
                 <h2 className="text-3xl font-bold text-foreground">Features of the Calculator</h2>
                 <ul className="list-disc list-inside space-y-2">
@@ -87,7 +117,7 @@ export default function DiagonalizeMatrixPage() {
                     <li>Automatically forms the P (eigenvector) and D (eigenvalue) matrices.</li>
                     <li>Verifies the diagonalization P⁻¹AP = D.</li>
                     <li>Supports 2×2, 3×3, and larger matrices for learning and application.</li>
-                    <li>Related tools: <Link href="/matrix-calculator" className="text-primary hover:underline">Matrix Calculator</Link>, <Link href="/desmos-matrix" className="text-primary hover:underline">Desmos Matrix Calculator</Link>, and <Link href="/rref" className="text-primary hover:underline">RREF Calculator</Link>.</li>
+                    <li>Related tools: <Link href="/matrix" className="text-primary hover:underline">Matrix Calculator</Link>, <Link href="/desmos-matrix" className="text-primary hover:underline">Desmos Matrix Calculator</Link>, and <Link href="/rref" className="text-primary hover:underline">RREF Calculator</Link>.</li>
                 </ul>
 
                 <h2 className="text-3xl font-bold text-foreground">Actionable Tips</h2>
