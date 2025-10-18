@@ -1,4 +1,4 @@
-
+import Link from 'next/link';
 import MatrixCalculator from '@/components/calculators/matrix-calculator';
 
 export default function MatrixPage() {
@@ -14,7 +14,7 @@ export default function MatrixPage() {
                     A matrix calculator is an essential tool for students, engineers, and professionals working with linear algebra, computer graphics, physics, or data analysis. It saves time, reduces errors, and helps you understand complex operations like determinants, inverses, and matrix multiplication.
                 </p>
                  <p className="mt-2 text-lg text-muted-foreground">
-                    Here’s how to make the most out of your online matrix calculator.
+                    Here’s how to make the most out of your online matrix calculator. For solving systems of linear equations, you may also find our <Link href="/rref" className="text-primary hover:underline">Augmented Matrix & RREF Calculator</Link> useful.
                 </p>
             </section>
             
@@ -69,7 +69,7 @@ export default function MatrixPage() {
                     <div>
                         <h3 className="text-2xl font-semibold">D. Inverse</h3>
                         <p className="text-muted-foreground mt-2">
-                           Only square matrices with non-zero determinant can be inverted.
+                           Only for square matrices with non-zero determinant can be inverted.
                         </p>
                         <p className="font-mono text-center my-2 text-lg">A⁻¹ = 1/det(A) * adj(A)</p>
                          <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">

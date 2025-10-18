@@ -120,7 +120,7 @@ export default function ScientificPage() {
             <section className="space-y-8">
                 <h2 className="text-3xl font-bold">What is a Scientific Calculator?</h2>
                 <p className="text-muted-foreground">
-                    A scientific calculator is an essential tool for students, engineers, and professionals who need to perform complex mathematical calculations. Unlike a basic calculator, a scientific calculator includes functions for trigonometry, logarithms, exponents, and more. Our free scientific calculator app provides a powerful and easy-to-use interface right in your browser, with features comparable to leading brands like Casio and Texas Instruments (TI). Whether you're tackling homework or complex engineering problems, this tool is designed to be your reliable companion. The primary benefit of an online calculator is its accessibility—no need to buy a physical device when you have a powerful tool available for free.
+                    A scientific calculator is an essential tool for students, engineers, and professionals who need to perform complex mathematical calculations. Unlike a basic calculator, a scientific calculator includes functions for trigonometry, logarithms, exponents, and more. Our free scientific calculator app provides a powerful and easy-to-use interface right in your browser, with features comparable to leading brands like Casio and Texas Instruments (TI). Whether you're tackling homework or complex engineering problems, this tool is designed to be your reliable companion. The primary benefit of an online calculator is its accessibility—no need to buy a physical device when you have a powerful tool available for free. For more specialized trigonometric functions, you can also use our dedicated <Link href="/trigonometry" className="text-primary hover:underline">Trigonometry Calculator</Link>.
                 </p>
 
                 <h2 className="text-3xl font-bold">How to Use a Scientific Calculator Online</h2>
@@ -240,7 +240,7 @@ export default function ScientificPage() {
                     <div>
                         <h3 className="text-2xl font-semibold">Fractions & Memory Functions</h3>
                         <p className="text-muted-foreground mt-2">
-                            While this calculator handles decimal results, for dedicated fraction work, check our <Link href="/fraction-calculator" className="text-primary hover:underline">Fraction Calculator</Link>. This scientific calculator also includes memory functions (M+, M-, MR, MC) to store and recall values, making multi-step calculations simpler.
+                            While this calculator handles decimal results, for dedicated fraction work, check our other tools. This scientific calculator also includes memory functions (M+, M-, MR, MC) to store and recall values, making multi-step calculations simpler.
                         </p>
                     </div>
                     <div>
