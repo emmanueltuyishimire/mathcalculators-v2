@@ -40,15 +40,22 @@ export default function PermutationCombinationCalculator() {
         
         try {
             const factN = factorial(nVal);
+            if (!isFinite(factN)) {
+                throw new Error("Input number 'n' is too large to calculate the factorial.");
+            }
             const factR = factorial(rVal);
             const factNminusR = factorial(nVal - rVal);
             
             if (isNaN(factN) || isNaN(factR) || isNaN(factNminusR)) {
-                 throw new Error("Factorial calculation resulted in NaN. Input numbers may be too large.");
+                 throw new Error("Factorial calculation resulted in NaN. Inputs may be invalid.");
             }
 
             const permutation = factN / factNminusR;
             const combination = permutation / factR;
+
+            if (!isFinite(permutation) || !isFinite(combination)) {
+                throw new Error("The resulting numbers are too large to display.");
+            }
 
             setResults({ permutation, combination });
 
