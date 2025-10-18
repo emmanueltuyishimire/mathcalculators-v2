@@ -182,6 +182,23 @@ export default function StatisticsPage() {
       <PageHeader title="Statistics" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-4xl space-y-8">
+            <section className="space-y-4">
+                <h1 className="text-3xl md:text-4xl font-bold text-center">Statistics Calculator – Your Quick & Reliable Tool</h1>
+                <p className="text-lg text-muted-foreground text-center">
+                    Our Statistics Calculator is a versatile, easy-to-use tool that helps you quickly compute important statistical measures for any dataset. Whether you are a student, researcher, or professional, this calculator saves time and ensures accuracy in your calculations.
+                </p>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Why Use This Calculator?</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 text-muted-foreground">
+                        <p><strong>Fast and Easy:</strong> Enter numbers quickly via the keypad or by pasting a list of values.</p>
+                        <p><strong>Comprehensive Statistics:</strong> Instantly calculate mean, population and sample standard deviation, variance, sum, sum of squares, and geometric mean.</p>
+                        <p><strong>Accurate Results:</strong> The calculator automatically handles large datasets and provides precise calculations.</p>
+                        <p><strong>Flexible Input:</strong> Works with numbers entered one by one or as a comma-separated list.</p>
+                    </CardContent>
+                </Card>
+            </section>
           <StatisticsCalculator />
           <HowToUseGuide />
           <StatisticsEducationalContent />
