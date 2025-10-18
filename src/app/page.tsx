@@ -72,6 +72,12 @@ const tools = [
     icon: Star,
     description: 'Numerology and personality insights.',
   },
+  {
+    href: '/z-table',
+    label: 'Z-Table',
+    icon: Table,
+    description: 'Standard normal distribution table.',
+  },
 ];
 
 export default function Home() {
