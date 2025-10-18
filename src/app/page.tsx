@@ -65,6 +65,12 @@ const tools = [
     icon: Table,
     description: 'A Desmos-style matrix calculator.',
   },
+  {
+    href: '/diagonalize-matrix',
+    label: 'Diagonalize Matrix',
+    icon: Table,
+    description: 'Find eigenvalues and diagonalize matrices.',
+  },
 ];
 
 export default function Home() {
@@ -90,17 +96,17 @@ export default function Home() {
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {tools.map((tool) => (
                 <Link href={tool.href} key={tool.href} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                    <CardHeader className="flex flex-col items-center text-center p-4">
-                      <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                        <tool.icon className="h-6 w-6" />
+                    <CardHeader className="flex flex-col items-center text-center p-2">
+                      <div className="mb-1 rounded-full bg-primary/10 p-2 text-primary">
+                        <tool.icon className="h-5 w-5" />
                       </div>
-                      <CardTitle className="text-base">{tool.label}</CardTitle>
+                      <CardTitle className="text-sm">{tool.label}</CardTitle>
                     </CardHeader>
-                    <CardContent className="text-center p-4 pt-0">
+                    <CardContent className="text-center p-2 pt-0">
                       <p className="text-xs text-muted-foreground">{tool.description}</p>
                     </CardContent>
                   </Card>
