@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star } from 'lucide-react';
+import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, Percent } from 'lucide-react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
@@ -47,6 +47,12 @@ const tools = [
     label: 'Statistics',
     icon: BarChartHorizontal,
     description: 'Mean, median, mode, and more.',
+  },
+   {
+    href: '/probability',
+    label: 'Probability',
+    icon: Percent,
+    description: 'Odds, events, and distributions.',
   },
   {
     href: '/matrix',
@@ -98,7 +104,7 @@ export default function Home() {
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {tools.map((tool) => (
                 <Link href={tool.href} key={tool.href} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">

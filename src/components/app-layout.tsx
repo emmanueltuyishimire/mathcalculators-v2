@@ -13,6 +13,7 @@ import {
   BarChartHorizontal,
   Table,
   Milestone,
+  Percent,
 } from 'lucide-react';
 import {
   Sheet,
@@ -30,6 +31,7 @@ const navItems = [
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
+  { href: '/probability', label: 'Probability', icon: Percent },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
