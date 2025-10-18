@@ -1,4 +1,5 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import ZScoreCalculator from '@/components/calculators/z-score-calculator';
 import type { Metadata } from 'next';
@@ -6,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ZTable } from '@/components/z-table';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Z-Score Calculator',
@@ -111,9 +113,13 @@ export default function ZScorePage() {
             
             <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center gap-4 mt-2">
-                    <Link href="/statistics/standard-deviation" className="text-primary hover:underline">Standard Deviation Calculator</Link>
-                    <Link href="/statistics/probability" className="text-primary hover:underline">Probability Calculator</Link>
+                <div className="flex justify-center flex-wrap gap-2 mt-2">
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/probability">Probability Calculator</Link>
+                    </Button>
                 </div>
             </section>
         </div>

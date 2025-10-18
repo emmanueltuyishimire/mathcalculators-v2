@@ -1,10 +1,12 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import MeanMedianModeCalculator from '@/components/calculators/mean-median-mode-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Mean, Median, Mode, Range Calculator',
@@ -137,10 +139,16 @@ export default function MeanMedianModePage() {
 
             <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center gap-4 mt-2">
-                    <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
-                    <Link href="/statistics/standard-deviation" className="text-primary hover:underline">Standard Deviation Calculator</Link>
-                    <Link href="/statistics/sample-size" className="text-primary hover:underline">Sample Size Calculator</Link>
+                <div className="flex justify-center flex-wrap gap-2 mt-2">
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics">Statistics Calculator</Link>
+                    </Button>
+                     <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
+                    </Button>
+                     <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/sample-size">Sample Size Calculator</Link>
+                    </Button>
                 </div>
             </section>
         </div>

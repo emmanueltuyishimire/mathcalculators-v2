@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import DiagonalizeMatrixCalculator from '@/components/calculators/diagonalize-matrix-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Diagonalize Matrix Calculator – Online Eigenvalue & Eigenvector Tool',
@@ -110,15 +111,30 @@ export default function DiagonalizeMatrixPage() {
                   <li>Verify the result by confirming P⁻¹ A P = D.</li>
                 </ul>
                 
-                <h2 className="text-3xl font-bold text-foreground">Features of the Calculator</h2>
-                <ul className="list-disc list-inside space-y-2">
-                    <li>Step-by-step calculations for clarity.</li>
-                    <li>Computes eigenvalues and eigenvectors accurately.</li>
-                    <li>Automatically forms the P (eigenvector) and D (eigenvalue) matrices.</li>
-                    <li>Verifies the diagonalization P⁻¹AP = D.</li>
-                    <li>Supports 2×2, 3×3, and larger matrices for learning and application.</li>
-                    <li>Related tools: <Link href="/matrix/calculator" className="text-primary hover:underline">Matrix Calculator</Link>, <Link href="/desmos-matrix" className="text-primary hover:underline">Desmos Matrix Calculator</Link>, and <Link href="/rref" className="text-primary hover:underline">RREF Calculator</Link>.</li>
-                </ul>
+                <div className="space-y-4">
+                  <h2 className="text-3xl font-bold text-foreground">Features of the Calculator</h2>
+                  <ul className="list-disc list-inside space-y-2">
+                      <li>Step-by-step calculations for clarity.</li>
+                      <li>Computes eigenvalues and eigenvectors accurately.</li>
+                      <li>Automatically forms the P (eigenvector) and D (eigenvalue) matrices.</li>
+                      <li>Verifies the diagonalization P⁻¹AP = D.</li>
+                      <li>Supports 2×2, 3×3, and larger matrices for learning and application.</li>
+                  </ul>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-semibold text-foreground">Related Tools</h3>
+                  <div className="flex flex-wrap gap-2">
+                      <Button asChild variant="outline" size="sm">
+                          <Link href="/matrix/calculator">Matrix Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline" size="sm">
+                          <Link href="/desmos-matrix">Desmos Matrix Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline" size="sm">
+                          <Link href="/rref">RREF Calculator</Link>
+                      </Button>
+                  </div>
+                </div>
 
                 <h2 className="text-3xl font-bold text-foreground">Actionable Tips</h2>
                  <ul className="list-disc list-inside space-y-2">

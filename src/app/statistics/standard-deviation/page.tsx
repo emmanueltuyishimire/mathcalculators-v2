@@ -1,4 +1,5 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import StandardDeviationCalculator from '@/components/calculators/standard-deviation-calculator';
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
 import type { Metadata } from 'next';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Standard Deviation Calculator',
@@ -139,9 +141,13 @@ export default function StandardDeviationPage() {
           
           <section className="text-center text-sm text-muted-foreground">
             <h3 className="font-semibold text-foreground">Related</h3>
-            <div className="flex justify-center gap-4 mt-2">
-                <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
-                <Link href="/statistics/probability" className="text-primary hover:underline">Probability Calculator</Link>
+            <div className="flex justify-center flex-wrap gap-2 mt-2">
+                <Button asChild variant="outline" size="sm">
+                    <Link href="/statistics">Statistics Calculator</Link>
+                </Button>
+                 <Button asChild variant="outline" size="sm">
+                    <Link href="/statistics/probability">Probability Calculator</Link>
+                </Button>
             </div>
           </section>
         </div>

@@ -1,4 +1,5 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import ProbabilityCalculator from '@/components/calculators/probability-calculator';
 import type { Metadata } from 'next';
@@ -7,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Separator } from '@/components/ui/separator';
 import { ZTable } from '@/components/z-table';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Probability Calculator',
@@ -194,10 +196,16 @@ export default function ProbabilityPage() {
             <ZTableSection />
              <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center gap-4 mt-2">
-                    <Link href="/statistics/permutation-combination" className="text-primary hover:underline">Permutation & Combination</Link>
-                    <Link href="/statistics/z-score" className="text-primary hover:underline">Z-Score Calculator</Link>
-                    <Link href="/statistics/confidence-interval" className="text-primary hover:underline">Confidence Interval Calculator</Link>
+                <div className="flex justify-center flex-wrap gap-2 mt-2">
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/permutation-combination">Permutation & Combination</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/z-score">Z-Score Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/confidence-interval">Confidence Interval Calculator</Link>
+                    </Button>
                 </div>
             </section>
         </div>

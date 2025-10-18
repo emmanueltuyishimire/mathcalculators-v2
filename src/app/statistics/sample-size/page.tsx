@@ -1,4 +1,5 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import SampleSizeCalculator from '@/components/calculators/sample-size-calculator';
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import type { Metadata } from 'next';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Sample Size & Margin of Error Calculator',
@@ -181,9 +183,13 @@ export default function SampleSizePage() {
 
           <section className="text-center text-sm text-muted-foreground">
             <h3 className="font-semibold text-foreground">Related</h3>
-            <div className="flex justify-center gap-4 mt-2">
-                <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
-                <Link href="/statistics/standard-deviation" className="text-primary hover:underline">Standard Deviation Calculator</Link>
+            <div className="flex justify-center flex-wrap gap-2 mt-2">
+                <Button asChild variant="outline" size="sm">
+                    <Link href="/statistics">Statistics Calculator</Link>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                    <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
+                </Button>
             </div>
           </section>
         </div>

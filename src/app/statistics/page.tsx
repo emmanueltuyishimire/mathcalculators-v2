@@ -1,8 +1,10 @@
 
+
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChartHorizontal, Sigma, Percent, ShieldCheck, FunctionSquare, Milestone } from 'lucide-react';
+import { BarChartHorizontal, Sigma, Percent, ShieldCheck, FunctionSquare, Milestone, Calculator } from 'lucide-react';
 import type { Metadata } from 'next';
+import StatisticsCalculator from '@/components/calculators/statistics-calculator';
 
 export const metadata: Metadata = {
     title: 'Statistics Calculators – Tools for Data Analysis',
@@ -58,6 +60,12 @@ const statisticsTools = [
     icon: Milestone,
     description: 'Calculators for arithmetic, geometric, and Fibonacci sequences.',
   },
+  {
+    href: '/statistics',
+    label: 'Statistics Calculator',
+    icon: Calculator,
+    description: 'A general-purpose statistical calculator.',
+  },
 ];
 
 export default function StatisticsCategoryPage() {
@@ -73,10 +81,12 @@ export default function StatisticsCategoryPage() {
                     A comprehensive suite of tools for all your statistical analysis needs. From basic descriptive statistics to probability and sample size calculations.
                 </p>
             </section>
+
+            <StatisticsCalculator />
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {statisticsTools.map((tool) => (
-                <Link href={tool.href} key={tool.href} className="group">
+                <Link href={tool.href} key={tool.href} className="group" aria-label={`Go to ${tool.label} calculator`}>
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
                     <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                        <div className="rounded-full bg-primary/10 p-3 text-primary">

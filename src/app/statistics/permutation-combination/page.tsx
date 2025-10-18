@@ -1,10 +1,12 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import PermutationCombinationCalculator from '@/components/calculators/permutation-combination-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Permutation and Combination Calculator',
@@ -189,9 +191,13 @@ export default function PermutationCombinationPage() {
 
             <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center gap-4 mt-2">
-                    <Link href="/statistics/probability" className="text-primary hover:underline">Probability Calculator</Link>
-                    <Link href="/statistics/sample-size" className="text-primary hover:underline">Sample Size Calculator</Link>
+                <div className="flex justify-center flex-wrap gap-2 mt-2">
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/probability">Probability Calculator</Link>
+                    </Button>
+                     <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/sample-size">Sample Size Calculator</Link>
+                    </Button>
                 </div>
             </section>
         </div>

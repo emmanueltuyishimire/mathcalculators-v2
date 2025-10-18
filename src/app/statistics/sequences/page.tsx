@@ -1,10 +1,12 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import SequenceCalculators from '@/components/calculators/sequence-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Sequence Calculators – Arithmetic, Geometric, and Fibonacci',
@@ -205,9 +207,13 @@ export default function SequencesPage() {
 
             <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center gap-4 mt-2">
-                    <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
-                    <Link href="/statistics/mean-median-mode" className="text-primary hover:underline">Mean, Median, Mode Calculator</Link>
+                <div className="flex justify-center flex-wrap gap-2 mt-2">
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics">Statistics Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/mean-median-mode">Mean, Median, Mode Calculator</Link>
+                    </Button>
                 </div>
             </section>
         </div>
