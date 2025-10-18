@@ -106,7 +106,7 @@ export default function UnitConverter() {
         <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
             <Select value={category} onValueChange={(val) => setCategory(val as UnitCategory)}>
-                <SelectTrigger id="category">
+                <SelectTrigger id="category" aria-label="Select unit category">
                     <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -122,7 +122,7 @@ export default function UnitConverter() {
                 <Label htmlFor="from">From</Label>
                 <Input id="from" value={fromValue} onChange={(e) => setFromValue(e.target.value)} type="number" />
                 <Select value={fromUnit} onValueChange={setFromUnit}>
-                    <SelectTrigger><SelectValue/></SelectTrigger>
+                    <SelectTrigger aria-label="Select unit to convert from"><SelectValue/></SelectTrigger>
                     <SelectContent>
                         {units.map(unit => <SelectItem key={unit} value={unit}>{unit}</SelectItem>)}
                     </SelectContent>
@@ -130,14 +130,14 @@ export default function UnitConverter() {
             </div>
             
             <div className="pt-8">
-                <Button variant="ghost" size="icon" onClick={handleSwap}><ArrowRightLeft className="size-5"/></Button>
+                <Button variant="ghost" size="icon" onClick={handleSwap} aria-label="Swap units"><ArrowRightLeft className="size-5"/></Button>
             </div>
 
             <div className="w-full space-y-2">
                 <Label htmlFor="to">To</Label>
                 <Input id="to" value={toValue} readOnly type="number" className="bg-muted"/>
                 <Select value={toUnit} onValueChange={setToUnit}>
-                    <SelectTrigger><SelectValue/></SelectTrigger>
+                    <SelectTrigger aria-label="Select unit to convert to"><SelectValue/></SelectTrigger>
                     <SelectContent>
                         {units.map(unit => <SelectItem key={unit} value={unit}>{unit}</SelectItem>)}
                     </SelectContent>
