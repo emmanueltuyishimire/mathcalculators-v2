@@ -9,8 +9,11 @@ import { cn } from '@/lib/utils';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'MathMaster Calculators',
-  description: 'A web application focused on mathematics calculators, from basic arithmetic to advanced functions.',
+  title: {
+    default: 'MathMaster Calculators',
+    template: '%s – MathMaster',
+  },
+  description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
 };
 
 export default function RootLayout({

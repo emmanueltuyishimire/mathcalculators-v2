@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, InfinityIcon, BarChartHorizontal, Milestone, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, Percent, ShieldCheck } from 'lucide-react';
+import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star } from 'lucide-react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
@@ -70,7 +70,7 @@ const tools = [
 
 export default function Home() {
   return (
-    <div className="flex flex-1 flex-col">
+    <>
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-primary text-primary-foreground">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
@@ -100,7 +100,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {tools.map((tool) => (
-                <Link href={tool.href} key={tool.href} className="group">
+                <Link href={tool.href} key={tool.href} className="group" aria-label={`Go to ${tool.label} calculator`}>
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
                     <CardHeader className="flex flex-col items-center text-center p-2">
                       <div className="mb-1 rounded-full bg-primary/10 p-2 text-primary">
@@ -118,6 +118,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-    </div>
+    </>
   );
 }

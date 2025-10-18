@@ -179,25 +179,25 @@ export default function StatisticsCalculator() {
                   {/* Row 1 */}
                   {keypadRow1.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
                   <Button variant="secondary" disabled>x</Button>
-                  <Button variant="secondary" onClick={() => handleImmediateOp('x²')}>x²</Button>
+                  <Button variant="secondary" onClick={() => handleImmediateOp('x²')} aria-label="Square">x²</Button>
                   {/* Row 2 */}
                   {keypadRow2.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
-                  <Button variant="secondary" onClick={() => handleStatButton('Σx')}>Σx</Button>
-                  <Button variant="secondary" onClick={() => handleStatButton('Σx²')}>Σx²</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('Σx')} aria-label="Sum of x">Σx</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('Σx²')} aria-label="Sum of x squared">Σx²</Button>
                   {/* Row 3 */}
                   {keypadRow3.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
-                  <Button variant="secondary" onClick={() => handleStatButton('σ')}>σ</Button>
-                  <Button variant="secondary" onClick={() => handleStatButton('σ²')}>σ²</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('σ')} aria-label="Population Standard Deviation">σ</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('σ²')} aria-label="Population Variance">σ²</Button>
                   {/* Row 4 */}
                   {keypadRow4.map(k => <Button key={k} variant="outline" onClick={() => handleKeypad(k)}>{k}</Button>)}
-                  <Button variant="secondary" onClick={() => handleStatButton('s')}>s</Button>
-                  <Button variant="secondary" onClick={() => handleStatButton('s²')}>s²</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('s')} aria-label="Sample Standard Deviation">s</Button>
+                  <Button variant="secondary" onClick={() => handleStatButton('s²')} aria-label="Sample Variance">s²</Button>
                    {/* Row 5 */}
-                   <Button variant="destructive" onClick={handleClear}>CAD</Button>
-                   <Button variant="destructive" onClick={handleAllClear}>C</Button>
-                   <Button className="bg-accent hover:bg-accent/90" onClick={handleAdd}>ADD</Button>
-                   <Button variant="outline" onClick={() => handleKeypad('±')}>±</Button>
-                   <Button variant="secondary" onClick={() => handleStatButton('GM')}>GM</Button>
+                   <Button variant="destructive" onClick={handleClear} aria-label="Clear Current Entry">CAD</Button>
+                   <Button variant="destructive" onClick={handleAllClear} aria-label="Clear All">C</Button>
+                   <Button className="bg-accent hover:bg-accent/90" onClick={handleAdd} aria-label="Add to Dataset">ADD</Button>
+                   <Button variant="outline" onClick={() => handleKeypad('±')} aria-label="Toggle Sign">±</Button>
+                   <Button variant="secondary" onClick={() => handleStatButton('GM')} aria-label="Geometric Mean">GM</Button>
               </div>
           </div>
 
@@ -230,7 +230,7 @@ export default function StatisticsCalculator() {
                         {dataset.map((val, index) => (
                             <Badge key={index} variant="secondary" className="gap-1">
                                 {val}
-                                <button onClick={() => handleDelete(index)} className="rounded-full hover:bg-destructive/20 p-0.5">
+                                <button onClick={() => handleDelete(index)} className="rounded-full hover:bg-destructive/20 p-0.5" aria-label={`Remove ${val} from dataset`}>
                                     <X className="h-3 w-3" />
                                 </button>
                             </Badge>
