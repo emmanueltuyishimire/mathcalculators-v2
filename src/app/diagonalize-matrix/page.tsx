@@ -130,19 +130,19 @@ export default function DiagonalizeMatrixPage() {
                 <h2 className="text-3xl font-bold text-foreground">Frequently Asked Questions (FAQs)</h2>
                  <div className="space-y-4">
                     <div>
-                        <h3 className="font-semibold text-xl">What is diagonalization?</h3>
+                        <h3 className="text-xl font-semibold">What is diagonalization?</h3>
                         <p>Diagonalization is the process of finding a diagonal matrix D and an invertible matrix P for a given square matrix A, such that P⁻¹AP = D. The columns of P are the eigenvectors of A, and the diagonal entries of D are the corresponding eigenvalues.</p>
                     </div>
                      <div>
-                        <h3 className="font-semibold text-xl">Can all matrices be diagonalized?</h3>
+                        <h3 className="text-xl font-semibold">Can all matrices be diagonalized?</h3>
                         <p>No. A square matrix can only be diagonalized if it has a complete set of linearly independent eigenvectors. If a matrix does not have enough linearly independent eigenvectors, it is called "defective" and cannot be diagonalized.</p>
                     </div>
                      <div>
-                        <h3 className="font-semibold text-xl">How do I check if a matrix is defective?</h3>
+                        <h3 className="text-xl font-semibold">How do I check if a matrix is defective?</h3>
                         <p>A matrix is defective if the number of its linearly independent eigenvectors is less than its dimension (n for an n×n matrix). This often occurs when there are repeated eigenvalues, but the number of eigenvectors for that eigenvalue is less than its multiplicity.</p>
                     </div>
                      <div>
-                        <h3 className="font-semibold text-xl">Is this calculator free?</h3>
+                        <h3 className="text-xl font-semibold">Is this calculator free?</h3>
                         <p>Yes, this online diagonalization tool is completely free to use.</p>
                     </div>
                 </div>

@@ -75,7 +75,7 @@ export default function DesmosMatrixPage() {
                 </div>
 
                 <div>
-                    <h3 className="text-2xl font-bold text-foreground">Pro Tips</h3>
+                    <h2 className="text-3xl font-bold text-foreground">Pro Tips</h2>
                     <ul className="list-disc list-inside pl-4 mt-2">
                         <li>Start with small matrices (2×2 or 3×3) to understand operations.</li>
                         <li>Verify your results by checking that multiplication or inversion produces expected outcomes.</li>
