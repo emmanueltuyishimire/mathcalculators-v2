@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { jStat } from 'jstat';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 function TwoEventsCalculator() {
   const { toast } = useToast();
@@ -32,17 +31,14 @@ function TwoEventsCalculator() {
     const pAorB = pA_num + pB_num - pAandB;
     const pXorB = pA_num + pB_num - 2 * pAandB;
     const pNeither = pAnot * pBnot;
-    const pAnotB = pA_num * pBnot;
-    const pBnotA = pAnot * pB_num;
 
-    setResults({ pA_num, pB_num, pAnot, pBnot, pAandB, pAorB, pXorB, pNeither, pAnotB, pBnotA });
+    setResults({ pAnot, pBnot, pAandB, pAorB, pXorB, pNeither });
   };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Probability of Two Independent Events</CardTitle>
-        <CardDescription>To find out the union, intersection, and other related probabilities of two independent events.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-4">
@@ -58,37 +54,13 @@ function TwoEventsCalculator() {
         <Button onClick={calculate}>Calculate</Button>
       </CardContent>
       {results && (
-        <CardFooter className="flex-col items-start gap-4">
-           <Card className="w-full">
-            <CardHeader><CardTitle>Results</CardTitle></CardHeader>
-            <CardContent>
-                 <Table>
-                    <TableBody>
-                        <TableRow><TableCell>Probability of A NOT occuring: P(A')</TableCell><TableCell className="text-right font-mono">{results.pAnot.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability of B NOT occuring: P(B')</TableCell><TableCell className="text-right font-mono">{results.pBnot.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability of A and B both occuring: P(A∩B)</TableCell><TableCell className="text-right font-mono">{results.pAandB.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability that A or B or both occur: P(A∪B)</TableCell><TableCell className="text-right font-mono">{results.pAorB.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability that A or B occurs but NOT both: P(AΔB)</TableCell><TableCell className="text-right font-mono">{results.pXorB.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability of neither A nor B occuring: P((A∪B)')</TableCell><TableCell className="text-right font-mono">{results.pNeither.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability of A occuring but NOT B</TableCell><TableCell className="text-right font-mono">{results.pAnotB.toFixed(4)}</TableCell></TableRow>
-                        <TableRow><TableCell>Probability of B occuring but NOT A</TableCell><TableCell className="text-right font-mono">{results.pBnotA.toFixed(4)}</TableCell></TableRow>
-                    </TableBody>
-                </Table>
-            </CardContent>
-           </Card>
-           <Card className="w-full">
-               <CardHeader><CardTitle>Steps</CardTitle></CardHeader>
-               <CardContent className="font-mono text-sm space-y-2">
-                   <div>P(A') = 1 - P(A) = 1 - {results.pA_num} = {results.pAnot.toFixed(4)}</div>
-                   <div>P(B') = 1 - P(B) = 1 - {results.pB_num} = {results.pBnot.toFixed(4)}</div>
-                   <div>P(A∩B) = P(A) × P(B) = {results.pA_num} × {results.pB_num} = {results.pAandB.toFixed(4)}</div>
-                   <div>P(A∪B) = P(A) + P(B) - P(A∩B) = {results.pA_num} + {results.pB_num} - {results.pAandB.toFixed(4)} = {results.pAorB.toFixed(4)}</div>
-                   <div>P(AΔB) = P(A) + P(B) - 2P(A∩B) = {results.pA_num} + {results.pB_num} - 2×{results.pAandB.toFixed(4)} = {results.pXorB.toFixed(4)}</div>
-                   <div>P((A∪B)') = 1 - P(A∪B) = 1 - {results.pAorB.toFixed(4)} = {results.pNeither.toFixed(4)}</div>
-                   <div>P(A not B) = P(A) × (1- P(B)) = {results.pA_num} × (1 - {results.pB_num}) = {results.pAnotB.toFixed(4)}</div>
-                   <div>P(B not A) = (1 - P(A)) × P(B) = (1 - {results.pA_num}) × {results.pB_num} = {results.pBnotA.toFixed(4)}</div>
-               </CardContent>
-           </Card>
+        <CardFooter className="flex-col items-start gap-2">
+          <p>P(A') = {results.pAnot.toFixed(4)}</p>
+          <p>P(B') = {results.pBnot.toFixed(4)}</p>
+          <p>P(A ∩ B) = {results.pAandB.toFixed(4)}</p>
+          <p>P(A ∪ B) = {results.pAorB.toFixed(4)}</p>
+          <p>P(A Δ B) = {results.pXorB.toFixed(4)}</p>
+          <p>P((A ∪ B)') = {results.pNeither.toFixed(4)}</p>
         </CardFooter>
       )}
     </Card>
