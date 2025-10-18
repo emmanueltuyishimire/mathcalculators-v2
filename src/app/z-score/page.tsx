@@ -40,12 +40,23 @@ const EducationalContent = () => (
             <Separator />
 
             <div>
-                <h3 className="text-xl font-semibold text-foreground">What is a Z-Table?</h3>
+                <h3 className="text-xl font-semibold text-foreground">Introduction to the Z-Table</h3>
                 <p className="text-muted-foreground mt-2">
-                    A z-table, also known as a standard normal table or unit normal table, is a table that consists of standardized values that are used to determine the probability that a given statistic is below, above, or between the standard normal distribution. A z-score of 0 indicates that the given point is identical to the mean. On the graph of the standard normal distribution, z = 0 is therefore the center of the curve. A positive z-value indicates that the point lies to the right of the mean, and a negative z-value indicates that the point lies left of the mean. There are a few different types of z-tables.
+                    A Z-Table, also called a standard normal table, is a statistical tool used to determine the probability that a score in a normal distribution is below, above, or between specific values. It is based on the standard normal distribution, which has a mean of 0 and a standard deviation of 1.
                 </p>
                  <p className="text-muted-foreground mt-2">
-                    The values in the table below represent the area between z = 0 and the given z-score.
+                    The Z-Table allows you to convert a z-score into a cumulative probability. A z-score represents how many standard deviations a value is from the mean. By referencing the Z-Table, you can quickly find the probability of a value occurring within a certain range of the normal distribution without performing complex calculations.
+                </p>
+                <h4 className="font-semibold text-foreground mt-4">Key Points About Z-Tables:</h4>
+                <ul className="list-disc list-inside text-muted-foreground mt-2 space-y-1">
+                    <li><b>Standardized Values:</b> All z-scores are based on a distribution with μ = 0 and σ = 1.</li>
+                    <li><b>Cumulative Probability:</b> Most tables show the probability that a value is less than or equal to a given z-score (P(x &lt; Z)).</li>
+                    <li><b>Applications:</b> Z-Tables are widely used in statistics, quality control, hypothesis testing, and confidence interval calculations.</li>
+                    <li><b>Flexibility:</b> By symmetry, negative z-scores can be converted into probabilities for positive z-scores.</li>
+                </ul>
+                <h4 className="font-semibold text-foreground mt-4">Example Use Case:</h4>
+                <p className="text-muted-foreground mt-2">
+                    If a student scores a z = 1.5 on a test, the Z-Table can tell you the percentage of students who scored below that value, helping you understand relative performance in a standardized way.
                 </p>
             </div>
         </CardContent>
@@ -73,6 +84,9 @@ export default function ZScorePage() {
 
             <section className="space-y-4">
                 <h2 className="text-3xl font-bold text-center">Z-Table (0 to Z)</h2>
+                <p className="text-lg text-muted-foreground text-center">
+                    The values in the table below represent the area between z = 0 and the given z-score.
+                </p>
                 <ZTable />
                  <Card>
                     <CardHeader>
