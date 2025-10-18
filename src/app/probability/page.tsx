@@ -11,6 +11,56 @@ export const metadata: Metadata = {
     description: 'Calculate probabilities for two events, series of events, and normal distributions.',
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Probability Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <p>This calculator can help you compute probabilities for two independent events, series of events, and normal distributions. Follow the instructions below for each section.</p>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">1. Probability of Two Independent Events</h3>
+                <p>This section calculates probabilities like union, intersection, complement, exclusive OR, and neither for two independent events.</p>
+                <ol className="list-decimal list-inside mt-2 space-y-1">
+                    <li>Enter the probability of Event A in the <strong>P(A)</strong> field (between 0 and 1).</li>
+                    <li>Enter the probability of Event B in the <strong>P(B)</strong> field (between 0 and 1).</li>
+                    <li>Click <strong>Calculate</strong>.</li>
+                </ol>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">2. Probability of a Series of Independent Events</h3>
+                <p>This section computes probabilities for repeated independent events.</p>
+                <ol className="list-decimal list-inside mt-2 space-y-1">
+                    <li>Enter the probability of an event and the number of times it is repeated.</li>
+                    <li>Click <strong>Calculate</strong>.</li>
+                </ol>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">3. Probability of a Normal Distribution</h3>
+                <p>This section calculates the area under the curve for a normal distribution.</p>
+                 <ol className="list-decimal list-inside mt-2 space-y-1">
+                    <li>Enter the <strong>mean (μ)</strong> and <strong>standard deviation (σ)</strong>.</li>
+                    <li>Enter the <strong>Left Bound (Lb)</strong> and <strong>Right Bound (Rb)</strong>. Use <code>-inf</code> for negative infinity and <code>inf</code> for positive infinity.</li>
+                    <li>Click <strong>Calculate</strong>.</li>
+                </ol>
+            </div>
+
+             <div className="p-4 bg-accent/10 rounded-lg">
+                <h4 className="font-semibold text-accent-foreground">💡 General Notes</h4>
+                <ul className="list-disc list-inside text-sm text-muted-foreground mt-2">
+                    <li>All probabilities must be between 0 and 1.</li>
+                    <li>The calculator assumes events are independent.</li>
+                    <li>For repeated or series events, the formula assumes each trial is independent.</li>
+                </ul>
+            </div>
+        </CardContent>
+    </Card>
+);
+
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -103,6 +153,7 @@ export default function ProbabilityPage() {
                 </p>
             </section>
             <ProbabilityCalculator />
+            <HowToUseGuide />
             <EducationalContent />
         </div>
       </main>
