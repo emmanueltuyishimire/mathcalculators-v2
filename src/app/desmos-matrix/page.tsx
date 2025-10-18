@@ -20,86 +20,67 @@ export default function DesmosMatrixPage() {
             <DesmosMatrixCalculator />
 
             <section className="space-y-8 text-muted-foreground">
-                <h2 className="text-3xl font-bold text-foreground">1. Input Your Matrix</h2>
-                <p>Select the number of rows and columns for your matrix. Enter numbers manually or use quick-fill options:</p>
-                <ul className="list-disc list-inside pl-4">
-                    <li><strong>Clear All / 0 All:</strong> Reset matrix to zeros</li>
-                    <li><strong>1 All:</strong> Fill all cells with ones</li>
-                    <li><strong>Random:</strong> Fill matrix with random numbers for practice</li>
-                </ul>
-
-                <h2 className="text-3xl font-bold text-foreground">2. Matrix Operations</h2>
-                <p>Click the operation buttons to perform calculations:</p>
-                <ul className="list-disc list-inside pl-4">
-                    <li><strong>Add (A + B):</strong> Element-wise addition (same dimensions)</li>
-                    <li><strong>Subtract (A – B):</strong> Element-wise subtraction (same dimensions)</li>
-                    <li><strong>Multiply (A × B):</strong> Matrix multiplication (columns of A = rows of B)</li>
-                    <li><strong>Transpose (A<sup>T</sup>):</strong> Swap rows and columns</li>
-                    <li><strong>Determinant (det(A)):</strong> Only for square matrices</li>
-                    <li><strong>Inverse (A⁻¹):</strong> Only for square matrices with non-zero determinant</li>
-                    <li><strong>Scalar Multiply:</strong> Multiply all elements by a scalar</li>
-                </ul>
-
-                <h2 className="text-3xl font-bold text-foreground">3. Validation & Error Checks</h2>
-                <ul className="list-disc list-inside pl-4">
-                    <li>Check dimensions for addition, subtraction, and multiplication</li>
-                    <li>Ensure square matrices for determinant and inverse</li>
-                    <li>Non-zero determinant required for inverse</li>
-                    <li>Numeric validation to prevent invalid input</li>
-                </ul>
-
-                <h2 className="text-3xl font-bold text-foreground">4. Examples</h2>
+                <h2 className="text-3xl font-bold text-foreground">How to Use the Desmos Matrix Calculator</h2>
+                <p>Our Desmos Matrix Calculator lets you perform matrix operations, visualize transformations, and explore linear algebra concepts interactively. Follow these steps to get started:</p>
+                
                 <div>
-                    <h4 className="font-semibold text-xl">Example 1: Addition</h4>
-                    <pre className="mt-2 p-4 bg-muted rounded-md font-mono">
-{`A = [[1, 2], [3, 4]]
-B = [[5, 6], [7, 8]]
-A + B = [[6, 8], [10, 12]]`}
-                    </pre>
-                </div>
-                <div>
-                    <h4 className="font-semibold text-xl">Example 2: Multiplication</h4>
-                    <pre className="mt-2 p-4 bg-muted rounded-md font-mono">
-{`A = [[1, 2], [3, 4]]
-B = [[5, 6], [7, 8]]
-A × B = [[19, 22], [43, 50]]`}
-                    </pre>
-                </div>
-                <div>
-                    <h4 className="font-semibold text-xl">Example 3: Inverse</h4>
-                    <pre className="mt-2 p-4 bg-muted rounded-md font-mono">
-{`A = [[1, 2], [3, 4]]
-A⁻¹ = [[-2, 1], [1.5, -0.5]]`}
-                    </pre>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 1: Input Your Matrix</h3>
+                    <p>Select the number of rows and columns for your matrix. Enter numbers manually into the grid.</p>
+                    <p>Use the quick-fill options for faster input:</p>
+                    <ul className="list-disc list-inside pl-4 mt-2">
+                        <li><strong>Clear All / 0 All:</strong> Reset all cells to zero</li>
+                        <li><strong>1 All:</strong> Fill all cells with ones</li>
+                        <li><strong>Random:</strong> Automatically fill the matrix with random numbers</li>
+                    </ul>
                 </div>
 
-                <h2 className="text-3xl font-bold text-foreground">5. Actionable Tips</h2>
-                <ul className="list-disc list-inside pl-4">
-                    <li>Start with 2×2 or 3×3 matrices to understand operations.</li>
-                    <li>Use step-by-step mode to learn intermediate calculations.</li>
-                    <li>Visualize 2×2 matrix transformations on vectors to understand linear algebra.</li>
-                    <li>Combine operations like Transpose → Multiply → Inverse to explore matrix properties.</li>
-                    <li>Use Random fill to practice with different matrices quickly.</li>
-                </ul>
+                <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 2: Choose an Operation</h3>
+                    <p>Click the operation buttons to perform calculations:</p>
+                    <ul className="list-disc list-inside pl-4 mt-2">
+                        <li><strong>Add (A + B):</strong> Element-wise addition (matrices must have the same dimensions)</li>
+                        <li><strong>Subtract (A – B):</strong> Element-wise subtraction (matrices must have the same dimensions)</li>
+                        <li><strong>Multiply (A × B):</strong> Standard matrix multiplication (columns of A = rows of B)</li>
+                        <li><strong>Transpose (A^T):</strong> Swap rows and columns</li>
+                        <li><strong>Determinant (det(A)):</strong> Only works for square matrices</li>
+                        <li><strong>Inverse (A⁻¹):</strong> Only square matrices with non-zero determinant</li>
+                        <li><strong>Scalar Multiply:</strong> Multiply all elements by a number</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 3: Check for Errors</h3>
+                     <ul className="list-disc list-inside pl-4 mt-2">
+                        <li>Make sure matrix dimensions are compatible for addition, subtraction, or multiplication.</li>
+                        <li>Only square matrices can have determinants and inverses.</li>
+                        <li>Ensure your inputs are numeric values.</li>
+                    </ul>
+                </div>
 
-                <h2 className="text-3xl font-bold text-foreground">6. Frequently Asked Questions (FAQs)</h2>
-                <div className="space-y-4">
-                    <div>
-                        <h4 className="font-semibold text-xl">Q1: What is a Desmos Matrix Calculator?</h4>
-                        <p>A free online tool for performing matrix operations, visualizing transformations, and learning linear algebra interactively.</p>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold text-xl">Q2: Can I multiply any two matrices?</h4>
-                        <p>Only if the number of columns in the first matrix equals the number of rows in the second matrix.</p>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold text-xl">Q3: Can I calculate the inverse of any matrix?</h4>
-                        <p>No. Only square matrices with a non-zero determinant have inverses.</p>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold text-xl">Q4: Is this tool free?</h4>
-                        <p>Yes, it is completely free to use online.</p>
-                    </div>
+                <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 4: View the Result</h3>
+                    <ul className="list-disc list-inside pl-4 mt-2">
+                        <li>The result of the operation will be displayed in the output grid.</li>
+                        <li><strong>For determinant:</strong> a single numeric value</li>
+                        <li><strong>For inverse, transpose, or arithmetic operations:</strong> a full matrix</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 className="text-2xl font-semibold text-foreground">Step 5: Explore and Learn</h3>
+                    <ul className="list-disc list-inside pl-4 mt-2">
+                        <li>Experiment with random matrices to test different operations.</li>
+                        <li>Combine multiple operations (e.g., Transpose → Multiply → Inverse) to understand matrix behavior.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 className="text-2xl font-bold text-foreground">Pro Tips</h3>
+                    <ul className="list-disc list-inside pl-4 mt-2">
+                        <li>Start with small matrices (2×2 or 3×3) to understand operations.</li>
+                        <li>Verify your results by checking that multiplication or inversion produces expected outcomes.</li>
+                        <li>Use visualization to connect matrix math with geometric transformations.</li>
+                    </ul>
                 </div>
             </section>
         </div>
