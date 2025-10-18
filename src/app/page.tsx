@@ -67,6 +67,12 @@ const tools = [
     description: 'Matrix operations and calculations.',
   },
   {
+    href: '/permutation-combination',
+    label: 'Permutation & Combination',
+    icon: FunctionSquare,
+    description: 'Calculate nPr and nCr.',
+  },
+  {
     href: '/converter',
     label: 'Unit Converter',
     icon: Replace,
