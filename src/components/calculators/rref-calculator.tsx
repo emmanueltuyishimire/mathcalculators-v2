@@ -9,22 +9,27 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 type Matrix = (number | string)[][];
 
-const MatrixInput = ({
+const MatrixDisplay = ({
   matrix,
-  onMatrixChange,
   rows,
   cols,
+  title,
+  isInput = false,
+  onMatrixChange,
   onRowsChange,
   onColsChange,
 }: {
   matrix: Matrix;
-  onMatrixChange: (matrix: Matrix) => void;
   rows: number;
   cols: number;
-  onRowsChange: (rows: number) => void;
-  onColsChange: (cols: number) => void;
+  title: string;
+  isInput?: boolean;
+  onMatrixChange?: (matrix: Matrix) => void;
+  onRowsChange?: (rows: number) => void;
+  onColsChange?: (cols: number) => void;
 }) => {
   const handleInputChange = (rowIndex: number, colIndex: number, value: string) => {
+    if (!onMatrixChange) return;
     const newMatrix = matrix.map((row, rIdx) => 
       rIdx === rowIndex ? row.map((cell, cIdx) => cIdx === colIndex ? value : cell) : row
     );
@@ -32,6 +37,7 @@ const MatrixInput = ({
   };
   
   const fillMatrix = (value: number | 'random') => {
+    if (!onMatrixChange || !onRowsChange || !onColsChange) return;
     const newMatrix = Array.from({ length: rows }, () =>
       Array.from({ length: cols }, () =>
         value === 'random' ? Math.floor(Math.random() * 10) : value
@@ -43,13 +49,15 @@ const MatrixInput = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Augmented Matrix [A|b]</CardTitle>
-        <div className="flex items-center gap-2 pt-2">
-          <Label htmlFor="rows">Rows</Label>
-          <Input id="rows" type="number" min="1" max="8" value={rows} onChange={(e) => onRowsChange(parseInt(e.target.value))} className="h-8 w-16" />
-          <Label htmlFor="cols">Cols</Label>
-          <Input id="cols" type="number" min="2" max="9" value={cols} onChange={(e) => onColsChange(parseInt(e.target.value))} className="h-8 w-16" />
-        </div>
+        <CardTitle>{title}</CardTitle>
+        {isInput && onRowsChange && onColsChange && (
+          <div className="flex items-center gap-2 pt-2">
+            <Label htmlFor="rows">Rows</Label>
+            <Input id="rows" type="number" min="1" max="8" value={rows} onChange={(e) => onRowsChange(parseInt(e.target.value))} className="h-8 w-16" />
+            <Label htmlFor="cols">Cols</Label>
+            <Input id="cols" type="number" min="2" max="9" value={cols} onChange={(e) => onColsChange(parseInt(e.target.value))} className="h-8 w-16" />
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid gap-2 overflow-x-auto" style={{ gridTemplateColumns: `repeat(${cols}, minmax(3rem, 1fr))` }}>
@@ -59,18 +67,21 @@ const MatrixInput = ({
                 key={`${rowIndex}-${colIndex}`}
                 type="text"
                 value={cell}
-                onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
-                className={`h-10 text-center ${colIndex === cols - 1 ? 'bg-muted border-l-2 border-dashed' : ''}`}
+                readOnly={!isInput}
+                onChange={(e) => isInput && handleInputChange(rowIndex, colIndex, e.target.value)}
+                className={`h-10 text-center ${colIndex === cols - 1 ? 'bg-muted border-l-2 border-dashed' : ''} ${!isInput ? 'bg-muted' : ''}`}
                 aria-label={`Row ${rowIndex + 1}, Column ${colIndex + 1}`}
               />
             ))
           )}
         </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={() => fillMatrix(0)}>Clear</Button>
-          <Button variant="outline" size="sm" onClick={() => fillMatrix(1)}>1s</Button>
-          <Button variant="outline" size="sm" onClick={() => fillMatrix('random')}>Random</Button>
-        </div>
+        {isInput && (
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm" onClick={() => fillMatrix(0)}>Clear</Button>
+            <Button variant="outline" size="sm" onClick={() => fillMatrix(1)}>1s</Button>
+            <Button variant="outline" size="sm" onClick={() => fillMatrix('random')}>Random</Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -107,11 +118,7 @@ export default function RrefCalculator() {
   const [matrix, setMatrix] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(4).fill(0)));
   const [history, setHistory] = useState<Matrix[]>([]);
   const [solution, setSolution] = useState<string>('');
-
-  const updateMatrix = (newMatrix: Matrix) => {
-    setHistory(prev => [...prev, matrix]);
-    setMatrix(newMatrix);
-  }
+  const [rrefMatrix, setRrefMatrix] = useState<Matrix | null>(null);
 
   const resizeMatrix = useCallback((newRows: number, newCols: number, currentMatrix: Matrix): Matrix => {
     newRows = Math.max(1, Math.min(newRows, 8));
@@ -148,7 +155,13 @@ export default function RrefCalculator() {
                 if (i === rows) {
                     i = r;
                     lead++;
-                    if (cols === lead) return;
+                    if (cols === lead) {
+                        const finalRrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(4))));
+                        setRrefMatrix(finalRrefMatrix);
+                        analyzeSolution(finalRrefMatrix);
+                        toast({ title: "RREF Calculated", description: "The matrix is now in row-reduced echelon form." });
+                        return;
+                    };
                 }
             }
             [numMatrix[i], numMatrix[r]] = [numMatrix[r], numMatrix[i]];
@@ -166,20 +179,20 @@ export default function RrefCalculator() {
             lead++;
         }
         
-        const rrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(4))));
-        setMatrix(rrefMatrix);
-        analyzeSolution(rrefMatrix);
+        const finalRrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(4))));
+        setRrefMatrix(finalRrefMatrix);
+        analyzeSolution(finalRrefMatrix);
         toast({ title: "RREF Calculated", description: "The matrix is now in row-reduced echelon form." });
     } catch(e: any) {
         toast({ variant: "destructive", title: "Calculation Error", description: e.message });
     }
   };
 
-  const analyzeSolution = (rrefMatrix: number[][]) => {
+  const analyzeSolution = (rrefMtx: number[][]) => {
     const numVars = cols - 1;
     let inconsistent = false;
 
-    for(const row of rrefMatrix) {
+    for(const row of rrefMtx) {
         const lhs = row.slice(0, numVars);
         const rhs = row[numVars];
         const isLhsZero = lhs.every(val => Math.abs(val) < 1e-9);
@@ -196,7 +209,7 @@ export default function RrefCalculator() {
     
     let pivotCount = 0;
     for(let r=0; r<rows; r++) {
-       const firstNonZero = rrefMatrix[r].findIndex(val => Math.abs(val) > 1e-9);
+       const firstNonZero = rrefMtx[r].findIndex(val => Math.abs(val) > 1e-9);
        if(firstNonZero !== -1 && firstNonZero < numVars) {
            pivotCount++;
        }
@@ -207,7 +220,7 @@ export default function RrefCalculator() {
     } else {
         const solParts = [];
         for (let i = 0; i < numVars; i++) {
-            solParts.push(`x_${i + 1} = ${rrefMatrix[i][numVars].toFixed(4)}`);
+            solParts.push(`x_${i + 1} = ${rrefMtx[i][numVars].toFixed(4)}`);
         }
         setSolution(`Unique solution: ${solParts.join(', ')}`);
     }
@@ -218,16 +231,20 @@ export default function RrefCalculator() {
       const lastState = history[history.length - 1];
       setHistory(history.slice(0, -1));
       setMatrix(lastState);
+      setRrefMatrix(null);
+      setSolution('');
     }
   }
 
   return (
     <div className="space-y-4">
-      <MatrixInput
+      <MatrixDisplay
         matrix={matrix}
-        onMatrixChange={setMatrix}
         rows={rows}
         cols={cols}
+        title="Augmented Matrix [A|b]"
+        isInput={true}
+        onMatrixChange={setMatrix}
         onRowsChange={handleRowsChange}
         onColsChange={handleColsChange}
       />
@@ -242,6 +259,15 @@ export default function RrefCalculator() {
             <Button onClick={handleUndo} variant="outline" disabled={history.length === 0}>Undo</Button>
         </CardContent>
       </Card>
+
+      {rrefMatrix && (
+        <MatrixDisplay
+          matrix={rrefMatrix}
+          rows={rrefMatrix.length}
+          cols={rrefMatrix[0]?.length || 0}
+          title="Reduced Row Echelon Form (RREF)"
+        />
+      )}
       
       {solution && (
         <Card>
