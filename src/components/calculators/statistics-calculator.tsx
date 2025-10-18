@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -36,7 +37,7 @@ export default function StatisticsCalculator() {
     const mean = sum / n;
     
     const sumOfSquaredDiffs = dataset.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
-    const sumOfSquares = dataset.reduce((acc, val) => acc + val*val, 0);
+    const sumOfSquares = dataset.reduce((acc, val) => acc + val * val, 0);
 
     const popVariance = sumOfSquaredDiffs / n;
     const popStdDev = Math.sqrt(popVariance);
@@ -286,3 +287,5 @@ export default function StatisticsCalculator() {
     </div>
   );
 }
+
+    
