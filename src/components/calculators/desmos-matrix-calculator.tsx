@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -282,9 +282,18 @@ const MatrixView = ({
 
 
 const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], onNewMatrix: (m: Matrix, name?: string) => void }) => {
-    const [inputA, setInputA] = useState('A');
-    const [inputB, setInputB] = useState('A');
+    const [inputA, setInputA] = useState(matrices[0]?.name || 'A');
+    const [inputB, setInputB] = useState(matrices[0]?.name || 'A');
     const { toast } = useToast();
+
+    useEffect(() => {
+        if (!matrices.some(m => m.name === inputA)) {
+            setInputA(matrices[0]?.name || 'A');
+        }
+        if (!matrices.some(m => m.name === inputB)) {
+            setInputB(matrices[0]?.name || 'A');
+        }
+    }, [matrices, inputA, inputB]);
 
     const handleOperation = (op: 'add' | 'subtract' | 'multiply') => {
         const matrixAObj = matrices.find(m => m.name === inputA);
@@ -413,6 +422,14 @@ export default function DesmosMatrixCalculator() {
   };
   
   const removeMatrix = (id: string) => {
+    if (matrices.length === 1) {
+        toast({
+            variant: "destructive",
+            title: "Cannot remove last matrix",
+            description: "You must have at least one matrix."
+        });
+        return;
+    }
     setMatrices(matrices.filter(m => m.id !== id));
   };
   
