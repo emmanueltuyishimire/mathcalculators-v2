@@ -27,6 +27,7 @@ const navItems = [
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical, tooltip: 'Trigonometry Calculator' },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal, tooltip: 'Statistics Calculator' },
   { href: '/matrix', label: 'Matrix', icon: Table, tooltip: 'Matrix Calculator' },
+  { href: '/rref', label: 'RREF', icon: Table, tooltip: 'RREF Calculator' },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
