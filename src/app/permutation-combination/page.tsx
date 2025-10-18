@@ -3,6 +3,8 @@ import { PageHeader } from '@/components/page-header';
 import PermutationCombinationCalculator from '@/components/calculators/permutation-combination-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 export const metadata: Metadata = {
     title: 'Permutation and Combination Calculator',
@@ -26,6 +28,94 @@ export default function PermutationCombinationPage() {
             </section>
 
             <PermutationCombinationCalculator />
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>How to Use the Calculator</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4 text-muted-foreground">
+                   <ol className="list-decimal list-inside space-y-2">
+                       <li>
+                           <b>Enter the total number of elements in the set (n):</b>
+                           <p className="text-sm pl-4">This is the total number of distinct items available.</p>
+                       </li>
+                       <li>
+                           <b>Enter the number of elements in each subset (r):</b>
+                            <p className="text-sm pl-4">This is how many items you want to select or arrange from the set.</p>
+                       </li>
+                        <li>
+                           <b>Click Calculate:</b>
+                            <ul className="list-disc list-inside pl-8 text-sm">
+                                <li><b>Permutation (nPr):</b> Number of ways to arrange r items from n items where order matters.</li>
+                                <li><b>Combination (nCr):</b> Number of ways to select r items from n items where order does not matter.</li>
+                            </ul>
+                       </li>
+                   </ol>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Understanding the Concepts</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div>
+                        <h3 className="text-xl font-semibold text-foreground">Understanding Permutations</h3>
+                        <p className="text-muted-foreground mt-2">Permutations are arrangements where <b>order is important</b>.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">nPr = n! / (n-r)!</p>
+                        <p className="text-sm text-muted-foreground"><b>Example:</b> Choosing a team captain and goalkeeper from 11 players. The order matters.</p>
+                        <ul className="list-disc list-inside text-sm text-muted-foreground pl-4 mt-1">
+                            <li>First choice (captain) = 11 options</li>
+                            <li>Second choice (goalkeeper) = 10 options</li>
+                            <li>Total permutations = 11 × 10 = 110</li>
+                        </ul>
+                         <p className="text-sm text-primary mt-2"><b>Tip:</b> Use permutations when the order of selection matters, such as codes, passwords, or seating arrangements.</p>
+                    </div>
+
+                     <div>
+                        <h3 className="text-xl font-semibold text-foreground">Understanding Combinations</h3>
+                        <p className="text-muted-foreground mt-2">Combinations are selections where <b>order does not matter</b>.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">nCr = n! / (r! × (n-r)!)</p>
+                        <p className="text-sm text-muted-foreground"><b>Example:</b> Choosing 2 strikers from 11 players. The specific players matter, not the order they were picked in.</p>
+                        <p className="font-mono text-sm bg-muted p-2 rounded-md mt-1">Total combinations = 11C2 = 11! / (2! × 9!) = 55</p>
+                         <p className="text-sm text-primary mt-2"><b>Tip:</b> Use combinations when only the selected items matter, not the order, such as groups, lottery numbers, or choosing team members.</p>
+                    </div>
+
+                    <div>
+                        <h3 className="text-xl font-semibold text-foreground">Key Notes</h3>
+                         <ul className="list-disc list-inside text-sm text-muted-foreground pl-4 mt-2 space-y-1">
+                            <li>This calculator does not include replacement, meaning an element cannot be selected more than once.</li>
+                            <li>Permutations are always ≥ Combinations for the same n and r.</li>
+                            <li>Factorials (n!) grow very fast; use smaller numbers to avoid extremely large results.</li>
+                        </ul>
+                    </div>
+
+                     <div>
+                        <h3 className="text-xl font-semibold text-foreground">Quick Reference Table</h3>
+                        <Table className="mt-2">
+                           <TableHeader>
+                                <TableRow>
+                                    <TableHead>Concept</TableHead>
+                                    <TableHead>Formula</TableHead>
+                                    <TableHead>Order Matters?</TableHead>
+                                </TableRow>
+                           </TableHeader>
+                           <TableBody>
+                                <TableRow>
+                                    <TableCell>Permutation</TableCell>
+                                    <TableCell className="font-mono">nPr = n! / (n - r)!</TableCell>
+                                    <TableCell>Yes</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Combination</TableCell>
+                                    <TableCell className="font-mono">nCr = n! / (r! × (n - r)!)</TableCell>
+                                    <TableCell>No</TableCell>
+                                </TableRow>
+                           </TableBody>
+                        </Table>
+                    </div>
+                </CardContent>
+            </Card>
 
             <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
