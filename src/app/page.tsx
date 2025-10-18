@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -85,22 +86,22 @@ export default function Home() {
         </div>
       </section>
 
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
+      <main className="flex-1 p-4 md:p-6">
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {tools.map((tool) => (
                 <Link href={tool.href} key={tool.href} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                    <CardHeader className="flex flex-col items-center text-center">
-                      <div className="mb-4 rounded-full bg-primary/10 p-4 text-primary">
-                        <tool.icon className="h-8 w-8" />
+                    <CardHeader className="flex flex-col items-center text-center p-4">
+                      <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
+                        <tool.icon className="h-6 w-6" />
                       </div>
-                      <CardTitle>{tool.label}</CardTitle>
+                      <CardTitle className="text-base">{tool.label}</CardTitle>
                     </CardHeader>
-                    <CardContent className="text-center">
-                      <p className="text-muted-foreground">{tool.description}</p>
+                    <CardContent className="text-center p-4 pt-0">
+                      <p className="text-xs text-muted-foreground">{tool.description}</p>
                     </CardContent>
                   </Card>
                 </Link>
