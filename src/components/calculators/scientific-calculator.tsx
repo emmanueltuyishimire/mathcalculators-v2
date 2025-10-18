@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
 // Helper for factorial
@@ -24,6 +23,7 @@ export default function ScientificCalculator() {
   const [isRadians, setIsRadians] = useState(true);
   const [memory, setMemory] = useState(0);
   const [show2nd, setShow2nd] = useState(false);
+  const { toast } = useToast();
 
   const handleButtonClick = (value: string) => {
     if (isResult) {
@@ -262,54 +262,54 @@ export default function ScientificCalculator() {
     }
 
 
-    return <Button key={label} variant={null} className={cn('text-lg h-12 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick}>{label}</Button>;
+    return <Button key={label} variant={null} className={cn('text-xs md:text-sm h-10 md:h-12 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick}>{label}</Button>;
   }
 
   return (
     <Card className="shadow-xl max-w-2xl mx-auto bg-card/80 backdrop-blur-sm border-border/50">
-      <CardContent className="flex flex-col items-center gap-2 p-4">
-        <div className="w-full mb-2 rounded-lg border bg-muted/80 p-4 text-right text-4xl font-mono text-foreground break-all h-24 flex items-end justify-end shadow-inner">
+      <CardContent className="flex flex-col items-center gap-1 md:gap-2 p-2 md:p-4">
+        <div className="w-full mb-2 rounded-lg border bg-muted/80 p-4 text-right text-3xl md:text-4xl font-mono text-foreground break-all h-24 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
-        <div className="w-full grid grid-cols-7 gap-2">
-            <Button variant="outline" className="h-10 text-sm" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant="outline" className="h-10 text-sm" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
-            {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-10 text-sm'))}
-            <Button variant="destructive" className="h-10 text-sm transition-transform transform border-b-4 border-destructive/70 active:border-b-0 active:translate-y-1" onClick={handleBackspace}>⌫</Button>
+        <div className="w-full grid grid-cols-7 gap-1 md:gap-2">
+            <Button variant="outline" className="h-8 md:h-10 text-xs" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
+            <Button variant="outline" className="h-8 md:h-10 text-xs" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
+            {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-8 md:h-10 text-xs'))}
+            <Button variant="destructive" className="h-8 md:h-10 text-xs transition-transform transform border-b-4 border-destructive/70 active:border-b-0 active:translate-y-1" onClick={handleBackspace}>⌫</Button>
         </div>
 
-        <div className="w-full grid grid-cols-7 gap-2">
-            {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-10 text-sm'))}
-            <Button variant="secondary" className="h-10 text-sm transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
-            <Button variant="secondary" className="h-10 text-sm transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
-            <Button variant="secondary" className="h-10 text-sm transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
+        <div className="w-full grid grid-cols-7 gap-1 md:gap-2">
+            {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-8 md:h-10 text-xs'))}
+            <Button variant="secondary" className="h-8 md:h-10 text-xs transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
+            <Button variant="secondary" className="h-8 md:h-10 text-xs transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
+            <Button variant="secondary" className="h-8 md:h-10 text-xs transition-transform transform border-b-4 border-secondary/70 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
         </div>
         
-        <div className="w-full grid grid-cols-7 gap-2">
-            {functionButtons1.slice(4, 8).map(btn => renderButton(btn, 'secondary', 'h-10 text-sm'))}
-             {trigButtons.slice(0, 3).map(btn => renderButton(btn, 'secondary', 'h-10 text-sm'))}
+        <div className="w-full grid grid-cols-7 gap-1 md:gap-2">
+            {functionButtons1.slice(4, 8).map(btn => renderButton(btn, 'secondary', 'h-8 md:h-10 text-xs'))}
+             {trigButtons.slice(0, 3).map(btn => renderButton(btn, 'secondary', 'h-8 md:h-10 text-xs'))}
         </div>
 
-        <div className="grid grid-cols-5 gap-2 w-full">
-            <div className="col-span-3 grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-5 gap-1 md:gap-2 w-full">
+            <div className="col-span-3 grid grid-cols-3 gap-1 md:gap-2">
                 {basicButtons.map(b => {
                     if (b === '±') return renderButton({ label: '±', type: 'toggle-sign' }, 'outline');
                     return renderButton(b, 'outline');
                 })}
             </div>
-            <div className="col-span-1 grid grid-cols-1 gap-2">
+            <div className="col-span-1 grid grid-cols-1 gap-1 md:gap-2">
                 {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
             </div>
-             <div className="col-span-1 grid grid-cols-1 gap-2">
+             <div className="col-span-1 grid grid-cols-1 gap-1 md:gap-2">
                 <Button variant={null} className="h-full text-lg transition-transform transform bg-destructive text-destructive-foreground hover:bg-destructive/90 border-b-4 border-destructive/70 active:border-b-0 active:translate-y-1" onClick={handleAllClear}>AC</Button>
                 {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
             </div>
         </div>
-         <div className="w-full grid grid-cols-7 gap-2 mt-2">
-            {trigButtons.slice(3, 6).map(btn => renderButton(btn, 'secondary', 'h-10 text-sm'))}
-            {['sec', 'csc', 'cot'].map(op => renderButton({ label: op, type: 'func', value: op }, 'secondary', 'h-10 text-sm'))}
-            {renderButton({ label: 'π', type: 'char' }, 'secondary', 'h-10 text-sm')}
+         <div className="w-full grid grid-cols-7 gap-1 md:gap-2 mt-1 md:mt-2">
+            {trigButtons.slice(3, 6).map(btn => renderButton(btn, 'secondary', 'h-8 md:h-10 text-xs'))}
+            {['sec', 'csc', 'cot'].map(op => renderButton({ label: op, type: 'func', value: op }, 'secondary', 'h-8 md:h-10 text-xs'))}
+            {renderButton({ label: 'π', type: 'char' }, 'secondary', 'h-8 md:h-10 text-xs')}
         </div>
 
 
