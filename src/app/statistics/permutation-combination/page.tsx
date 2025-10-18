@@ -190,7 +190,7 @@ export default function PermutationCombinationPage() {
             <section className="text-center text-sm text-muted-foreground">
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
                 <div className="flex justify-center gap-4 mt-2">
-                    <Link href="/probability" className="text-primary hover:underline">Probability Calculator</Link>
+                    <Link href="/statistics/probability" className="text-primary hover:underline">Probability Calculator</Link>
                     <Link href="/statistics/sample-size" className="text-primary hover:underline">Sample Size Calculator</Link>
                 </div>
             </section>

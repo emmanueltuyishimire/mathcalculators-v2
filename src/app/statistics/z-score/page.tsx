@@ -113,7 +113,7 @@ export default function ZScorePage() {
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
                 <div className="flex justify-center gap-4 mt-2">
                     <Link href="/statistics/standard-deviation" className="text-primary hover:underline">Standard Deviation Calculator</Link>
-                    <Link href="/probability" className="text-primary hover:underline">Probability Calculator</Link>
+                    <Link href="/statistics/probability" className="text-primary hover:underline">Probability Calculator</Link>
                 </div>
             </section>
         </div>

@@ -141,7 +141,7 @@ export default function StandardDeviationPage() {
             <h3 className="font-semibold text-foreground">Related</h3>
             <div className="flex justify-center gap-4 mt-2">
                 <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
-                <Link href="/probability" className="text-primary hover:underline">Probability Calculator</Link>
+                <Link href="/statistics/probability" className="text-primary hover:underline">Probability Calculator</Link>
             </div>
           </section>
         </div>

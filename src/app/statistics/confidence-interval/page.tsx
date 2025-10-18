@@ -1,4 +1,5 @@
 
+
 import { PageHeader } from '@/components/page-header';
 import ConfidenceIntervalCalculator from '@/components/calculators/confidence-interval-calculator';
 import type { Metadata } from 'next';
@@ -117,7 +118,7 @@ export default function ConfidenceIntervalPage() {
                 <h3 className="font-semibold text-foreground">Related Calculators</h3>
                 <div className="flex justify-center gap-4 mt-2">
                     <Link href="/statistics" className="text-primary hover:underline">Statistics Calculator</Link>
-                    <Link href="/z-score" className="text-primary hover:underline">Z-Score Calculator</Link>
+                    <Link href="/statistics/z-score" className="text-primary hover:underline">Z-Score Calculator</Link>
                 </div>
             </section>
         </div>

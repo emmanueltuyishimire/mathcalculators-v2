@@ -31,12 +31,6 @@ const tools = [
     description: 'Derivatives, integrals, and limits.',
   },
   {
-    href: '/sequences',
-    label: 'Sequences',
-    icon: Milestone,
-    description: 'Arithmetic, geometric, and Fibonacci.',
-  },
-  {
     href: '/geometry',
     label: 'Geometry',
     icon: Square,
@@ -54,35 +48,11 @@ const tools = [
     icon: BarChartHorizontal,
     description: 'Mean, median, mode, and more.',
   },
-   {
-    href: '/probability',
-    label: 'Probability',
-    icon: Percent,
-    description: 'Odds, events, and distributions.',
-  },
   {
     href: '/matrix',
     label: 'Matrix',
     icon: Table,
     description: 'Matrix operations and calculations.',
-  },
-  {
-    href: '/permutation-combination',
-    label: 'Permutation & Combination',
-    icon: FunctionSquare,
-    description: 'Calculate nPr and nCr.',
-  },
-  {
-    href: '/z-score',
-    label: 'Z-Score',
-    icon: Sigma,
-    description: 'Z-score calculations and conversions.'
-  },
-  {
-    href: '/confidence-interval',
-    label: 'Confidence Interval',
-    icon: ShieldCheck,
-    description: 'Calculate confidence intervals.',
   },
   {
     href: '/converter',
@@ -128,7 +98,7 @@ export default function Home() {
         <section id="tools" className="py-12">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold text-center mb-8">Discover Our Tools</h2>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
               {tools.map((tool) => (
                 <Link href={tool.href} key={tool.href} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">

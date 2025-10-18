@@ -12,10 +12,7 @@ import {
   MoreVertical,
   BarChartHorizontal,
   Table,
-  Milestone,
-  Percent,
   FlaskConical,
-  ShieldCheck,
 } from 'lucide-react';
 import {
   Sheet,
@@ -29,14 +26,10 @@ import { ThemeToggle } from '@/components/theme-toggle';
 const navItems = [
   { href: '/scientific', label: 'Scientific', icon: FlaskConical },
   { href: '/basic', label: 'Basic', icon: Calculator },
-  { href: '/sequences', label: 'Sequences', icon: Milestone },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
-  { href: '/probability', label: 'Probability', icon: Percent },
-  { href: '/z-score', label: 'Z-Score', icon: Sigma },
-  { href: '/confidence-interval', label: 'Confidence Interval', icon: ShieldCheck },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
