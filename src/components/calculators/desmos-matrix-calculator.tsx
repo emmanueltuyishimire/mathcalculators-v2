@@ -5,15 +5,23 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Plus, X, Trash2, Rows, Columns, FunctionSquare, Pilcrow, Replace } from 'lucide-react';
+import { Plus, X, Rows, Columns, FunctionSquare, Replace } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 
 type Matrix = number[][];
 type MatrixObject = {
@@ -76,7 +84,69 @@ const subtractMatrices = (a: Matrix, b: Matrix): Matrix => {
   if (a.length !== b.length || a[0].length !== b[0].length) throw new Error("Matrices must have the same dimensions for subtraction.");
   return a.map((row, r) => row.map((cell, c) => cell - b[r][c]));
 }
+
+const scalarMultiply = (matrix: Matrix, scalar: number): Matrix => {
+  return matrix.map(row => row.map(cell => cell * scalar));
+}
 // #endregion
+
+const OperationDialog = ({matrix, onNewMatrix, operation}: {matrix: MatrixObject, onNewMatrix: (m: Matrix, name?: string) => void, operation: 'scalar'}) => {
+    const [value, setValue] = useState(2);
+    
+    const opDetails = {
+        scalar: { title: 'Scalar Multiplication', description: 'Enter a number to multiply the matrix by.', label: 'Scalar' }
+    }
+    const currentOp = opDetails[operation];
+
+    const handleCalculate = () => {
+        try {
+            let newMatrix: Matrix;
+            let newName: string;
+            switch(operation) {
+                case 'scalar':
+                    newMatrix = scalarMultiply(matrix.matrix, value);
+                    newName = `${value}×${matrix.name}`;
+                    break;
+            }
+            onNewMatrix(newMatrix, newName);
+        } catch(e: any) {
+             toast({ variant: "destructive", title: "Operation Error", description: e.message });
+        }
+    }
+
+    return (
+        <Dialog>
+            <DialogTrigger asChild>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Scalar Multiply</DropdownMenuItem>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                <DialogTitle>{currentOp.title}</DialogTitle>
+                <DialogDescription>{currentOp.description}</DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="scalar-value" className="text-right">
+                        {currentOp.label}
+                        </Label>
+                        <Input
+                        id="scalar-value"
+                        type="number"
+                        value={value}
+                        onChange={(e) => setValue(parseFloat(e.target.value) || 0)}
+                        className="col-span-3"
+                        />
+                    </div>
+                </div>
+                <DialogFooter>
+                  <DialogTrigger asChild>
+                    <Button onClick={handleCalculate}>Calculate</Button>
+                   </DialogTrigger>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+  }
 
 const NewMatrixButton = ({ onClick }: { onClick: () => void }) => (
   <Button variant="outline" onClick={onClick} className="w-full min-h-[160px] border-dashed">
@@ -89,13 +159,15 @@ const MatrixView = ({
   updateMatrix,
   removeMatrix,
   fillMatrix,
-  applyUnaryOperation
+  applyUnaryOperation,
+  onNewMatrix,
 }: {
   matrixObj: MatrixObject;
   updateMatrix: (id: string, newMatrix: Matrix) => void;
   removeMatrix: (id: string) => void;
   fillMatrix: (id: string, value: number | 'random' | 'identity') => void;
   applyUnaryOperation: (id: string, operation: 'transpose' | 'inverse') => void;
+  onNewMatrix: (m: Matrix, name?: string) => void;
 }) => {
   const { id, name, matrix } = matrixObj;
   const { toast } = useToast();
@@ -164,6 +236,7 @@ const MatrixView = ({
                 <DropdownMenuItem onClick={() => handleUnaryOperation('transpose')}>Transpose</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleDet}>Determinant</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleUnaryOperation('inverse')}>Inverse</DropdownMenuItem>
+                <OperationDialog matrix={matrixObj} onNewMatrix={onNewMatrix} operation="scalar" />
               </DropdownMenuContent>
             </DropdownMenu>
             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => removeMatrix(id)}>
@@ -377,6 +450,7 @@ export default function DesmosMatrixCalculator() {
             removeMatrix={removeMatrix}
             fillMatrix={fillMatrix}
             applyUnaryOperation={applyUnaryOperation}
+            onNewMatrix={addMatrix}
           />
         ))}
         <NewMatrixButton onClick={() => addMatrix()} />
