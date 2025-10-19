@@ -1,0 +1,173 @@
+
+"use client";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { AreaDiagram } from './area-diagram';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+interface AreaCalculatorProps {
+    shape: 'Rectangle' | 'Triangle' | 'Trapezoid' | 'Circle' | 'Sector' | 'Ellipse' | 'Parallelogram';
+    inputs: { name: string; label: string; }[];
+    calculate: (inputs: { [key: string]: number }) => number | string;
+}
+
+const lengthUnits = {
+    Meter: 1,
+    Centimeter: 0.01,
+    Millimeter: 0.001,
+    Kilometer: 1000,
+    Foot: 0.3048,
+    Inch: 0.0254,
+    Yard: 0.9144,
+};
+
+const unitAbbreviations: { [key: string]: string } = {
+    Meter: 'm',
+    Centimeter: 'cm',
+    Millimeter: 'mm',
+    Kilometer: 'km',
+    Foot: 'ft',
+    Inch: 'in',
+    Yard: 'yd',
+};
+
+type Unit = keyof typeof lengthUnits;
+
+const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculate }) => {
+    const { toast } = useToast();
+    const [inputValues, setInputValues] = useState<{ [key: string]: string }>(
+        inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {})
+    );
+    const [area, setArea] = useState<string>('');
+    const [unit, setUnit] = useState<Unit>('Meter');
+
+    const handleCalculate = () => {
+        const conversionFactor = lengthUnits[unit];
+        try {
+            const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
+                const num = parseFloat(value);
+                if (isNaN(num)) {
+                    throw new Error(`Invalid input for ${key}`);
+                }
+                return { ...acc, [key]: num * conversionFactor };
+            }, {} as { [key: string]: number });
+
+            const resultInBaseUnit = calculate(parsedInputs);
+            const resultInSelectedUnit = typeof resultInBaseUnit === 'number' ? resultInBaseUnit / Math.pow(conversionFactor, 2) : resultInBaseUnit;
+            setArea(typeof resultInSelectedUnit === 'number' ? resultInSelectedUnit.toFixed(4) : resultInSelectedUnit);
+        } catch (e: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Calculation Error',
+                description: e.message,
+            });
+            setArea('');
+        }
+    };
+
+    return (
+        <Card className="overflow-hidden">
+            <CardHeader>
+                <CardTitle>{shape} Area Calculator</CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label htmlFor={`${shape}-unit`}>Unit</Label>
+                        <Select value={unit} onValueChange={(val) => setUnit(val as Unit)}>
+                            <SelectTrigger id={`${shape}-unit`}>
+                                <SelectValue placeholder="Select unit" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.keys(lengthUnits).map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {inputs.map(input => (
+                        <div key={input.name} className="space-y-2">
+                            <Label htmlFor={`${shape}-${input.name}`}>{input.label}</Label>
+                            <Input
+                                id={`${shape}-${input.name}`}
+                                type="number"
+                                value={inputValues[input.name]}
+                                onChange={e => setInputValues({ ...inputValues, [input.name]: e.target.value })}
+                                placeholder={`Enter value in ${unit.toLowerCase()}s`}
+                            />
+                        </div>
+                    ))}
+                    <Button onClick={handleCalculate} className="w-full">Calculate</Button>
+                    {area && (
+                        <div className="pt-2">
+                            <Label>Area</Label>
+                             <div className="font-mono text-lg p-2 bg-muted rounded-md text-center">
+                                {area} {unitAbbreviations[unit]}²
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="flex justify-center items-center md:pt-10">
+                    <AreaDiagram shape={shape} className="w-48 h-48 text-foreground" />
+                </div>
+            </CardContent>
+        </Card>
+    );
+};
+
+const calculators: AreaCalculatorProps[] = [
+    {
+        shape: 'Rectangle',
+        inputs: [{ name: 'l', label: 'Length (l)' }, { name: 'w', label: 'Width (w)' }],
+        calculate: ({ l, w }) => l * w,
+    },
+    {
+        shape: 'Triangle',
+        inputs: [{ name: 'a', label: 'Edge 1 (a)' }, { name: 'b', label: 'Edge 2 (b)' }, { name: 'c', label: 'Edge 3 (c)' }],
+        calculate: ({ a, b, c }) => {
+            const s = (a + b + c) / 2;
+            if (s <= a || s <= b || s <= c) {
+                throw new Error("Invalid triangle sides.");
+            }
+            return Math.sqrt(s * (s - a) * (s - b) * (s - c)); // Heron's formula
+        },
+    },
+    {
+        shape: 'Trapezoid',
+        inputs: [{ name: 'b1', label: 'Base 1 (b1)' }, { name: 'b2', label: 'Base 2 (b2)' }, { name: 'h', label: 'Height (h)' }],
+        calculate: ({ b1, b2, h }) => ((b1 + b2) / 2) * h,
+    },
+    {
+        shape: 'Circle',
+        inputs: [{ name: 'r', label: 'Radius (r)' }],
+        calculate: ({ r }) => Math.PI * Math.pow(r, 2),
+    },
+    {
+        shape: 'Sector',
+        inputs: [{ name: 'r', label: 'Radius (r)' }, { name: 'A', label: 'Angle (A) in degrees' }],
+        calculate: ({ r, A }) => (A / 360) * Math.PI * Math.pow(r, 2),
+    },
+    {
+        shape: 'Ellipse',
+        inputs: [{ name: 'a', label: 'Semi-major Axis (a)' }, { name: 'b', label: 'Semi-minor Axis (b)' }],
+        calculate: ({ a, b }) => Math.PI * a * b,
+    },
+     {
+        shape: 'Parallelogram',
+        inputs: [{ name: 'b', label: 'Base (b)' }, { name: 'h', label: 'Height (h)' }],
+        calculate: ({ b, h }) => b * h,
+    },
+];
+
+export default function AreaCalculator() {
+    return (
+        <div className="space-y-8">
+            {calculators.map(calc => (
+                <CalculatorCard key={calc.shape} {...calc} />
+            ))}
+        </div>
+    );
+}

@@ -17,16 +17,16 @@ const geometryTools = [
     description: 'Calculate the volume of common 3D shapes.',
   },
   {
+    href: '/geometry/area',
+    label: 'Area Calculator',
+    icon: Square,
+    description: 'Calculate the area of common 2D shapes.',
+  },
+  {
     href: '#', // Placeholder for Surface Area Calculator
     label: 'Surface Area Calculator',
     icon: Waves,
     description: 'Calculate the surface area of common 3D shapes. (Coming Soon)',
-  },
-    {
-    href: '#', // Placeholder for Area Calculator
-    label: 'Area Calculator',
-    icon: Square,
-    description: 'Calculate the area of common 2D shapes. (Coming Soon)',
   },
 ];
 
