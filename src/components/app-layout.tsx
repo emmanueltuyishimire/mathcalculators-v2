@@ -45,12 +45,6 @@ const navItems = [
   { href: '/trigonometry', label: 'Trigonometry', icon: Sigma },
 ];
 
-const moreNavItems = [
-    { href: '/about', label: 'About', icon: Info },
-    { href: '/contact', label: 'Contact', icon: Mail },
-];
-
-
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -77,16 +71,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                         </Link>
                     </NavigationMenuItem>
                     ))}
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>More</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul className="grid w-[200px] gap-3 p-4 md:w-[250px] lg:w-[300px] ">
-                                {moreNavItems.map((item) => (
-                                     <ListItem key={item.label} title={item.label} href={item.href} />
-                                ))}
-                            </ul>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
         </nav>
@@ -111,7 +95,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
                 <span>Math Calculators</span>
               </Link>
-              {[...navItems, ...moreNavItems].map((item) => (
+              {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
