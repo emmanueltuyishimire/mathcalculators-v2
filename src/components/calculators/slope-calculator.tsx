@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -37,6 +37,7 @@ const TwoPointsCalculator = () => {
 
     if ([x1, y1, x2, y2].some(isNaN)) {
       toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all points.' });
+      setResult(null);
       return;
     }
 
@@ -82,6 +83,11 @@ const TwoPointsCalculator = () => {
       });
     }
   };
+
+  useEffect(() => {
+    calculate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Card className="border-none shadow-none">
@@ -179,13 +185,18 @@ const OnePointSlopeCalculator = () => {
         let finalAngle: number;
         if(inputType === 'slope') {
             m = parseFloat(slope);
-            if (isNaN(m)) return;
+            if (isNaN(m)) {
+                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid slope.'});
+                setResult(null);
+                return;
+            };
             finalAngle = Math.atan(m) * (180 / Math.PI);
             setAngle(finalAngle.toFixed(4));
         } else {
             const angleDeg = parseFloat(angle);
             if(isNaN(angleDeg)) {
                 toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid angle.'});
+                setResult(null);
                 return;
             }
             m = Math.tan(angleDeg * Math.PI / 180);
@@ -193,8 +204,9 @@ const OnePointSlopeCalculator = () => {
             setSlope(m.toFixed(4));
         }
 
-        if ([x1, y1, d, m].some(isNaN)) {
+        if ([x1, y1, d].some(isNaN)) {
              toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please fill all required fields with valid numbers.' });
+             setResult(null);
              return;
         }
 
@@ -216,6 +228,11 @@ const OnePointSlopeCalculator = () => {
             xIntercept
         });
     }
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
     <Card className="border-none shadow-none">
