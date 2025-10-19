@@ -199,8 +199,8 @@ export default function LcmCalculator() {
                                 <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-4">
                                     <div>
                                         <p className="font-semibold mb-2">Prime factorization of the numbers:</p>
-                                        {result.steps.allFactors.map(({num, factors}) => (
-                                            <p key={String(num)}>{String(num)} = {formatFactors(factors)}</p>
+                                        {result.steps.allFactors.map(({num, factors}, index) => (
+                                            <p key={`${String(num)}-${index}`}>{String(num)} = {formatFactors(factors)}</p>
                                         ))}
                                     </div>
                                     <div>
