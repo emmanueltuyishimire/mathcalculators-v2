@@ -7,126 +7,22 @@ import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, M
 import { useState, useEffect } from 'react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
-const carouselSlides = [
-  {
-    imageUrl: "/math-calculator-background-image1.webp",
-    title: "Precision in Every Calculation",
-    description: "From basic arithmetic to complex calculus, find the right tool for your needs.",
-    dataAiHint: "abstract geometric"
-  },
-  {
-    imageUrl: "/math-calculator-background-image2.webp",
-    title: "Master Geometry",
-    description: "Calculate area, volume, slope, and more with our intuitive geometry tools.",
-    dataAiHint: "geometric shapes"
-  },
-  {
-    imageUrl: "/math-calculator-background-image3.webp",
-    title: "Unlock Statistical Insights",
-    description: "Analyze data with our mean, median, mode, and standard deviation calculators.",
-    dataAiHint: "data charts"
-  },
-    {
-    imageUrl: "/math-calculator-background-image4.webp",
-    title: "Solve Complex Algebra",
-    description: "Tackle equations and explore algebraic concepts with ease.",
-    dataAiHint: "formulas equations"
-  },
-  {
-    imageUrl: "/math-calculator-background-image5.webp",
-    title: "Explore Trigonometry",
-    description: "Sine, cosine, tangent, and more for all your angular calculation needs.",
-    dataAiHint: "trigonometry waves"
-  },
-  {
-    imageUrl: "/math-calculator-background-image6.webp",
-    title: "Dive into Calculus",
-    description: "Derivatives, integrals, and limits made simple with our calculus tools.",
-    dataAiHint: "calculus graph"
-  },
-  {
-    imageUrl: "/math-calculator-background-image7.webp",
-    title: "Matrix Operations Simplified",
-    description: "Perform matrix addition, multiplication, and transformations effortlessly.",
-    dataAiHint: "matrix numbers"
-  },
-  {
-    imageUrl: "/math-calculator-background-image8.webp",
-    title: "Convert Units Instantly",
-    description: "A versatile unit converter for length, mass, temperature, and more.",
-    dataAiHint: "measurements units"
-  },
-  {
-    imageUrl: "/math-calculator-background-image9.webp",
-    title: "For Students & Professionals",
-    description: "Reliable and accurate tools for both academic and professional use.",
-    dataAiHint: "learning education"
-  },
-   {
-    imageUrl: "/math-calculator-background-image10.webp",
-    title: "Free and Accessible to All",
-    description: "Our mission is to make powerful mathematical tools available to everyone.",
-    dataAiHint: "community people"
-  },
-   {
-    imageUrl: "/math-calculator-background-image11.webp",
-    title: "Advanced Scientific Functions",
-    description: "Logarithms, exponents, and more in our full-featured scientific calculator.",
-    dataAiHint: "science technology"
-  },
-   {
-    imageUrl: "/math-calculator-background-image12.webp",
-    title: "Discover Your Path",
-    description: "Explore numerology and personal insights with the Destiny Matrix calculator.",
-    dataAiHint: "destiny abstract"
-  }
-];
-
-function Slideshow() {
-  const [slideIndex, setSlideIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSlideIndex((prevIndex) => (prevIndex + 1) % carouselSlides.length);
-    }, 5000); // Change image every 5 seconds
-
-    return () => clearTimeout(timer);
-  }, [slideIndex]);
-
+function HeroSection() {
   return (
     <section 
-      className="slideshow-container"
+      className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
+      style={{ backgroundImage: "url('/math-calculator-background-image2.webp')" }}
     >
-      {carouselSlides.map((slide, index) => (
-        <div
-          key={index}
-          className="mySlides fade"
-          style={{ display: index === slideIndex ? 'block' : 'none' }}
-        >
-          <img src={slide.imageUrl.replace(/ /g, '%20')} alt={slide.title} data-ai-hint={slide.dataAiHint} />
-        </div>
-      ))}
-      
-      <div className="hero-text-overlay">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-            {carouselSlides[slideIndex].title}
+      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-primary-foreground">
+            Master Geometry
           </h1>
-          <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-            {carouselSlides[slideIndex].description}
+          <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl mt-4">
+            Calculate area, volume, slope, and more with our intuitive geometry tools.
           </p>
-           <Button asChild variant="secondary" size="lg">
+           <Button asChild variant="secondary" size="lg" className="mt-6">
             <Link href="#tools">Explore Tools</Link>
           </Button>
-      </div>
-
-      <div style={{ textAlign: 'center', position: 'absolute', bottom: '20px', width: '100%' }}>
-        {carouselSlides.map((_, index) => (
-          <span
-            key={index}
-            className={`dot ${index === slideIndex ? 'active' : ''}`}
-            onClick={() => setSlideIndex(index)}
-          ></span>
-        ))}
       </div>
     </section>
   );
@@ -153,7 +49,7 @@ const tools = [
 export default function Home() {
   return (
     <>
-      <Slideshow />
+      <HeroSection />
 
       <main className="flex-1 p-4 md:p-6">
         <section id="tools" className="py-12">
