@@ -16,11 +16,22 @@ const EducationalContent = () => (
             <CardTitle>Understanding Circle Calculations</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-            <p className="text-muted-foreground">
-                All properties of a circle are interrelated through the mathematical constant π (pi). This means if you know any one property, you can find all the others. This guide explains the core formulas used by the calculator.
-            </p>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">How to Use the Calculator</h3>
+                <p className="text-muted-foreground mt-2">
+                    This calculator is designed for ease of use. Simply enter any single known value of a circle, and the other properties will be calculated for you automatically.
+                </p>
+                <ol className="list-decimal list-inside space-y-2 mt-2 text-muted-foreground">
+                    <li><b>Enter a value:</b> Type a number into any of the four fields: Radius, Diameter, Circumference, or Area.</li>
+                    <li><b>View the results:</b> The other three fields will instantly update to show the corresponding values for the circle.</li>
+                    <li><b>Experiment:</b> Change any value at any time to see how the other properties are affected.</li>
+                </ol>
+            </div>
             <div>
                 <h3 className="text-xl font-semibold text-foreground">Core Formulas</h3>
+                <p className="text-muted-foreground mt-2">
+                    All properties of a circle are interrelated through the mathematical constant π (pi). This means if you know any one property, you can find all the others. This guide explains the core formulas used by the calculator.
+                </p>
                 <Table className="mt-2">
                     <TableHeader>
                         <TableRow>
