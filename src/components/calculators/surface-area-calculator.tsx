@@ -256,11 +256,11 @@ const calculators: SurfaceAreaCalculatorProps[] = [
                 final: { Base: base, Lateral: lateral, Total: base + lateral },
                 steps: {
                     base: {
-                        formula: 'π×{r}²',
+                        formula: 'π×r² = π×{r}²',
                         piTerm: `${r**2}`
                     },
                     lateral: {
-                        formula: 'π×{r}×√({r}² + {h}²)',
+                        formula: 'π×r×√({r}² + {h}²)',
                         piTerm: `${(r * slantHeight).toFixed(4)}`
                     },
                     total: {}
@@ -397,11 +397,19 @@ const calculators: SurfaceAreaCalculatorProps[] = [
         shape: 'Conical Frustum',
         inputs: [{ name: 'r', label: 'Top Radius (r)' }, { name: 'R', label: 'Bottom Radius (R)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, R, h }) => {
-            const slantHeight = Math.sqrt(Math.pow(R-r, 2) + h*h);
+            const slantHeight = Math.sqrt(Math.pow(R - r, 2) + h * h);
             const lateral = Math.PI * (R + r) * slantHeight;
-            const top = Math.PI * r*r;
-            const bottom = Math.PI * R*R;
-            return { Top: top, Bottom: bottom, Lateral: lateral, Total: top + bottom + lateral };
+            const top = Math.PI * r * r;
+            const bottom = Math.PI * R * R;
+            return {
+                final: { Top: top, Bottom: bottom, Lateral: lateral, Total: top + bottom + lateral },
+                steps: {
+                    top: { formula: 'π×r² = π×{r}²', piTerm: `${r*r}`},
+                    bottom: { formula: 'π×R² = π×{R}²', piTerm: `${R*R}`},
+                    lateral: { formula: 'π×(r+R)×√((R-r)² + h²) = π×({r}+{R})×√(({R}-{r})² + {h}²)', piTerm: `${((r+R) * slantHeight).toFixed(4)}`},
+                    total: {}
+                }
+            };
         },
     },
     {
