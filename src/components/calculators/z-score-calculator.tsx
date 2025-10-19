@@ -65,6 +65,12 @@ function ZScoreFormulaCalculator() {
                 <CardFooter>
                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <h3 className="font-bold text-lg">Z-Score: <span className="text-primary">{zScore.toFixed(4)}</span></h3>
+                        <div className="font-mono text-sm mt-2 p-2 bg-muted rounded-md">
+                          <p>z = (x - μ) / σ</p>
+                          <p>z = ({rawScore} - {mean}) / {stdDev}</p>
+                          <p>z = {(parseFloat(rawScore) - parseFloat(mean)).toFixed(4)} / {stdDev}</p>
+                          <p>z = {zScore.toFixed(4)}</p>
+                        </div>
                     </div>
                 </CardFooter>
             )}

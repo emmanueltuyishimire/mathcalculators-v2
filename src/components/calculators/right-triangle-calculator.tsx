@@ -89,7 +89,8 @@ export default function RightTriangleCalculator() {
         let numAlpha = alpha ? (angleUnit === 'radian' ? toDeg(evalRad(alpha)) : parseFloat(alpha)) : NaN;
         let numBeta = beta ? (angleUnit === 'radian' ? toDeg(evalRad(beta)) : parseFloat(beta)) : NaN;
         
-        const knowns = [!isNaN(numA), !isNaN(numB), !isNaN(numC), !isNaN(numAlpha), !isNaN(numBeta)].filter(Boolean).length;
+        const knownValues = [!isNaN(numA), !isNaN(numB), !isNaN(numC), !isNaN(numAlpha), !isNaN(numBeta)];
+        const knownCount = knownValues.filter(Boolean).length;
         const sideCount = [!isNaN(numA), !isNaN(numB), !isNaN(numC)].filter(Boolean).length;
 
         if (knownCount !== 2 || sideCount === 0) {
@@ -243,8 +244,8 @@ export default function RightTriangleCalculator() {
                              <p><b>Side a = {results.a.toFixed(4)}</b></p>
                              <p><b>Side b = {results.b.toFixed(4)}</b></p>
                              <p><b>Hypotenuse c = {results.c.toFixed(4)}</b></p>
-                             <p><b>∠α = {results.alpha.deg.toFixed(4)}° = {results.alpha.dms} = {results.alpha.rad.toFixed(4)} rad</b></p>
-                             <p><b>∠β = {results.beta.deg.toFixed(4)}° = {results.beta.dms} = {results.beta.rad.toFixed(4)} rad</b></p>
+                             <p><b>∠α = {results.alpha.deg.toFixed(4)}° = {results.alpha.dms} = {formatRad(results.alpha.rad)}</b></p>
+                             <p><b>∠β = {results.beta.deg.toFixed(4)}° = {results.beta.dms} = {formatRad(results.beta.rad)}</b></p>
                              <p><b>Altitude h = {results.h.toFixed(4)}</b></p>
                              <p><b>Area = {results.area.toFixed(4)}</b></p>
                              <p><b>Perimeter = {results.perimeter.toFixed(4)}</b></p>
@@ -258,7 +259,7 @@ export default function RightTriangleCalculator() {
                                     <AccordionContent>
                                         <div className="p-4 bg-muted rounded-md font-mono text-xs space-y-2 break-words">
                                             {Object.entries(results.steps).map(([key, value]) => (
-                                                <p key={key} dangerouslySetInnerHTML={{ __html: value }} />
+                                                value && <p key={key} dangerouslySetInnerHTML={{ __html: String(value) }} />
                                             ))}
                                         </div>
                                     </AccordionContent>

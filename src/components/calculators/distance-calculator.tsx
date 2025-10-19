@@ -121,8 +121,8 @@ const TwoDCalculator = () => {
                             <div className="font-mono text-xs space-y-1 bg-background/50 p-2 rounded-md">
                                 <p>d = √(({p2.x}) - ({p1.x}))² + (({p2.y}) - ({p1.y}))²</p>
                                 <p>d = √({result.deltaX})² + ({result.deltaY})²</p>
-                                <p>d = √({Math.pow(result.deltaX, 2)} + {Math.pow(result.deltaY, 2)})</p>
-                                <p>d = √{Math.pow(result.distance, 2)}</p>
+                                <p>d = √({Math.pow(result.deltaX, 2).toFixed(4)} + {Math.pow(result.deltaY, 2).toFixed(4)})</p>
+                                <p>d = √{Math.pow(result.distance, 2).toFixed(4)}</p>
                                 <p>d = {result.distance.toFixed(4)}</p>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ const TwoDCalculator = () => {
                         <h4 className="font-semibold">Line Properties</h4>
                         <p className="font-mono text-sm"><b>ΔX = </b> {p2.x} - {p1.x} = {result.deltaX}</p>
                         <p className="font-mono text-sm"><b>ΔY = </b> {p2.y} - {p1.y} = {result.deltaY}</p>
-                        <p className="font-mono text-sm"><b>Slope (m) = </b> ΔY/ΔX = {result.deltaY}/{result.deltaX} = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
+                        <p className="font-mono text-sm"><b>Slope (m) = </b> ΔY/ΔX = {result.deltaY.toFixed(4)}/{result.deltaX.toFixed(4)} = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
                         <p className="font-mono text-sm"><b>Angle (θ) = </b> {typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</p>
                         <Separator className="my-2 bg-blue-200 dark:bg-blue-800" />
                         <h5 className="font-medium text-sm">Equation of the line:</h5>
@@ -221,8 +221,8 @@ const ThreeDCalculator = () => {
                             <div className="font-mono text-xs space-y-1 bg-background/50 p-2 rounded-md">
                                 <p>d = √(({p2.x}) - ({p1.x}))² + (({p2.y}) - ({p1.y}))² + (({p2.z}) - ({p1.z}))²</p>
                                 <p>d = √({result.deltaX})² + ({result.deltaY})² + ({result.deltaZ})²</p>
-                                <p>d = √({Math.pow(result.deltaX, 2)} + {Math.pow(result.deltaY, 2)} + {Math.pow(result.deltaZ, 2)})</p>
-                                <p>d = √{Math.pow(result.distance, 2)}</p>
+                                <p>d = √({Math.pow(result.deltaX, 2).toFixed(4)} + {Math.pow(result.deltaY, 2).toFixed(4)} + {Math.pow(result.deltaZ, 2).toFixed(4)})</p>
+                                <p>d = √{Math.pow(result.distance, 2).toFixed(4)}</p>
                                 <p>d = {result.distance.toFixed(4)}</p>
                             </div>
                         </div>

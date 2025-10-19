@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -49,6 +49,11 @@ function TwoEventsCalculator() {
 
     setResults({ pAnot, pBnot, pAandB, pAorB, pXorB, pNeither, pAnotB, pBnotA });
   };
+  
+  useEffect(() => {
+    calculate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
   const resultEntries = useMemo(() => {
     if (!results) return [];
@@ -230,6 +235,11 @@ function NormalDistributionCalculator() {
 
         setResult({ probBetween, probOutside, probLeft, probRight });
     }
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     const confidenceTable = useMemo(() => {
         const mean_num = parseFloat(mean);
