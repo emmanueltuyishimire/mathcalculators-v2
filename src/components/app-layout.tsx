@@ -56,14 +56,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           href="/"
           className="mr-4 flex items-center gap-2 text-lg font-semibold md:text-base"
         >
-          <Image src="/logo.png" alt="Math Calculators Logo" width={24} height={24} />
+          <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} />
           <span className="sr-only">Math Calculators</span>
         </Link>
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
              {navItems.map((item) => (
               <NavigationMenuItem key={item.href}>
-                <Link href={item.href} passHref>
+                <Link href={item.href} legacyBehavior passHref>
                   <NavigationMenuLink active={pathname.startsWith(item.href)} className={navigationMenuTriggerStyle()}>
                     {item.label}
                   </NavigationMenuLink>
@@ -90,7 +90,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Image src="/logo.png" alt="Math Calculators Logo" width={24} height={24} />
+                <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} />
                 <span>Math Calculators</span>
               </Link>
               {navItems.map((item) => (

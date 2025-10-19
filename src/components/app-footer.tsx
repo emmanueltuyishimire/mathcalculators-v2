@@ -11,7 +11,7 @@ export function AppFooter() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-                            <Image src="/logo.png" alt="Math Calculators Logo" width={24} height={24} />
+                            <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} />
                             <span>Math Calculators</span>
                         </Link>
                         <p className="text-sm text-muted-foreground">
