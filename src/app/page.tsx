@@ -88,7 +88,7 @@ export default function Home() {
     <>
       <section 
         className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
-        style={{ backgroundImage: "url('/math-calculator-background-image2.webp')" }}
+        style={{ backgroundImage: "url('/math%20calculator%20background%20image2.webp')" }}
         data-ai-hint="geometric shapes"
       >
         <div className="absolute inset-0 bg-black/50" />
