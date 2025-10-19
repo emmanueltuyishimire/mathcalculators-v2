@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'Calculate half-life, initial quantity, remaining quantity, or time elapsed. Also convert between half-life, mean lifetime, and decay constant.',
 };
 
-const EducationalContent = () => (
+const CalculatorLogic = () => (
     <Card>
         <CardHeader>
             <CardTitle>Half-Life Formulas and Logic</CardTitle>
@@ -80,6 +80,60 @@ const EducationalContent = () => (
     </Card>
 );
 
+const EducationalContent = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>What is Half-Life?</CardTitle>
+            <CardDescription>A deeper look into the concept of half-life and its applications.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Definition and Core Concept</h3>
+                <p className="text-muted-foreground mt-2"><b>Half-life</b> is the time it takes for a substance to reduce to half of its initial amount. While commonly associated with the radioactive decay of atoms, it applies to any quantity that follows an exponential decay pattern.</p>
+                <p className="text-muted-foreground mt-2">One of its most famous applications is <b>carbon-14 dating</b>. Carbon-14, which has a half-life of about 5,730 years, is constantly created in the atmosphere and absorbed by plants and, in turn, by animals. When an organism dies, it stops absorbing carbon-14, and the existing amount begins to decay. By measuring the remaining carbon-14, scientists can date organic remains up to around 50,000 years old.</p>
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">The Three Exponential Decay Formulas</h3>
+                <p className="text-muted-foreground mt-2">Exponential decay can be described using three equivalent formulas, where <b>N₀</b> is the initial quantity, and <b>N(t)</b> is the quantity remaining after time <b>t</b>.</p>
+                 <div className="space-y-4 font-mono bg-muted p-4 rounded-md text-sm">
+                    <p>1. Using Half-Life (t½): <b>N(t) = N₀ × (1/2)^(t/t½)</b></p>
+                    <p>2. Using Mean Lifetime (τ): <b>N(t) = N₀ × e^(-t/τ)</b></p>
+                    <p>3. Using Decay Constant (λ): <b>N(t) = N₀ × e^(-λt)</b></p>
+                </div>
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Example: Carbon-Dating a Fossil</h3>
+                <p className="text-muted-foreground mt-2">Imagine an archaeologist finds a fossil with 25% of the carbon-14 found in a living sample. Given that N(t)/N₀ = 0.25 and the half-life of carbon-14 is 5,730 years, we can find the age (t):</p>
+                 <div className="space-y-2 font-mono bg-background p-4 rounded-md text-xs border">
+                    <p>0.25 = (1/2)^(t / 5730)</p>
+                    <p>ln(0.25) = (t / 5730) × ln(0.5)</p>
+                    <p>t = 5730 × (ln(0.25) / ln(0.5))</p>
+                    <p>t = 5730 × (-1.386 / -0.693)</p>
+                    <p>t = 5730 × 2</p>
+                    <p className="font-semibold">t = 11,460 years</p>
+                </div>
+                <p className="text-muted-foreground mt-2">This calculation indicates the fossil is approximately 11,460 years old.</p>
+            </div>
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">Connecting Half-Life, Mean Lifetime, and Decay Constant</h3>
+                <p className="text-muted-foreground mt-2">By setting the formulas equal to each other, we can derive the relationship between these three key constants. Starting with N(t) = N₀ × (1/2)^(t/t½) and N(t) = N₀ × e^(-λt):</p>
+                 <div className="space-y-2 font-mono bg-muted p-4 rounded-md text-sm">
+                    <p>(1/2)^(t/t½) = e^(-λt)</p>
+                    <p>(t/t½) × ln(0.5) = -λt</p>
+                    <p>- (t/t½) × ln(2) = -λt</p>
+                    <p><b>λ = ln(2) / t½</b></p>
+                </div>
+                <p className="text-muted-foreground mt-2">Since mean lifetime <b>τ = 1/λ</b>, we get:</p>
+                 <div className="space-y-2 font-mono bg-muted p-4 rounded-md text-sm">
+                     <p><b>τ = t½ / ln(2)</b></p>
+                </div>
+                 <p className="text-muted-foreground mt-2">These relationships allow you to convert between all three values, which the second calculator on this page does automatically.</p>
+            </div>
+        </CardContent>
+    </Card>
+);
+
+
 export default function HalfLifePage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -95,6 +149,7 @@ export default function HalfLifePage() {
                 </p>
             </section>
           <HalfLifeCalculator />
+          <CalculatorLogic />
           <EducationalContent />
         </div>
       </main>
