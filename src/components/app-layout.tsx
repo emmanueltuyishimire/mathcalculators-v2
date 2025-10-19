@@ -99,8 +99,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                  {navItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
                          <Link href={item.href} legacyBehavior passHref>
-                            <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname.startsWith(item.href) ? "text-foreground bg-accent/50" : "text-muted-foreground")}>
-                            {item.label}
+                            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                                <a className={cn("flex items-center gap-2", pathname.startsWith(item.href) ? "text-foreground bg-accent/50" : "text-muted-foreground")}>
+                                    {item.label}
+                                </a>
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
