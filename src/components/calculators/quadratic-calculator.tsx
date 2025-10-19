@@ -15,9 +15,13 @@ interface Result {
 }
 
 interface Steps {
-    discriminant: string;
-    root1: string;
-    root2: string;
+    a: string;
+    b: string;
+    c: string;
+    discriminant: number;
+    discriminantStep: string;
+    root1Step: string;
+    root2Step: string;
 }
 
 // Helper to parse fractions like "1/4"
@@ -56,35 +60,36 @@ export default function QuadraticCalculator() {
             const discriminant = b * b - 4 * a * c;
             let root1: string, root2: string;
 
-            const stepData = {
-                discriminant: `Δ = b² - 4ac = (${b})² - 4(${a})(${c}) = ${discriminant.toFixed(4)}`,
-                root1: '',
-                root2: '',
-            };
+            const discriminantStep = `Δ = b² - 4ac = (${b})² - 4(${a})(${c}) = ${discriminant.toFixed(4)}`;
+            let root1Step = '';
+            let root2Step = '';
 
             if (discriminant > 0) {
                 const r1 = (-b + Math.sqrt(discriminant)) / (2 * a);
                 const r2 = (-b - Math.sqrt(discriminant)) / (2 * a);
                 root1 = r1.toFixed(4);
                 root2 = r2.toFixed(4);
-                stepData.root1 = `x₁ = (-b + √Δ) / 2a = (-${b} + √${discriminant.toFixed(4)}) / (2×${a}) = ${root1}`;
-                stepData.root2 = `x₂ = (-b - √Δ) / 2a = (-${b} - √${discriminant.toFixed(4)}) / (2×${a}) = ${root2}`;
+                root1Step = `x₁ = (-${b} + √${discriminant.toFixed(4)}) / (2×${a}) = ${root1}`;
+                root2Step = `x₂ = (-${b} - √${discriminant.toFixed(4)}) / (2×${a}) = ${root2}`;
             } else if (discriminant === 0) {
                 const r = -b / (2 * a);
                 root1 = root2 = r.toFixed(4);
-                stepData.root1 = `x = -b / 2a = -${b} / (2×${a}) = ${root1}`;
-                stepData.root2 = 'A single real root.';
+                root1Step = `x = -b / 2a = -${b} / (2×${a}) = ${root1}`;
+                root2Step = 'A single real root.';
             } else { // Complex roots
                 const realPart = (-b / (2 * a)).toFixed(4);
                 const imagPart = (Math.sqrt(-discriminant) / (2 * a)).toFixed(4);
                 root1 = `${realPart} + ${imagPart}i`;
                 root2 = `${realPart} - ${imagPart}i`;
-                stepData.root1 = `x₁ = (-b + i√-Δ) / 2a = (-${b} + i√${(-discriminant).toFixed(4)}) / (2×${a}) = ${root1}`;
-                stepData.root2 = `x₂ = (-b - i√-Δ) / 2a = (-${b} - i√${(-discriminant).toFixed(4)}) / (2×${a}) = ${root2}`;
+                root1Step = `x₁ = (-${b} + i√${(-discriminant).toFixed(4)}) / (2×${a}) = ${root1}`;
+                root2Step = `x₂ = (-${b} - i√${(-discriminant).toFixed(4)}) / (2×${a}) = ${root2}`;
             }
 
             setResult({ root1, root2 });
-            setSteps(stepData);
+            setSteps({
+                a: coeffs.a, b: coeffs.b, c: coeffs.c,
+                discriminant, discriminantStep, root1Step, root2Step
+            });
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
@@ -131,17 +136,43 @@ export default function QuadraticCalculator() {
                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <h3 className="font-bold text-lg mb-2">Roots</h3>
                         <p className="font-mono text-lg"><b>x₁ =</b> {result.root1}</p>
-                        <p className="font-mono text-lg"><b>x₂ =</b> {result.root2}</p>
+                        {result.root1 !== result.root2 && <p className="font-mono text-lg"><b>x₂ =</b> {result.root2}</p>}
                     </div>
                      {steps && (
                          <Accordion type="single" collapsible className="w-full">
                             <AccordionItem value="item-1">
                                 <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                                 <AccordionContent>
-                                    <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
-                                        <p><b>Discriminant (Δ):</b> {steps.discriminant}</p>
-                                        <p><b>Root 1 (x₁):</b> {steps.root1}</p>
-                                        <p><b>Root 2 (x₂):</b> {steps.root2}</p>
+                                    <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-4">
+                                        <div className="flex items-center gap-2">
+                                            <span>x =</span>
+                                            <div className="flex flex-col items-center">
+                                                <span className="border-b border-foreground px-2">-b ± √(b² - 4ac)</span>
+                                                <span>2a</span>
+                                            </div>
+                                        </div>
+                                         <div className="flex items-center gap-2">
+                                            <span>=</span>
+                                            <div className="flex flex-col items-center">
+                                                <span className="border-b border-foreground px-2">-{steps.b} ± √({steps.b}² - 4 × {steps.a} × {steps.c})</span>
+                                                <span>2 × {steps.a}</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span>=</span>
+                                            <div className="flex flex-col items-center">
+                                                <span className="border-b border-foreground px-2">-{steps.b} ± √({steps.discriminant.toFixed(4)})</span>
+                                                <span>{2 * parseFraction(steps.a)}</span>
+                                            </div>
+                                        </div>
+                                        {result.root1 !== result.root2 ? (
+                                            <>
+                                            <p><b>x₁ =</b> {steps.root1Step}</p>
+                                            <p><b>x₂ =</b> {steps.root2Step}</p>
+                                            </>
+                                        ) : (
+                                             <p><b>x =</b> {steps.root1Step}</p>
+                                        )}
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
