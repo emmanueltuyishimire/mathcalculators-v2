@@ -15,89 +15,83 @@ export const metadata: Metadata = {
 const EducationalContent = () => (
     <Card>
         <CardHeader>
-            <CardTitle>Understanding Roots</CardTitle>
+            <CardTitle>Understanding Roots: A Comprehensive Guide</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
-                <p>In mathematics, the general root, or the <strong>nth root</strong> of a number <em>a</em> is another number <em>b</em> that when multiplied by itself <em>n</em> times, equals <em>a</em>. In equation format:</p>
+                <h3 className="text-xl font-semibold text-foreground">What is a Root?</h3>
+                <p className="mt-2">In mathematics, finding a root is the inverse operation of raising a number to a power. The general root, or the <strong>nth root</strong> of a number <em>a</em>, is another number <em>b</em> that, when multiplied by itself <em>n</em> times, equals <em>a</em>.</p>
                 <p className="font-mono bg-muted p-4 rounded-md text-center text-lg my-2"><sup>n</sup>√a = b  &nbsp;&nbsp;which means&nbsp;&nbsp;  bⁿ = a</p>
+                <p>The most common roots are the <strong>square root (n=2)</strong> and the <strong>cube root (n=3)</strong>, but you can find any degree of root for a number.</p>
             </div>
             
             <div>
-                <h3 className="text-xl font-semibold text-foreground">1. Core Mathematical Formulas</h3>
+                <h3 className="text-xl font-semibold text-foreground">Core Formulas & Calculator Logic</h3>
+                <p className="mt-2">Roots can be expressed as fractional exponents, which is how most calculators compute them:</p>
                  <ul className="list-disc list-inside mt-2 space-y-2">
                     <li><b>Square Root:</b> <code className="font-mono bg-muted p-1 rounded-md">√x = x¹/²</code></li>
                     <li><b>Cube Root:</b> <code className="font-mono bg-muted p-1 rounded-md">∛x = x¹/³</code></li>
-                    <li><b>General Root (n-th root):</b> <code className="font-mono bg-muted p-1 rounded-md">ⁿ√x = x¹/ⁿ</code></li>
+                    <li><b>General Nth Root:</b> <code className="font-mono bg-muted p-1 rounded-md">ⁿ√x = x¹/ⁿ</code></li>
                 </ul>
-            </div>
-
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">2. Calculator Logic (Pseudocode)</h3>
-                <p className="mt-2">The calculators use the following logic to compute roots:</p>
+                <p className="mt-4">The pseudocode below shows how a calculator uses this logic. It also includes a check to handle negative numbers correctly for odd-degree roots.</p>
                 <div className="font-mono text-sm bg-muted p-4 rounded-md space-y-2 mt-2">
-                    <p><span className="text-muted-foreground">// Square root</span><br/>function squareRoot(x) &#123;<br/>&nbsp;&nbsp;return Math.pow(x, 1/2);<br/>&#125;</p>
-                    <p><span className="text-muted-foreground">// Cube root</span><br/>function cubeRoot(x) &#123;<br/>&nbsp;&nbsp;return Math.pow(x, 1/3);<br/>&#125;</p>
-                    <p><span className="text-muted-foreground">// General n-th root (handles negatives correctly)</span><br/>function nthRoot(x, n) &#123;<br/>&nbsp;&nbsp;return x &lt; 0 &amp;&amp; n % 2 !== 0 ? -Math.pow(-x, 1/n) : Math.pow(x, 1/n);<br/>&#125;</p>
+                    <p><span className="text-muted-foreground">// General n-th root logic</span><br/>function nthRoot(x, n) &#123;<br/>&nbsp;&nbsp;if (x &lt; 0 &amp;&amp; n % 2 === 0) &#123;<br/>&nbsp;&nbsp;&nbsp;&nbsp;return "Imaginary"; // Cannot take an even root of a negative number<br/>&nbsp;&nbsp;&#125;<br/>&nbsp;&nbsp;return Math.pow(x, 1/n);<br/>&#125;</p>
                 </div>
             </div>
             
             <div>
-                 <h3 className="text-xl font-semibold text-foreground">3. Example Calculations</h3>
+                 <h3 className="text-xl font-semibold text-foreground">Example Calculations</h3>
                 <Table>
                     <TableHeader>
-                        <TableRow><TableHead>Operation</TableHead><TableHead>Input</TableHead><TableHead>Output</TableHead></TableRow>
+                        <TableRow><TableHead>Operation</TableHead><TableHead>Input</TableHead><TableHead>Output</TableHead><TableHead>Meaning</TableHead></TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow><TableCell>√x</TableCell><TableCell>√(25)</TableCell><TableCell>5</TableCell></TableRow>
-                        <TableRow><TableCell>∛x</TableCell><TableCell>∛(27)</TableCell><TableCell>3</TableCell></TableRow>
-                        <TableRow><TableCell>⁴√x</TableCell><TableCell>n=4, x=16</TableCell><TableCell>2</TableCell></TableRow>
-                        <TableRow><TableCell>⁵√x</TableCell><TableCell>n=5, x=32</TableCell><TableCell>2</TableCell></TableRow>
+                        <TableRow><TableCell>√x</TableCell><TableCell>√(25)</TableCell><TableCell>5</TableCell><TableCell>5 × 5 = 25</TableCell></TableRow>
+                        <TableRow><TableCell>∛x</TableCell><TableCell>∛(27)</TableCell><TableCell>3</TableCell><TableCell>3 × 3 × 3 = 27</TableCell></TableRow>
+                        <TableRow><TableCell>⁴√x</TableCell><TableCell>n=4, x=16</TableCell><TableCell>2</TableCell><TableCell>2 × 2 × 2 × 2 = 16</TableCell></TableRow>
+                        <TableRow><TableCell>⁵√x</TableCell><TableCell>n=5, x=-32</TableCell><TableCell>-2</TableCell><TableCell>(-2)⁵ = -32</TableCell></TableRow>
                     </TableBody>
                 </Table>
             </div>
 
             <div>
-                <h3 className="text-xl font-semibold text-foreground">Estimating a Square Root</h3>
-                <p>Some common roots include the square root, where n = 2, and the cubed root, where n = 3. Calculating square roots and nth roots is fairly intensive. It requires estimation and trial and error. There exist more precise and efficient ways to calculate square roots, but below is a method that does not require a significant understanding of more complicated math concepts. To calculate √a:</p>
+                <h3 className="text-xl font-semibold text-foreground">How to Estimate a Square Root Manually</h3>
+                <p>While calculators make it instant, you can estimate roots yourself. This method, similar to one used by ancient Babylonians, is a great way to understand how root-finding works.</p>
                 <ol className="list-decimal list-inside mt-2 space-y-2">
-                    <li>Estimate a number <em>b</em>.</li>
-                    <li>Divide <em>a</em> by <em>b</em>. If the number <em>c</em> returned is precise to the desired decimal place, stop.</li>
-                    <li>Average <em>b</em> and <em>c</em> and use the result as a new guess.</li>
-                    <li>Repeat step two.</li>
+                    <li><b>Make an initial guess (b).</b></li>
+                    <li><b>Divide the original number by your guess:</b> c = a / b.</li>
+                    <li><b>Average your guess and the result:</b> new_guess = (b + c) / 2.</li>
+                    <li><b>Repeat</b> with the new guess until your answer is precise enough.</li>
                 </ol>
                 <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg mt-2">
                   <h4 className="font-semibold">Example: Find √27 to 3 decimal places</h4>
                   <ul className="font-mono text-sm mt-2 space-y-1">
-                    <li>Guess: 5.125</li>
-                    <li>27 ÷ 5.125 = 5.268</li>
-                    <li>(5.125 + 5.268)/2 = 5.197</li>
-                    <li>27 ÷ 5.197 = 5.195</li>
-                    <li>(5.195 + 5.197)/2 = 5.196</li>
-                    <li>27 ÷ 5.196 = 5.196. The result is <b>5.196</b>.</li>
+                    <li><b>1. Guess:</b> Let's start with 5 (since 5²=25).</li>
+                    <li><b>2. Divide & Average:</b> 27 / 5 = 5.4. &nbsp;&nbsp; Average = (5 + 5.4) / 2 = 5.2.</li>
+                    <li><b>3. Repeat:</b> 27 / 5.2 = 5.192. &nbsp;&nbsp; Average = (5.2 + 5.192) / 2 = 5.196.</li>
+                    <li><b>4. Repeat again:</b> 27 / 5.196 = 5.1963. The numbers are now very close.</li>
                   </ul>
+                   <p className="mt-2 font-semibold">The result is approximately <b>5.196</b>.</p>
                 </div>
             </div>
 
             <div>
-                <h3 className="text-xl font-semibold text-foreground">Estimating an nth Root</h3>
-                <p>Calculating nth roots can be done using a similar method, with modifications to deal with n. For a simpler, but less efficient method, follow these steps:</p>
+                <h3 className="text-xl font-semibold text-foreground">Estimating an Nth Root</h3>
+                <p>A similar, though more complex, iterative method exists for nth roots:</p>
                  <ol className="list-decimal list-inside mt-2 space-y-2">
                     <li>Estimate a number <em>b</em>.</li>
-                    <li>Divide <em>a</em> by b<sup>n-1</sup>. If the number <em>c</em> returned is precise to the desired decimal place, stop.</li>
-                    <li>Average: [b × (n-1) + c] / n</li>
-                    <li>Repeat step two.</li>
+                    <li>Calculate a new guess: <b>New Guess = [(n-1)b + a/bⁿ⁻¹] / n</b></li>
+                    <li>Repeat with the new guess.</li>
                 </ol>
                  <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg mt-2">
-                  <h4 className="font-semibold">Example: Find ⁸√15 to 3 decimal places</h4>
+                  <h4 className="font-semibold">Example: Find ³√64</h4>
                    <ul className="font-mono text-sm mt-2 space-y-1">
-                    <li>Guess: 1.432</li>
-                    <li>15 ÷ 1.432⁷ = 1.405</li>
-                    <li>(1.432 × 7 + 1.405)/8 = 1.388</li>
-                    <li>15 ÷ 1.388⁷ = 1.403</li>
-                    <li>(1.403 × 7 + 1.388)/8 = 1.402</li>
+                    <li><b>1. Guess:</b> 3 (since 3³=27). Here, a=64, n=3.</li>
+                    <li><b>2. Calculate:</b> New Guess = [(2×3) + 64/3²] / 3 = [6 + 7.11] / 3 ≈ 4.37.</li>
+                    <li><b>3. Repeat:</b> New Guess = [(2×4.37) + 64/4.37²] / 3 = [8.74 + 3.35] / 3 ≈ 4.03.</li>
+                    <li><b>4. Repeat again:</b> New Guess = [(2×4.03) + 64/4.03²] / 3 = [8.06 + 3.94] / 3 ≈ 4.00.</li>
                   </ul>
-                  <p className="mt-2">It should then be clear that computing any further will result in a number that would round to 1.403, making 1.403 the final estimate to 3 decimal places.</p>
+                  <p className="mt-2 font-semibold">The result converges on <b>4</b>.</p>
                 </div>
             </div>
         </CardContent>
@@ -110,6 +104,14 @@ export default function RootPage() {
       <PageHeader title="Root Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-2xl space-y-8">
+            <section className="text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                    Root Calculator
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                   Easily calculate square roots, cube roots, and nth roots for any number.
+                </p>
+            </section>
             <RootCalculator />
             <EducationalContent />
             <section className="text-center">
