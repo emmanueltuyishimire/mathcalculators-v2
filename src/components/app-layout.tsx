@@ -14,6 +14,7 @@ import {
   Table,
   FlaskConical,
   TrendingUp,
+  Move3d,
 } from 'lucide-react';
 import {
   Sheet,
@@ -28,6 +29,7 @@ const navItems = [
   { href: '/scientific', label: 'Scientific', icon: FlaskConical },
   { href: '/basic', label: 'Basic', icon: Calculator },
   { href: '/slope', label: 'Slope', icon: TrendingUp },
+  { href: '/distance', label: 'Distance', icon: Move3d },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },

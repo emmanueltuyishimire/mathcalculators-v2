@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp } from 'lucide-react';
+import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d } from 'lucide-react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
@@ -35,6 +35,12 @@ const tools = [
     label: 'Slope',
     icon: TrendingUp,
     description: 'Calculate slope from two points.',
+  },
+   {
+    href: '/distance',
+    label: 'Distance',
+    icon: Move3d,
+    description: 'Distance between points.',
   },
   {
     href: '/geometry',
