@@ -6,11 +6,41 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
     title: 'Volume Calculator',
     description: 'A list of volume calculators for several common shapes. Please fill in the corresponding fields and click the "Calculate" button.',
 };
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Volume Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+            <p className="text-muted-foreground">
+                This page provides individual calculators for various 3D shapes. Follow these simple steps to find the volume for any shape.
+            </p>
+            <ol className="list-decimal list-inside space-y-4 text-muted-foreground">
+                <li>
+                    <span className="font-semibold text-foreground">Select Your Unit:</span> Choose a unit of measurement (e.g., meters, feet, inches) from the dropdown menu in each calculator card. All inputs for that shape should be in the selected unit.
+                </li>
+                <li>
+                    <span className="font-semibold text-foreground">Enter Dimensions:</span> Fill in the required fields for the shape you are calculating. The labels (e.g., Radius (r), Height (h)) correspond to the diagrams.
+                </li>
+                <li>
+                    <span className="font-semibold text-foreground">Calculate Volume:</span> Click the "Calculate" button. The result will be displayed in the corresponding cubic unit (e.g., m³, ft³, in³).
+                </li>
+            </ol>
+             <div className="p-4 bg-accent/50 rounded-lg">
+                <h4 className="font-semibold text-accent-foreground">💡 Tip</h4>
+                <p className="text-sm text-muted-foreground mt-2">For the Spherical Cap, you only need to provide two of the three dimensions (Base Radius, Ball Radius, or Height). The calculator will compute the third value for you.</p>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 
 const EducationalContent = () => (
     <Accordion type="single" collapsible className="w-full">
@@ -125,6 +155,8 @@ export default function VolumePage() {
                 </p>
             </section>
             
+            <HowToUseGuide />
+
             <VolumeCalculator />
             
             <EducationalContent />
