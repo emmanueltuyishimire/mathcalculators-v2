@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { useAuth, useFirestore, useUser } from '@/firebase';
+import { useFirestore, useUser } from '@/firebase';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { collection, serverTimestamp } from 'firebase/firestore';
 
@@ -89,9 +89,6 @@ const TwoPointsCalculator = ({ onCalculate }: { onCalculate: (data: any) => void
       });
     }
   };
-
-  // Removed useEffect to avoid automatic calculation on every input change.
-  // Calculation will now only be triggered by the button.
 
   return (
     <Card className="border-none shadow-none">
@@ -229,8 +226,6 @@ const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => 
         });
     }
 
-    // Removed useEffect to make calculation on-demand via button
-    
     return (
     <Card className="border-none shadow-none">
       <CardHeader className="p-0 mb-4">
@@ -293,34 +288,19 @@ const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => 
 export default function SlopeCalculator() {
   const firestore = useFirestore();
   const { user } = useUser();
-  const { toast } = useToast();
 
   const handleCalculate = (data: any) => {
     if (!firestore || !user) return;
+    
+    const calculationData = {
+      ...data,
+      userId: user.uid, // Add user ID to the document
+      timestamp: serverTimestamp()
+    };
+    
     const calculationsCollection = collection(firestore, 'slope_calculations');
-    addDocumentNonBlocking(calculationsCollection, {
-        ...data,
-        timestamp: serverTimestamp()
-    });
+    addDocumentNonBlocking(calculationsCollection, calculationData);
   };
-
-  const handleSave = () => {
-     if (!user) {
-        toast({
-            variant: "destructive",
-            title: "Not Logged In",
-            description: "You must be signed in to save calculations.",
-        });
-        return;
-    }
-    // This is a placeholder for where a real save would trigger a specific calculation to be saved.
-    // Since the calculation now happens on button press inside the tabs, we would need to lift the state
-    // or trigger the calculation again here. For now, we just show a toast.
-    toast({
-        title: "Calculation Saved",
-        description: "Your slope calculation has been saved to your history.",
-    });
-  }
 
   return (
     <Card className="shadow-lg">
@@ -337,7 +317,6 @@ export default function SlopeCalculator() {
                 <OnePointSlopeCalculator onCalculate={handleCalculate} />
             </TabsContent>
         </Tabs>
-        <Button onClick={handleSave} className="w-full mt-4">Save this calculation</Button>
       </CardContent>
     </Card>
   );

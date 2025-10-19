@@ -5,6 +5,10 @@
       "type": "object",
       "description": "Represents a slope calculation with input parameters and results.",
       "properties": {
+        "userId": {
+            "type": "string",
+            "description": "The UID of the user who made the calculation."
+        },
         "x1": {
           "type": "number",
           "description": "The x-coordinate of the first point."
@@ -36,6 +40,7 @@
         }
       },
       "required": [
+        "userId",
         "x1",
         "y1",
         "x2",
