@@ -21,14 +21,14 @@ const HexMultiplicationTable = () => {
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="text-center font-bold text-primary">×</TableHead>
-                            {headers.map(h => <TableHead key={h} className="text-center font-bold text-primary">{h}</TableHead>)}
+                            <TableHead className="text-center font-bold text-primary bg-primary/10 sticky left-0">×</TableHead>
+                            {headers.map(h => <TableHead key={h} className="text-center font-bold text-primary bg-primary/10">{h}</TableHead>)}
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {rows.map((row, rowIndex) => (
                             <TableRow key={row}>
-                                <TableHead className="text-center font-bold text-primary">{row}</TableHead>
+                                <TableHead className="text-center font-bold text-primary bg-primary/10 sticky left-0">{row}</TableHead>
                                 {headers.map((col, colIndex) => (
                                     <TableCell key={`${row}-${col}`} className="text-center font-mono text-xs">
                                         {(rowIndex * colIndex).toString(16).toUpperCase()}
@@ -53,7 +53,7 @@ const EducationalContent = () => (
             <div>
                 <h3 className="text-xl font-semibold text-foreground">What is Hexadecimal?</h3>
                 <p className="mt-2">The hexadecimal number system (hex) functions similarly to the decimal and binary systems but uses a base of 16. It includes digits 0-9 and letters A-F to represent values 10-15. Each hex digit corresponds to four binary digits (a nibble), which simplifies the representation of large binary numbers.</p>
-                <p className="mt-2">For example, the binary value 110110101110 can be represented as DAE in hex. This helps computers compress large binary values in a way that is easily convertible between the two systems.</p>
+                <p className="mt-2">For example, the binary value for 110110101110 can be written more concisely as DAE in hex. This compression helps computers manage large binary values in a format that is easily convertible between the two systems.</p>
             </div>
 
             <div>
@@ -78,27 +78,27 @@ const EducationalContent = () => (
             
             <div>
                 <h3 className="text-xl font-semibold text-foreground">Hex to Decimal Conversion</h3>
-                <p className="mt-2">Converting from hex to decimal involves understanding place values. Each position in a hex number represents a power of 16. For example, to convert 3BC:</p>
+                <p className="mt-2">To convert from hexadecimal to decimal, you need to understand its place value system. Each position in a hexadecimal number represents a power of 16. For instance, to convert the hex value 3BC to decimal:</p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">3BC₁₆ = (3 × 16²) + (11 × 16¹) + (12 × 16⁰) = 768 + 176 + 12 = 956₁₀</p>
             </div>
 
              <div>
                 <h3 className="text-xl font-semibold text-foreground">Decimal to Hex Conversion</h3>
-                <p className="mt-2">To convert a decimal number to hex, follow these steps:</p>
+                <p className="mt-2">To convert a decimal number to hexadecimal, you can follow these steps:</p>
                  <ol className="list-decimal list-inside mt-2 space-y-2">
-                    <li>Find the largest power of 16 that fits into your number.</li>
-                    <li>Divide your number by this power of 16 and note the whole number part.</li>
-                    <li>Multiply that whole number by the power of 16 and subtract it from your original number to get a remainder.</li>
-                    <li>Repeat with the remainder until it is less than 16.</li>
+                    <li>Find the largest power of 16 that is less than or equal to your number.</li>
+                    <li>Divide your number by this power of 16 and record the whole number part (this will be one of your hex digits).</li>
+                    <li>Multiply that whole number by the corresponding power of 16 and subtract the result from your original number to find the remainder.</li>
+                    <li>Repeat the process with the remainder until it is less than 16, which will be your final hex digit.</li>
                 </ol>
-                <p className="mt-2">For example, to convert decimal 956 to hex:</p>
+                <p className="mt-2">For example, to convert the decimal number 956 to hex:</p>
                  <ul className="list-disc list-inside mt-2 space-y-1 font-mono text-sm bg-muted p-4 rounded-md">
-                    <li>956 ÷ 256 (16²) = 3 with a remainder. So, the first digit is 3.</li>
-                    <li>956 - (3 × 256) = 188.</li>
-                    <li>188 ÷ 16 (16¹) = 11 (B) with a remainder. The second digit is B.</li>
-                    <li>188 - (11 × 16) = 12 (C). The last digit is C.</li>
+                    <li>The largest power of 16 less than 956 is 16² (256). 956 ÷ 256 = 3, with a remainder. The first hex digit is 3.</li>
+                    <li>Calculate the new remainder: 956 - (3 × 256) = 188.</li>
+                    <li>The largest power of 16 less than 188 is 16¹ (16). 188 ÷ 16 = 11, with a remainder. The second hex digit is B (since B represents 11).</li>
+                    <li>Calculate the final remainder: 188 - (11 × 16) = 12. The final digit is C (since C represents 12).</li>
                 </ul>
-                <p className="mt-2">Result: 3BC₁₆.</p>
+                <p className="mt-2">The resulting hex value is 3BC₁₆.</p>
             </div>
 
             <div>
@@ -106,16 +106,16 @@ const EducationalContent = () => (
                 <div className="space-y-4 mt-2">
                     <div>
                         <h4 className="font-semibold text-foreground">Addition</h4>
-                        <p>Hex addition works like decimal addition. When a sum exceeds 15, you find how many 16s are in it, carry that over, and write down the remainder.</p>
-                        <p className="font-mono bg-muted p-2 rounded-md my-2">Example: 1A + C = 26 + 12 = 38.  38 is 2 × 16 + 6, so the result is 26₁₆.</p>
+                        <p>Hexadecimal addition functions just like decimal addition, with the key difference being that a "carry-over" to the next column happens when the sum exceeds 15 (F), not 9. When a sum is 16 or greater, you determine how many 16s are in the total, carry that number over, and write the remainder in the current column.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2">For example: 1A + C = 26 + 12 = 38 in decimal. Since 38 contains two 16s with a remainder of 6, the hex result is 26₁₆.</p>
                     </div>
                      <div>
                         <h4 className="font-semibold text-foreground">Subtraction</h4>
-                        <p>When "borrowing" in hex subtraction, you borrow a value of 16, not 10.</p>
+                        <p>In hexadecimal subtraction, when you need to "borrow" from the next column, you are borrowing a value of 16, not 10. This is because each place value is 16 times greater than the one to its right.</p>
                     </div>
                      <div>
                         <h4 className="font-semibold text-foreground">Multiplication & Division</h4>
-                        <p>These operations follow the same principles as their decimal counterparts but require conversions between hex and decimal at each step.</p>
+                        <p>These operations follow the same logic as their decimal counterparts but require careful conversion between hex and decimal values at each step. Using a multiplication table can make this much easier.</p>
                     </div>
                 </div>
             </div>
