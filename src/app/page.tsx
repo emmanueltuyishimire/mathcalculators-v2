@@ -193,6 +193,8 @@ const Slideshow = () => {
     return () => clearTimeout(timer);
   }, [slideIndex]);
 
+  const currentSlide = carouselSlides[slideIndex];
+
   return (
     <div className="slideshow-container">
       {carouselSlides.map((slide, index) => (
@@ -201,12 +203,11 @@ const Slideshow = () => {
           className="mySlides fade"
           style={{ display: index === slideIndex ? 'block' : 'none' }}
         >
-          <Image
+          {/* Using standard img tag for simplicity and reliability */}
+          <img
             src={slide.imageUrl}
             alt={slide.title}
-            layout="fill"
-            objectFit="cover"
-            priority={index === 0}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             data-ai-hint={slide.dataAiHint}
           />
         </div>
@@ -214,13 +215,13 @@ const Slideshow = () => {
       <div className="absolute inset-0 bg-black/50" />
       <div className="container relative z-10 flex h-full flex-col items-center justify-center space-y-4 text-center text-primary-foreground">
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-          {carouselSlides[slideIndex].title}
+          {currentSlide.title}
         </h1>
         <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-          {carouselSlides[slideIndex].description}
+          {currentSlide.description}
         </p>
         <Button asChild variant="secondary" size="lg">
-          <Link href={carouselSlides[slideIndex].link}>{carouselSlides[slideIndex].buttonText}</Link>
+          <Link href={currentSlide.link}>{currentSlide.buttonText}</Link>
         </Button>
       </div>
 
@@ -230,12 +231,17 @@ const Slideshow = () => {
             key={index}
             className={`dot ${index === slideIndex ? 'active' : ''}`}
             onClick={() => setSlideIndex(index)}
+            onKeyDown={(e) => e.key === 'Enter' && setSlideIndex(index)}
+            role="button"
+            tabIndex={0}
+            aria-label={`Go to slide ${index + 1}`}
           ></span>
         ))}
       </div>
     </div>
   );
 };
+
 
 export default function Home() {
   return (
