@@ -252,14 +252,14 @@ export default function ScientificCalculator() {
       default: onClick = () => handleButtonClick(label);
     }
 
-    const button3dClasses = 'border-b-2 active:border-b-0 active:translate-y-px border-foreground/50 dark:border-border/50';
+    const button3dClasses = 'border-b-2 active:border-b-0 active:translate-y-px';
     let variantClasses = '';
     switch(variant) {
       case 'default': variantClasses = `bg-primary text-primary-foreground hover:bg-primary/90 border-primary/70`; break;
-      case 'secondary': variantClasses = `bg-secondary text-secondary-foreground hover:bg-secondary/90 border-secondary/70`; break;
-      case 'destructive': variantClasses = `bg-destructive text-destructive-foreground hover:bg-destructive/90 border-destructive/70`; break;
-      case 'accent': variantClasses = 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent/70'; break;
-      default: variantClasses = 'bg-card hover:bg-muted border-input';
+      case 'secondary': variantClasses = `bg-gray-600 text-white hover:bg-gray-500 border-gray-700`; break;
+      case 'destructive': variantClasses = `bg-red-500 text-white hover:bg-red-600 border-red-700`; break;
+      case 'accent': variantClasses = 'bg-blue-500 text-white hover:bg-blue-600 border-blue-700'; break;
+      default: variantClasses = 'bg-gray-200 hover:bg-gray-300 border-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-800';
     }
 
 
@@ -267,24 +267,24 @@ export default function ScientificCalculator() {
   }
 
   return (
-    <Card className="shadow-xl max-w-md mx-auto bg-card/80 backdrop-blur-sm border-foreground/50 dark:border-border/50">
-      <CardContent className="flex flex-col items-center gap-1 p-2">
-        <div className="w-full mb-1 rounded-lg border border-foreground/50 dark:border-border/50 bg-muted/80 p-2 text-right text-3xl font-mono text-foreground break-all h-20 flex items-end justify-end shadow-inner">
+    <Card className="shadow-xl max-w-md mx-auto bg-gray-800 text-white p-2 border-2 border-gray-900">
+      <CardContent className="flex flex-col items-center gap-1 p-0">
+        <div className="w-full mb-1 rounded-lg border border-gray-700 bg-gray-900 p-2 text-right text-3xl font-mono text-white break-all h-20 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
-            <Button variant="outline" className="h-7 text-xs border-foreground/50 dark:border-border/50" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant="outline" className="h-7 text-xs border-foreground/50 dark:border-border/50" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
+            <Button variant="outline" className="h-7 text-xs bg-gray-700 border-gray-600" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
+            <Button variant="outline" className="h-7 text-xs bg-gray-700 border-gray-600" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
             {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-7 text-xs'))}
-            <Button variant="destructive" className="h-7 text-xs transition-transform transform border-b-2 border-destructive/70 active:border-b-0 active:translate-y-px" onClick={handleBackspace}>⌫</Button>
+            <Button variant="destructive" className="h-7 text-xs transition-transform transform border-b-2 border-red-700 active:border-b-0 active:translate-y-px" onClick={handleBackspace}>⌫</Button>
         </div>
 
         <div className="w-full grid grid-cols-7 gap-1">
             {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-7 text-xs'))}
-            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-secondary/70 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick('(')}>(</Button>
-            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-secondary/70 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick(')')}>)</Button>
-            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-secondary/70 active:border-b-0 active:translate-y-px" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
+            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-gray-700 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick('(')}>(</Button>
+            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-gray-700 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick(')')}>)</Button>
+            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-gray-700 active:border-b-0 active:translate-y-px" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
@@ -303,7 +303,7 @@ export default function ScientificCalculator() {
                 {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
             </div>
              <div className="col-span-1 grid grid-cols-1 gap-1">
-                <Button variant={null} className="h-full text-lg transition-transform transform bg-destructive text-destructive-foreground hover:bg-destructive/90 border-b-2 border-destructive/70 active:border-b-0 active:translate-y-px" onClick={handleAllClear}>AC</Button>
+                <Button variant={null} className="h-full text-lg transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-2 border-red-700 active:border-b-0 active:translate-y-px" onClick={handleAllClear}>AC</Button>
                 {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
             </div>
         </div>
@@ -318,5 +318,3 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
-
-    
