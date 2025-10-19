@@ -16,11 +16,15 @@ const BinaryArithmeticCalculator = () => {
     const [val2, setVal2] = useState('100101');
     const [op, setOp] = useState('+');
     const [result, setResult] = useState('');
+    const [decimalResult, setDecimalResult] = useState('');
 
     const calculate = () => {
         try {
             if (!/^[01]+$/.test(val1) || !/^[01]+$/.test(val2)) {
-                throw new Error("Inputs must be valid binary strings.");
+                if (val1 || val2) throw new Error("Inputs must be valid binary strings.");
+                setResult('');
+                setDecimalResult('');
+                return;
             }
             const num1 = parseInt(val1, 2);
             const num2 = parseInt(val2, 2);
@@ -38,9 +42,12 @@ const BinaryArithmeticCalculator = () => {
             }
             
             setResult(resNum.toString(2));
+            setDecimalResult(`${num1} ${op} ${num2} = ${resNum}`);
+
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
             setResult('');
+            setDecimalResult('');
         }
     };
     
@@ -70,9 +77,15 @@ const BinaryArithmeticCalculator = () => {
                 </div>
                  <Button onClick={calculate} className="w-full">Calculate</Button>
                  {result && (
-                    <div>
-                        <Label>Result</Label>
-                        <Input readOnly value={result} className="font-mono text-center bg-muted" />
+                    <div className="space-y-4">
+                        <div>
+                            <Label>Binary Result</Label>
+                            <Input readOnly value={result} className="font-mono text-center bg-muted" />
+                        </div>
+                        <div>
+                            <Label>Decimal Equivalent</Label>
+                            <Input readOnly value={decimalResult} className="font-mono text-center bg-muted" />
+                        </div>
                     </div>
                  )}
             </CardContent>
