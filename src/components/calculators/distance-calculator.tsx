@@ -24,8 +24,8 @@ interface TwoDResult {
 // 2D Calculator
 const TwoDCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ x: '', y: '' });
-    const [p2, setP2] = useState({ x: '', y: '' });
+    const [p1, setP1] = useState({ x: '2', y: '3' });
+    const [p2, setP2] = useState({ x: '8', y: '7' });
     const [result, setResult] = useState<TwoDResult | null>(null);
 
     const calculate = () => {
@@ -71,6 +71,11 @@ const TwoDCalculator = () => {
             xIntercept,
         });
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -153,8 +158,8 @@ interface ThreeDResult {
 // 3D Calculator
 const ThreeDCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ x: '', y: '', z: '' });
-    const [p2, setP2] = useState({ x: '', y: '', z: '' });
+    const [p1, setP1] = useState({ x: '1', y: '2', z: '3' });
+    const [p2, setP2] = useState({ x: '4', y: '5', z: '6' });
     const [result, setResult] = useState<ThreeDResult | null>(null);
 
     const calculate = () => {
@@ -179,6 +184,11 @@ const ThreeDCalculator = () => {
         const distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
         setResult({ distance, deltaX, deltaY, deltaZ });
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -232,8 +242,8 @@ const ThreeDCalculator = () => {
 // Latitude/Longitude Calculator
 const LatLongCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ lat: '', lon: '' });
-    const [p2, setP2] = useState({ lat: '', lon: '' });
+    const [p1, setP1] = useState({ lat: '51.5074', lon: '0.1278' }); // London
+    const [p2, setP2] = useState({ lat: '40.7128', lon: '-74.0060' }); // New York
     const [distance, setDistance] = useState<{ km: number, miles: number } | null>(null);
 
     const calculate = () => {
@@ -266,6 +276,11 @@ const LatLongCalculator = () => {
         const miles = km * 0.621371;
         setDistance({ km, miles });
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>

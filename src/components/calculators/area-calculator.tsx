@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 interface AreaCalculatorProps {
     shape: 'Rectangle' | 'Triangle' | 'Trapezoid' | 'Circle' | 'Sector' | 'Ellipse' | 'Parallelogram';
-    inputs: { name: string; label: string; }[];
+    inputs: { name: string; label: string; defaultValue: string; }[];
     calculate: (inputs: { [key: string]: number }) => number | string;
 }
 
@@ -39,7 +39,7 @@ type Unit = keyof typeof lengthUnits;
 const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculate }) => {
     const { toast } = useToast();
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>(
-        inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {})
+        inputs.reduce((acc, input) => ({ ...acc, [input.name]: input.defaultValue }), {})
     );
     const [area, setArea] = useState<string>('');
     const [unit, setUnit] = useState<Unit>('Meter');
@@ -67,6 +67,11 @@ const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculat
             setArea('');
         }
     };
+    
+    useEffect(() => {
+        handleCalculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [unit]);
 
     return (
         <Card className="overflow-hidden">
@@ -117,12 +122,12 @@ const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculat
 const calculators: AreaCalculatorProps[] = [
     {
         shape: 'Rectangle',
-        inputs: [{ name: 'l', label: 'Length (l)' }, { name: 'w', label: 'Width (w)' }],
+        inputs: [{ name: 'l', label: 'Length (l)', defaultValue: '10' }, { name: 'w', label: 'Width (w)', defaultValue: '5' }],
         calculate: ({ l, w }) => l * w,
     },
     {
         shape: 'Triangle',
-        inputs: [{ name: 'a', label: 'Edge 1 (a)' }, { name: 'b', label: 'Edge 2 (b)' }, { name: 'c', label: 'Edge 3 (c)' }],
+        inputs: [{ name: 'a', label: 'Edge 1 (a)', defaultValue: '5' }, { name: 'b', label: 'Edge 2 (b)', defaultValue: '6' }, { name: 'c', label: 'Edge 3 (c)', defaultValue: '7' }],
         calculate: ({ a, b, c }) => {
             if (a + b <= c || a + c <= b || b + c <= a) {
                 throw new Error("Invalid triangle: The sum of any two sides must be greater than the third.");
@@ -133,27 +138,27 @@ const calculators: AreaCalculatorProps[] = [
     },
     {
         shape: 'Trapezoid',
-        inputs: [{ name: 'b1', label: 'Base 1 (b1)' }, { name: 'b2', label: 'Base 2 (b2)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'b1', label: 'Base 1 (b1)', defaultValue: '5' }, { name: 'b2', label: 'Base 2 (b2)', defaultValue: '10' }, { name: 'h', label: 'Height (h)', defaultValue: '4' }],
         calculate: ({ b1, b2, h }) => ((b1 + b2) / 2) * h,
     },
     {
         shape: 'Circle',
-        inputs: [{ name: 'r', label: 'Radius (r)' }],
+        inputs: [{ name: 'r', label: 'Radius (r)', defaultValue: '5' }],
         calculate: ({ r }) => Math.PI * Math.pow(r, 2),
     },
     {
         shape: 'Sector',
-        inputs: [{ name: 'r', label: 'Radius (r)' }, { name: 'A', label: 'Angle (A) in degrees' }],
+        inputs: [{ name: 'r', label: 'Radius (r)', defaultValue: '5' }, { name: 'A', label: 'Angle (A) in degrees', defaultValue: '60' }],
         calculate: ({ r, A }) => (A / 360) * Math.PI * Math.pow(r, 2),
     },
     {
         shape: 'Ellipse',
-        inputs: [{ name: 'a', label: 'Semi-major Axis (a)' }, { name: 'b', label: 'Semi-minor Axis (b)' }],
+        inputs: [{ name: 'a', label: 'Semi-major Axis (a)', defaultValue: '10' }, { name: 'b', label: 'Semi-minor Axis (b)', defaultValue: '5' }],
         calculate: ({ a, b }) => Math.PI * a * b,
     },
      {
         shape: 'Parallelogram',
-        inputs: [{ name: 'b', label: 'Base (b)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'b', label: 'Base (b)', defaultValue: '10' }, { name: 'h', label: 'Height (h)', defaultValue: '5' }],
         calculate: ({ b, h }) => b * h,
     },
 ];

@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 
 function SquareRootCalculator() {
     const { toast } = useToast();
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('25');
     const [result, setResult] = useState('');
 
     const calculate = () => {
@@ -27,6 +27,11 @@ function SquareRootCalculator() {
         }
         setResult(Math.sqrt(num).toFixed(6));
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
 
     return (
         <Card>
@@ -49,7 +54,7 @@ function SquareRootCalculator() {
 
 function CubeRootCalculator() {
     const { toast } = useToast();
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('27');
     const [result, setResult] = useState('');
 
     const calculate = () => {
@@ -61,6 +66,11 @@ function CubeRootCalculator() {
         }
         setResult(Math.cbrt(num).toFixed(6));
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
 
     return (
         <Card>
@@ -83,8 +93,8 @@ function CubeRootCalculator() {
 
 function GeneralRootCalculator() {
     const { toast } = useToast();
-    const [root, setRoot] = useState('');
-    const [number, setNumber] = useState('');
+    const [root, setRoot] = useState('4');
+    const [number, setNumber] = useState('16');
     const [result, setResult] = useState('');
 
     const calculate = () => {
@@ -118,6 +128,11 @@ function GeneralRootCalculator() {
 
         setResult(calculatedResult.toFixed(6));
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [root, number]);
 
     return (
         <Card>

@@ -12,8 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 // --- Hex Arithmetic Calculator ---
 const HexArithmeticCalculator = () => {
     const { toast } = useToast();
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
+    const [val1, setVal1] = useState('3BC');
+    const [val2, setVal2] = useState('1A');
     const [op, setOp] = useState('+');
     const [result, setResult] = useState('');
     const [decimalResult, setDecimalResult] = useState('');
@@ -58,7 +58,10 @@ const HexArithmeticCalculator = () => {
         }
     };
     
-    useEffect(calculate, [val1, val2, op]);
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [val1, val2, op]);
 
     return (
         <Card>
@@ -103,7 +106,7 @@ const HexArithmeticCalculator = () => {
 // --- Hex to Decimal Converter ---
 const HexToDecConverter = () => {
     const { toast } = useToast();
-    const [hex, setHex] = useState('');
+    const [hex, setHex] = useState('3BC');
     const [decimal, setDecimal] = useState('');
 
     const convert = () => {
@@ -122,7 +125,10 @@ const HexToDecConverter = () => {
         }
     };
 
-    useEffect(convert, [hex]);
+    useEffect(() => {
+        convert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hex]);
 
     return (
         <Card>
@@ -148,7 +154,7 @@ const HexToDecConverter = () => {
 // --- Decimal to Hex Converter ---
 const DecToHexConverter = () => {
     const { toast } = useToast();
-    const [decimal, setDecimal] = useState('');
+    const [decimal, setDecimal] = useState('956');
     const [hex, setHex] = useState('');
 
     const convert = () => {
@@ -165,7 +171,10 @@ const DecToHexConverter = () => {
         }
     };
     
-    useEffect(convert, [decimal]);
+    useEffect(() => {
+        convert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [decimal]);
 
     return (
         <Card>

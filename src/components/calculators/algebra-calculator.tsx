@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 export default function AlgebraCalculator() {
-  const [equation, setEquation] = useState('');
+  const [equation, setEquation] = useState('3x - 5 = 16');
   const [result, setResult] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +26,11 @@ export default function AlgebraCalculator() {
       setIsLoading(false);
     }, 1000);
   };
+  
+  useEffect(() => {
+    handleSolve();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Card className="shadow-lg">

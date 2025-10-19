@@ -11,9 +11,9 @@ import { jStat } from 'jstat';
 
 function ZScoreFormulaCalculator() {
     const { toast } = useToast();
-    const [rawScore, setRawScore] = useState('');
-    const [mean, setMean] = useState('');
-    const [stdDev, setStdDev] = useState('');
+    const [rawScore, setRawScore] = useState('85');
+    const [mean, setMean] = useState('75');
+    const [stdDev, setStdDev] = useState('5');
     const [zScore, setZScore] = useState<number | null>(null);
 
     const calculate = () => {
@@ -37,6 +37,11 @@ function ZScoreFormulaCalculator() {
         const z = (x - mu) / sigma;
         setZScore(z);
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -78,7 +83,7 @@ function ZScoreFormulaCalculator() {
 
 function ZScoreProbabilityConverter() {
     const { toast } = useToast();
-    const [zScore, setZScore] = useState('');
+    const [zScore, setZScore] = useState('1.5');
     const [results, setResults] = useState<any>(null);
 
     const calculate = () => {
@@ -97,6 +102,11 @@ function ZScoreProbabilityConverter() {
 
         setResults({ p_less, p_greater, p_0_to_z, p_between, p_outside });
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [zScore]);
 
     return (
         <Card>
@@ -126,8 +136,8 @@ function ZScoreProbabilityConverter() {
 
 function ZScoreRangeCalculator() {
     const { toast } = useToast();
-    const [z1, setZ1] = useState('');
-    const [z2, setZ2] = useState('');
+    const [z1, setZ1] = useState('-1.96');
+    const [z2, setZ2] = useState('1.96');
     const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {
@@ -149,6 +159,11 @@ function ZScoreRangeCalculator() {
         const prob = jStat.normal.cdf(z2_num, 0, 1) - jStat.normal.cdf(z1_num, 0, 1);
         setResult(prob);
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [z1, z2]);
 
     return (
         <Card>

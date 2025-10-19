@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -36,6 +36,13 @@ function CalculatorTab({
       setIsLoading(false);
     }, 1000);
   };
+  
+  useEffect(() => {
+    if (initialValue) {
+      handleCalculate();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="space-y-4">
@@ -82,10 +89,10 @@ export default function CalculusCalculator() {
               title="Derivative"
               description="Find the derivative of a function with respect to x."
               inputLabel="f(x) ="
-              initialValue=""
+              initialValue="x^3 + 2x"
               placeholder="e.g., x^3 + 2x"
               resultPrefix="d/dx"
-              mockResult="3x^2"
+              mockResult="3x^2 + 2"
             />
           </TabsContent>
           <TabsContent value="integral" className="mt-6">
@@ -93,7 +100,7 @@ export default function CalculusCalculator() {
               title="Integral"
               description="Find the indefinite integral of a function with respect to x."
               inputLabel="∫ f(x) dx"
-              initialValue=""
+              initialValue="3x^2"
               placeholder="e.g., 3x^2"
               resultPrefix="∫"
               mockResult="x^3 + C"
@@ -104,7 +111,7 @@ export default function CalculusCalculator() {
               title="Limit"
               description="Find the limit of a function as x approaches a value."
               inputLabel="lim x→a f(x)"
-              initialValue=""
+              initialValue="(x^2 - 4)/(x - 2) as x->2"
               placeholder="e.g., (sin(x)/x) as x->0"
               resultPrefix="lim"
               mockResult="4"

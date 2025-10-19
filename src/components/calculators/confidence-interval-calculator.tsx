@@ -27,9 +27,9 @@ const confidenceLevels = [
 
 export default function ConfidenceIntervalCalculator() {
     const { toast } = useToast();
-    const [sampleSize, setSampleSize] = useState('');
-    const [sampleMean, setSampleMean] = useState('');
-    const [stdDev, setStdDev] = useState('');
+    const [sampleSize, setSampleSize] = useState('50');
+    const [sampleMean, setSampleMean] = useState('20.6');
+    const [stdDev, setStdDev] = useState('3.2');
     const [confidence, setConfidence] = useState("1.96");
     const [result, setResult] = useState<{ marginOfError: number, lowerBound: number, upperBound: number } | null>(null);
 
@@ -41,6 +41,13 @@ export default function ConfidenceIntervalCalculator() {
 
         if ([n, mean, sd].some(isNaN)) {
              setResult(null);
+             if (sampleSize || sampleMean || stdDev) {
+                toast({
+                    variant: 'destructive',
+                    title: "Invalid Input",
+                    description: "Please enter valid numbers for all fields.",
+                });
+             }
             return;
         }
         
@@ -60,6 +67,11 @@ export default function ConfidenceIntervalCalculator() {
 
         setResult({ marginOfError, lowerBound, upperBound });
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [confidence]);
 
     return (
         <Card className="shadow-lg">

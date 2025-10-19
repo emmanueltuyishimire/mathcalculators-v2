@@ -12,8 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 // --- Binary Arithmetic Calculator ---
 const BinaryArithmeticCalculator = () => {
     const { toast } = useToast();
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
+    const [val1, setVal1] = useState('1101');
+    const [val2, setVal2] = useState('101');
     const [op, setOp] = useState('+');
     const [result, setResult] = useState('');
     const [decimalResult, setDecimalResult] = useState('');
@@ -56,7 +56,10 @@ const BinaryArithmeticCalculator = () => {
         }
     };
     
-    useEffect(calculate, [val1, val2, op]);
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [val1, val2, op]);
 
     return (
         <Card>
@@ -101,7 +104,7 @@ const BinaryArithmeticCalculator = () => {
 // --- Binary to Decimal Converter ---
 const BinToDecConverter = () => {
     const { toast } = useToast();
-    const [binary, setBinary] = useState('');
+    const [binary, setBinary] = useState('10110');
     const [decimal, setDecimal] = useState('');
 
     const convert = () => {
@@ -122,7 +125,10 @@ const BinToDecConverter = () => {
         }
     };
 
-    useEffect(convert, [binary]);
+    useEffect(() => {
+        convert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [binary]);
 
     return (
         <Card>
@@ -148,7 +154,7 @@ const BinToDecConverter = () => {
 // --- Decimal to Binary Converter ---
 const DecToBinConverter = () => {
     const { toast } = useToast();
-    const [decimal, setDecimal] = useState('');
+    const [decimal, setDecimal] = useState('22');
     const [binary, setBinary] = useState('');
 
     const convert = () => {
@@ -170,7 +176,10 @@ const DecToBinConverter = () => {
         }
     };
     
-    useEffect(convert, [decimal]);
+    useEffect(() => {
+        convert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [decimal]);
 
     return (
         <Card>

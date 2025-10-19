@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -25,8 +25,8 @@ interface Stats {
 
 export default function StatisticsCalculator() {
   const [display, setDisplay] = useState('0');
-  const [dataset, setDataset] = useState<number[]>([]);
-  const [csvData, setCsvData] = useState('');
+  const [dataset, setDataset] = useState<number[]>([5, 10, 15, 20, 25]);
+  const [csvData, setCsvData] = useState('5, 10, 15, 20, 25');
   const { toast } = useToast();
 
   const stats: Stats | null = useMemo(() => {

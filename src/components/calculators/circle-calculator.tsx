@@ -19,20 +19,13 @@ interface CircleValues {
 export default function CircleCalculator() {
     const { toast } = useToast();
     const [values, setValues] = useState<CircleValues>({
-        radius: '',
+        radius: '1',
         diameter: '',
         circumference: '',
         area: ''
     });
-    const [lastChanged, setLastChanged] = useState<CircleProperty | null>(null);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        
-        const changedProperty = name as CircleProperty;
-        setLastChanged(changedProperty);
-        setValues(prev => ({...prev, [name]: value }));
-
+    const calculateFrom = (changedProperty: CircleProperty, value: string) => {
         const numValue = parseFloat(value);
         if (value === '' || isNaN(numValue) || numValue < 0) {
             if (value !== '' && (isNaN(numValue) || numValue < 0)) {
@@ -43,12 +36,9 @@ export default function CircleCalculator() {
                 });
             }
              // Clear other fields if input is invalid or empty
-            setValues({
-                radius: changedProperty === 'radius' ? value : '',
-                diameter: changedProperty === 'diameter' ? value : '',
-                circumference: changedProperty === 'circumference' ? value : '',
-                area: changedProperty === 'area' ? value : '',
-            });
+            const newValues: CircleValues = { radius: '', diameter: '', circumference: '', area: '' };
+            newValues[changedProperty] = value;
+            setValues(newValues);
             return;
         }
 
@@ -69,12 +59,9 @@ export default function CircleCalculator() {
         }
         
         if (isNaN(r) || r < 0) {
-             setValues({
-                radius: changedProperty === 'radius' ? value : '',
-                diameter: changedProperty === 'diameter' ? value : '',
-                circumference: changedProperty === 'circumference' ? value : '',
-                area: changedProperty === 'area' ? value : '',
-            });
+             const newValues: CircleValues = { radius: '', diameter: '', circumference: '', area: '' };
+             newValues[changedProperty] = value;
+             setValues(newValues);
             return;
         }
 
@@ -83,12 +70,22 @@ export default function CircleCalculator() {
         const a = Math.PI * Math.pow(r, 2);
 
         setValues({
-            radius: changedProperty === 'radius' ? value : r.toFixed(5),
-            diameter: changedProperty === 'diameter' ? value : d.toFixed(5),
-            circumference: changedProperty === 'circumference' ? value : c.toFixed(5),
-            area: changedProperty === 'area' ? value : a.toFixed(5),
+            radius: r.toFixed(5),
+            diameter: d.toFixed(5),
+            circumference: c.toFixed(5),
+            area: a.toFixed(5),
         });
+    }
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        const changedProperty = name as CircleProperty;
+        calculateFrom(changedProperty, value);
     };
+
+    useEffect(() => {
+        calculateFrom('radius', '1');
+    }, []);
 
     return (
         <Card className="shadow-lg">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -8,9 +8,14 @@ import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 
 const ScientificCalculator = () => {
-  const [displayValue, setDisplayValue] = useState('0');
+  const [displayValue, setDisplayValue] = useState('log_2(8)');
   const [isResult, setIsResult] = useState(false);
   const { toast } = useToast();
+  
+  useEffect(() => {
+    handleEquals();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleButtonClick = (value: string) => {
     if (isResult) {

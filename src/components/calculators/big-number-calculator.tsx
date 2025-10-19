@@ -50,8 +50,8 @@ const bigIntFactorial = (n: bigint): bigint => {
 
 export default function BigNumberCalculator() {
     const { toast } = useToast();
-    const [x, setX] = useState('');
-    const [y, setY] = useState('');
+    const [x, setX] = useState('12345678901234567890');
+    const [y, setY] = useState('98765432109876543210');
     const [precision, setPrecision] = useState('20');
     const [result, setResult] = useState('');
 

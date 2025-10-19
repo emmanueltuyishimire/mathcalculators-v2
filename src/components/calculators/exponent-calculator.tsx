@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -12,8 +12,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 export default function ExponentCalculator() {
     const { toast } = useToast();
-    const [base, setBase] = useState('');
-    const [exponent, setExponent] = useState('');
+    const [base, setBase] = useState('2');
+    const [exponent, setExponent] = useState('10');
     const [result, setResult] = useState('');
     const [useE, setUseE] = useState(false);
     const [steps, setSteps] = useState<string | null>(null);
@@ -27,11 +27,13 @@ export default function ExponentCalculator() {
         const knownValues = [!isNaN(baseNum) && !useE, !isNaN(expNum), !isNaN(resNum)].filter(Boolean).length + (useE ? 1 : 0);
 
         if (knownValues !== 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly two values to solve for the third.',
-            });
+             if (Object.values({base, exponent, result}).some(v => v !== '')) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please provide exactly two values to solve for the third.',
+                });
+            }
             return;
         }
 
@@ -63,6 +65,11 @@ export default function ExponentCalculator() {
             });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     const handleClear = () => {
       setBase('');
