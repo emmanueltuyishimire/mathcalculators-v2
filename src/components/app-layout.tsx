@@ -13,6 +13,7 @@ import {
   BarChartHorizontal,
   Table,
   FlaskConical,
+  TrendingUp,
 } from 'lucide-react';
 import {
   Sheet,
@@ -26,6 +27,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 const navItems = [
   { href: '/scientific', label: 'Scientific', icon: FlaskConical },
   { href: '/basic', label: 'Basic', icon: Calculator },
+  { href: '/slope', label: 'Slope', icon: TrendingUp },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
