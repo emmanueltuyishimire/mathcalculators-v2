@@ -88,7 +88,7 @@ const carouselSlides = [
     description: 'From basic arithmetic to advanced functions, solve any problem with ease.',
     link: '/scientific',
     buttonText: 'Get Started',
-    imageUrl: 'https://picsum.photos/seed/slide1/1200/600',
+    imageUrl: '/math calculator background image1.webp',
     dataAiHint: 'abstract science',
   },
   {
@@ -96,7 +96,7 @@ const carouselSlides = [
     description: 'Calculate area, volume, surface area and more for common geometric shapes.',
     link: '/geometry',
     buttonText: 'Explore Geometry',
-    imageUrl: 'https://picsum.photos/seed/slide2/1200/600',
+    imageUrl: '/math calculator background image2.webp',
     dataAiHint: 'geometric shapes',
   },
   {
@@ -104,7 +104,7 @@ const carouselSlides = [
     description: 'Analyze data with our tools for mean, median, mode, standard deviation, and more.',
     link: '/statistics',
     buttonText: 'Analyze Data',
-    imageUrl: 'https://picsum.photos/seed/slide3/1200/600',
+    imageUrl: '/math calculator background image3.webp',
     dataAiHint: 'data chart',
   },
    {
@@ -112,7 +112,7 @@ const carouselSlides = [
     description: 'Perform matrix operations like addition, multiplication, inverse, and transpose effortlessly.',
     link: '/matrix',
     buttonText: 'Open Matrix Calculator',
-    imageUrl: 'https://picsum.photos/seed/slide4/1200/600',
+    imageUrl: '/math calculator background image4.webp',
     dataAiHint: 'digital matrix',
   },
 ];
