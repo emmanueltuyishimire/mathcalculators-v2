@@ -1,11 +1,16 @@
 
+'use client'
 import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SlopeDiagram } from '@/components/calculators/slope-diagram';
+import { useAuth, useCollection, useFirestore, useMemoFirebase } from '@/firebase';
+import { collection, query, orderBy, limit } from 'firebase/firestore';
+import { useEffect } from 'react';
+import { initiateAnonymousSignIn } from '@/firebase/non-blocking-login';
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: 'Slope Calculator',
   description: 'Calculate the slope (or gradient) of a line using two points or one point and an angle. Also finds the equation of the line.',
 };
@@ -53,6 +58,25 @@ const EducationalContent = () => (
 );
 
 export default function SlopePage() {
+    const firestore = useFirestore();
+    const auth = useAuth();
+
+    useEffect(() => {
+        initiateAnonymousSignIn(auth);
+    }, [auth]);
+
+    const calculationsQuery = useMemoFirebase(() => {
+        if (!firestore) return null;
+        return query(
+            collection(firestore, 'slope_calculations'),
+            orderBy('timestamp', 'desc'),
+            limit(1)
+        );
+    }, [firestore]);
+
+    const { data: latestCalculations } = useCollection(calculationsQuery);
+    const latestCalculation = latestCalculations ? latestCalculations[0] : null;
+
   return (
     <div className="flex flex-1 flex-col">
       <PageHeader title="Slope Calculator" />
@@ -60,16 +84,16 @@ export default function SlopePage() {
         <div className="mx-auto max-w-4xl space-y-8">
           <section className="text-center">
             <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Slope Calculator
+              Dynamic Slope Calculator
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              By definition, the slope or gradient of a line describes its steepness, incline, or grade. Use the calculator below to find the slope of a line.
+              By definition, the slope or gradient of a line describes its steepness, incline, or grade. The diagram below updates in real-time based on your inputs.
             </p>
           </section>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
             <div className="md:col-span-2 flex justify-center items-center h-full">
-              <SlopeDiagram className="w-full max-w-[300px] h-auto" />
+              <SlopeDiagram calculation={latestCalculation} className="w-full max-w-[300px] h-auto" />
             </div>
             <div className="md:col-span-3">
               <SlopeCalculator />

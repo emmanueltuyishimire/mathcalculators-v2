@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,9 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
+import { useAuth, useFirestore, useUser } from '@/firebase';
+import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { collection, serverTimestamp } from 'firebase/firestore';
 
 interface TwoPointResult {
     slope: number | 'undefined';
@@ -23,7 +26,7 @@ interface TwoPointResult {
     deltaY: number;
 }
 
-const TwoPointsCalculator = () => {
+const TwoPointsCalculator = ({ onCalculate }: { onCalculate: (data: any) => void }) => {
   const { toast } = useToast();
   const [p1, setP1] = useState({ x: '1', y: '1' });
   const [p2, setP2] = useState({ x: '2', y: '2' });
@@ -43,8 +46,21 @@ const TwoPointsCalculator = () => {
     const deltaX = x2 - x1;
     const deltaY = y2 - y1;
     const distance = Math.sqrt(deltaX**2 + deltaY**2);
+    let slope: number | 'undefined' = 'undefined';
+    let angleDeg: number | 'N/A' = 90;
+    let angleRad: number | 'N/A' = Math.PI / 2;
 
-    if (Math.abs(deltaX) < 1e-9) { // Using tolerance for float comparison
+    if (Math.abs(deltaX) > 1e-9) {
+        slope = deltaY / deltaX;
+        angleRad = Math.atan(slope);
+        angleDeg = angleRad * (180 / Math.PI);
+    }
+    
+    onCalculate({
+        x1, y1, x2, y2, slope: slope === 'undefined' ? Infinity : slope, angle: angleDeg === 'N/A' ? 90 : angleDeg
+    });
+
+    if (slope === 'undefined') {
         setResult({
             slope: 'undefined',
             angleDeg: 90,
@@ -57,12 +73,9 @@ const TwoPointsCalculator = () => {
             deltaY,
         });
     } else {
-      const slope = deltaY / deltaX;
       const yIntercept = y1 - slope * x1;
       const xIntercept = Math.abs(slope) < 1e-9 ? 'none' : -yIntercept / slope;
-      const angleRad = Math.atan(slope);
-      const angleDeg = angleRad * (180 / Math.PI);
-
+      
       setResult({
         slope,
         angleDeg,
@@ -76,6 +89,11 @@ const TwoPointsCalculator = () => {
       });
     }
   };
+
+  useEffect(() => {
+    calculate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p1, p2]);
   
   return (
     <Card className="border-none shadow-none">
@@ -103,12 +121,11 @@ const TwoPointsCalculator = () => {
             <Input id="y2" type="number" value={p2.y} onChange={e => setP2({ ...p2, y: e.target.value })} />
           </div>
         </div>
-        <Button onClick={calculate} className="w-full">Calculate</Button>
       </CardContent>
       {result && (
         <CardFooter className="p-0 mt-4">
           <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
-             <p className="font-mono text-sm"><b>Slope (m)</b> = (y₂-y₁)/(x₂-x₁) = {result.deltaY}/{result.deltaX} = <b>{typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</b></p>
+             <p className="font-mono text-sm"><b>Slope (m)</b> = (y₂-y₁)/(x₂-x₁) = {result.deltaY.toFixed(4)}/{result.deltaX.toFixed(4)} = <b>{typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</b></p>
             <p className="font-mono text-sm"><b>Angle (θ)</b> = arctan(m) = <b>{typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</b> or <b>{typeof result.angleRad === 'number' ? result.angleRad.toFixed(4) : result.angleRad} rad</b></p>
             <p className="font-mono text-sm"><b>Distance (d)</b> = √((x₂-x₁)² + (y₂-y₁)²)= <b>{result.distance.toFixed(4)}</b></p>
             <Separator className="my-2 bg-green-200 dark:bg-green-800" />
@@ -155,7 +172,7 @@ const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title:
 );
 
 
-const OnePointSlopeCalculator = () => {
+const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => void }) => {
     const { toast } = useToast();
     const [point, setPoint] = useState({ x: '1', y: '1' });
     const [distance, setDistance] = useState('5');
@@ -170,8 +187,12 @@ const OnePointSlopeCalculator = () => {
         const d = parseFloat(distance);
         
         let m: number;
+        let finalAngle: number;
         if(inputType === 'slope') {
             m = parseFloat(slope);
+            if (isNaN(m)) return;
+            finalAngle = Math.atan(m) * (180 / Math.PI);
+            setAngle(finalAngle.toFixed(4));
         } else {
             const angleDeg = parseFloat(angle);
             if(isNaN(angleDeg)) {
@@ -179,6 +200,7 @@ const OnePointSlopeCalculator = () => {
                 return;
             }
             m = Math.tan(angleDeg * Math.PI / 180);
+            finalAngle = angleDeg;
             setSlope(m.toFixed(4));
         }
 
@@ -190,21 +212,10 @@ const OnePointSlopeCalculator = () => {
         const deltaX = d / Math.sqrt(1 + m*m);
         const deltaY = m * deltaX;
 
-        const posRes: OnePointResultData = {
-            x2: x1 + deltaX,
-            y2: y1 + deltaY,
-            deltaX: deltaX,
-            deltaY: deltaY,
-            angle: Math.atan(m) * (180 / Math.PI)
-        };
+        const posRes: OnePointResultData = { x2: x1 + deltaX, y2: y1 + deltaY, deltaX, deltaY, angle: finalAngle };
+        const negRes: OnePointResultData = { x2: x1 - deltaX, y2: y1 - deltaY, deltaX: -deltaX, deltaY: -deltaY, angle: finalAngle + 180 };
 
-        const negRes: OnePointResultData = {
-            x2: x1 - deltaX,
-            y2: y1 - deltaY,
-            deltaX: -deltaX,
-            deltaY: -deltaY,
-            angle: (Math.atan(m) * (180 / Math.PI))
-        };
+        onCalculate({ x1, y1, x2: posRes.x2, y2: posRes.y2, slope: m, angle: finalAngle });
 
         const yIntercept = y1 - m * x1;
         const xIntercept = m === 0 ? 'none' : -yIntercept / m;
@@ -218,6 +229,11 @@ const OnePointSlopeCalculator = () => {
             xIntercept
         });
     }
+
+     useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [point, distance, slope, angle, inputType]);
 
     return (
     <Card className="border-none shadow-none">
@@ -254,8 +270,6 @@ const OnePointSlopeCalculator = () => {
                 <span className="text-sm">°</span>
             </div>
         </RadioGroup>
-
-        <Button onClick={calculate} className="w-full">Calculate</Button>
       </CardContent>
        {result && (
         <CardFooter className="p-0 mt-4 flex-col">
@@ -280,6 +294,26 @@ const OnePointSlopeCalculator = () => {
 };
 
 export default function SlopeCalculator() {
+  const firestore = useFirestore();
+  const { user } = useUser();
+  const { toast } = useToast();
+
+  const handleCalculate = (data: any) => {
+    if (!firestore || !user) return;
+    const calculationsCollection = collection(firestore, 'slope_calculations');
+    addDocumentNonBlocking(calculationsCollection, {
+        ...data,
+        timestamp: serverTimestamp()
+    });
+  };
+
+  const handleSave = () => {
+    toast({
+        title: "Calculation Saved",
+        description: "Your slope calculation has been saved to your history.",
+    });
+  }
+
   return (
     <Card className="shadow-lg">
       <CardContent className="p-6">
@@ -289,12 +323,13 @@ export default function SlopeCalculator() {
                 <TabsTrigger value="one-point-slope">1 Point & Slope</TabsTrigger>
             </TabsList>
             <TabsContent value="two-points" className="mt-6">
-                <TwoPointsCalculator />
+                <TwoPointsCalculator onCalculate={handleCalculate} />
             </TabsContent>
             <TabsContent value="one-point-slope" className="mt-6">
-                <OnePointSlopeCalculator />
+                <OnePointSlopeCalculator onCalculate={handleCalculate} />
             </TabsContent>
         </Tabs>
+        <Button onClick={handleSave} className="w-full mt-4">Save this calculation</Button>
       </CardContent>
     </Card>
   );

@@ -1,15 +1,10 @@
 {
   "entities": {
     "SlopeCalculation": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "SlopeCalculation",
       "type": "object",
       "description": "Represents a slope calculation with input parameters and results.",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "Unique identifier for the slope calculation entry."
-        },
         "x1": {
           "type": "number",
           "description": "The x-coordinate of the first point."
@@ -20,15 +15,11 @@
         },
         "x2": {
           "type": "number",
-          "description": "The x-coordinate of the second point (optional, can be derived from slope and distance)."
+          "description": "The x-coordinate of the second point."
         },
         "y2": {
           "type": "number",
-          "description": "The y-coordinate of the second point (optional, can be derived from slope and distance)."
-        },
-        "distance": {
-          "type": "number",
-          "description": "The distance between the two points (optional, used with slope)."
+          "description": "The y-coordinate of the second point."
         },
         "slope": {
           "type": "number",
@@ -40,14 +31,15 @@
         },
         "timestamp": {
           "type": "string",
-          "description": "The timestamp of when the calculation was performed.",
-          "format": "date-time"
+          "format": "date-time",
+          "description": "The timestamp of when the calculation was performed."
         }
       },
       "required": [
-        "id",
         "x1",
         "y1",
+        "x2",
+        "y2",
         "slope",
         "angle",
         "timestamp"
@@ -56,29 +48,15 @@
   },
   "auth": {
     "providers": [
-      "password",
       "anonymous"
     ]
   },
   "firestore": {
-    "structure": [
-      {
-        "path": "/slope_calculations/{slopeCalculationId}",
-        "definition": {
-          "entityName": "SlopeCalculation",
-          "schema": {
-            "$ref": "#/backend/entities/SlopeCalculation"
-          },
-          "description": "Stores slope calculation data, including coordinates, slope, angle, and timestamp.",
-          "params": [
-            {
-              "name": "slopeCalculationId",
-              "description": "Unique identifier for the slope calculation document."
-            }
-          ]
-        }
-      }
-    ],
-    "reasoning": "Given the requirements for a mathematics calculator application with a focus on slope calculations and dynamic diagram updates, the following Firestore structure is recommended. The core principle is to maintain simplicity and avoid complex security rules, as the application does not require user authentication for core functionality but offers it as an option.\n\nThe primary collection is `slope_calculations`, which stores the input parameters (x1, y1, x2, y2, etc.) and calculated results (slope, angle, timestamp) for each slope diagram.\n\nThis structure achieves Authorization Independence trivially because there are no complex access control requirements.  Any future access controls will be based on simple existence checks for admin roles.\n\nThe QAP is satisfied since list operations are inherently safe (no data filtering required based on user roles)."
+    "/slope_calculations/{slopeCalculationId}": {
+      "schema": {
+        "$ref": "#/entities/SlopeCalculation"
+      },
+      "description": "Stores slope calculation data."
+    }
   }
 }

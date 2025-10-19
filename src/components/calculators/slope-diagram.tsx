@@ -1,37 +1,98 @@
 
 "use client";
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
-export const SlopeDiagram = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg viewBox="0 0 150 150" {...props}>
-        {/* Grid lines */}
-        <path d="M10 10 H 140 M10 40 H 140 M10 70 H 140 M10 100 H 140 M10 130 H 140" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.2" />
-        <path d="M10 10 V 140 M40 10 V 140 M70 10 V 140 M100 10 V 140 M130 10 V 140" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.2" />
+type SlopeDiagramProps = {
+    calculation: any;
+    className?: string;
+};
 
-        {/* Axes */}
-        <path d="M10 140 V 10 H 140" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <text x="140" y="15" fontSize="12" fill="currentColor" textAnchor="middle">x</text>
-        <text x="15" y="15" fontSize="12" fill="currentColor" textAnchor="middle">y</text>
+export const SlopeDiagram: React.FC<SlopeDiagramProps> = ({ calculation, className }) => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
-        {/* Line */}
-        <line x1="25" y1="115" x2="115" y2="25" stroke="hsl(var(--primary))" strokeWidth="2.5" />
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
         
-        {/* Points */}
-        <circle cx="25" cy="115" r="4" fill="hsl(var(--primary))" />
-        <text x="20" y="130" fontSize="12" fill="currentColor">(x₁, y₁)</text>
-        <circle cx="115" cy="25" r="4" fill="hsl(var(--primary))" />
-        <text x="110" y="18" fontSize="12" fill="currentColor">(x₂, y₂)</text>
+        const width = canvas.width;
+        const height = canvas.height;
+        const scale = 20;
+        const centerX = width / 2;
+        const centerY = height / 2;
 
-        {/* Rise and Run lines */}
-        <path d="M25 115 H 115" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
-        <path d="M115 115 V 25" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" />
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
 
-        {/* Rise and Run labels */}
-        <text x="70" y="130" fontSize="12" fill="currentColor" textAnchor="middle">Run (Δx = x₂ - x₁)</text>
-        <text x="122" y="70" fontSize="12" fill="currentColor" transform="rotate(-90, 122, 70)" textAnchor="middle">Rise (Δy = y₂ - y₁)</text>
+        // Draw grid
+        ctx.strokeStyle = "hsl(var(--muted-foreground))";
+        ctx.lineWidth = 0.2;
+        for (let x = 0; x <= width; x += scale) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        for (let y = 0; y <= height; y += scale) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
 
-        {/* Angle */}
-        <path d="M40 115 A 15 15 0 0 1 29.3 102.1" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <text x="38" y="108" fontSize="12" fill="currentColor">θ</text>
-    </svg>
-);
+        // Draw axes
+        ctx.strokeStyle = "hsl(var(--foreground))";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, centerY);
+        ctx.lineTo(width, centerY);
+        ctx.moveTo(centerX, 0);
+        ctx.lineTo(centerX, height);
+        ctx.stroke();
+
+        if (!calculation) return;
+
+        const { x1, y1, x2, y2, slope, angle } = calculation;
+        
+        const p1 = { x: centerX + x1 * scale, y: centerY - y1 * scale };
+        const p2 = { x: centerX + x2 * scale, y: centerY - y2 * scale };
+
+        // Draw line
+        ctx.strokeStyle = "hsl(var(--primary))";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+
+        // Draw points
+        ctx.fillStyle = "hsl(var(--destructive))";
+        ctx.beginPath();
+        ctx.arc(p1.x, p1.y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p2.x, p2.y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw labels
+        ctx.fillStyle = "hsl(var(--foreground))";
+        ctx.font = "12px Arial";
+        ctx.fillText("A", p1.x + 5, p1.y - 5);
+        ctx.fillText("B", p2.x + 5, p2.y - 5);
+        
+        ctx.save();
+        ctx.translate((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+        ctx.rotate(-Math.atan(slope));
+        ctx.textAlign = 'center';
+        ctx.fillText(`m=${slope.toFixed(2)}`, 0, -8);
+        ctx.fillText(`θ=${angle.toFixed(2)}°`, 0, 18);
+        ctx.restore();
+
+    }, [calculation]);
+
+    return (
+        <canvas ref={canvasRef} width="300" height="300" className={className}></canvas>
+    );
+};
