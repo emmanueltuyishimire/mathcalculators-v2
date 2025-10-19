@@ -6,11 +6,34 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { PythagoreanDiagram } from '@/components/pythagorean-diagram';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Pythagorean Theorem Calculator',
     description: 'A free online calculator to solve for any side of a right-angled triangle using the Pythagorean theorem (a² + b² = c²), and compute angles, area, and perimeter.',
 };
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <p>This calculator solves for the missing side of a right-angled triangle, and also provides other properties like angles, area, and perimeter.</p>
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Enter Two Sides:</strong> Input the lengths of any two sides of the right triangle (a, b, or c). Leave the field for the unknown side empty.
+                </li>
+                <li>
+                    <strong>Calculate:</strong> Click the "Calculate" button.
+                </li>
+                <li>
+                    <strong>View Results:</strong> The calculator will fill in the missing side length and display all other calculated properties of the triangle below. You can also view the step-by-step calculation for the missing side.
+                </li>
+            </ol>
+        </CardContent>
+    </Card>
+);
 
 const EducationalContent = () => (
     <Card>
@@ -50,6 +73,48 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is a right-angled triangle?</AccordionTrigger>
+                    <AccordionContent>
+                        A right-angled triangle (or right triangle) is a triangle in which one of the three angles is exactly 90 degrees.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is the hypotenuse?</AccordionTrigger>
+                    <AccordionContent>
+                        The hypotenuse is the longest side of a right-angled triangle. It is always the side opposite the 90-degree angle. In the equation a² + b² = c², 'c' represents the hypotenuse.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can I use this theorem for any triangle?</AccordionTrigger>
+                    <AccordionContent>
+                        No, the Pythagorean theorem only works for right-angled triangles. For other types of triangles, you would need to use other rules, such as the Law of Sines or the Law of Cosines.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>Does it matter which side I label 'a' and 'b'?</AccordionTrigger>
+                    <AccordionContent>
+                        No, the two shorter sides (the legs) are interchangeable. You can label either one 'a' and the other 'b'. The only side that must be correctly identified is the hypotenuse 'c'.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-5">
+                    <AccordionTrigger>How are the angles calculated?</AccordionTrigger>
+                    <AccordionContent>
+                        Once all three sides are known, the angles are calculated using inverse trigonometric functions. For example, angle α can be found using `arcsin(a/c)`, `arccos(b/c)`, or `arctan(a/b)`. Angle β is then `90° - α`.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function PythagoreanPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -69,7 +134,11 @@ export default function PythagoreanPage() {
 
             <PythagoreanDiagram />
 
+            <HowToUseGuide />
+
             <EducationalContent />
+            
+            <FaqSection />
 
             <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>

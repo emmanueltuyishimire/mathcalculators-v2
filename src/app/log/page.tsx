@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState } from 'react';
@@ -11,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 
 const LogEquationCalculator = () => {
@@ -215,6 +217,42 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between log and ln?</AccordionTrigger>
+                    <AccordionContent>
+                        - **log** usually refers to the logarithm with base 10 (log₁₀), also known as the common logarithm.<br/>
+                        - **ln** refers to the logarithm with base 'e' (logₑ), also known as the natural logarithm. 'e' is Euler's number, approximately 2.718.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Why can't I take the log of a negative number?</AccordionTrigger>
+                    <AccordionContent>
+                        In the equation `logᵦ(x) = y`, `x` is the result of `bʸ`. Since a positive base `b` raised to any real power `y` can never be negative, the logarithm is not defined for negative numbers in the real number system.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is the "Change of Base" formula?</AccordionTrigger>
+                    <AccordionContent>
+                        The Change of Base formula allows you to calculate a logarithm with any base using a calculator that only has `log` (base 10) and `ln` (base e). The formula is: `logᵦ(x) = logₐ(x) / logₐ(b)`. For example, `log₂(8)` can be calculated as `log(8) / log(2)` or `ln(8) / ln(2)`.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-4">
+                    <AccordionTrigger>How does the equation solver work?</AccordionTrigger>
+                    <AccordionContent>
+                        It uses the fundamental relationship between exponents and logarithms. By providing any two values in the equation `logᵦ(x) = y` (which is equivalent to `bʸ = x`), it can algebraically solve for the third unknown value.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function LogPage() {
   return (
@@ -252,6 +290,7 @@ export default function LogPage() {
             </section>
             
             <EducationalContent />
+            <FaqSection />
         </div>
       </main>
     </div>

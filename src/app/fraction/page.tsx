@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import FractionCalculators from '@/components/calculators/fraction-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
   title: 'Fraction Calculator',
@@ -71,6 +72,48 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between a proper and an improper fraction?</AccordionTrigger>
+                    <AccordionContent>
+                        A **proper fraction** has a numerator that is smaller than its denominator (e.g., 3/4). An **improper fraction** has a numerator that is greater than or equal to its denominator (e.g., 5/4). Improper fractions can also be written as mixed numbers.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is a mixed number?</AccordionTrigger>
+                    <AccordionContent>
+                        A mixed number combines a whole number and a proper fraction (e.g., 1 ¼). It represents the same value as an improper fraction. For example, 1 ¼ is the same as 5/4.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Why can't the denominator be zero?</AccordionTrigger>
+                    <AccordionContent>
+                        Division by zero is undefined in mathematics. Since the fraction bar represents division, a denominator of zero would mean dividing by zero, which is not a valid mathematical operation.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How do I simplify a fraction?</AccordionTrigger>
+                    <AccordionContent>
+                        To simplify a fraction, you find the Greatest Common Factor (GCF) of the numerator and the denominator, and then divide both by the GCF. For example, to simplify 12/18, the GCF of 12 and 18 is 6. Dividing both by 6 gives 2/3.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>How do these calculators handle large numbers?</AccordionTrigger>
+                    <AccordionContent>
+                       The "Big Number Fraction Calculator" uses BigInt, a feature in modern JavaScript that allows for calculations with integers of arbitrary size. This means it can handle fractions with very large numerators and denominators without losing precision, unlike standard number types.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 
 export default function FractionPage() {
   return (
@@ -88,6 +131,7 @@ export default function FractionPage() {
             </section>
           <FractionCalculators />
           <EducationalContent />
+          <FaqSection />
         </div>
       </main>
     </div>

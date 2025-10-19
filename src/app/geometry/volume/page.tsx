@@ -140,6 +140,48 @@ const EducationalContent = () => (
     </Accordion>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between volume and capacity?</AccordionTrigger>
+                    <AccordionContent>
+                        **Volume** is the amount of three-dimensional space an object occupies. **Capacity** refers to the amount of substance a container can hold. While they are related, capacity is typically used for fluids (like liters or gallons) and is a measure of a container's internal volume.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>How is volume different from surface area?</AccordionTrigger>
+                    <AccordionContent>
+                        **Volume** measures the space *inside* a 3D object and is measured in cubic units (like m³). **Surface Area** measures the total area of the *outside* surfaces of the object and is measured in square units (like m²).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Why are volume units "cubed"?</AccordionTrigger>
+                    <AccordionContent>
+                        Volume is measured in cubic units because it is a three-dimensional quantity, calculated by multiplying three lengths together (e.g., length × width × height). When you multiply the units (meter × meter × meter), you get cubic meters (m³).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How do I calculate the volume of an irregularly shaped object?</AccordionTrigger>
+                    <AccordionContent>
+                        For a solid object, you can use the displacement method: submerge the object in water and measure the volume of water it displaces. For complex geometric shapes, you might need to break them down into simpler shapes and sum their volumes, or use advanced techniques like integral calculus.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Do I need to use the same units for all inputs?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes. For an accurate calculation, all dimensions (like radius, height, length) must be in the same unit of measurement. The calculator will provide the result in the corresponding cubic unit.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function VolumePage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -160,6 +202,8 @@ export default function VolumePage() {
             <VolumeCalculator />
             
             <EducationalContent />
+            
+            <FaqSection />
 
              <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>

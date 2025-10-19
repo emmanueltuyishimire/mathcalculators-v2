@@ -29,6 +29,33 @@ const aspectRatios = [
     { name: "WQXGA", ratio: "16:10", width: 2560, height: 1600 },
 ];
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Ratio Calculators</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Ratio Proportion Calculator (A:B = C:D)</h3>
+                 <ol className="list-decimal list-inside space-y-2 mt-2">
+                    <li>Enter any three of the four values (A, B, C, or D) into their respective fields.</li>
+                    <li>Leave the field you want to solve for empty.</li>
+                    <li>Click "Calculate" to find the missing value that makes the two ratios equivalent.</li>
+                </ol>
+            </div>
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">Ratio Scaling Calculator</h3>
+                 <ol className="list-decimal list-inside space-y-2 mt-2">
+                    <li>Enter the two parts of your original ratio (e.g., 3 and 4 for a 3:4 ratio).</li>
+                    <li>Choose whether you want to "Shrink" or "Enlarge" the ratio.</li>
+                    <li>Enter the factor by which you want to scale it (e.g., enter 2 to double it).</li>
+                    <li>Click "Calculate" to see the new, scaled ratio.</li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -101,6 +128,42 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is a proportion?</AccordionTrigger>
+                    <AccordionContent>
+                        A proportion is a statement that two ratios are equal. For example, the statement 1:2 = 2:4 is a proportion. The proportion calculator helps you find a missing value in such a statement.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>How does the proportion calculator solve for the missing value?</AccordionTrigger>
+                    <AccordionContent>
+                        It uses cross-multiplication. In the proportion A:B = C:D, which is the same as A/B = C/D, the product of the means equals the product of the extremes (A × D = B × C). The calculator rearranges this formula to solve for the unknown value.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can I simplify a ratio?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes. To simplify a ratio, you find the greatest common divisor (GCD) of the numbers in the ratio and divide all parts by it. For example, the ratio 10:15 can be simplified to 2:3 by dividing both numbers by their GCD, which is 5.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>Can I use ratios with more than two numbers?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes, ratios can compare more than two quantities (e.g., 1:2:3). However, these calculators are designed to work with two-part ratios.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function RatioPage() {
     return (
         <div className="flex flex-1 flex-col">
@@ -118,7 +181,11 @@ export default function RatioPage() {
                     
                     <RatioCalculator />
 
+                    <HowToUseGuide />
+
                     <EducationalContent />
+                    
+                    <FaqSection />
 
                     <section className="text-center">
                         <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>

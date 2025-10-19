@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Unit Converter',
@@ -42,6 +43,48 @@ const HowToUseGuide = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>How accurate are the conversions?</AccordionTrigger>
+                    <AccordionContent>
+                        The conversions are based on standard, internationally accepted conversion factors. The results are typically rounded to four decimal places for readability, but the underlying calculation is highly accurate.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What temperature scales can I convert between?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator supports the three most common temperature scales: Celsius, Fahrenheit, and Kelvin. You can convert between any of these two.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Why does the "To" field update automatically?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator is designed for convenience. It recalculates the result in real-time whenever you change the input value or the selected units, so you don't need to press a "Calculate" button.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>Can I convert more complex units?</AccordionTrigger>
+                    <AccordionContent>
+                        This converter focuses on common units for Length and Mass, as well as Temperature. It does not currently support derived units (like speed, m/s) or other categories like volume or pressure.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>What is the base unit used for calculations?</AccordionTrigger>
+                    <AccordionContent>
+                        For consistency, all conversions are performed by first converting the "From" value into a standard base unit (e.g., meters for Length, kilograms for Mass, Celsius for Temperature) and then converting that base value to the desired "To" unit.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function ConverterPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -58,6 +101,7 @@ export default function ConverterPage() {
                     </Button>
                 </div>
             </section>
+            <FaqSection />
         </div>
       </main>
     </div>

@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
   title: 'Calculus Calculator',
@@ -44,6 +45,47 @@ const HowToUseGuide = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is a derivative?</AccordionTrigger>
+                    <AccordionContent>
+                        A derivative measures the instantaneous rate of change of a function. Geometrically, it represents the slope of the tangent line to the function's graph at a specific point. It's a fundamental concept in calculus used to find minima and maxima, velocity, and acceleration.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is an integral?</AccordionTrigger>
+                    <AccordionContent>
+                        An integral is the reverse operation of a derivative. An indefinite integral (or antiderivative) gives you a family of functions whose derivative is the original function. A definite integral calculates the cumulative effect of a quantity, which can be interpreted as the area under the curve of a function's graph between two points.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is a limit?</AccordionTrigger>
+                    <AccordionContent>
+                        A limit describes the value that a function "approaches" as the input approaches some value. Limits are essential for defining continuity, derivatives, and integrals. They help us analyze the behavior of functions at points where they might not be defined.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What functions does this calculator support?</AccordionTrigger>
+                    <AccordionContent>
+                        This calculator is a demonstration tool and supports basic polynomial functions like `x^2`, `3x^3 + 2x`, etc. It uses a mock calculation and does not have a full symbolic math engine. For real calculations, a more advanced tool like our full <Link href="/scientific" className="text-primary hover:underline">Scientific Calculator</Link> is recommended.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Why do indefinite integrals have "+ C"?</AccordionTrigger>
+                    <AccordionContent>
+                        The "+ C" represents the constant of integration. Since the derivative of any constant is zero, there are infinitely many functions that could have the same derivative. For example, the derivative of `x²`, `x² + 5`, and `x² - 100` are all `2x`. The "+ C" accounts for all these possible constant terms.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function CalculusPage() {
   return (
@@ -64,6 +106,7 @@ export default function CalculusPage() {
                     </Button>
                 </div>
             </section>
+            <FaqSection />
         </div>
       </main>
     </div>

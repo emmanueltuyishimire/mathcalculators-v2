@@ -4,11 +4,30 @@ import CircleCalculator from '@/components/calculators/circle-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Circle Calculator',
     description: 'A free online calculator to find the radius, diameter, circumference, and area of a circle from any single known value.',
 };
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+            <p className="text-muted-foreground">
+                This calculator is designed for ease of use. Simply enter any single known value of a circle, and the other properties will be calculated for you automatically.
+            </p>
+            <ol className="list-decimal list-inside space-y-2 mt-2 text-muted-foreground">
+                <li><b>Enter a value:</b> Type a number into any of the four fields: Radius, Diameter, Circumference, or Area.</li>
+                <li><b>View the results:</b> The other three fields will instantly update to show the corresponding values for the circle.</li>
+                <li><b>Experiment:</b> Change any value at any time to see how the other properties are affected.</li>
+            </ol>
+        </CardContent>
+    </Card>
+);
 
 const EducationalContent = () => (
     <Card>
@@ -16,18 +35,6 @@ const EducationalContent = () => (
             <CardTitle>Understanding Circle Calculations</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">How to Use the Calculator</h3>
-                <p className="text-muted-foreground mt-2">
-                    This calculator is designed for ease of use. Simply enter any single known value of a circle, and the other properties will be calculated for you automatically.
-                </p>
-                <ol className="list-decimal list-inside space-y-2 mt-2 text-muted-foreground">
-                    <li><b>Enter a value:</b> Type a number into any of the four fields: Radius, Diameter, Circumference, or Area.</li>
-                    <li><b>View the results:</b> The other three fields will instantly update to show the corresponding values for the circle.</li>
-                    <li><b>Experiment:</b> Change any value at any time to see how the other properties are affected.</li>
-                </ol>
-            </div>
-
             <div>
                 <h3 className="text-xl font-semibold text-foreground">The Anatomy of a Circle</h3>
                 <p className="text-muted-foreground mt-2">
@@ -106,6 +113,48 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>Why do I only need to enter one value?</AccordionTrigger>
+                    <AccordionContent>
+                        All properties of a circle (radius, diameter, circumference, and area) are mathematically related through the constant π. Because of this, knowing any single one of these values is enough to calculate all the others.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is π (pi)?</AccordionTrigger>
+                    <AccordionContent>
+                        Pi (π) is a mathematical constant that is the ratio of a circle's circumference to its diameter. It is an irrational number, approximately equal to 3.14159. It is fundamental to all calculations involving circles and spheres.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is the difference between radius and diameter?</AccordionTrigger>
+                    <AccordionContent>
+                        The **radius** is the distance from the center of the circle to any point on its edge. The **diameter** is the distance across the circle passing through the center. The diameter is always exactly twice the length of the radius (d = 2r).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What is the difference between circumference and area?</AccordionTrigger>
+                    <AccordionContent>
+                        **Circumference** is the one-dimensional distance around the outside of the circle (like a perimeter). **Area** is the two-dimensional space inside the circle.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-5">
+                    <AccordionTrigger>Can I enter a negative number?</AccordionTrigger>
+                    <AccordionContent>
+                        No. The dimensions of a physical circle (radius, diameter, area, circumference) cannot be negative. The calculator will show an error if you enter a negative value.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function CirclePage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -122,8 +171,9 @@ export default function CirclePage() {
             </section>
             
             <CircleCalculator />
-
+            <HowToUseGuide />
             <EducationalContent />
+            <FaqSection />
         </div>
       </main>
     </div>

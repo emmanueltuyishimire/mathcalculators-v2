@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Binary Calculator',
@@ -102,6 +103,59 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>Why do computers use binary?</AccordionTrigger>
+                    <AccordionContent>
+                        Computers use binary (base-2) because it's a simple and reliable way to represent data electronically. The two digits, 0 and 1, can be represented by two distinct states, such as "on" or "off," "high voltage" or "low voltage." This makes the underlying hardware much simpler to design and build compared to a system that would need to handle ten different states for decimal numbers.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is a bit, a byte, and a nibble?</AccordionTrigger>
+                    <AccordionContent>
+                        - A **bit** is the smallest unit of data in a computer and can have a value of either 0 or 1.<br/>
+                        - A **nibble** is a group of 4 bits.<br/>
+                        - A **byte** is a group of 8 bits. It's the standard unit of memory size in most modern computers.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>How do I perform binary addition?</AccordionTrigger>
+                    <AccordionContent>
+                        Binary addition follows four simple rules:<br/>
+                        - 0 + 0 = 0<br/>
+                        - 0 + 1 = 1<br/>
+                        - 1 + 0 = 1<br/>
+                        - 1 + 1 = 0, with a carry-over of 1 to the next column.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>Can this calculator handle negative binary numbers?</AccordionTrigger>
+                    <AccordionContent>
+                        This calculator primarily works with unsigned (positive) integers. The arithmetic calculator can produce a negative result in decimal, but representing negative numbers in binary typically requires methods like Two's Complement, which is a more advanced topic not covered by this basic tool.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Is there a limit to the size of the numbers I can convert?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator can handle any integer that JavaScript's standard number type can safely represent (up to `Number.MAX_SAFE_INTEGER`, which is 2⁵³ - 1). For larger numbers, you might need a BigInt-based calculator.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-6">
+                    <AccordionTrigger>Why is my division result different than expected?</AccordionTrigger>
+                    <AccordionContent>
+                        The binary arithmetic calculator performs integer division, just like many low-level computer operations. This means it discards any fractional part or remainder. For example, 7 ÷ 3 (binary 111 ÷ 11) will result in 2 (binary 10), not 2.33.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function BinaryPage() {
   return (
@@ -132,6 +186,7 @@ export default function BinaryPage() {
                 </div>
             </section>
             <EducationalContent />
+            <FaqSection />
         </div>
       </main>
     </div>

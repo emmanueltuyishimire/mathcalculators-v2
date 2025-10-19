@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
   title: 'Algebra Calculator',
@@ -36,6 +37,54 @@ const HowToUseGuide = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is a linear equation?</AccordionTrigger>
+                    <AccordionContent>
+                        A linear equation is an equation in which the highest power of the variable is always 1. It is the equation of a straight line. For example, `2x + 3 = 7` is a linear equation.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Can this calculator solve quadratic equations?</AccordionTrigger>
+                    <AccordionContent>
+                        No, this calculator is specifically designed for linear equations (like `ax + b = c`). It cannot solve quadratic equations (like `ax² + bx + c = 0`) or other higher-order polynomials.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>How do I enter fractions in the equation?</AccordionTrigger>
+                    <AccordionContent>
+                        Currently, the calculator has limited support for fractions. For best results, use decimal equivalents. For example, instead of `1/2`, use `0.5`.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What does it mean to "solve for x"?</AccordionTrigger>
+                    <AccordionContent>
+                        "Solving for x" means finding the value of the variable 'x' that makes the equation true. The goal is to isolate 'x' on one side of the equation.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Can I use variables other than 'x'?</AccordionTrigger>
+                    <AccordionContent>
+                        This calculator is optimized to solve for the variable 'x'. Using other variables might not produce a correct result.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-6">
+                    <AccordionTrigger>Does the calculator support equations with variables on both sides?</AccordionTrigger>
+                    <AccordionContent>
+                        The current version is best for simple linear equations in the format `ax + b = c`. Support for more complex structures like `ax + b = cx + d` is limited.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function AlgebraPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -55,6 +104,7 @@ export default function AlgebraPage() {
                     </Button>
                 </div>
             </section>
+            <FaqSection />
         </div>
       </main>
     </div>

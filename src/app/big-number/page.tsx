@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Big Number Calculator',
@@ -106,6 +107,57 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is a "big number" calculator?</AccordionTrigger>
+                    <AccordionContent>
+                        A big number calculator is a tool designed to handle arithmetic with integers that are too large for standard calculators. It uses special libraries (like BigInt in JavaScript) to perform operations on numbers with hundreds or even thousands of digits, avoiding the precision limits of typical floating-point arithmetic.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What format should I use for input?</AccordionTrigger>
+                    <AccordionContent>
+                        You can enter numbers as standard integers (e.g., `12345678901234567890`) or in E-notation (e.g., `1.23e25`). The calculator will parse the integer part of these inputs for its calculations.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can this calculator handle decimal numbers?</AccordionTrigger>
+                    <AccordionContent>
+                        This calculator is optimized for integer arithmetic. While you can input decimal numbers or numbers in E-notation, it will only use the integer part for calculations. It does not perform high-precision decimal arithmetic.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What is the largest number I can calculate?</AccordionTrigger>
+                    <AccordionContent>
+                        The theoretical limit depends on your browser's memory, but for most practical purposes, this calculator can handle numbers with many thousands of digits. Operations like factorial (`X!`) may be slow for very large inputs (e.g., over 10,000).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Why is cryptography mentioned in relation to big numbers?</AccordionTrigger>
+                    <AccordionContent>
+                        Modern encryption systems like RSA rely on the fact that it is computationally very difficult to find the prime factors of an extremely large number. This difficulty ensures the security of encrypted data.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-6">
+                    <AccordionTrigger>What do GCD and LCM stand for?</AccordionTrigger>
+                    <AccordionContent>
+                        <ul>
+                            <li><b>GCD:</b> Greatest Common Divisor. The largest positive integer that divides two or more integers without leaving a remainder.</li>
+                            <li><b>LCM:</b> Least Common Multiple. The smallest positive integer that is a multiple of two or more integers.</li>
+                        </ul>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function BigNumberPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -134,6 +186,7 @@ export default function BigNumberPage() {
                 </div>
             </section>
             <EducationalContent />
+            <FaqSection />
         </div>
       </main>
     </div>

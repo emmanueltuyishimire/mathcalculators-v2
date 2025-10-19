@@ -102,6 +102,43 @@ const RoundingMethodsGuide = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the default rounding method?</AccordionTrigger>
+                    <AccordionContent>
+                        This calculator defaults to "Round half up," which is the most common method taught in schools. In this method, if a number is exactly halfway (like 5.5), it is rounded up to the next integer (6).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What does "Precision" mean?</AccordionTrigger>
+                    <AccordionContent>
+                        Precision determines which place value you are rounding to. "Ones (0)" means rounding to the nearest whole number. "Tenths (1)" means rounding to one decimal place. "Tens (-1)" means rounding to the nearest 10.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Why are there so many different rounding methods?</AccordionTrigger>
+                    <AccordionContent>
+                        Different methods are used to handle "tie-breaking" (when a number is exactly halfway) in ways that avoid statistical bias. For example, "Round half to even" is often used in scientific and financial contexts because it rounds .5 up half the time and down half the time, preventing a consistent upward or downward skew in a large dataset.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What's the difference between "Round up" and "Round half up"?</AccordionTrigger>
+                    <AccordionContent>
+                        - **Round half up** only rounds up if the digit to be dropped is 5 or greater. For example, 5.4 rounds down to 5, but 5.5 rounds up to 6.<br/>
+                        - **Round up (Ceiling)** always rounds up to the next integer if there is any fractional part at all. For example, both 5.1 and 5.9 would round up to 6.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function RoundingPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -122,6 +159,7 @@ export default function RoundingPage() {
             <HowToUseGuide />
 
             <RoundingMethodsGuide />
+            <FaqSection />
         </div>
       </main>
     </div>

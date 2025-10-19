@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Root Calculator',
@@ -131,6 +132,44 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What's the difference between a square root and a cube root?</AccordionTrigger>
+                    <AccordionContent>
+                        The **square root** of a number is a value that, when multiplied by itself, gives the original number (e.g., √9 = 3 because 3×3=9). The **cube root** is a value that, when multiplied by itself three times, gives the original number (e.g., ∛8 = 2 because 2×2×2=8).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Can I find the root of a negative number?</AccordionTrigger>
+                    <AccordionContent>
+                        It depends on the root's degree (n).<br/>
+                        - If 'n' is **odd** (like a cube root), you can find the real root of a negative number. For example, ∛(-8) = -2.<br/>
+                        - If 'n' is **even** (like a square root), the real root of a negative number does not exist. The result is an imaginary number (e.g., √-4 = 2i), which this calculator will indicate.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is the "nth" root?</AccordionTrigger>
+                    <AccordionContent>
+                        The "nth" root is a generalization of square and cube roots. It's the number that needs to be multiplied by itself 'n' times to get the original number. The General Root Calculator lets you specify any 'n' you want.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>Is a root the same as a fractional exponent?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes. Finding the nth root of a number 'x' is equivalent to raising 'x' to the power of `1/n`. For example, √9 is the same as 9¹/². This is how most calculators compute roots.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function RootPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -148,6 +187,7 @@ export default function RootPage() {
             <RootCalculator />
             <HowToUseGuide />
             <EducationalContent />
+            <FaqSection />
             <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
                 <div className="flex flex-wrap justify-center gap-2 mt-4">

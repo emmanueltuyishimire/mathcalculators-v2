@@ -1,8 +1,10 @@
+
 'use client';
 import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 function HowToUseGuide() {
     return (
@@ -65,6 +67,49 @@ function EducationalContent() {
     );
 }
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is slope?</AccordionTrigger>
+                    <AccordionContent>
+                        Slope is a measure of the steepness of a line. It's calculated as the "rise" (vertical change) divided by the "run" (horizontal change) between two points on the line. A higher slope value indicates a steeper incline.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What does an "undefined" slope mean?</AccordionTrigger>
+                    <AccordionContent>
+                        An undefined slope means the line is perfectly vertical. This occurs when the "run" (the change in x-coordinates) is zero, which would lead to division by zero in the slope formula.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is the difference between slope and angle of incline?</AccordionTrigger>
+                    <AccordionContent>
+                        - **Slope (m)** is a ratio (rise/run).<br/>
+                        - **Angle of Incline (θ)** is the angle the line makes with the positive x-axis, measured in degrees or radians. They are related by the formula `m = tan(θ)`.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How do I find a second point with just one point and a slope?</AccordionTrigger>
+                    <AccordionContent>
+                        You also need a distance. The calculator uses the given point, slope, and distance to find a new point that lies on the same line. Since there are two such points (one in each direction along the line), the calculator provides both possibilities.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-5">
+                    <AccordionTrigger>What is the equation of the line?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator provides the equation in slope-intercept form: `y = mx + b`, where 'm' is the slope and 'b' is the y-intercept (the point where the line crosses the vertical y-axis).
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function SlopePage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -82,6 +127,7 @@ export default function SlopePage() {
           <SlopeCalculator />
           <HowToUseGuide />
           <EducationalContent />
+          <FaqSection />
         </div>
       </main>
     </div>

@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import DistanceCalculator from '@/components/calculators/distance-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Distance Calculator',
@@ -79,6 +80,48 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between 2D and 3D distance?</AccordionTrigger>
+                    <AccordionContent>
+                        2D distance is measured on a flat plane (like a map) and only considers X and Y coordinates. 3D distance is measured in space and includes a Z coordinate, which accounts for height or depth.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Why is the latitude/longitude distance different from a straight line?</AccordionTrigger>
+                    <AccordionContent>
+                        The Earth is a sphere, so the shortest distance between two points is a "great-circle" path along the curve of the Earth, not a straight line through it. Our calculator uses the Haversine formula to compute this curved distance.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What units can I use for the 2D and 3D calculators?</AccordionTrigger>
+                    <AccordionContent>
+                        The 2D and 3D calculators are unit-agnostic. The distance result will be in the same units that you use for the coordinates (e.g., if you input coordinates in meters, the distance will be in meters).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How do I find the latitude and longitude of a location?</AccordionTrigger>
+                    <AccordionContent>
+                        You can easily find the latitude and longitude of any location using online mapping services like Google Maps. Simply right-click on a location on the map, and its coordinates will be displayed.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>What does the "Equation of the line" in the 2D result mean?</AccordionTrigger>
+                    <AccordionContent>
+                        This is the algebraic formula (`y = mx + b`) that describes the straight line connecting your two points. 'm' is the slope, and 'b' is the y-intercept (the point where the line crosses the vertical y-axis).
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function DistancePage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -99,6 +142,7 @@ export default function DistancePage() {
             <HowToUseGuide />
             
             <EducationalContent />
+            <FaqSection />
         </div>
       </main>
     </div>

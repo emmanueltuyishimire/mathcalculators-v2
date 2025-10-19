@@ -12,6 +12,30 @@ export const metadata: Metadata = {
     description: 'A free online area calculator for finding the area of common 2D shapes, including rectangles, triangles, circles, and more.',
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Area Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+             <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Select a Shape:</strong> Find the calculator for the shape you want to measure (e.g., Rectangle, Circle).
+                </li>
+                <li>
+                    <strong>Choose a Unit:</strong> Select your unit of measurement (e.g., meters, feet) from the dropdown. All inputs should be in this unit.
+                </li>
+                <li>
+                    <strong>Enter Dimensions:</strong> Fill in the required fields for your shape, such as length, width, or radius.
+                </li>
+                 <li>
+                    <strong>Calculate:</strong> Click the "Calculate" button to see the area. The result will be displayed in the corresponding square units (e.g., m², ft²).
+                </li>
+            </ol>
+        </CardContent>
+    </Card>
+);
+
 const EducationalContent = () => (
     <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
@@ -101,6 +125,47 @@ const EducationalContent = () => (
     </Accordion>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between area and perimeter?</AccordionTrigger>
+                    <AccordionContent>
+                        **Area** is the measure of the space inside a two-dimensional shape (e.g., the amount of grass in a field). **Perimeter** is the total distance around the outside edge of the shape (e.g., the length of the fence around the field).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>How do I find the area of an irregular shape?</AccordionTrigger>
+                    <AccordionContent>
+                        To find the area of an irregular shape, you can break it down into simpler, common shapes (like rectangles, triangles, and circles). Calculate the area of each simple shape and then add them together to get the total area.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Why is the area unit "squared" (e.g., m²)?</AccordionTrigger>
+                    <AccordionContent>
+                        Area is measured in square units because it represents a two-dimensional space. For example, one square meter (m²) is the area of a square that is one meter long on each side. When you multiply two lengths together (e.g., length × width), you also multiply their units (meter × meter = meter²).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What is Heron's formula for a triangle?</AccordionTrigger>
+                    <AccordionContent>
+                        Heron's formula is a way to calculate the area of a triangle when you know the lengths of all three sides (a, b, and c). First, you calculate the semi-perimeter, `s = (a + b + c) / 2`. Then, the area is `√[s(s-a)(s-b)(s-c)]`. Our calculator uses this method for the triangle area.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Can I calculate the area of 3D shapes with this tool?</AccordionTrigger>
+                    <AccordionContent>
+                        No, this calculator is for 2D shapes only. To find the area of the outer surface of a 3D shape, you need our <Link href="/geometry/surface-area" className="text-primary hover:underline">Surface Area Calculator</Link>. To find the space inside a 3D shape, use the <Link href="/geometry/volume" className="text-primary hover:underline">Volume Calculator</Link>.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function AreaPage() {
   return (
@@ -118,7 +183,7 @@ export default function AreaPage() {
             </section>
             
             <AreaCalculator />
-            
+            <HowToUseGuide />
             <EducationalContent />
 
              <section className="text-center">
@@ -132,6 +197,7 @@ export default function AreaPage() {
                     </Button>
                 </div>
             </section>
+            <FaqSection />
         </div>
       </main>
     </div>

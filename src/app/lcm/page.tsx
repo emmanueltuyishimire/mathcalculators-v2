@@ -5,12 +5,33 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Least Common Multiple (LCM) Calculator',
     description: 'A free online calculator to find the least common multiple (LCM) of a set of numbers. Includes step-by-step solutions using prime factorization.',
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the LCM Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Enter Your Numbers:</strong> Type the numbers you want to find the LCM of into the input field. Make sure to separate each number with a comma.
+                </li>
+                <li>
+                    <strong>Calculate:</strong> Click the "Calculate" button to process the numbers.
+                </li>
+                <li>
+                    <strong>View the Result:</strong> The calculator will display the LCM. You can also click "Show Calculation Steps" to see the prime factorization method used to find the result.
+                </li>
+            </ol>
+        </CardContent>
+    </Card>
+);
 
 const EducationalContent = () => (
     <Card>
@@ -81,6 +102,43 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between LCM and GCF (GCD)?</AccordionTrigger>
+                    <AccordionContent>
+                        - **LCM (Least Common Multiple):** The smallest number that is a multiple of all numbers in the set. For example, LCM(4, 6) = 12.<br/>
+                        - **GCF (Greatest Common Factor) or GCD (Greatest Common Divisor):** The largest number that divides all numbers in the set without a remainder. For example, GCF(4, 6) = 2.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>When would I use the LCM in real life?</AccordionTrigger>
+                    <AccordionContent>
+                        The most common real-life application of LCM is when adding or subtracting fractions. You need to find a common denominator, and using the least common denominator (which is the LCM of the denominators) makes the calculation simpler. It's also used in scheduling problems, like finding out when two events will happen at the same time again.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can I calculate the LCM of negative numbers?</AccordionTrigger>
+                    <AccordionContent>
+                        The LCM is typically defined for positive integers. This calculator will use the absolute value of any negative numbers you enter, as the common multiples are the same for a number and its negative counterpart.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What is the LCM of a number and 1?</AccordionTrigger>
+                    <AccordionContent>
+                        The LCM of any number 'n' and 1 is always 'n', because 'n' is the smallest positive number that is a multiple of both 'n' and 1.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function LcmPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -96,7 +154,9 @@ export default function LcmPage() {
                 </p>
             </section>
           <LcmCalculator />
+          <HowToUseGuide />
           <EducationalContent />
+          <FaqSection />
           <section className="text-center">
             <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
             <div className="flex flex-wrap justify-center gap-2 mt-4">

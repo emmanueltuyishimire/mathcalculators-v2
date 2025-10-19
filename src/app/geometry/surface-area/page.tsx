@@ -136,6 +136,47 @@ const EducationalContent = () => (
     </Accordion>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between surface area and volume?</AccordionTrigger>
+                    <AccordionContent>
+                        **Surface area** is the total area of the outside surfaces of a 3D object (a two-dimensional measurement). **Volume** is the amount of space inside the 3D object (a three-dimensional measurement). For example, the surface area of a box is the amount of wrapping paper needed to cover it, while the volume is how much you can fit inside it.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What does "lateral surface area" mean?</AccordionTrigger>
+                    <AccordionContent>
+                        Lateral surface area refers to the area of the sides of an object, excluding the area of its top and bottom bases. For example, for a cylinder, it's the area of the curved "tube" part, not including the circular top and bottom.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can I use different units for different inputs?</AccordionTrigger>
+                    <AccordionContent>
+                        No. To get an accurate calculation, all of your inputs (like radius, height, length) must be in the same unit of measurement (e.g., all in meters or all in inches). The result will be in the corresponding square unit.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How does the Spherical Cap calculator work with only two inputs?</AccordionTrigger>
+                    <AccordionContent>
+                        The three dimensions of a spherical cap (base radius 'r', ball radius 'R', and height 'h') are geometrically related. If you know any two of them, the third can be calculated using the Pythagorean theorem. The calculator does this automatically before computing the surface area.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-5">
+                    <AccordionTrigger>What is a frustum?</AccordionTrigger>
+                    <AccordionContent>
+                        A frustum is the portion of a solid (in this case, a cone) that is left after its top has been cut off by a plane parallel to the base. A common example is a lampshade or a bucket.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function SurfaceAreaPage() {
   return (
@@ -157,6 +198,8 @@ export default function SurfaceAreaPage() {
             <SurfaceAreaCalculator />
             
             <EducationalContent />
+            
+            <FaqSection />
 
              <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>

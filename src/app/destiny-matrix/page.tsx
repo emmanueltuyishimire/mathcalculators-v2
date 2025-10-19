@@ -2,6 +2,8 @@
 import { PageHeader } from '@/components/page-header';
 import DestinyMatrixCalculator from '@/components/calculators/destiny-matrix-calculator';
 import type { Metadata } from 'next';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Destiny Matrix Calculator – Numerology Insights',
@@ -35,6 +37,54 @@ const pageSchema = {
     ]
   }
 };
+
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the Destiny Matrix?</AccordionTrigger>
+                    <AccordionContent>
+                        The Destiny Matrix is a numerology method that uses your birth date to create a personalized chart. This chart, often visualized as a diagram with key numbers, is believed to reveal insights into your personality, life purpose, talents, challenges, and karmic lessons.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Is this tool based on a specific numerology system?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes, this calculator is based on the principles of the Destiny Matrix system, which has roots in Pythagorean numerology and other esoteric traditions. It involves specific calculations to derive key "energies" or numbers that are placed at various points on a diagram.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is the "Life Path Number"?</AccordionTrigger>
+                    <AccordionContent>
+                        The Life Path Number (point 'd' in our diagram) is one of the most important numbers in your chart. It represents your life's journey, major themes, and the central mission or purpose you are here to fulfill. The interpretation provided gives you a glimpse into this core energy.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How are the numbers calculated?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculation involves summing the digits of your day, month, and year of birth. Each component (day, month, year) is reduced to a single digit or a master number (11, 22, 33). These numbers are then combined in specific ways to calculate the other points on the matrix.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Can I use my full name with this calculator?</AccordionTrigger>
+                    <AccordionContent>
+                        This specific Destiny Matrix calculator uses only the birth date. Other numerology systems, like Chaldean or Pythagorean, use the full name to calculate different aspects of your personality, such as the Expression or Soul Urge number.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-6">
+                    <AccordionTrigger>How should I interpret the results?</AccordionTrigger>
+                    <AccordionContent>
+                        The interpretations provided are a starting point for self-reflection. They offer insights into your potential strengths and weaknesses. Use them as a guide to understand your natural tendencies and areas for personal growth, not as a definitive prediction of your future.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function DestinyMatrixPage() {
   return (
@@ -89,6 +139,7 @@ export default function DestinyMatrixPage() {
                   <p>For enthusiasts of personal development, numerology, or psychology, the Destiny Matrix Calculator serves as a digital mentor, guiding you through self-discovery with a simple, intuitive interface. By exploring multiple inputs—like variations of your name or significant dates—you can compare patterns and understand recurring influences in your life, making the tool both practical and deeply personal.</p>
                   
               </section>
+              <FaqSection />
           </div>
         </main>
       </div>

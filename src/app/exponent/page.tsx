@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Exponent Calculator',
@@ -71,6 +72,50 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>How does the calculator solve for the missing value?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator uses inverse operations. To find the base, it takes the nth root of the result (`a = y^(1/n)`). To find the exponent, it uses logarithms (`n = logₐ(y)`). To find the result, it simply performs the exponentiation (`y = a^n`).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is 'e' and why would I use it as a base?</AccordionTrigger>
+                    <AccordionContent>
+                        'e' is Euler's number, an important mathematical constant approximately equal to 2.71828. It is the base of the natural logarithm and appears in many areas of mathematics and science, particularly in formulas related to continuous growth or decay (like compound interest or radioactive decay).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can I use negative numbers or fractions?</AccordionTrigger>
+                    <AccordionContent>
+                        - **Negative Bases:** Yes, you can use a negative base.<br/>
+                        - **Negative Exponents:** Yes, a negative exponent means taking the reciprocal (e.g., `2⁻³ = 1/2³ = 1/8`).<br/>
+                        - **Fractions:** You can use decimal equivalents for fractions (e.g., use `0.5` for `1/2`). Fractional exponents are equivalent to roots (e.g., `9^0.5` is the square root of 9).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>What happens if I try to calculate the even root of a negative number?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator will show an error. For example, trying to solve for 'a' in `a² = -4` requires finding the square root of a negative number, which results in an imaginary number. This calculator is designed for real numbers only.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Why do I get an error when solving for the exponent with a negative base or result?</AccordionTrigger>
+                    <AccordionContent>
+                        Solving for the exponent involves logarithms. The logarithm function is typically defined only for positive bases and positive results in the realm of real numbers.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
 export default function ExponentPage() {
   return (
     <div className="flex flex-1 flex-col">
@@ -91,6 +136,8 @@ export default function ExponentPage() {
             <HowToUseGuide />
 
             <EducationalContent />
+            
+            <FaqSection />
 
             <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>

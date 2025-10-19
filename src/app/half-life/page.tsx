@@ -4,11 +4,39 @@ import { PageHeader } from '@/components/page-header';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
   title: 'Half-Life Calculator',
   description: 'Calculate half-life, initial quantity, remaining quantity, or time elapsed. Also convert between half-life, mean lifetime, and decay constant.',
 };
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Half-Life Calculators</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Half-Life Decay Formula Calculator</h3>
+                 <ol className="list-decimal list-inside space-y-2 mt-2">
+                    <li>This calculator solves the equation: `Nt = N0 × (1/2)^(t/t½)`.</li>
+                    <li>Enter any three of the four values: Remaining Quantity (Nt), Initial Quantity (N0), Time Elapsed (t), or Half-Life (t½).</li>
+                    <li>Leave the field you want to solve for empty.</li>
+                    <li>Click "Calculate" to find the missing value.</li>
+                </ol>
+            </div>
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">Conversion Calculator</h3>
+                 <ol className="list-decimal list-inside space-y-2 mt-2">
+                    <li>This tool converts between Half-Life (t½), Mean Lifetime (τ), and Decay Constant (λ).</li>
+                    <li>Enter any one of the three values.</li>
+                    <li>The other two values will be calculated and displayed automatically.</li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
 
 const CalculatorLogic = () => (
     <Card>
@@ -133,6 +161,43 @@ const EducationalContent = () => (
     </Card>
 );
 
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>Is half-life only for radioactive decay?</AccordionTrigger>
+                    <AccordionContent>
+                        No. While it's most famously used for radioactive decay, the concept of half-life applies to any quantity that undergoes exponential decay. This includes the elimination of drugs from the body, the decay of a sound in a room, or the depreciation of certain assets.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>What is the difference between half-life, mean lifetime, and decay constant?</AccordionTrigger>
+                    <AccordionContent>
+                        - **Half-Life (t½):** The time it takes for half of the substance to decay.<br/>
+                        - **Mean Lifetime (τ):** The average lifetime of a particle before it decays. It is always longer than the half-life (τ ≈ 1.44 × t½).<br/>
+                        - **Decay Constant (λ):** Represents the probability of decay per unit of time. A larger decay constant means a faster decay. It is the reciprocal of the mean lifetime (λ = 1/τ).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>Can I use any units for time and quantity?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes, as long as you are consistent. If you enter the half-life in years, the elapsed time will also be in years. Similarly, the units for initial and remaining quantity (e.g., grams, %, number of atoms) must be the same.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>Why can't I use negative numbers for quantities or half-life?</AccordionTrigger>
+                    <AccordionContent>
+                        Physical quantities like amount of substance and time cannot be negative. Additionally, the mathematical formulas for decay involve logarithms, which are not defined for non-positive numbers. The calculator requires positive values for these inputs to ensure a meaningful result.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function HalfLifePage() {
   return (
@@ -149,8 +214,10 @@ export default function HalfLifePage() {
                 </p>
             </section>
           <HalfLifeCalculator />
+          <HowToUseGuide />
           <CalculatorLogic />
           <EducationalContent />
+          <FaqSection />
         </div>
       </main>
     </div>

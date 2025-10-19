@@ -3,11 +3,61 @@ import { PageHeader } from '@/components/page-header';
 import DesmosMatrixCalculator from '@/components/calculators/desmos-matrix-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
     title: 'Desmos Matrix Calculator – Interactive Online Tool',
     description: 'A free, interactive Desmos-style matrix calculator. Perform matrix operations, visualize transformations, and learn linear algebra with an intuitive interface.',
 };
+
+const FaqSection = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent>
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What makes this a "Desmos-style" calculator?</AccordionTrigger>
+                    <AccordionContent>
+                        This calculator is inspired by the interactive and user-friendly interface of Desmos. Instead of separate inputs for each operation, you can create multiple matrices (A, B, C, etc.) and perform operations on them dynamically, with results appearing as new matrices in your workspace.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>How many matrices can I create?</AccordionTrigger>
+                    <AccordionContent>
+                        You can add as many matrices as you need by clicking the "+ New Matrix" button. Each new matrix will be assigned a letter name automatically (A, B, C, ...).
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What matrix operations are supported?</AccordionTrigger>
+                    <AccordionContent>
+                        The calculator supports addition, subtraction, multiplication, transpose, determinant, inverse, and scalar multiplication. You can access these operations through the main operation panel or the function menu on each matrix card.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                    <AccordionTrigger>How do I change the size of a matrix?</AccordionTrigger>
+                    <AccordionContent>
+                        You can add or remove rows and columns using the dedicated buttons (+/- with row/column icons) on each matrix card. The maximum size is 8x8.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>What happens if I try an invalid operation?</AccordionTrigger>
+                    <AccordionContent>
+                        If you attempt an invalid operation, such as adding matrices of different dimensions or trying to find the inverse of a non-square matrix, the calculator will show a descriptive error toast to help you correct the issue.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-6">
+                    <AccordionTrigger>Can I use the result of one calculation in another?</AccordionTrigger>
+                    <AccordionContent>
+                        Yes. When you perform an operation (e.g., A + B), the result is created as a new matrix in your workspace (e.g., named "A+B"). You can then use this new matrix in subsequent calculations.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 
 export default function DesmosMatrixPage() {
@@ -91,6 +141,7 @@ export default function DesmosMatrixPage() {
                     </ul>
                 </div>
             </section>
+            <FaqSection />
         </div>
       </main>
     </div>
