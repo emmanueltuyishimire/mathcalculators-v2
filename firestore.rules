@@ -1,59 +1,58 @@
 /**
  * @file Firestore Security Rules
- * @description This ruleset enforces a strict user-ownership model for slope calculations. Only authenticated users can perform calculations, and they can only access their own calculations. Anonymous authentication is enabled.
- * @dataStructure
- *  - All slope calculation data is stored in the `/slope_calculations/{slopeCalculationId}` collection.
- *  - Each document in this collection represents a single calculation.
- *  - The `userId` field within each document indicates the owner of the calculation.
- * @keySecurityDecisions
- *  - Users can only list calculations.
- *  - Data schema validation is relaxed for rapid prototyping. The rule only enforces that `userId` matches the authenticated user's UID on creation.
- * @denormalizationForAuthorization
- *  - The `userId` field is denormalized directly into the `/slope_calculations/{slopeCalculationId}` documents. This allows rules to quickly verify ownership without additional reads.
+ * @core_philosophy This ruleset enforces a user-ownership model for slope calculations. Each calculation is associated with a specific user, who has full CRUD access. Read access is public.
+ * @data_structure Slope calculations are stored in the `/slope_calculations/{slopeCalculationId}` collection. Each document contains the calculation input and output data, along with the `userId` of the user who created it.
+ * @key_security_decisions
+ *   - Public Read: Read access to slope calculations is public.
+ *   - Owner-Only Writes: Only the owner (creator) of a slope calculation can modify or delete it.
+ *   - Ownership Enforcement: The `userId` field in each document is used to enforce ownership.
  */
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
     /**
-     * @description Controls access to the /slope_calculations collection.
+     * @description Protects slope calculation documents. Allows public reads, but restricts writes to the owner.
      * @path /slope_calculations/{slopeCalculationId}
-     * @allow (list) Authenticated user can list all slope_calculations.
-     * @deny (list) Unauthenticated user can not list slope_calculations.
-     * @allow (create) Authenticated user can create a new slope calculation if the userId matches their own UID.
-     * @deny (create) Authenticated user can not create a new slope calculation if the userId does not match their own UID.
-     * @deny (update) Authenticated user can not update other user's slope calculations.
-     * @deny (delete) Authenticated user can not delete other user's slope calculations.
-     * @principle Enforces document ownership for writes and allows public reads. Validates relational integrity on create.
+     * @allow (get, list): Any user can read slope calculations.
+     * @allow (create): Only the authenticated user can create slope calculations where the userId matches their own.
+     * @allow (update, delete): Only the owner of the slope calculation can modify or delete it.
+     * @deny (create): An unauthenticated user cannot create slope calculations.
+     * @deny (update, delete): A user cannot modify or delete a slope calculation they don't own.
+     * @principle Enforces document ownership for writes and public read access.
      */
     match /slope_calculations/{slopeCalculationId} {
-      // Helper function to check if the user is signed in.
-      function isSignedIn() {
-        return request.auth != null;
-      }
+      allow get, list: if true;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isExistingOwner(resource.data.userId);
+    }
 
-      // Helper function to check if the user is the owner of the document.
-      function isOwner(userId) {
-        return isSignedIn() && request.auth.uid == userId;
-      }
-      
-      // Helper function to check if the existing user is the owner of the document.
-      function isExistingOwner(userId) {
-        return isOwner(userId) && resource != null;
-      }
+    // --- Helper functions ---
 
-      // Allow anyone to read the collection.
-      allow get: if true;
-      allow list: if isSignedIn();
+    /**
+     * @description Checks if the user is signed in.
+     * @return True if the user is authenticated, false otherwise.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
 
-      // Only allow authenticated users to create slope calculations with a matching userId.
-      allow create: if isOwner(request.resource.data.userId);
+    /**
+     * @description Checks if the requesting user is the owner of the document.
+     * @param userId The user ID stored in the document.
+     * @return True if the user is the owner, false otherwise.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
 
-      // Only the owner can update the slope calculation.
-      allow update: if isExistingOwner(resource.data.userId);
-
-      // Only the owner can delete the slope calculation.
-      allow delete: if isExistingOwner(resource.data.userId);
+    /**
+     * @description Checks if the user is the owner of the document and the document exists.
+     * @param userId The user ID stored in the document.
+     * @return True if the user is the owner and the document exists, false otherwise.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
     }
   }
 }
