@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/firebase';
 import { initiateAnonymousSignIn } from '@/firebase/non-blocking-login';
 import { useEffect } from 'react';
+import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/label';
 
 const HowToUseGuide = () => (
     <Card>
