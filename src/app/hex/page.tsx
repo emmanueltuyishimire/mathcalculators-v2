@@ -34,7 +34,7 @@ const EducationalContent = () => (
                         {[...Array(16).keys()].map(i => (
                             <TableRow key={i}>
                                 <TableCell>{i.toString(16).toUpperCase()}</TableCell>
-                                <TableCell>{i.toString(2)}</TableCell>
+                                <TableCell>{i.toString(2).padStart(4, '0')}</TableCell>
                                 <TableCell>{i}</TableCell>
                             </TableRow>
                         ))}
