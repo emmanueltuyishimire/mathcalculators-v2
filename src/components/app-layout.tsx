@@ -98,7 +98,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                  {navItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
-                         <Link href={item.href} passHref>
+                         <Link href={item.href} legacyBehavior passHref>
                           <NavigationMenuLink
                             className={cn(
                               navigationMenuTriggerStyle(),
