@@ -23,6 +23,30 @@ function LogCalculator() {
     const [calculation, setCalculation] = useState<string | null>(null);
     const [exponentialForm, setExponentialForm] = useState<string | null>(null);
 
+    const handleBaseChange = (value: string) => {
+        setBase(value);
+        setArgument('');
+        setResult('');
+        setCalculation(null);
+        setExponentialForm(null);
+    };
+
+    const handleArgumentChange = (value: string) => {
+        setArgument(value);
+        setBase('');
+        setResult('');
+        setCalculation(null);
+        setExponentialForm(null);
+    };
+
+    const handleResultChange = (value: string) => {
+        setResult(value);
+        setBase('');
+        setArgument('');
+        setCalculation(null);
+        setExponentialForm(null);
+    };
+
     const calculate = () => {
         setCalculation(null);
         setExponentialForm(null);
@@ -73,7 +97,8 @@ function LogCalculator() {
         }
     };
 
-     useEffect(() => {
+    useEffect(() => {
+        // Initial calculation on load
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -95,10 +120,33 @@ function LogCalculator() {
             <CardContent className="space-y-4">
                 <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
                     <span className="self-center">log</span>
-                    <Input id="base" value={base} onChange={e => setBase(e.target.value)} className="w-20 text-center text-sm self-end" placeholder="a"/>
-                    <Input id="argument" type="number" value={argument} onChange={e => setArgument(e.target.value)} className="w-24 text-center" placeholder="x" />
+                    <Input
+                        id="base"
+                        value={base}
+                        onChange={(e) => handleBaseChange(e.target.value)}
+                        className="w-20 text-center text-sm self-end"
+                        placeholder="a"
+                        aria-label="Base (a)"
+                    />
+                    <Input
+                        id="argument"
+                        type="number"
+                        value={argument}
+                        onChange={(e) => handleArgumentChange(e.target.value)}
+                        className="w-24 text-center"
+                        placeholder="x"
+                        aria-label="Argument (x)"
+                    />
                     <span className="self-center">=</span>
-                    <Input id="result" type="number" value={result} onChange={e => setResult(e.target.value)} className="w-24 text-center" placeholder="y"/>
+                    <Input
+                        id="result"
+                        type="number"
+                        value={result}
+                        onChange={(e) => handleResultChange(e.target.value)}
+                        className="w-24 text-center"
+                        placeholder="y"
+                        aria-label="Result (y)"
+                    />
                 </div>
                 <div className="flex gap-2">
                     <Button onClick={calculate} className="w-full">Calculate</Button>
@@ -133,7 +181,7 @@ const HowToUseGuide = () => (
                     <strong>Use 'e' as Base (Optional):</strong> To use Euler's number (e ≈ 2.718), simply type 'e' into the Base input field.
                 </li>
                 <li>
-                    <strong>Calculate:</strong> Click the "Calculate" button to compute the missing value. The calculator also updates automatically as you type.
+                    <strong>Calculate:</strong> Click the "Calculate" button to compute the missing value.
                 </li>
                 <li>
                     <strong>View the Result:</strong> The answer and its exponential equivalent will appear in the result section below.
@@ -208,7 +256,7 @@ export default function LogPage() {
                     Log Calculator (Logarithm)
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide any two values to calculate the third in the logarithm equation logbx=y. It can accept "e" as a base input.
+                    Please provide any two values to calculate the third in the logarithm equation logₐx=y. It can accept "e" as a base input.
                 </p>
             </section>
             
@@ -234,3 +282,5 @@ export default function LogPage() {
     </div>
   );
 }
+
+    
