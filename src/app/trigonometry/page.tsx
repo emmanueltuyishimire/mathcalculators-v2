@@ -56,9 +56,10 @@ const HowToUseGuide = () => (
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                <TableRow><TableCell>🔹 Basic/Inverse Functions</TableCell><TableCell>Compute sin, cos, tan or find an angle with arcsin, etc.</TableCell></TableRow>
-                                <TableRow><TableCell>🔹 Right Triangle Solver</TableCell><TableCell>Find missing sides or angles of a right triangle.</TableCell></TableRow>
-                                <TableRow><TableCell>🔹 Oblique Triangle Solver</TableCell><TableCell>Solve any triangle using the Law of Sines and Cosines.</TableCell></TableRow>
+                                <TableRow><TableCell>🔹 Basic Trigonometric Functions</TableCell><TableCell>Compute sin, cos, tan, cot, sec, or csc for any angle.</TableCell></TableRow>
+                                <TableRow><TableCell>🔹 Inverse Trigonometric Functions</TableCell><TableCell>Find the angle from a given ratio using arcsin, arccos, or arctan.</TableCell></TableRow>
+                                <TableRow><TableCell>🔹 Right Triangle Solver</TableCell><TableCell>Find missing sides or angles of a right triangle using basic trig ratios.</TableCell></TableRow>
+                                <TableRow><TableCell>🔹 Non-Right Triangle Solver</TableCell><TableCell>Solve any triangle (Law of Sines and Law of Cosines).</TableCell></TableRow>
                             </TableBody>
                         </Table>
                     </AccordionContent>
@@ -87,15 +88,14 @@ const HowToUseGuide = () => (
                 <AccordionItem value="item-3">
                     <AccordionTrigger>3. Review Your Results</AccordionTrigger>
                     <AccordionContent className="text-muted-foreground">
-                        The calculator will display all solved values. For triangle problems, this includes all three sides and all three angles. Step-by-step solutions are planned for a future update to show how the formulas were applied.
+                        The calculator will display all solved values. For triangle problems, this includes all three sides and all three angles.
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
                     <AccordionTrigger>4. Settings and Options</AccordionTrigger>
                     <AccordionContent className="space-y-2 text-muted-foreground">
                         <p><b>Angle Unit:</b> Toggle between degrees and radians for your calculations.</p>
-                        <p><b>Precision:</b> Results are typically rounded for clarity. More options coming soon.</p>
-                        <p><b>Dark Mode:</b> Use the theme toggle at the top of the page to switch between light and dark modes.</p>
+                        <p><b>Precision:</b> Results are typically rounded for clarity.</p>
                     </AccordionContent>
                 </AccordionItem>
                  <AccordionItem value="item-5">
