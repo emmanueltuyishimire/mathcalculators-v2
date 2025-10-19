@@ -1,21 +1,15 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Square, Waves, Volume, Circle, Triangle } from 'lucide-react';
+import { Square, Waves, Volume, Circle, Triangle, TrendingUp, Move3d, Sigma } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Geometry Calculators',
-  description: 'A comprehensive set of geometry calculators for calculating area, volume, surface area and other geometric properties.',
+  description: 'A comprehensive set of geometry calculators for calculating area, volume, surface area, slope, distance, and other geometric properties.',
 };
 
 const geometryTools = [
-  {
-    href: '/geometry/volume',
-    label: 'Volume Calculator',
-    icon: Volume,
-    description: 'Calculate the volume of common 3D shapes.',
-  },
   {
     href: '/geometry/area',
     label: 'Area Calculator',
@@ -23,10 +17,10 @@ const geometryTools = [
     description: 'Calculate the area of common 2D shapes.',
   },
   {
-    href: '/geometry/circle',
-    label: 'Circle Calculator',
-    icon: Circle,
-    description: 'Calculate radius, diameter, circumference, and area.',
+    href: '/geometry/volume',
+    label: 'Volume Calculator',
+    icon: Volume,
+    description: 'Calculate the volume of common 3D shapes.',
   },
   {
     href: '/geometry/surface-area',
@@ -35,11 +29,35 @@ const geometryTools = [
     description: 'Calculate the surface area of common 3D shapes.',
   },
   {
+    href: '/geometry/circle',
+    label: 'Circle Calculator',
+    icon: Circle,
+    description: 'Calculate radius, diameter, circumference, and area.',
+  },
+  {
+    href: '/pythagorean',
+    label: 'Pythagorean',
+    icon: Sigma,
+    description: 'Solve for sides of a right-angled triangle.',
+  },
+  {
     href: '/right-triangle',
     label: 'Right Triangle',
     icon: Triangle,
     description: 'Solve right triangles from any two values.',
-  }
+  },
+  {
+    href: '/slope',
+    label: 'Slope Calculator',
+    icon: TrendingUp,
+    description: 'Calculate slope from two points or one point and an angle.',
+  },
+  {
+    href: '/distance',
+    label: 'Distance Calculator',
+    icon: Move3d,
+    description: 'Calculate distance between points in 2D, 3D, and on Earth.',
+  },
 ];
 
 
