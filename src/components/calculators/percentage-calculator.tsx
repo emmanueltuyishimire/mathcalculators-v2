@@ -153,11 +153,104 @@ const CommonPhrasesCalculator = () => {
     )
 }
 
+const PercentageDifferenceCalculator = () => {
+    const { toast } = useToast();
+    const [val1, setVal1] = useState('100');
+    const [val2, setVal2] = useState('120');
+    const [result, setResult] = useState('');
+
+    const calculate = () => {
+        const v1 = parseFloat(val1);
+        const v2 = parseFloat(val2);
+        if(isNaN(v1) || isNaN(v2)) {
+            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for both values.' });
+            return;
+        }
+        if ((v1 + v2) === 0) {
+            setResult('0.00');
+            return;
+        }
+        const diff = (Math.abs(v1 - v2) / ((v1 + v2) / 2)) * 100;
+        setResult(diff.toFixed(2));
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Percentage Difference Calculator</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                    <Input className="flex-1 min-w-[80px]" type="number" value={val1} onChange={e => setVal1(e.target.value)} aria-label="Value 1"/>
+                    <span className="font-semibold">and</span>
+                    <Input className="flex-1 min-w-[80px]" type="number" value={val2} onChange={e => setVal2(e.target.value)} aria-label="Value 2"/>
+                </div>
+                <Button onClick={calculate} className="w-full">Calculate Difference</Button>
+                {result && (
+                    <Input readOnly value={`${result}%`} className="bg-muted text-center font-semibold" aria-label="Percentage difference result" />
+                )}
+            </CardContent>
+        </Card>
+    );
+};
+
+const PercentageChangeCalculator = () => {
+    const { toast } = useToast();
+    const [initial, setInitial] = useState('100');
+    const [final, setFinal] = useState('');
+    const [change, setChange] = useState('10');
+    const [result, setResult] = useState<string | null>(null);
+
+    const calculate = (direction: 'increase' | 'decrease') => {
+        const numInitial = parseFloat(initial);
+        const numChange = parseFloat(change);
+
+        if(isNaN(numInitial) || isNaN(numChange)) {
+            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for value and percentage.' });
+            return;
+        }
+
+        const multiplier = numChange / 100;
+        let finalValue;
+
+        if (direction === 'increase') {
+            finalValue = numInitial * (1 + multiplier);
+        } else {
+            finalValue = numInitial * (1 - multiplier);
+        }
+
+        setFinal(finalValue.toFixed(2));
+    };
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Percentage Change Calculator</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                    <Input className="flex-1 min-w-[80px]" type="number" value={initial} onChange={e => setInitial(e.target.value)} aria-label="Initial value"/>
+                    <span className="font-semibold">by</span>
+                    <Input className="flex-1 min-w-[80px]" type="number" value={change} onChange={e => setChange(e.target.value)} aria-label="Percentage change" />
+                    <span className="font-semibold">% is</span>
+                    <Input readOnly value={final} className="bg-muted flex-1 min-w-[80px]" aria-label="Final value" />
+                </div>
+                <div className="flex gap-2">
+                    <Button onClick={() => calculate('increase')} className="w-full">Increase</Button>
+                    <Button onClick={() => calculate('decrease')} variant="secondary" className="w-full">Decrease</Button>
+                </div>
+            </CardContent>
+        </Card>
+    );
+};
+
 export default function PercentageCalculator() {
     return (
         <div className="space-y-8">
             <ThreeFieldCalculator />
             <CommonPhrasesCalculator />
+            <PercentageDifferenceCalculator />
+            <PercentageChangeCalculator />
         </div>
     );
 }
