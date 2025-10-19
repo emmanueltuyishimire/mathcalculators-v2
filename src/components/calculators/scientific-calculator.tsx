@@ -270,7 +270,7 @@ export default function ScientificCalculator() {
   }
 
   return (
-    <Card className="shadow-xl max-w-md mx-auto bg-gray-700 text-white p-2 border-4 border-black rounded-2xl">
+    <Card id="scientific-calculator" className="shadow-xl max-w-md mx-auto bg-gray-700 text-white p-2 border-4 border-black rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
         <div className="w-full mb-1 rounded-lg border-2 border-black bg-sky-200 p-2 text-right text-3xl font-mono text-black break-all h-20 flex items-end justify-end shadow-inner">
           {displayValue}
