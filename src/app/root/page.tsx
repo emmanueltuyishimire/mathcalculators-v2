@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 export const metadata: Metadata = {
     title: 'Root Calculator',
@@ -20,6 +21,40 @@ const EducationalContent = () => (
             <div>
                 <p>In mathematics, the general root, or the <strong>nth root</strong> of a number <em>a</em> is another number <em>b</em> that when multiplied by itself <em>n</em> times, equals <em>a</em>. In equation format:</p>
                 <p className="font-mono bg-muted p-4 rounded-md text-center text-lg my-2"><sup>n</sup>√a = b  &nbsp;&nbsp;which means&nbsp;&nbsp;  bⁿ = a</p>
+            </div>
+            
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">1. Core Mathematical Formulas</h3>
+                 <ul className="list-disc list-inside mt-2 space-y-2">
+                    <li><b>Square Root:</b> <code className="font-mono bg-muted p-1 rounded-md">√x = x¹/²</code></li>
+                    <li><b>Cube Root:</b> <code className="font-mono bg-muted p-1 rounded-md">∛x = x¹/³</code></li>
+                    <li><b>General Root (n-th root):</b> <code className="font-mono bg-muted p-1 rounded-md">ⁿ√x = x¹/ⁿ</code></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">2. Calculator Logic (Pseudocode)</h3>
+                <p className="mt-2">The calculators use the following logic to compute roots:</p>
+                <div className="font-mono text-sm bg-muted p-4 rounded-md space-y-2 mt-2">
+                    <p><span className="text-muted-foreground">// Square root</span><br/>function squareRoot(x) &#123;<br/>&nbsp;&nbsp;return Math.pow(x, 1/2);<br/>&#125;</p>
+                    <p><span className="text-muted-foreground">// Cube root</span><br/>function cubeRoot(x) &#123;<br/>&nbsp;&nbsp;return Math.pow(x, 1/3);<br/>&#125;</p>
+                    <p><span className="text-muted-foreground">// General n-th root (handles negatives correctly)</span><br/>function nthRoot(x, n) &#123;<br/>&nbsp;&nbsp;return x &lt; 0 &amp;&amp; n % 2 !== 0 ? -Math.pow(-x, 1/n) : Math.pow(x, 1/n);<br/>&#125;</p>
+                </div>
+            </div>
+            
+            <div>
+                 <h3 className="text-xl font-semibold text-foreground">3. Example Calculations</h3>
+                <Table>
+                    <TableHeader>
+                        <TableRow><TableHead>Operation</TableHead><TableHead>Input</TableHead><TableHead>Output</TableHead></TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow><TableCell>√x</TableCell><TableCell>√(25)</TableCell><TableCell>5</TableCell></TableRow>
+                        <TableRow><TableCell>∛x</TableCell><TableCell>∛(27)</TableCell><TableCell>3</TableCell></TableRow>
+                        <TableRow><TableCell>⁴√x</TableCell><TableCell>n=4, x=16</TableCell><TableCell>2</TableCell></TableRow>
+                        <TableRow><TableCell>⁵√x</TableCell><TableCell>n=5, x=32</TableCell><TableCell>2</TableCell></TableRow>
+                    </TableBody>
+                </Table>
             </div>
 
             <div>
