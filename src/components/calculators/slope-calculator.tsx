@@ -9,10 +9,12 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Separator } from '@/components/ui/separator';
 
 interface TwoPointResult {
     slope: number | 'undefined';
-    angle: number | 'N/A';
+    angleDeg: number | 'N/A';
+    angleRad: number | 'N/A';
     distance: number;
     equation: string;
     yIntercept: number | string;
@@ -45,9 +47,10 @@ const TwoPointsCalculator = () => {
     if (Math.abs(deltaX) < 1e-9) { // Using tolerance for float comparison
         setResult({
             slope: 'undefined',
-            angle: 'N/A',
+            angleDeg: 90,
+            angleRad: 'N/A',
             distance,
-            equation: `x = ${x1}`,
+            equation: `x = ${x1.toFixed(2)}`,
             yIntercept: 'none',
             xIntercept: x1,
             deltaX,
@@ -57,11 +60,13 @@ const TwoPointsCalculator = () => {
       const slope = deltaY / deltaX;
       const yIntercept = y1 - slope * x1;
       const xIntercept = Math.abs(slope) < 1e-9 ? 'none' : -yIntercept / slope;
-      const angle = Math.atan(slope) * (180 / Math.PI);
+      const angleRad = Math.atan(slope);
+      const angleDeg = angleRad * (180 / Math.PI);
 
       setResult({
         slope,
-        angle,
+        angleDeg,
+        angleRad,
         distance,
         equation: `y = ${slope.toFixed(4)}x + ${yIntercept.toFixed(4)}`,
         yIntercept: yIntercept,
@@ -103,14 +108,14 @@ const TwoPointsCalculator = () => {
       {result && (
         <CardFooter className="p-0 mt-4">
           <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
-             <p className="font-mono text-sm">Slope (m) = ΔY/ΔX = {result.deltaY}/{result.deltaX} = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
-            <p className="font-mono text-sm">Angle (θ) = arctan(ΔY/ΔX) = {typeof result.angle === 'number' ? `${result.angle.toFixed(4)}°` : result.angle} = {typeof result.slope === 'number' ? (result.angle/45).toFixed(4) : 'N/A'}π</p>
-            <p className="font-mono text-sm">ΔX = {p2.x} - {p1.x} = {result.deltaX}</p>
-            <p className="font-mono text-sm">ΔY = {p2.y} - {p1.y} = {result.deltaY}</p>
-            <p className="font-mono text-sm">Distance (d) = √ΔX² + ΔY² = {result.distance.toFixed(4)}</p>
-            <p className="font-mono text-sm">Equation: {result.equation}</p>
-            <p className="font-mono text-sm">Y-Intercept (b): {typeof result.yIntercept === 'number' ? result.yIntercept.toFixed(4) : result.yIntercept}</p>
-            <p className="font-mono text-sm">X-Intercept: {typeof result.xIntercept === 'number' ? result.xIntercept.toFixed(4) : result.xIntercept}</p>
+             <p className="font-mono text-sm"><b>Slope (m)</b> = (y₂-y₁)/(x₂-x₁) = {result.deltaY}/{result.deltaX} = <b>{typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</b></p>
+            <p className="font-mono text-sm"><b>Angle (θ)</b> = arctan(m) = <b>{typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</b> or <b>{typeof result.angleRad === 'number' ? result.angleRad.toFixed(4) : result.angleRad} rad</b></p>
+            <p className="font-mono text-sm"><b>Distance (d)</b> = √((x₂-x₁)² + (y₂-y₁)²)= <b>{result.distance.toFixed(4)}</b></p>
+            <Separator className="my-2 bg-green-200 dark:bg-green-800" />
+            <h4 className="font-semibold">Line Equation</h4>
+            <p className="font-mono text-sm"><b>Full Equation:</b> {result.equation}</p>
+            <p className="font-mono text-sm"><b>Y-Intercept (b):</b> {typeof result.yIntercept === 'number' ? result.yIntercept.toFixed(4) : result.yIntercept}</p>
+            <p className="font-mono text-sm"><b>X-Intercept:</b> {typeof result.xIntercept === 'number' ? result.xIntercept.toFixed(4) : result.xIntercept}</p>
           </div>
         </CardFooter>
       )}
@@ -138,14 +143,14 @@ interface OnePointResult {
 const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title: string, data: OnePointResultData, equation: string, yIntercept: number | string, xIntercept: number | string }) => (
     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2 mt-4">
         <h4 className="font-bold">{title}</h4>
-        <p className="font-mono text-sm">X2 = {data.x2.toFixed(4)}</p>
-        <p className="font-mono text-sm">Y2 = {data.y2.toFixed(4)}</p>
-        <p className="font-mono text-sm">ΔX = {data.deltaX.toFixed(4)}</p>
-        <p className="font-mono text-sm">ΔY = {data.deltaY.toFixed(4)}</p>
-        <p className="font-mono text-sm">θ = {data.angle.toFixed(4)}°</p>
-        <p className="font-mono text-sm">Equation of the line: {equation}</p>
-        <p className="font-mono text-sm">When x=0, y = {typeof yIntercept === 'number' ? yIntercept.toFixed(4) : yIntercept}</p>
-        <p className="font-mono text-sm">When y=0, x = {typeof xIntercept === 'number' ? xIntercept.toFixed(4) : xIntercept}</p>
+        <p className="font-mono text-sm"><b>Second Point (x₂, y₂):</b> ({data.x2.toFixed(4)}, {data.y2.toFixed(4)})</p>
+        <p className="font-mono text-sm"><b>Change in X (ΔX):</b> {data.deltaX.toFixed(4)}</p>
+        <p className="font-mono text-sm"><b>Change in Y (ΔY):</b> {data.deltaY.toFixed(4)}</p>
+         <Separator className="my-2 bg-green-200 dark:bg-green-800" />
+        <h4 className="font-semibold">Line Properties</h4>
+        <p className="font-mono text-sm"><b>Equation:</b> {equation}</p>
+        <p className="font-mono text-sm"><b>Y-Intercept:</b> {typeof yIntercept === 'number' ? yIntercept.toFixed(4) : yIntercept}</p>
+        <p className="font-mono text-sm"><b>X-Intercept:</b> {typeof xIntercept === 'number' ? xIntercept.toFixed(4) : xIntercept}</p>
     </div>
 );
 
@@ -198,7 +203,7 @@ const OnePointSlopeCalculator = () => {
             y2: y1 - deltaY,
             deltaX: -deltaX,
             deltaY: -deltaY,
-            angle: (Math.atan(m) * (180 / Math.PI)) + 180
+            angle: (Math.atan(m) * (180 / Math.PI))
         };
 
         const yIntercept = y1 - m * x1;
@@ -255,14 +260,14 @@ const OnePointSlopeCalculator = () => {
        {result && (
         <CardFooter className="p-0 mt-4 flex-col">
           <ResultBlock 
-            title="Result"
+            title="Result (Positive Direction)"
             data={result.positive}
             equation={result.equation}
             yIntercept={result.yIntercept}
             xIntercept={result.xIntercept}
           />
           <ResultBlock 
-            title="OR"
+            title="Result (Negative Direction)"
             data={result.negative}
             equation={result.equation}
             yIntercept={result.yIntercept}
