@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.",
-  "url": "https://calculation.site/calculus",
+  "url": "https://maths.calculation.site/calculus",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to solve linear equations for the variable 'x'.",
-  "url": "https://calculation.site/algebra",
+  "url": "https://maths.calculation.site/algebra",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

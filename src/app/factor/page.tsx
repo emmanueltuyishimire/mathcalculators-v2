@@ -18,11 +18,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to find all factors, factor pairs, and the prime factorization of any integer.",
-  "url": "https://calculation.site/factor",
+  "url": "https://maths.calculation.site/factor",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

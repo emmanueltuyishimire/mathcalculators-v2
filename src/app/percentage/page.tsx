@@ -16,11 +16,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A versatile set of free online calculators for various percentage-based problems, including percentage of a number, percentage change, and more.",
-  "url": "https://calculation.site/percentage",
+  "url": "https://maths.calculation.site/percentage",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

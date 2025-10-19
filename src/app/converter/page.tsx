@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "Utilities",
   "description": "A versatile unit converter for length, mass, temperature, and other common measurements.",
-  "url": "https://calculation.site/converter",
+  "url": "https://maths.calculation.site/converter",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

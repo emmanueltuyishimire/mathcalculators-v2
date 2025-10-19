@@ -20,11 +20,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "Perform binary arithmetic (add, subtract, multiply, divide) and convert between binary and decimal values.",
-  "url": "https://calculation.site/binary",
+  "url": "https://maths.calculation.site/binary",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

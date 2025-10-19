@@ -17,11 +17,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "Calculate the distance between two points in 2D or 3D space, or between two geographical coordinates (latitude and longitude).",
-  "url": "https://calculation.site/distance",
+  "url": "https://maths.calculation.site/distance",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

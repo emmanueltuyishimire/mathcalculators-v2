@@ -17,11 +17,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "Utilities",
   "description": "A tool to generate random numbers, including integers and decimals with adjustable precision, range, and count.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/random",
+  "url": "https://maths.calculation.site/random",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

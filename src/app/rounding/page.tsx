@@ -17,11 +17,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A versatile online calculator for rounding numbers using various methods (half up, half down, ceiling, floor) and to different levels of precision.",
-  "url": "https://calculation.site/rounding",
+  "url": "https://maths.calculation.site/rounding",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

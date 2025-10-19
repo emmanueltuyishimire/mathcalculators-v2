@@ -13,12 +13,12 @@ export default function PrivacyPolicyPage() {
       <PageHeader title="Privacy Policy" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-4xl space-y-8 prose dark:prose-invert">
-          <h1>Privacy Policy for Calculation.site</h1>
+          <h1>Privacy Policy for Math Calculators</h1>
 
           <p><strong>Last Updated: 2024-07-26</strong></p>
 
           <p>
-            Welcome to Calculation.site. We are committed to protecting your privacy and ensuring you have a positive experience on our website. This Privacy Policy applies to Calculation.site and governs our data collection, processing, and usage practices.
+            Welcome to Math Calculators (maths.calculation.site). We are committed to protecting your privacy and ensuring you have a positive experience on our website. This Privacy Policy applies to Math Calculators and governs our data collection, processing, and usage practices.
           </p>
 
           <h2>1. Information We Collect</h2>
@@ -33,7 +33,7 @@ export default function PrivacyPolicyPage() {
 
           <h2>3. Cookies and Web Beacons</h2>
           <p>
-            Like any other website, Calculation.site uses 'cookies'. These cookies are used to store information including visitors' preferences and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
+            Like any other website, Math Calculators uses 'cookies'. These cookies are used to store information including visitors' preferences and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
           </p>
           <p>
             You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites.
@@ -49,10 +49,10 @@ export default function PrivacyPolicyPage() {
             </li>
           </ul>
           <p>
-            Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Calculation.site, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
+            Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on Math Calculators, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
           </p>
           <p>
-            Note that Calculation.site has no access to or control over these cookies that are used by third-party advertisers.
+            Note that Math Calculators has no access to or control over these cookies that are used by third-party advertisers.
           </p>
 
           <h2>5. CCPA Privacy Rights (Do Not Sell My Personal Information)</h2>

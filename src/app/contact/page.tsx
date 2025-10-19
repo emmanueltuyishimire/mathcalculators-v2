@@ -9,23 +9,23 @@ import type { Metadata } from 'next';
 // This component cannot be a server component because it uses an onClick handler
 // export const metadata: Metadata = {
 //   title: 'Contact Us',
-//   description: 'Get in touch with the Calculation.site team. We welcome your feedback, suggestions, and inquiries.',
+//   description: 'Get in touch with the Math Calculators team. We welcome your feedback, suggestions, and inquiries.',
 // };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  "name": "Contact Calculation.site",
-  "description": "Contact page for Calculation.site calculators. Reach out for support, feedback, or inquiries.",
-  "url": "https://calculation.site/contact",
+  "name": "Contact Math Calculators",
+  "description": "Contact page for Math Calculators. Reach out for support, feedback, or inquiries.",
+  "url": "https://maths.calculation.site/contact",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://calculation.site/contact"
+    "@id": "https://maths.calculation.site/contact"
   }
 };
 
