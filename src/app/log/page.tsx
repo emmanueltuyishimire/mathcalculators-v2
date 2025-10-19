@@ -1,12 +1,159 @@
+
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PageHeader } from '@/components/page-header';
-import ScientificCalculator from '@/components/calculators/log-calculator';
+import ScientificCalculator from '@/components/calculators/scientific-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { Switch } from '@/components/ui/switch';
+
+
+const LogEquationCalculator = () => {
+    const { toast } = useToast();
+    const [base, setBase] = useState('e');
+    const [number, setNumber] = useState('100');
+    const [result, setResult] = useState('4.60517');
+    
+    const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
+        const newValues = { base, number, result };
+        newValues[field] = value;
+        
+        const emptyFields = Object.keys(newValues).filter(key => newValues[key as keyof typeof newValues] === '');
+        
+        if (emptyFields.length !== 1) {
+            if (field === 'base') setBase(value);
+            if (field === 'number') setNumber(value);
+            if (field === 'result') setResult(value);
+        } else {
+             if (field === 'base') setBase(value);
+             if (field === 'number') setNumber(value);
+             if (field === 'result') setResult(value);
+             // Clear the field that needs to be calculated
+             if (emptyFields[0] === 'base') setBase('');
+             if (emptyFields[0] === 'number') setNumber('');
+             if (emptyFields[0] === 'result') setResult('');
+        }
+    }
+
+
+    const calculate = () => {
+        const baseVal = base.toLowerCase() === 'e' ? Math.E : parseFloat(base);
+        const numberVal = parseFloat(number);
+        const resultVal = parseFloat(result);
+
+        const knownValues = [!isNaN(baseVal), !isNaN(numberVal), !isNaN(resultVal)].filter(Boolean).length;
+
+        if (knownValues !== 2) {
+            toast({
+                variant: 'destructive',
+                title: 'Invalid Input',
+                description: 'Please provide exactly two values to solve for the third.',
+            });
+            return;
+        }
+
+        try {
+            if (isNaN(resultVal)) { // Calculate result (y)
+                if(baseVal <= 0 || baseVal === 1 || numberVal <= 0) throw new Error("Logarithm requires base > 0 (and not 1) and number > 0.");
+                setResult((Math.log(numberVal) / Math.log(baseVal)).toString());
+            } else if (isNaN(numberVal)) { // Calculate number (x)
+                setNumber(Math.pow(baseVal, resultVal).toString());
+            } else { // Calculate base (b)
+                if(numberVal < 0 && resultVal % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
+                setBase(Math.pow(numberVal, 1 / resultVal).toString());
+            }
+        } catch (e: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Calculation Error',
+                description: e.message,
+            });
+        }
+    };
+    
+    const handleClear = () => {
+        setBase('');
+        setNumber('');
+        setResult('');
+    }
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Logarithm Equation Solver</CardTitle>
+                <CardDescription>Solves for any variable in the equation log<sub>b</sub>(x) = y. Provide any two values.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
+                    <span className="mb-2">log</span>
+                    <div className="relative">
+                        <Input id="base" value={base} onChange={(e) => handleInputChange('base', e.target.value)} className="w-20 text-sm text-center pt-5"/>
+                        <Label htmlFor="base" className="absolute text-xs left-1/2 -translate-x-1/2 top-1 text-muted-foreground">base (b)</Label>
+                    </div>
+                     <div className="relative">
+                        <Input id="number" value={number} onChange={(e) => handleInputChange('number', e.target.value)} className="w-24 text-center"/>
+                        <Label htmlFor="number" className="absolute text-xs left-1/2 -translate-x-1/2 -top-4 text-muted-foreground">number (x)</Label>
+                    </div>
+                    <span>=</span>
+                     <div className="relative">
+                        <Input id="result" value={result} onChange={(e) => handleInputChange('result', e.target.value)} className="w-24 text-center"/>
+                        <Label htmlFor="result" className="absolute text-xs left-1/2 -translate-x-1/2 -top-4 text-muted-foreground">result (y)</Label>
+                    </div>
+                </div>
+                 <div className="flex gap-2">
+                    <Button onClick={calculate} className="w-full">Calculate</Button>
+                    <Button onClick={handleClear} variant="outline" className="w-full">Clear</Button>
+                </div>
+            </CardContent>
+        </Card>
+    )
+}
+
+const HowToUseGuide = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle>How to Use the Calculators</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6 text-muted-foreground">
+        <div>
+            <h3 className="font-semibold text-foreground text-lg">Scientific Log Calculator</h3>
+            <ol className="list-decimal list-inside space-y-2 mt-2">
+            <li>
+                <strong>Basic Calculations:</strong> Use the number keys to enter values. Use <code className="font-mono bg-muted p-1 rounded-md">log</code> for base 10, <code className="font-mono bg-muted p-1 rounded-md">ln</code> for base e.
+                <br />
+                <em>Example: To find log(100), press <code className="font-mono bg-muted p-1 rounded-md">log</code>, then <code className="font-mono bg-muted p-1 rounded-md">(</code>, <code className="font-mono bg-muted p-1 rounded-md">1</code>, <code className="font-mono bg-muted p-1 rounded-md">0</code>, <code className="font-mono bg-muted p-1 rounded-md">0</code>, <code className="font-mono bg-muted p-1 rounded-md">)</code>, and <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
+            </li>
+            <li>
+                <strong>Custom Base (log_b):</strong> To calculate a logarithm with a custom base, use the <code className="font-mono bg-muted p-1 rounded-md">log_b</code> key. The format is <code className="font-mono bg-muted p-1 rounded-md">log_BASE(NUMBER)</code>.
+                <br />
+                <em>Example: To find log₂(8), type <code className="font-mono bg-muted p-1 rounded-md">log_2(8)</code> using the keypad and then press <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
+            </li>
+            </ol>
+        </div>
+        <div>
+            <h3 className="font-semibold text-foreground text-lg">Logarithm Equation Solver</h3>
+             <ol className="list-decimal list-inside space-y-2 mt-2">
+                <li>
+                    <strong>Enter Two Values:</strong> In the equation log<sub>b</sub>(x) = y, fill in any two of the fields: base (b), number (x), or result (y).
+                </li>
+                <li>
+                    <strong>Use 'e' for Base:</strong> You can type 'e' into the base field to use Euler's number.
+                </li>
+                <li>
+                    <strong>Calculate:</strong> Click "Calculate" to solve for the missing value. The field you left empty will be filled with the answer.
+                </li>
+             </ol>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
 
 const EducationalContent = () => (
     <Card>
@@ -73,35 +220,6 @@ const EducationalContent = () => (
     </Card>
 );
 
-const HowToUseGuide = () => (
-    <Card>
-      <CardHeader>
-        <CardTitle>How to Use the Logarithm Calculator</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 text-muted-foreground">
-        <ol className="list-decimal list-inside space-y-2">
-          <li>
-            <strong>Basic Calculations:</strong> Use the number keys to enter values. Use <code className="font-mono bg-muted p-1 rounded-md">log</code> for base 10, <code className="font-mono bg-muted p-1 rounded-md">ln</code> for base e.
-            <br />
-            <em>Example: To find log(100), press <code className="font-mono bg-muted p-1 rounded-md">log</code>, then <code className="font-mono bg-muted p-1 rounded-md">(</code>, <code className="font-mono bg-muted p-1 rounded-md">1</code>, <code className="font-mono bg-muted p-1 rounded-md">0</code>, <code className="font-mono bg-muted p-1 rounded-md">0</code>, <code className="font-mono bg-muted p-1 rounded-md">)</code>, and <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
-          </li>
-          <li>
-            <strong>Custom Base (log_b):</strong> To calculate a logarithm with a custom base, use the <code className="font-mono bg-muted p-1 rounded-md">log_b</code> key. The format is <code className="font-mono bg-muted p-1 rounded-md">log_BASE(NUMBER)</code>.
-            <br />
-            <em>Example: To find log₂(8), type <code className="font-mono bg-muted p-1 rounded-md">log_2(8)</code> using the keypad and then press <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
-          </li>
-          <li>
-            <strong>Exponents:</strong> Use the <code className="font-mono bg-muted p-1 rounded-md">xʸ</code> button for powers.
-            <br />
-            <em>Example: To calculate 2⁵, press <code className="font-mono bg-muted p-1 rounded-md">2</code>, then <code className="font-mono bg-muted p-1 rounded-md">^</code>, then <code className="font-mono bg-muted p-1 rounded-md">5</code>, and <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
-          </li>
-          <li>
-            <strong>Clear Buttons:</strong> Use <code className="font-mono bg-muted p-1 rounded-md">C</code> to clear the last entry or <code className="font-mono bg-muted p-1 rounded-md">AC</code> to clear everything.
-          </li>
-        </ol>
-      </CardContent>
-    </Card>
-  );
 
 export default function LogPage() {
   return (
@@ -111,7 +229,7 @@ export default function LogPage() {
         <div className="mx-auto max-w-2xl space-y-8">
             <section className="text-center">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Log Calculator (Logarithm)
+                    Logarithm Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
                     A powerful calculator for logarithmic and exponential functions.
@@ -119,6 +237,10 @@ export default function LogPage() {
             </section>
             
             <ScientificCalculator />
+
+            <div className="py-4">
+                <LogEquationCalculator />
+            </div>
 
             <HowToUseGuide />
 
