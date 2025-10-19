@@ -67,11 +67,13 @@ export default function SlopePage() {
             </p>
           </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="flex justify-center items-center">
-              <SlopeDiagram className="w-full max-w-[350px] h-auto" />
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 items-start">
+            <div className="md:col-span-2 flex justify-center items-center h-full">
+              <SlopeDiagram className="w-full max-w-[300px] h-auto" />
             </div>
-            <SlopeCalculator />
+            <div className="md:col-span-3">
+              <SlopeCalculator />
+            </div>
           </div>
 
           <EducationalContent />
