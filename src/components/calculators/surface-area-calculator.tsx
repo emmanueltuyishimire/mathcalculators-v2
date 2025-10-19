@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { VolumeDiagram } from './volume-diagram'; // Reusing volume diagrams as they are visually similar
+import { VolumeDiagram } from './volume-diagram'; 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface SurfaceAreaCalculatorProps {
@@ -366,12 +366,12 @@ const calculators: SurfaceAreaCalculatorProps[] = [
                     R_calc = (r**2 + h**2) / (2*h);
                 }
                 if(isNaN(r)) {
-                    if (h > 2*R) throw new Error("Height cannot be greater than the sphere's diameter.");
-                    r_calc = Math.sqrt(h * (2*R - h));
+                    if (h > 2*R_calc) throw new Error("Height cannot be greater than the sphere's diameter.");
+                    r_calc = Math.sqrt(h * (2*R_calc - h));
                 }
                  if(isNaN(h)) {
-                    if (r > R) throw new Error("Base radius (r) cannot be greater than ball radius (R).");
-                    h_calc = R - Math.sqrt(R**2 - r**2); // Assuming smaller cap
+                    if (r > R_calc) throw new Error("Base radius (r) cannot be greater than ball radius (R).");
+                    h_calc = R_calc - Math.sqrt(R_calc**2 - r**2); // Assuming smaller cap
                 }
 
                 const baseArea = Math.PI * r_calc**2;
@@ -380,7 +380,7 @@ const calculators: SurfaceAreaCalculatorProps[] = [
                      steps: {
                         result1: {
                             title: "Result",
-                            heightFormula: 'Provided',
+                            heightFormula: 'Provided or calculated',
                             heightValue: h_calc,
                             baseFormula: `π×r² = π×${r_calc.toFixed(4)}²`,
                             baseValue: baseArea,
@@ -439,7 +439,7 @@ const calculators: SurfaceAreaCalculatorProps[] = [
                 final: { 'Approx. Total': surfaceArea },
                 steps: {
                     total: {
-                        formula: '4π × ( ((ab)^1.6 + (ac)^1.6 + (bc)^1.6) / 3 )^(1/1.6)'
+                        formula: '4π × ( (({a}×{b})**1.6 + ({a}×{c})**1.6 + ({b}×{c})**1.6) / 3 )**(1/1.6)'
                     }
                 }
             };

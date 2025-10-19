@@ -146,7 +146,7 @@ export default function PythagoreanCalculator() {
                          </div>
                     </div>
                      <div className="flex justify-center">
-                        <PythagoreanDiagram a={a} b={b} c={c} />
+                        <PythagoreanDiagram a={result?.a.toFixed(4) || a} b={result?.b.toFixed(4) || b} c={result?.c.toFixed(4) || c} />
                     </div>
                 </div>
             </CardContent>
