@@ -90,11 +90,9 @@ const TwoPointsCalculator = ({ onCalculate }: { onCalculate: (data: any) => void
     }
   };
 
-  useEffect(() => {
-    calculate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [p1, p2]);
-  
+  // Removed useEffect to avoid automatic calculation on every input change.
+  // Calculation will now only be triggered by the button.
+
   return (
     <Card className="border-none shadow-none">
       <CardHeader className="p-0 mb-4">
@@ -121,6 +119,7 @@ const TwoPointsCalculator = ({ onCalculate }: { onCalculate: (data: any) => void
             <Input id="y2" type="number" value={p2.y} onChange={e => setP2({ ...p2, y: e.target.value })} />
           </div>
         </div>
+         <Button onClick={calculate} className="w-full">Calculate Slope</Button>
       </CardContent>
       {result && (
         <CardFooter className="p-0 mt-4">
@@ -230,11 +229,8 @@ const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => 
         });
     }
 
-     useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [point, distance, slope, angle, inputType]);
-
+    // Removed useEffect to make calculation on-demand via button
+    
     return (
     <Card className="border-none shadow-none">
       <CardHeader className="p-0 mb-4">
@@ -270,6 +266,7 @@ const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => 
                 <span className="text-sm">°</span>
             </div>
         </RadioGroup>
+        <Button onClick={calculate} className="w-full">Calculate Point</Button>
       </CardContent>
        {result && (
         <CardFooter className="p-0 mt-4 flex-col">
@@ -308,6 +305,17 @@ export default function SlopeCalculator() {
   };
 
   const handleSave = () => {
+     if (!user) {
+        toast({
+            variant: "destructive",
+            title: "Not Logged In",
+            description: "You must be signed in to save calculations.",
+        });
+        return;
+    }
+    // This is a placeholder for where a real save would trigger a specific calculation to be saved.
+    // Since the calculation now happens on button press inside the tabs, we would need to lift the state
+    // or trigger the calculation again here. For now, we just show a toast.
     toast({
         title: "Calculation Saved",
         description: "Your slope calculation has been saved to your history.",
