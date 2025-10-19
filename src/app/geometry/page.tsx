@@ -29,10 +29,10 @@ const geometryTools = [
     description: 'Calculate radius, diameter, circumference, and area.',
   },
   {
-    href: '#', // Placeholder for Surface Area Calculator
+    href: '/geometry/surface-area',
     label: 'Surface Area Calculator',
     icon: Waves,
-    description: 'Calculate the surface area of common 3D shapes. (Coming Soon)',
+    description: 'Calculate the surface area of common 3D shapes.',
   },
 ];
 
