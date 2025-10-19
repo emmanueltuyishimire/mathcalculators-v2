@@ -17,10 +17,10 @@ function HeroSection() {
     >
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
         <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
-          The Ultimate Free Online Calculator
+          Unlock the Power of Numbers
         </h1>
         <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
-          From basic arithmetic to advanced calculus, our comprehensive suite of calculators is designed for students, professionals, and the perpetually curious. Get instant, accurate answers and master complex concepts with our easy-to-use tools—all for free. Find your calculator and start solving.
+          Struggling with complex equations or need a quick calculation? Our free, user-friendly calculators provide instant, accurate answers for everything from basic arithmetic to advanced calculus. Master math with tools designed for students and professionals alike. Start solving now!
         </p>
            <Button asChild variant="secondary" size="lg" className="mt-6">
             <Link href="#tools">Explore Calculators</Link>
@@ -33,7 +33,7 @@ function HeroSection() {
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
-        image: "/math%20calculator%20background%20image%201.webp",
+        image: "/math%20calculator%20background%20image6.webp",
         tools: [
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
             { href: '/scientific', label: 'Scientific Calculator', icon: FlaskConical },
