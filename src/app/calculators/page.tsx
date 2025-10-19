@@ -1,39 +1,18 @@
 
-"use client";
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
+import type { Metadata } from 'next';
 
-function HeroSection() {
-  return (
-    <section
-      className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/math%20calculator%20background%20image%201.webp')",
-      }}
-    >
-      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
-        <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
-          Unlock the Power of Numbers
-        </h1>
-        <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
-          Struggling with complex equations or need a quick calculation? Our free, user-friendly calculators provide instant, accurate answers for everything from basic arithmetic to advanced calculus. Master math with tools designed for students and professionals alike. Start solving now!
-        </p>
-           <Button asChild variant="secondary" size="lg" className="mt-6">
-            <Link href="/calculators">Explore Calculators</Link>
-          </Button>
-      </div>
-    </section>
-  );
-}
+export const metadata: Metadata = {
+  title: 'All Calculators',
+  description: 'Explore a comprehensive directory of all calculators available on Math Calculators, organized by category.',
+};
 
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
-        image: "/math%20calculator%20background%20image6.webp",
         tools: [
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
             { href: '/scientific', label: 'Scientific Calculator', icon: FlaskConical },
@@ -54,7 +33,6 @@ const calculatorCategories = [
     },
     {
         title: "Geometry & Trigonometry",
-        image: "/math%20calculator%20background%20image7.webp",
         tools: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
             { href: '/trigonometry', label: 'Trigonometry Calculator', icon: MoreVertical },
@@ -70,7 +48,6 @@ const calculatorCategories = [
     },
     {
         title: "Statistics & Probability",
-        image: "/math%20calculator%20background%20image6.webp",
         tools: [
             { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
@@ -86,7 +63,6 @@ const calculatorCategories = [
     },
     {
         title: "Advanced & Specialty",
-        image: "/math%20calculator%20background%20image4.webp",
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
             { href: '/matrix', label: 'Matrix Calculators', icon: Table },
@@ -102,46 +78,48 @@ const calculatorCategories = [
     }
 ];
 
-
-export default function Home() {
+export default function CalculatorsPage() {
   return (
-    <>
-      <HeroSection />
+    <div className="flex flex-1 flex-col">
+      <section
+        className="relative w-full h-64 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/math%20calculator%20background%20image2.webp')",
+        }}
+      >
+        <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
+          <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
+            All Calculators
+          </h1>
+          <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
+            Browse our comprehensive collection of calculators, organized by category.
+          </p>
+        </div>
+      </section>
 
       <main className="flex-1 p-4 md:p-6 lg:p-12">
-        <section id="tools" className="space-y-16">
-            {calculatorCategories.map(category => (
-                <div key={category.title}>
-                    <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg">
-                        <Image
-                            src={category.image}
-                            alt={`${category.title} category background`}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                            <h2 className="text-3xl md:text-4xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
+        <section className="space-y-16">
+          {calculatorCategories.map(category => (
+            <div key={category.title}>
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">{category.title}</h2>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                {category.tools.map((tool) => (
+                  <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label}`}>
+                    <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                      <CardHeader className="flex flex-col items-center text-center p-4">
+                        <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
+                          <tool.icon className="h-6 w-6" />
                         </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        {category.tools.map((tool) => (
-                            <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
-                            <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                                <CardHeader className="flex flex-col items-center text-center p-4">
-                                <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                                    <tool.icon className="h-6 w-6" />
-                                </div>
-                                <CardTitle className="text-base">{tool.label}</CardTitle>
-                                </CardHeader>
-                            </Card>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-            ))}
+                        <CardTitle className="text-base">{tool.label}</CardTitle>
+                      </CardHeader>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </section>
       </main>
-    </>
+    </div>
   );
 }
