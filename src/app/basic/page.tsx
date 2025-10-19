@@ -27,7 +27,7 @@ const basicTools = [
   { href: '/factor', label: 'Factor Calculator', icon: Gavel },
   { href: '/rounding', 'label': 'Rounding Calculator', icon: CheckCircle },
   { href: '/matrix', label: 'Matrix Calculator', icon: Table },
-  { href: '#', label: 'Scientific Notation', icon: Type },
+  { href: '/scientific-notation', label: 'Scientific Notation', icon: Type },
   { href: '#', label: 'Big Number Calculator', icon: InfinityIcon },
 ];
 
