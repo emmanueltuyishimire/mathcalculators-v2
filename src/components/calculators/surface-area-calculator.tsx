@@ -114,6 +114,44 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
     
     const originalInputs = Object.entries(inputValues).reduce((acc, [key, value]) => ({...acc, [key]: parseFloat(value) || 0}), {} as {[key: string]: number});
 
+    const renderSphericalCapResults = () => {
+        if (shape !== 'Spherical Cap' || !steps) return null;
+        
+        const renderResultBlock = (resultKey: 'result1' | 'result2') => {
+            const resultData = steps[resultKey];
+            if (!resultData) return null;
+            return (
+                 <div key={resultKey} className="space-y-3">
+                    <p className="font-semibold text-base">{resultData.title}</p>
+                    <div className="font-mono text-sm space-y-2 p-2 bg-muted rounded-md">
+                        <p>Height = {resultData.heightFormula}</p>
+                        <p>= {resultData.heightValue.toFixed(4)} {unitAbbreviations[unit]}</p>
+                    </div>
+                     <div className="font-mono text-sm space-y-2 p-2 bg-muted rounded-md">
+                        <p>Base Surface Area = {resultData.baseFormula}</p>
+                        <p>= {resultData.baseValue.toFixed(4)} {unitAbbreviations[unit]}²</p>
+                    </div>
+                     <div className="font-mono text-sm space-y-2 p-2 bg-muted rounded-md">
+                        <p>Cap Surface Area = {resultData.capFormula}</p>
+                        <p>= {resultData.capValue.toFixed(4)} {unitAbbreviations[unit]}²</p>
+                    </div>
+                    <div className="font-mono text-sm space-y-2 p-2 bg-muted rounded-md font-bold text-primary">
+                        <p>Total Surface Area = {resultData.totalValue.toFixed(4)} {unitAbbreviations[unit]}²</p>
+                    </div>
+                 </div>
+            )
+        }
+
+        return (
+             <div className="pt-2 space-y-6">
+                <Label>Results</Label>
+                {renderResultBlock('result1')}
+                {steps.result2 && <p className="text-center font-bold">OR</p>}
+                {renderResultBlock('result2')}
+            </div>
+        )
+    }
+
     return (
         <Card className="overflow-hidden">
             <CardHeader>
@@ -146,7 +184,7 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                         </div>
                     ))}
                     <Button onClick={handleCalculate} className="w-full">Calculate</Button>
-                    {steps ? (
+                    {shape === 'Spherical Cap' ? renderSphericalCapResults() : steps ? (
                          <div className="pt-2 space-y-4">
                             <Label>Results</Label>
                             <div className="font-mono text-sm space-y-3">
@@ -163,7 +201,7 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                                 {steps.total && (
                                      <div>
                                         <p className="font-semibold text-base">Total Surface Area</p>
-                                        <div className="p-2 bg-muted rounded-md mt-1">
+                                        <div className="p-2 bg-muted rounded-md mt-1 font-bold text-primary">
                                             <p>= {results.Total} {unitAbbreviations[unit]}²</p>
                                         </div>
                                     </div>
@@ -234,12 +272,12 @@ const calculators: SurfaceAreaCalculatorProps[] = [
         shape: 'Cube',
         inputs: [{ name: 'a', label: 'Edge Length (a)' }],
         calculate: ({ a }) => ({
-            final: { Total: 6 * a**2 },
-            steps: {
-                total: {
-                    formula: '6×a² = 6×{a}²',
-                }
-            }
+             final: { Total: 6 * a**2 },
+             steps: {
+                 total: {
+                     formula: '6×a² = 6×{a}²'
+                 }
+             }
         }),
     },
     {
@@ -292,24 +330,67 @@ const calculators: SurfaceAreaCalculatorProps[] = [
         shape: 'Spherical Cap',
         inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'R', label: 'Ball Radius (R)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, R, h }) => {
-            let capArea;
-            if (!isNaN(h) && !isNaN(R)) {
-                 if (h > 2 * R) throw new Error("Height cannot be greater than the sphere's diameter.");
-                 capArea = 2 * Math.PI * R * h;
-                 return { 'Cap Surface': capArea };
+            if (isNaN(r) && isNaN(R)) throw new Error("At least Base Radius (r) or Ball Radius (R) must be provided.");
+            if (isNaN(r) && isNaN(h)) throw new Error("At least Base Radius (r) or Height (h) must be provided.");
+            if (isNaN(R) && isNaN(h)) throw new Error("At least Ball Radius (R) or Height (h) must be provided.");
+    
+            if (!isNaN(r) && !isNaN(R) && isNaN(h)) {
+                if (r > R) throw new Error("Base radius (r) cannot be greater than ball radius (R).");
+                const h1 = R + Math.sqrt(R**2 - r**2);
+                const h2 = R - Math.sqrt(R**2 - r**2);
+                
+                const calcResult = (h_calc: number) => {
+                    const baseArea = Math.PI * r**2;
+                    const capArea = 2 * Math.PI * R * h_calc;
+                    return {
+                        heightFormula: `{R} ± √({R}² - {r}²)`,
+                        heightValue: h_calc,
+                        baseFormula: `π×r² = π×{r}²`,
+                        baseValue: baseArea,
+                        capFormula: `2πhR = 2π×${h_calc.toFixed(4)}×{R}`,
+                        capValue: capArea,
+                        totalValue: baseArea + capArea
+                    }
+                }
+
+                return {
+                   steps: {
+                       result1: { title: "Result 1", ...calcResult(h1) },
+                       result2: h1 !== h2 ? { title: "Result 2", ...calcResult(h2) } : undefined
+                   }
+                };
+
+            } else {
+                let R_calc = R, r_calc = r, h_calc = h;
+                if(isNaN(R)) {
+                    R_calc = (r**2 + h**2) / (2*h);
+                }
+                if(isNaN(r)) {
+                    if (h > 2*R) throw new Error("Height cannot be greater than the sphere's diameter.");
+                    r_calc = Math.sqrt(h * (2*R - h));
+                }
+                 if(isNaN(h)) {
+                    if (r > R) throw new Error("Base radius (r) cannot be greater than ball radius (R).");
+                    h_calc = R - Math.sqrt(R**2 - r**2); // Assuming smaller cap
+                }
+
+                const baseArea = Math.PI * r_calc**2;
+                const capArea = 2 * Math.PI * R_calc * h_calc;
+                return {
+                     steps: {
+                        result1: {
+                            title: "Result",
+                            heightFormula: 'Provided',
+                            heightValue: h_calc,
+                            baseFormula: `π×r² = π×${r_calc.toFixed(4)}²`,
+                            baseValue: baseArea,
+                            capFormula: `2πhR = 2π×${h_calc.toFixed(4)}×${R_calc.toFixed(4)}`,
+                            capValue: capArea,
+                            totalValue: baseArea + capArea
+                        }
+                    }
+                }
             }
-            if (!isNaN(r) && !isNaN(h)) {
-                const R_calc = (r*r + h*h) / (2*h);
-                capArea = 2 * Math.PI * R_calc * h;
-                return { 'Cap Surface': capArea };
-            }
-             if (!isNaN(r) && !isNaN(R)) {
-                if (r > R) throw new Error("Base radius cannot be greater than ball radius.");
-                const h_calc = R - Math.sqrt(R*R - r*r);
-                capArea = 2 * Math.PI * R * h_calc;
-                return { 'Cap Surface': capArea };
-            }
-            throw new Error("Requires at least two values to calculate.")
         },
     },
     {
