@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Square, Waves, Volume, Circle } from 'lucide-react';
+import { Square, Waves, Volume, Circle, Triangle } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -34,6 +34,12 @@ const geometryTools = [
     icon: Waves,
     description: 'Calculate the surface area of common 3D shapes.',
   },
+  {
+    href: '/right-triangle',
+    label: 'Right Triangle',
+    icon: Triangle,
+    description: 'Solve right triangles from any two values.',
+  }
 ];
 
 
