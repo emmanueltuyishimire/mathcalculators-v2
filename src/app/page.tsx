@@ -1,9 +1,11 @@
 
+"use client";
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle } from 'lucide-react';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import Image from 'next/image';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
@@ -181,44 +183,64 @@ const carouselSlides = [
   },
 ];
 
+const Slideshow = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSlideIndex((prevIndex) => (prevIndex + 1) % carouselSlides.length);
+    }, 5000); // Change image every 5 seconds
+    return () => clearTimeout(timer);
+  }, [slideIndex]);
+
+  return (
+    <div className="slideshow-container relative h-[60vh] min-h-[400px] w-full">
+      {carouselSlides.map((slide, index) => (
+        <div
+          key={index}
+          className={`mySlides fade ${index === slideIndex ? 'block' : 'hidden'}`}
+        >
+          <Image
+            src={slide.imageUrl}
+            alt={slide.title}
+            fill
+            className="object-cover"
+            priority={index === 0}
+            data-ai-hint={slide.dataAiHint}
+          />
+        </div>
+      ))}
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="container relative z-10 flex h-full flex-col items-center justify-center space-y-4 text-center text-primary-foreground">
+        <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+          {carouselSlides[slideIndex].title}
+        </h1>
+        <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
+          {carouselSlides[slideIndex].description}
+        </p>
+        <Button asChild variant="secondary" size="lg">
+          <Link href={carouselSlides[slideIndex].link}>{carouselSlides[slideIndex].buttonText}</Link>
+        </Button>
+      </div>
+
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        {carouselSlides.map((_, index) => (
+          <span
+            key={index}
+            className={`dot ${index === slideIndex ? 'active' : ''}`}
+            onClick={() => setSlideIndex(index)}
+          ></span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   return (
     <>
       <section className="w-full">
-         <Carousel
-            opts={{
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {carouselSlides.map((slide, index) => (
-                <CarouselItem key={index}>
-                  <div className="relative h-[60vh] min-h-[400px] w-full">
-                    <Image
-                      src={slide.imageUrl}
-                      alt={slide.title}
-                      fill
-                      className="object-cover"
-                      data-ai-hint={slide.dataAiHint}
-                    />
-                    <div className="absolute inset-0 bg-black/50" />
-                    <div className="container relative z-10 flex h-full flex-col items-center justify-center space-y-4 text-center text-primary-foreground">
-                      <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                        {slide.title}
-                      </h1>
-                      <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-                        {slide.description}
-                      </p>
-                      <Button asChild variant="secondary" size="lg">
-                        <Link href={slide.link}>{slide.buttonText}</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-        </Carousel>
+        <Slideshow />
       </section>
 
       <main className="flex-1 p-4 md:p-6">
