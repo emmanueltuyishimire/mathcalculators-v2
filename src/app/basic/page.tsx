@@ -16,7 +16,7 @@ const basicTools = [
   { href: '/random', label: 'Random Number Generator', icon: Shuffle },
   { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
   { href: '/exponent', label: 'Exponent Calculator', icon: Superscript },
-  { href: '#', label: 'Binary Calculator', icon: Binary },
+  { href: '/binary', label: 'Binary Calculator', icon: Binary },
   { href: '#', label: 'Hex Calculator', icon: Code },
   { href: '#', label: 'Half-Life Calculator', icon: Atom },
   { href: '#', label: 'Quadratic Formula', icon: Sigma },
