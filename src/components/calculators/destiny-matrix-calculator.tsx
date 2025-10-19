@@ -117,6 +117,25 @@ export default function DestinyMatrixCalculator() {
           </div>
         </CardContent>
       </Card>
+
+       <Card>
+        <CardHeader>
+          <CardTitle>How to Use This Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <b>Enter Birth Date:</b> Use the date picker to select your date of birth. The calculations are based on the numbers from your birth day, month, and year.
+                </li>
+                <li>
+                    <b>Calculate Matrix:</b> Click the "Calculate Matrix" button. The tool will instantly generate your personal Destiny Matrix based on numerological principles.
+                </li>
+                <li>
+                    <b>Analyze Your Results:</b> The results will appear below the calculator, showing your Destiny Matrix diagram and providing interpretations for key numbers like your Life Path Number.
+                </li>
+            </ol>
+        </CardContent>
+      </Card>
       
       {matrixPoints && (
         <Card>
