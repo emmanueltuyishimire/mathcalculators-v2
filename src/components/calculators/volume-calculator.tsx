@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { VolumeDiagram } from './volume-diagram';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface VolumeCalculatorProps {
     shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Ellipsoid' | 'Square Pyramid' | 'Tube';
@@ -14,13 +15,27 @@ interface VolumeCalculatorProps {
     calculate: (inputs: { [key: string]: number }) => number | string;
 }
 
+const lengthUnits = {
+    Meter: 1,
+    Centimeter: 0.01,
+    Decimeter: 0.1,
+    Millimeter: 0.001,
+    Kilometer: 1000,
+    Foot: 0.3048,
+    Inch: 0.0254,
+    Yard: 0.9144,
+};
+
+type Unit = keyof typeof lengthUnits;
+
 const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calculate }) => {
     const { toast } = useToast();
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>(
         inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {})
     );
     const [volume, setVolume] = useState<string>('');
-    
+    const [unit, setUnit] = useState<Unit>('Meter');
+
     const handleCalculate = () => {
         const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
             const num = parseFloat(value);
@@ -35,7 +50,6 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
             return { ...acc, [key]: num };
         }, {} as { [key: string]: number });
         
-        // For Spherical Cap, check if at least two values are provided
         if (shape === 'Spherical Cap') {
             const providedValues = Object.values(parsedInputs).filter(v => !isNaN(v));
             if (providedValues.length < 2) {
@@ -75,8 +89,20 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
             <CardHeader>
                 <CardTitle>{shape} Volume Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label htmlFor={`${shape}-unit`}>Unit</Label>
+                        <Select value={unit} onValueChange={(val) => setUnit(val as Unit)}>
+                            <SelectTrigger id={`${shape}-unit`}>
+                                <SelectValue placeholder="Select unit" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.keys(lengthUnits).map(u => <SelectItem key={u} value={u}>{u}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                    </div>
+
                     {inputs.map(input => (
                         <div key={input.name} className="space-y-2">
                             <Label htmlFor={`${shape}-${input.name}`}>{input.label}</Label>
@@ -85,7 +111,7 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                                 type="number"
                                 value={inputValues[input.name]}
                                 onChange={e => setInputValues({ ...inputValues, [input.name]: e.target.value })}
-                                placeholder="meters"
+                                placeholder={`Enter value in ${unit.toLowerCase()}s`}
                             />
                         </div>
                     ))}
@@ -94,12 +120,12 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                         <div className="pt-2">
                             <Label>Volume</Label>
                              <div className="font-mono text-lg p-2 bg-muted rounded-md text-center">
-                                {volume} m³
+                                {volume} {unit}³
                             </div>
                         </div>
                     )}
                 </div>
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center md:pt-10">
                     <VolumeDiagram shape={shape} className="w-48 h-48 text-foreground" />
                 </div>
             </CardContent>
@@ -143,12 +169,14 @@ const calculators: VolumeCalculatorProps[] = [
         inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'R', label: 'Ball Radius (R)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, R, h }) => {
             if (!isNaN(h) && !isNaN(R)) {
+                 if (h > 2 * R) throw new Error("Height cannot be greater than the sphere's diameter.");
                  return (1/3) * Math.PI * Math.pow(h, 2) * (3*R - h);
             }
             if (!isNaN(r) && !isNaN(h)) {
                 return (1/6) * Math.PI * h * (3*Math.pow(r,2) + Math.pow(h,2));
             }
              if (!isNaN(r) && !isNaN(R)) {
+                if (r > R) throw new Error("Base radius cannot be greater than ball radius.");
                 const h_calc = R - Math.sqrt(R*R - r*r);
                 return (1/3) * Math.PI * Math.pow(h_calc, 2) * (3*R - h_calc);
             }
@@ -189,3 +217,5 @@ export default function VolumeCalculator() {
         </div>
     );
 }
+
+    
