@@ -51,27 +51,27 @@ const EducationalContent = () => (
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
                 <h3 className="text-xl font-semibold text-foreground">Distance in a 2D Coordinate Plane</h3>
-                <p className="mt-2">The distance between two points in a two-dimensional plane is found using the Euclidean distance formula, derived from the Pythagorean theorem.</p>
+                <p className="mt-2">The distance between two points in a two-dimensional plane is found using the Euclidean distance formula, which is a direct application of the Pythagorean theorem. It treats the straight line connecting two points as the hypotenuse of a right-angled triangle.</p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">d = √[(x₂ - x₁)² + (y₂ - y₁)²]</p>
-                <p>Here, (x₁, y₁) and (x₂, y₂) are the coordinates of the two points. The formula calculates the length of the hypotenuse of a right triangle formed by the points.</p>
+                <p>Here, (x₁, y₁) and (x₂, y₂) represent the coordinates of the two points. The formula squares the change in the horizontal (x) and vertical (y) distances, adds them together, and then takes the square root to find the length of the hypotenuse.</p>
             </div>
             <div>
                 <h3 className="text-xl font-semibold text-foreground">Distance in 3D Coordinate Space</h3>
-                <p className="mt-2">The concept extends naturally to three dimensions. The distance between two points in 3D space includes the change along the z-axis.</p>
+                <p className="mt-2">The concept extends seamlessly into three dimensions. The distance formula for 3D space incorporates the change along the z-axis, accounting for depth.</p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">d = √[(x₂ - x₁)² + (y₂ - y₁)² + (z₂ - z₁)²]</p>
-                <p>This formula is a straightforward extension of the 2D version, accounting for depth.</p>
+                <p>This is a natural extension of the 2D formula, adding the squared difference of the z-coordinates to the sum before taking the square root.</p>
             </div>
             <div>
                 <h3 className="text-xl font-semibold text-foreground">Distance on the Earth's Surface</h3>
-                <p className="mt-2">Calculating the distance between two geographical points is more complex because the Earth is a sphere (an ellipsoid, more accurately). Two common methods are the Haversine and Lambert's formulas.</p>
+                <p className="mt-2">Calculating the distance between two geographical locations is more complex because the Earth is an oblate spheroid (a slightly flattened sphere). Two primary methods are used for this.</p>
                 <div className="mt-4 space-y-4">
                     <div>
-                        <h4 className="font-semibold text-foreground">Haversine Formula</h4>
-                        <p>This formula determines the great-circle distance between two points on a sphere. A great circle is the shortest path along the surface. While very common, it can have an error of up to 0.5% because it treats the Earth as a perfect sphere.</p>
+                        <h4 className="font-semibold text-foreground">The Haversine Formula</h4>
+                        <p>This formula is widely used to calculate the great-circle distance—the shortest path between two points along the surface of a sphere. While it's a very good approximation, it treats the Earth as a perfect sphere, which can lead to errors of up to 0.5%.</p>
                     </div>
                     <div>
-                        <h4 className="font-semibold text-foreground">Lambert's Formula</h4>
-                        <p>This more advanced formula calculates the shortest distance on the surface of an ellipsoid. It is significantly more accurate than the Haversine formula for Earth calculations, often with precision down to a few meters over thousands of kilometers. Our calculator uses Lambert's formula for greater accuracy.</p>
+                        <h4 className="font-semibold text-foreground">Lambert's Formula for Ellipsoids</h4>
+                        <p>For higher accuracy, Lambert's formula is used. It calculates the shortest distance (geodesic) on the surface of an ellipsoid, which is a more accurate model of the Earth. This method significantly reduces the error found in the Haversine formula, often providing precision within a few meters over vast distances. Our calculator utilizes this more accurate approach for geographical calculations.</p>
                     </div>
                 </div>
             </div>
