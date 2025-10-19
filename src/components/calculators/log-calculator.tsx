@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from 'react';
@@ -16,10 +15,31 @@ export default function LogCalculator() {
     const [result, setResult] = useState('2');
     const [steps, setSteps] = useState<string | null>(null);
 
+     const handleBaseChange = (value: string) => {
+        setBase(value);
+        setArgument('');
+        setResult('');
+        setSteps(null);
+    };
+
+    const handleArgumentChange = (value: string) => {
+        setArgument(value);
+        setBase('');
+        setResult('');
+        setSteps(null);
+    };
+
+    const handleResultChange = (value: string) => {
+        setResult(value);
+        setBase('');
+        setArgument('');
+        setSteps(null);
+    };
+
     const calculate = () => {
         setSteps(null);
         
-        const baseStr = base.toLowerCase();
+        const baseStr = base.toLowerCase().trim();
         const baseNum = baseStr === 'e' ? Math.E : parseFloat(base);
         const argNum = parseFloat(argument);
         const resNum = parseFloat(result);
@@ -46,7 +66,7 @@ export default function LogCalculator() {
                 const newArgument = Math.pow(baseNum, resNum);
                 setArgument(newArgument.toString());
                  setSteps(`x = ${baseStr}^${resNum} = ${newArgument.toFixed(10)}`);
-            } else if (isNaN(baseNum)) {
+            } else { // isNaN(baseNum) is implied
                 if (argNum <= 0 || argNum === 1) throw new Error("Argument must be positive and not equal to 1 for finding the base.");
                 if (resNum === 0) throw new Error("Result cannot be zero when solving for the base.");
                 const newBase = Math.pow(argNum, 1 / resNum);
@@ -72,24 +92,39 @@ export default function LogCalculator() {
     return (
         <Card className="shadow-lg">
             <CardHeader>
-                <CardTitle>logₐ(y) = x</CardTitle>
+                <CardTitle>logₐ(x) = y</CardTitle>
                 <CardDescription>Enter any two values to find the third. Base can be 'e'.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="flex items-end gap-2 text-lg font-semibold">
-                    <span className="pb-2">log</span>
-                    <div className="flex-1 space-y-1 relative">
-                        <Label htmlFor="argument" className="absolute -top-5 left-0 text-sm">Argument (y)</Label>
-                        <Input id="argument" type="number" value={argument} onChange={e => setArgument(e.target.value)} />
-                    </div>
-                </div>
-                 <div className="space-y-2">
-                     <Label htmlFor="base">Base (a)</Label>
-                     <Input id="base" type="text" value={base} onChange={e => setBase(e.target.value)} />
-                </div>
-                 <div className="space-y-2">
-                     <Label htmlFor="result">Result (x)</Label>
-                     <Input id="result" type="number" value={result} onChange={e => setResult(e.target.value)} />
+                 <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
+                    <span className="self-center">log</span>
+                    <Input
+                        id="base"
+                        value={base}
+                        onChange={(e) => handleBaseChange(e.target.value)}
+                        className="w-20 text-center text-sm self-end"
+                        placeholder="a"
+                        aria-label="Base (a)"
+                    />
+                    <Input
+                        id="argument"
+                        type="number"
+                        value={argument}
+                        onChange={(e) => handleArgumentChange(e.target.value)}
+                        className="w-24 text-center"
+                        placeholder="x"
+                        aria-label="Argument (x)"
+                    />
+                    <span className="self-center">=</span>
+                    <Input
+                        id="result"
+                        type="number"
+                        value={result}
+                        onChange={(e) => handleResultChange(e.target.value)}
+                        className="w-24 text-center"
+                        placeholder="y"
+                        aria-label="Result (y)"
+                    />
                 </div>
                 <div className="flex gap-2 pt-2">
                     <Button onClick={calculate} className="w-full">Calculate</Button>
