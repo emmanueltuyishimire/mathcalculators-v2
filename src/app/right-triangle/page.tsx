@@ -73,7 +73,7 @@ export default function RightTrianglePage() {
                         <Link href="/pythagorean">Pythagorean Theorem Calculator</Link>
                     </Button>
                     <Button asChild variant="outline">
-                        <Link href="/trigonometry">Trigonometry Calculator</Link>
+                        <Link href="/scientific">Trigonometry Calculator</Link>
                     </Button>
                 </div>
             </section>

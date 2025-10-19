@@ -35,7 +35,7 @@ const calculatorCategories = [
         title: "Geometry & Trigonometry",
         tools: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
-            { href: '/trigonometry', label: 'Trigonometry Calculator', icon: MoreVertical },
+            { href: '/scientific', label: 'Trigonometry Calculator', icon: MoreVertical },
             { href: '/pythagorean', label: 'Pythagorean Theorem Calculator', icon: Sigma },
             { href: '/right-triangle', label: 'Right Triangle Calculator', icon: Triangle },
             { href: '/slope', label: 'Slope Calculator', icon: TrendingUp },

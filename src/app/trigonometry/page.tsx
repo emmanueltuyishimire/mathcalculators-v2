@@ -18,11 +18,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator for trigonometric functions (sin, cos, tan, csc, sec, cot) and their inverses. Supports both degrees and radians.",
-  "url": "https://calculation.site/trigonometry",
+  "url": "https://maths.calculation.site/trigonometry",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",
