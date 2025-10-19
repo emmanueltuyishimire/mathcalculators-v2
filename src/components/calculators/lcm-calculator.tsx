@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
@@ -68,13 +68,36 @@ export default function LcmCalculator() {
     const [result, setResult] = useState<LcmResult | null>(null);
 
     const calculate = () => {
+        if (!input) {
+            setResult(null);
+            return;
+        }
+
         const numbers = input
             .split(',')
             .map(s => s.trim())
             .filter(Boolean)
-            .map(BigInt);
+            .map(s => {
+                try {
+                    return BigInt(s);
+                } catch {
+                    return NaN;
+                }
+            });
 
-        if (numbers.length < 2) {
+        if (numbers.some(n => typeof n === 'number')) { // Checks for NaN
+             toast({
+                variant: 'destructive',
+                title: 'Invalid Input',
+                description: 'Please ensure all inputs are valid integers.',
+            });
+            setResult(null);
+            return;
+        }
+        
+        const bigIntNumbers = numbers as bigint[];
+
+        if (bigIntNumbers.length < 2) {
             toast({
                 variant: 'destructive',
                 title: 'Invalid Input',
@@ -86,11 +109,11 @@ export default function LcmCalculator() {
         
         try {
             // --- Calculation for result ---
-            const finalLcm = numbers.reduce((acc, val) => lcm(acc, val));
-            const finalGcd = numbers.reduce((acc, val) => gcd(acc, val));
+            const finalLcm = bigIntNumbers.reduce((acc, val) => lcm(acc, val));
+            const finalGcd = bigIntNumbers.reduce((acc, val) => gcd(acc, val));
             
             // --- Calculation for steps ---
-            const allFactors = numbers.map(num => ({
+            const allFactors = bigIntNumbers.map(num => ({
                 num,
                 factors: getPrimeFactorization(num),
             }));
@@ -119,21 +142,21 @@ export default function LcmCalculator() {
                 steps: { 
                     allFactors, 
                     lcmCalculationFactors: lcmCalculationFactorsArray.join(' × '),
-                    calculation: `LCM(${numbers.join(', ')})`
+                    calculation: `LCM(${bigIntNumbers.join(', ')})`
                 }
             });
         } catch (e: any) {
             toast({
                 variant: 'destructive',
                 title: 'Error',
-                description: 'Please ensure all inputs are valid integers.',
+                description: 'An unexpected error occurred.',
             });
              setResult(null);
         }
     };
     
     const formatFactors = (factors: Map<bigint, number>) => {
-        if (factors.size === 0) return String(factors.keys().next().value || 1);
+        if (factors.size === 0) return '1';
         const expandedFactors: bigint[] = [];
          factors.forEach((exponent, prime) => {
             for(let i=0; i < exponent; i++) {
@@ -147,13 +170,13 @@ export default function LcmCalculator() {
     return (
         <Card className="shadow-lg">
             <CardHeader>
-                <CardTitle>Least Common Multiple (LCM) Calculator</CardTitle>
-                <CardDescription>Enter numbers separated by commas to find their LCM.</CardDescription>
+                <CardTitle>LCM & GCD Calculator</CardTitle>
+                <CardDescription>Enter numbers separated by commas to find their LCM and GCD.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">
                     <Label htmlFor="numbers-input">Numbers</Label>
-                    <Textarea
+                    <Input
                         id="numbers-input"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
@@ -161,7 +184,7 @@ export default function LcmCalculator() {
                         className="font-mono"
                     />
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate LCM</Button>
+                <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result && (
                 <CardFooter className="flex-col items-start gap-4">

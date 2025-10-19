@@ -16,58 +16,66 @@ const EducationalContent = () => (
     <Card>
         <CardHeader>
             <CardTitle>Understanding the Least Common Multiple (LCM)</CardTitle>
+            <CardDescription>The smallest positive integer that is divisible by all numbers in a set.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6 text-muted-foreground">
+        <CardContent className="space-y-6">
             <div>
-                <h3 className="text-xl font-semibold text-foreground">What is the Least Common Multiple (LCM)?</h3>
-                <p className="mt-2">
-                    In mathematics, the least common multiple, also known as the lowest common multiple of two (or more) integers a and b, is the smallest positive integer that is divisible by both. It is commonly denoted as LCM(a, b).
+                <h3 className="text-xl font-semibold text-foreground">What is the LCM?</h3>
+                <p className="text-muted-foreground mt-2">
+                    In mathematics, the least common multiple (LCM), also known as the lowest common multiple, of two or more integers is the smallest positive integer that is divisible by all of them. It is commonly denoted as LCM(a, b).
                 </p>
             </div>
             
-            <div>
+            <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-foreground">How to Find the LCM</h3>
-                <p className="mt-2">There are multiple ways to find a least common multiple. Here are a few common methods:</p>
+                <p className="text-muted-foreground">There are several methods to find the LCM. Here are three common approaches:</p>
                 
-                <div className="mt-4 space-y-6">
-                    <div>
-                        <h4 className="font-semibold text-foreground">Brute Force Method</h4>
-                         <p className="mt-1">This basic method involves listing the multiples of each integer until you find the first common multiple.</p>
-                        <p className="p-2 bg-muted rounded-md text-sm mt-2">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>1. The Brute Force Method</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                         <p className="text-muted-foreground">This basic method involves listing the multiples of each integer until you find the first common multiple. While intuitive, it can be tedious for larger numbers.</p>
+                        <div className="p-4 bg-muted rounded-md text-sm mt-2 font-mono">
                             <b>Example: Find LCM(18, 26)</b><br/>
-                            18: 18, 36, 54, 72, 90, 108, 126, 144, 162, 180, 198, 216, <b>234</b>, ...<br/>
-                            26: 26, 52, 78, 104, 130, 156, 182, 208, <b>234</b>, ...<br/>
-                            As can be seen, this method can be fairly tedious, and is far from ideal.
-                        </p>
-                    </div>
+                            <p className="mt-2">Multiples of 18: 18, 36, 54, 72, 90, 108, 126, 144, 162, 180, 198, 216, <b>234</b>, ...</p>
+                            <p>Multiples of 26: 26, 52, 78, 104, 130, 156, 182, 208, <b>234</b>, ...</p>
+                        </div>
+                    </CardContent>
+                </Card>
 
-                    <div>
-                        <h4 className="font-semibold text-foreground">Prime Factorization Method</h4>
-                        <p className="mt-1">A more systematic way to find the LCM is to use prime factorization. This involves breaking down each number into its product of prime numbers. The LCM is then determined by multiplying the highest power of each prime number together.</p>
-                         <p className="p-2 bg-muted rounded-md text-sm mt-2">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>2. The Prime Factorization Method</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">A more systematic way is to break down each number into its prime factors. The LCM is the product of the highest power of each prime number that appears in any of the factorizations.</p>
+                         <div className="p-4 bg-muted rounded-md text-sm mt-2 font-mono">
                             <b>Example: Find LCM(21, 14, 38)</b><br/>
-                            Prime factorization of 21: 3 × 7<br/>
-                            Prime factorization of 14: 2 × 7<br/>
-                            Prime factorization of 38: 2 × 19<br/>
-                            The LCM is therefore: 3 × 7 × 2 × 19 = <b>798</b>.
-                        </p>
-                        <p className="mt-2 text-xs">Note that computing the LCM this way, while more efficient than using the "brute force" method, is still limited to smaller numbers.</p>
-                    </div>
+                            <p className="mt-2">Prime factorization of 21: 3 × 7</p>
+                            <p>Prime factorization of 14: 2 × 7</p>
+                            <p>Prime factorization of 38: 2 × 19</p>
+                            <p className="mt-2">The LCM is found by taking the highest power of each prime factor present (2, 3, 7, 19):<br/> 2 × 3 × 7 × 19 = <b>798</b>.</p>
+                        </div>
+                    </CardContent>
+                </Card>
 
-                    <div>
-                        <h4 className="font-semibold text-foreground">Greatest Common Divisor (GCD) Method</h4>
-                        <p className="mt-1">A third viable method for finding the LCM is using the greatest common divisor (also known as GCF). The procedure for finding the LCM of two numbers (a, b) is to divide their product by their GCF: <code className="font-mono text-xs bg-muted p-1 rounded-md">(a × b) / GCF(a, b)</code>.</p>
-                        <p className="mt-2">When finding the LCM of more than two numbers, you can apply this method iteratively. For example, for LCM(a, b, c), you would first find the LCM of a and b, let's call it q, and then find the LCM of q and c.</p>
-                         <p className="p-2 bg-muted rounded-md text-sm mt-2">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>3. The Greatest Common Divisor (GCD) Method</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">A third method uses the greatest common divisor (GCD). For two numbers, the formula is: <code className="font-mono text-xs bg-muted p-1 rounded-md">LCM(a, b) = (|a × b|) / GCD(a, b)</code>.</p>
+                        <p className="text-muted-foreground mt-2">To find the LCM of more than two numbers, you can apply this method iteratively.</p>
+                         <div className="p-4 bg-muted rounded-md text-sm mt-2 font-mono">
                             <b>Example: Find LCM(21, 14, 38)</b><br/>
-                            First, find LCM(14, 38). GCF(14, 38) = 2.<br/>
-                            LCM(14, 38) = (14 × 38) / 2 = 266.<br/>
-                            Next, find LCM(21, 266). GCF(21, 266) = 7.<br/>
-                            LCM(21, 266) = (21 × 266) / 7 = <b>798</b>.
-                        </p>
-                        <p className="mt-2 text-xs">It is not important which LCM is calculated first as long as all numbers are used. Depending on the particular situation, each method has its own merits.</p>
-                    </div>
-                </div>
+                            <p className="mt-2">First, find LCM(14, 38). The GCD(14, 38) is 2.</p>
+                            <p>LCM(14, 38) = (14 × 38) / 2 = <b>266</b>.</p>
+                            <p className="mt-2">Next, find LCM of the result and the next number: LCM(21, 266). The GCD(21, 266) is 7.</p>
+                            <p>LCM(21, 266) = (21 × 266) / 7 = <b>798</b>.</p>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
         </CardContent>
     </Card>
@@ -94,6 +102,9 @@ export default function LcmPage() {
             <div className="flex flex-wrap justify-center gap-2 mt-4">
                 <Button asChild variant="outline">
                     <Link href="/basic">Basic Calculators</Link>
+                </Button>
+                 <Button asChild variant="outline">
+                    <Link href="/fraction">Fraction Calculator</Link>
                 </Button>
             </div>
           </section>
