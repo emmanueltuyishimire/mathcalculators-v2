@@ -41,8 +41,8 @@ const EducationalContent = () => (
             
             <Separator />
 
-            <div>
-                 <h3 className="text-xl font-semibold text-foreground">Derivation of the Formula</h3>
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">Derivation of the Formula</h3>
                 <p className="mt-2">The quadratic formula is derived by a method called "completing the square." Here’s a summary of the steps:</p>
                 <ol className="list-decimal list-inside space-y-2 mt-2 font-mono text-sm bg-muted p-4 rounded-md">
                     <li>Start with the standard form: `ax² + bx + c = 0`</li>
