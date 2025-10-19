@@ -125,9 +125,9 @@ function GeneralRootCalculator() {
                 <CardTitle>General Root Calculator</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="flex items-center gap-2 text-lg">
-                     <Input type="number" value={root} onChange={e => setRoot(e.target.value)} className="w-16 absolute -translate-x-4 -translate-y-3 text-xs" placeholder="n" />
-                    <span className="font-bold text-3xl">√</span>
+                <div className="relative flex items-center gap-1 text-lg">
+                     <Input type="number" value={root} onChange={e => setRoot(e.target.value)} className="w-12 h-6 text-xs absolute -top-3 left-0" placeholder="n" />
+                    <span className="font-bold text-3xl ml-1">√</span>
                     <Input type="number" value={number} onChange={e => setNumber(e.target.value)} className="w-full" placeholder="Enter number" />
                 </div>
                  <Button onClick={calculate} className="w-full">Calculate</Button>
