@@ -37,6 +37,7 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
     const [unit, setUnit] = useState<Unit>('Meter');
 
     const handleCalculate = () => {
+        const conversionFactor = lengthUnits[unit];
         const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
             const num = parseFloat(value);
             if (isNaN(num) && value !== '') {
@@ -47,7 +48,7 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                 });
                 throw new Error('Invalid input');
             }
-            return { ...acc, [key]: num };
+            return { ...acc, [key]: isNaN(num) ? NaN : num * conversionFactor };
         }, {} as { [key: string]: number });
         
         if (shape === 'Spherical Cap') {
@@ -72,8 +73,9 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
         }
 
         try {
-            const result = calculate(parsedInputs);
-            setVolume(typeof result === 'number' ? result.toFixed(4) : result);
+            const resultInBaseUnit = calculate(parsedInputs);
+            const resultInSelectedUnit = typeof resultInBaseUnit === 'number' ? resultInBaseUnit / Math.pow(conversionFactor, 3) : resultInBaseUnit;
+            setVolume(typeof resultInSelectedUnit === 'number' ? resultInSelectedUnit.toFixed(4) : resultInSelectedUnit);
         } catch (e: any) {
             toast({
                 variant: 'destructive',
@@ -162,7 +164,7 @@ const calculators: VolumeCalculatorProps[] = [
     {
         shape: 'Capsule',
         inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
-        calculate: ({ r, h }) => (Math.PI * Math.pow(r, 2) * h) + ((4/3) * Math.PI * Math.pow(r, 3)),
+        calculate: ({ r, h }) => Math.PI * Math.pow(r, 2) * h + (4/3) * Math.PI * Math.pow(r, 3),
     },
     {
         shape: 'Spherical Cap',
@@ -186,7 +188,7 @@ const calculators: VolumeCalculatorProps[] = [
     {
         shape: 'Conical Frustum',
         inputs: [{ name: 'r', label: 'Top Radius (r)' }, { name: 'R', label: 'Bottom Radius (R)' }, { name: 'h', label: 'Height (h)' }],
-        calculate: ({ r, R, h }) => (1/3) * Math.PI * h * (Math.pow(r, 2) + r*R + Math.pow(R, 2)),
+        calculate: ({ r, R, h }) => (1/3) * Math.PI * h * (Math.pow(R, 2) + R*r + Math.pow(r, 2)),
     },
     {
         shape: 'Ellipsoid',
@@ -203,7 +205,7 @@ const calculators: VolumeCalculatorProps[] = [
         inputs: [{ name: 'd1', label: 'Outer Diameter (d1)' }, { name: 'd2', label: 'Inner Diameter (d2)' }, { name: 'l', label: 'Length (l)' }],
         calculate: ({ d1, d2, l }) => {
             if (d1 <= d2) throw new Error("Outer diameter must be greater than inner diameter.");
-            return Math.PI * (Math.pow(d1/2, 2) - Math.pow(d2/2, 2)) * l;
+            return (Math.PI * l / 4) * (Math.pow(d1, 2) - Math.pow(d2, 2));
         },
     },
 ];
@@ -217,5 +219,3 @@ export default function VolumeCalculator() {
         </div>
     );
 }
-
-    
