@@ -88,7 +88,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-.hero-background {
-  background-image: url('/math-calculator-background-image1.webp');
-}

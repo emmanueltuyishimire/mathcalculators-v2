@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -9,7 +8,12 @@ import ScientificCalculator from '@/components/calculators/scientific-calculator
 
 function HeroSection() {
   return (
-    <section className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center hero-background">
+    <section
+      className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
+      style={{
+        backgroundImage: "url('/math%20calculator%20background%20image1.webp')",
+      }}
+    >
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-primary-foreground">
             Master Geometry
