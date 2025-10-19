@@ -204,10 +204,8 @@ const Slideshow = () => {
           <Image
             src={slide.imageUrl}
             alt={slide.title}
-            layout="responsive"
-            width={1200}
-            height={600}
-            className="object-cover"
+            layout="fill"
+            objectFit="cover"
             priority={index === 0}
             data-ai-hint={slide.dataAiHint}
           />
