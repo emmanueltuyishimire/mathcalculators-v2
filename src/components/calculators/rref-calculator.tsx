@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -91,8 +92,9 @@ const MatrixDisplay = ({
 const parseMatrix = (matrix: Matrix): number[][] => {
     return matrix.map((row, r) => row.map((cell, c) => {
         try {
-            if(typeof cell === 'string' && cell.includes('/')) {
-                const parts = cell.split('/');
+            const cellStr = String(cell);
+            if(cellStr.includes('/')) {
+                const parts = cellStr.split('/');
                 if(parts.length === 2) {
                     const num = parseFloat(parts[0]);
                     const den = parseFloat(parts[1]);
@@ -100,7 +102,7 @@ const parseMatrix = (matrix: Matrix): number[][] => {
                     return num / den;
                 }
             }
-            const val = parseFloat(cell as string);
+            const val = parseFloat(cellStr);
             if (isNaN(val)) throw new Error(`Invalid number in cell (${r+1},${c+1}).`);
             return val;
         } catch {

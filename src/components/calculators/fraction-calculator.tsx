@@ -50,8 +50,12 @@ function BasicFractionCalculator() {
 
             if (d1 === 0n || d2 === 0n) throw new Error("Denominator cannot be zero.");
             
-            if (d1 < 0n) { d1 = -d1; }
-            if (d2 < 0n) { d2 = -d2; }
+            if (d1 < 0n) {
+                d1 = -d1;
+            }
+            if (d2 < 0n) {
+                d2 = -d2;
+            }
 
 
             let resN: bigint, resD: bigint;
