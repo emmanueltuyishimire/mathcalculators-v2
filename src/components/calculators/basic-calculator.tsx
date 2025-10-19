@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -29,9 +30,13 @@ export default function BasicCalculator() {
 
   const handleEquals = () => {
     try {
+      const expression = displayValue.replace(/×/g, '*').replace(/÷/g, '/');
+      if (/[+\-*/]$/.test(expression.trim())) {
+        throw new Error("Invalid expression");
+      }
       // Note: Using eval() is insecure for production apps.
       // This is a simplified example. A real app should use a safe math expression parser.
-      const result = new Function('return ' + displayValue.replace(/×/g, '*').replace(/÷/g, '/'))();
+      const result = new Function('return ' + expression)();
       setDisplayValue(String(result));
       setIsResult(true);
     } catch (error) {

@@ -57,7 +57,7 @@ function ZScoreFormulaCalculator() {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="stdDev">Standard Deviation (σ)</Label>
-                    <Input id="stdDev" type="number" value={stdDev} onChange={(e) => setStdDev(e.target.value)} />
+                    <Input id="stdDev" type="number" value={stdDev} onChange={(e) => setStdDev(e.target.value)} min="0.0001" />
                 </div>
                  <Button onClick={calculate} className="w-full">Calculate Z-Score</Button>
             </CardContent>

@@ -13,13 +13,15 @@ type Matrix = number[][];
 const sumDigits = (numStr: string): number => {
   let num = parseInt(numStr, 10);
   if (isNaN(num)) return 0;
-  
+  if ([11, 22, 33].includes(num)) return num;
+
   while (num > 9) {
-    if ([11, 22, 33].includes(num)) break; // Master numbers
     num = String(num).split('').reduce((sum, digit) => sum + parseInt(digit, 10), 0);
+    if ([11, 22, 33].includes(num)) break;
   }
   return num;
 };
+
 
 const numberInterpretations: { [key: number]: string } = {
   1: "Leader, independent, pioneer, original.",
