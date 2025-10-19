@@ -12,35 +12,40 @@ export const metadata: Metadata = {
 const EducationalContent = () => (
     <Card>
         <CardHeader>
-            <CardTitle>Understanding Slope</CardTitle>
+            <CardTitle>A Deeper Look at Slope</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
                 <h3 className="text-xl font-semibold text-foreground">What is Slope?</h3>
                 <p className="mt-2">
-                    The <b>slope</b>, or gradient, of a line is a number that describes its direction and steepness. It is often denoted by the letter <b>m</b>.
+                    In mathematics, the <b>slope</b>, often called the gradient, is a single number that encapsulates two key properties of a line: its steepness and its direction. Essentially, it's the "rise over run"—the vertical change for every unit of horizontal change.
                 </p>
                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>A <b>positive slope</b> means the line is increasing (it goes up from left to right).</li>
-                    <li>A <b>negative slope</b> means the line is decreasing (it goes down from left to right).</li>
-                    <li>A <b>zero slope</b> indicates a horizontal line.</li>
-                    <li>An <b>undefined slope</b> indicates a vertical line.</li>
+                    <li>If <b>m &gt; 0</b>, the line is increasing and travels upward from left to right.</li>
+                    <li>If <b>m &lt; 0</b>, the line is decreasing, moving downward from left to right.</li>
+                    <li>If <b>m = 0</b>, the line is perfectly horizontal.</li>
+                    <li>For a <b>vertical line</b>, the slope is undefined because the horizontal change (the denominator in the formula) is zero.</li>
                 </ul>
             </div>
              <div>
-                <h3 className="text-xl font-semibold text-foreground">Formulas Used</h3>
-                <p className="mt-2"><b>1. From Two Points:</b> Given two points (x₁, y₁) and (x₂, y₂), the slope is calculated as:</p>
+                <h3 className="text-xl font-semibold text-foreground">Core Formulas</h3>
+                <p className="mt-2"><b>1. Slope from Two Points:</b> Given two distinct points, (x₁, y₁) and (x₂, y₂), the slope is calculated by dividing the change in y (the "rise") by the change in x (the "run").</p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">m = (y₂ - y₁) / (x₂ - x₁)</p>
-                <p>This is often referred to as "rise over run".</p>
 
-                <p className="mt-4"><b>2. From One Point and Angle:</b> The slope can also be found from the angle of incline (θ) using trigonometry:</p>
+                <p className="mt-4"><b>2. Slope from Angle:</b> The slope is also the tangent of the line's angle of inclination (θ), which is the angle it makes with the positive x-axis.</p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">m = tan(θ)</p>
             </div>
             <div>
-                <h3 className="text-xl font-semibold text-foreground">Line Equation</h3>
-                <p className="mt-2">The calculator also provides the equation of the line in slope-intercept form:</p>
+                <h3 className="text-xl font-semibold text-foreground">Line Equation and Intercepts</h3>
+                <p className="mt-2">Once the slope (m) is known, you can describe the entire line with the slope-intercept formula:</p>
                 <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">y = mx + b</p>
-                <p>where <b>b</b> is the y-intercept (the point where the line crosses the y-axis).</p>
+                <p>Here, <b>b</b> represents the y-intercept—the point where the line crosses the vertical y-axis. The calculator also solves for the x-intercept, where the line crosses the horizontal x-axis.</p>
+            </div>
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">Beyond the Basics: Slope in Calculus</h3>
+                <p className="mt-2">
+                    While this calculator focuses on linear functions, the concept of slope is a cornerstone of differential calculus. For curves and non-linear functions, the slope isn't constant. The derivative of a function at a specific point gives you the slope of the tangent line at that exact spot, representing the instantaneous rate of change.
+                </p>
             </div>
         </CardContent>
     </Card>
