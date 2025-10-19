@@ -42,6 +42,7 @@ const navItems = [
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
+  { href: '/trigonometry', label: 'Trigonometry', icon: Sigma },
   { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
