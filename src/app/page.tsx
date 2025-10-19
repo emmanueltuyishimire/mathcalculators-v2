@@ -198,7 +198,7 @@ const Slideshow = () => {
       {carouselSlides.map((slide, index) => (
         <div
           key={index}
-          className={`mySlides fade ${index === slideIndex ? 'block' : 'hidden'}`}
+          className={`mySlides fade absolute w-full h-full ${index === slideIndex ? 'block' : 'hidden'}`}
         >
           <Image
             src={slide.imageUrl}
