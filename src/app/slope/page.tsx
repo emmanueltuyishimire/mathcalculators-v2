@@ -3,9 +3,54 @@
 import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth, useFirestore, useUser } from '@/firebase';
+import { useAuth } from '@/firebase';
 import { initiateAnonymousSignIn } from '@/firebase/non-blocking-login';
 import { useEffect } from 'react';
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Slope Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">🔹 Using the "2 Points" Tab</h3>
+                <ol className="list-decimal list-inside mt-2 space-y-2">
+                    <li>
+                        <span className="font-semibold text-foreground">Enter Coordinates:</span> Input the X and Y coordinates for two distinct points (Point 1 and Point 2).
+                    </li>
+                    <li>
+                        <span className="font-semibold text-foreground">Calculate:</span> Click the "Calculate Slope" button.
+                    </li>
+                    <li>
+                        <span className="font-semibold text-foreground">View Results:</span> The calculator will display the slope (m), angle (θ), distance between points, and the full equation of the line.
+                    </li>
+                </ol>
+            </div>
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">🔹 Using the "1 Point & Slope" Tab</h3>
+                <ol className="list-decimal list-inside mt-2 space-y-2">
+                    <li>
+                        <span className="font-semibold text-foreground">Enter Start Point:</span> Input the coordinates for your starting point (X1, Y1).
+                    </li>
+                     <li>
+                        <span className="font-semibold text-foreground">Provide Distance:</span> Enter the distance (d) you wish to extend from your starting point.
+                    </li>
+                    <li>
+                        <span className="font-semibold text-foreground">Choose Input Type:</span> Select whether you want to provide the slope (m) or the angle of incline (θ). Fill in the corresponding value.
+                    </li>
+                    <li>
+                        <span className="font-semibold text-foreground">Calculate:</span> Click the "Calculate Point" button.
+                    </li>
+                     <li>
+                        <span className="font-semibold text-foreground">View Results:</span> The tool will show two possible endpoints—one in the positive direction and one in the negative—along with the line equation.
+                    </li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 
 const EducationalContent = () => (
     <Card>
@@ -19,8 +64,8 @@ const EducationalContent = () => (
                     In mathematics, the <b>slope</b>, often called the gradient, is a single number that encapsulates two key properties of a line: its steepness and its direction. Essentially, it's the "rise over run"—the vertical change for every unit of horizontal change.
                 </p>
                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>If <b>m &gt; 0</b>, the line is increasing and travels upward from left to right.</li>
-                    <li>If <b>m &lt; 0</b>, the line is decreasing, moving downward from left to right.</li>
+                    <li>If <b>m > 0</b>, the line is increasing and travels upward from left to right.</li>
+                    <li>If <b>m < 0</b>, the line is decreasing, moving downward from left to right.</li>
                     <li>If <b>m = 0</b>, the line is perfectly horizontal.</li>
                     <li>For a <b>vertical line</b>, the slope is undefined because the horizontal change (the denominator in the formula) is zero.</li>
                 </ul>
@@ -73,6 +118,8 @@ export default function SlopePage() {
           </section>
 
           <SlopeCalculator />
+
+          <HowToUseGuide />
 
           <EducationalContent />
         </div>
