@@ -12,6 +12,39 @@ export const metadata: Metadata = {
     description: 'Calculate square roots, cube roots, and nth roots of any number. Includes examples and explanations on how to estimate roots.',
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Root Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <div>
+                <h3 className="text-lg font-semibold text-foreground">Square Root Calculator</h3>
+                <ol className="list-decimal list-inside pl-4 mt-1">
+                    <li>Enter the number you want to find the square root of in the input field.</li>
+                    <li>Click the "Calculate" button.</li>
+                    <li>The result will appear below.</li>
+                </ol>
+            </div>
+             <div>
+                <h3 className="text-lg font-semibold text-foreground">Cube Root Calculator</h3>
+                <ol className="list-decimal list-inside pl-4 mt-1">
+                    <li>Enter the number you want to find the cube root of.</li>
+                    <li>Click "Calculate" to see the result.</li>
+                </ol>
+            </div>
+             <div>
+                <h3 className="text-lg font-semibold text-foreground">General Root Calculator</h3>
+                <ol className="list-decimal list-inside pl-4 mt-1">
+                    <li>Enter the degree of the root (n) in the small input field above the root symbol.</li>
+                    <li>Enter the number you want to find the root of in the main input field.</li>
+                    <li>Click "Calculate" to compute the nth root.</li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -113,6 +146,7 @@ export default function RootPage() {
                 </p>
             </section>
             <RootCalculator />
+            <HowToUseGuide />
             <EducationalContent />
             <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
