@@ -221,10 +221,14 @@ function MixedNumbersCalculator() {
                 resN = wholeSum * fracResD + fracResN;
                 resD = fracResD;
 
-                explanation.push(`Combine the whole numbers: ${m1.w} ${op} ${m2.w} = ${wholeSum}`);
-                explanation.push(`For the fractions, find a common denominator (${d1 * d2}):`);
-                explanation.push(`${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d} = ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD} = ${fracResN}/${fracResD}`);
-                explanation.push(`Combine the whole number and fraction: ${wholeSum} + ${fracResN}/${fracResD} = ${resN}/${resD}`);
+                explanation.push(`For the problem: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ?`);
+                explanation.push(`Combine the whole numbers and fractions together: (${m1.w} ${op} ${m2.w}) + (${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d})`);
+                explanation.push(`The whole numbers part is: ${m1.w} ${op} ${m2.w} = ${wholeSum}`);
+                explanation.push(`For the fractions part: The Least Common Multiple (LCM) of ${d1} and ${d2} is ${fracResD}. Multiply the numerator and denominator of each fraction by whatever value will result in the denominator of each fraction being equal to the LCM:`);
+                explanation.push(`${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d} = ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD}`);
+                explanation.push(`Now that the fractions have like denominators, add the numerators: ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD} = ${fracResN}/${fracResD}`);
+                explanation.push(`Put the whole number and fraction together: ${wholeSum} + ${fracResN}/${fracResD} = ${resN}/${resD}`);
+                explanation.push(`The result is: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ${resN}/${resD}`);
 
             } else { // Multiplication and Division
                  resN = op === '×' ? improperN1 * improperN2 : improperN1 * d2;
@@ -252,6 +256,12 @@ function MixedNumbersCalculator() {
 
             const finalW = finalN / finalD;
             const finalRemainderN = finalN >= 0n ? finalN % finalD : -(finalN % finalD);
+            
+            if(explanation.length > 0 && finalW !== 0n && finalRemainderN !== 0n){
+                 explanation.push(`The result is: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ${finalW} ${finalRemainderN}/${finalD}`);
+            } else if (explanation.length > 0) {
+                 explanation.push(`The result is: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ${finalN}/${finalD}`);
+            }
             
             steps.push(`= ${finalN}/${finalD}`);
             if (finalW !== 0n && finalRemainderN !== 0n) {
@@ -292,7 +302,7 @@ function MixedNumbersCalculator() {
                             </AccordionContent>
                         </AccordionItem>
                          <AccordionItem value="item-2">
-                            <AccordionTrigger>Further Explanation</AccordionTrigger>
+                            <AccordionTrigger>Show Further Explanation</AccordionTrigger>
                             <AccordionContent>
                                 <div className="p-4 bg-muted rounded-md text-sm break-words space-y-2">
                                    {result.explanation.map((exp, i) => <p key={i}>{exp}</p>)}
@@ -377,9 +387,12 @@ function DecimalToFraction() {
 
         const steps = [
             `${dec} = ${dec} × ${multiplier} / ${multiplier} = ${initialNum}/${initialDen}`,
-            `GCD(${initialNum}, ${initialDen}) = ${common}`,
-            `${initialNum} ÷ ${common} / ${initialDen} ÷ ${common} = ${finalN}/${finalD}`
+            `= ${initialNum} ÷ ${common} / ${initialDen} ÷ ${common} = ${finalN}/${finalD}`,
         ];
+
+        if (w > 0n && rem !== 0n) {
+            steps.push(`= ${w} ${rem}/${finalD}`);
+        }
 
         setResult({ n: finalN, d: finalD, w, rem, steps });
       } catch (e: any) {
@@ -413,7 +426,6 @@ function DecimalToFraction() {
                             <AccordionContent>
                                 <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
                                    {result.steps.map((step, i) => <p key={i}>{step}</p>)}
-                                   {result.w > 0 && result.rem !== 0n && <p>= {result.w} {result.rem}/{result.d}</p>}
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
