@@ -91,8 +91,8 @@ function BasicFractionCalculator() {
                     resD = d1 * n2;
                     if (resD === 0n) throw new Error("Division by zero fraction.");
                     step1 = `${f1.n}/${f1.d} ÷ ${f2.n}/${f2.d}`;
-                    step2 = `${f1.n}/${f1.d} × ${d2}/${n2}`;
-                    step3 = `(${f1.n} × ${d2}) / (${f1.d} × ${n2})`;
+                    step2 = `${f1.n}/${f1.d} × ${f2.d}/${f1.n}`;
+                    step3 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f1.n})`;
                     step4 = `${resN}/${resD}`;
                     break;
                 default:
@@ -115,7 +115,7 @@ function BasicFractionCalculator() {
                 finalD = -finalD;
             }
             
-            const decimal = (Number(resN) / Number(resD)).toFixed(6);
+            const decimal = (Number(resN) / Number(resD)).toFixed(14);
 
             setResult({ n: finalN, d: finalD, decimal, steps: {step1, step2, step3, step4} });
 
@@ -228,7 +228,7 @@ function MixedNumbersCalculator() {
                 explanation.push(`${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d} = ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD}`);
                 explanation.push(`Now that the fractions have like denominators, add the numerators: ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD} = ${fracResN}/${fracResD}`);
                 explanation.push(`Put the whole number and fraction together: ${wholeSum} + ${fracResN}/${fracResD} = ${resN}/${resD}`);
-                explanation.push(`The result is: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ${resN}/${resD}`);
+                
 
             } else { // Multiplication and Division
                  resN = op === '×' ? improperN1 * improperN2 : improperN1 * d2;
@@ -268,7 +268,7 @@ function MixedNumbersCalculator() {
                 steps.push(`= ${finalW} ${finalRemainderN}/${finalD}`);
             }
 
-            setResult({ w: finalW, n: finalRemainderN, d: finalD, decimal: (Number(resN)/Number(resD)).toFixed(6), steps, explanation });
+            setResult({ w: finalW, n: finalRemainderN, d: finalD, decimal: (Number(resN)/Number(resD)).toFixed(14), steps, explanation });
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
@@ -468,12 +468,11 @@ function FractionToDecimal() {
 }
 
 function BigNumberFractionCalculator() {
-    // This is a simplified version. True big number support would require a dedicated library.
     const { toast } = useToast();
     const [f1, setF1] = useState({ n: '1234', d: '748892928829' });
     const [f2, setF2] = useState({ n: '33434421132232234333', d: '8877277388288288288' });
     const [op, setOp] = useState('+');
-    const [result, setResult] = useState<{ n: bigint, d: bigint } | null>(null);
+    const [result, setResult] = useState<{ n: bigint, d: bigint, w: bigint, rem: bigint } | null>(null);
 
     const calculate = () => {
         try {
@@ -490,8 +489,15 @@ function BigNumberFractionCalculator() {
                 case '÷': resN = n1 * d2; resD = d1 * n2; if (resD === 0n) throw new Error("Division by zero."); break;
                 default: throw new Error("Invalid operator");
             }
+            
             const commonDivisor = gcd(resN, resD);
-            setResult({ n: resN / commonDivisor, d: resD / commonDivisor });
+            const finalN = resN / commonDivisor;
+            const finalD = resD / commonDivisor;
+            
+            const finalW = finalN / finalD;
+            const finalRem = finalN % finalD;
+
+            setResult({ n: finalN, d: finalD, w: finalW, rem: finalRem });
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
@@ -517,8 +523,12 @@ function BigNumberFractionCalculator() {
                 <Button onClick={calculate}>=</Button>
             </CardContent>
             {result && (
-                 <CardContent>
+                 <CardContent className="flex flex-wrap items-center justify-center gap-2">
                     <FractionInput n={String(result.n)} d={String(result.d)} readOnly wide />
+                    {result.w !== 0n && result.rem !== 0n && <span>=</span>}
+                    {result.w !== 0n && result.rem !== 0n && (
+                        <MixedNumberInput w={String(result.w)} n={String(result.rem)} d={String(result.d)} readOnly />
+                    )}
                  </CardContent>
             )}
         </Card>
