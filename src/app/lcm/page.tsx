@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to find the least common multiple (LCM) of a set of numbers, with step-by-step solutions.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/lcm",
+  "url": "https://calculation.site/lcm",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

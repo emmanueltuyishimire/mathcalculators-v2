@@ -12,7 +12,7 @@ export function AppFooter() {
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
                             <Sigma className="h-6 w-6" />
-                            <span>MathMaster</span>
+                            <span>Calculation.site</span>
                         </Link>
                         <p className="text-sm text-muted-foreground">
                             Providing free, powerful, and easy-to-use online calculators for everyone.
@@ -44,7 +44,7 @@ export function AppFooter() {
                     </div>
                 </div>
                  <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    © {new Date().getFullYear()} MathMaster. All rights reserved.
+                    © {new Date().getFullYear()} Calculation.site. All rights reserved.
                 </div>
             </div>
         </footer>

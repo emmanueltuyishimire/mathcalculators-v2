@@ -6,19 +6,19 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn more about MathMaster, our mission, and our commitment to providing free, high-quality mathematical calculators for everyone.',
+  description: 'Learn more about Calculation.site, our mission, and our commitment to providing free, high-quality mathematical calculators for everyone.',
 };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  "name": "About MathMaster",
-  "description": "Learn about the mission and vision of MathMaster, a free online resource for mathematical calculators.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/about",
+  "name": "About Calculation.site",
+  "description": "Learn about the mission and vision of Calculation.site, a free online resource for mathematical calculators.",
+  "url": "https://calculation.site/about",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   }
 };
 
@@ -30,12 +30,12 @@ export default function AboutPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
       />
       <div className="flex flex-1 flex-col">
-        <PageHeader title="About MathMaster" />
+        <PageHeader title="About Calculation.site" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-4xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Welcome to MathMaster
+                    Welcome to Calculation.site
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
                     Your trusted source for free, powerful, and easy-to-use online calculators.
@@ -53,7 +53,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent className="space-y-4 text-muted-foreground">
                     <p>
-                        At MathMaster, our mission is to make mathematics accessible and understandable for everyone. We believe that powerful tools for calculation and learning should be free and available to all, whether you are a student tackling homework, a professional in need of a quick calculation, or simply a curious mind exploring the world of numbers.
+                        At Calculation.site, our mission is to make mathematics accessible and understandable for everyone. We believe that powerful tools for calculation and learning should be free and available to all, whether you are a student tackling homework, a professional in need of a quick calculation, or simply a curious mind exploring the world of numbers.
                     </p>
                     <p>
                         We strive to create calculators that are not only accurate and reliable but also intuitive and educational. Each tool is designed to provide clear explanations, formulas, and step-by-step solutions to help you understand the concepts behind the calculations.
@@ -72,7 +72,7 @@ export default function AboutPage() {
                         </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4 text-muted-foreground">
-                       <p>MathMaster is built for a diverse audience:</p>
+                       <p>Calculation.site is built for a diverse audience:</p>
                         <ul className="list-disc list-inside space-y-2">
                             <li><b>Students:</b> To assist with homework, exam preparation, and understanding complex mathematical concepts.</li>
                             <li><b>Teachers:</b> As a resource for classroom examples, demonstrations, and helping students visualize problems.</li>
@@ -108,7 +108,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                        We are always looking to improve and expand our offerings. If you have any feedback, suggestions for new calculators, or questions, please do not hesitate to <a href="/contact" className="text-primary hover:underline">contact us</a>. Your input is invaluable as we continue to build MathMaster into the best possible resource for the community.
+                        We are always looking to improve and expand our offerings. If you have any feedback, suggestions for new calculators, or questions, please do not hesitate to <a href="/contact" className="text-primary hover:underline">contact us</a>. Your input is invaluable as we continue to build Calculation.site into the best possible resource for the community.
                     </p>
                 </CardContent>
             </Card>

@@ -17,11 +17,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A versatile online calculator for rounding numbers using various methods (half up, half down, ceiling, floor) and to different levels of precision.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/rounding",
+  "url": "https://calculation.site/rounding",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

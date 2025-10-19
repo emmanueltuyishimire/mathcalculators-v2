@@ -20,11 +20,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "Perform binary arithmetic (add, subtract, multiply, divide) and convert between binary and decimal values.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/binary",
+  "url": "https://calculation.site/binary",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",
@@ -137,9 +137,9 @@ const FaqSection = () => (
                 <AccordionItem value="item-2">
                     <AccordionTrigger>What is a bit, a byte, and a nibble?</AccordionTrigger>
                     <AccordionContent>
-                        - A **bit** is the smallest unit of data in a computer and can have a value of either 0 or 1.<br/>
-                        - A **nibble** is a group of 4 bits.<br/>
-                        - A **byte** is a group of 8 bits. It's the standard unit of memory size in most modern computers.
+                        - A <strong>bit</strong> is the smallest unit of data in a computer and can have a value of either 0 or 1.<br/>
+                        - A <strong>nibble</strong> is a group of 4 bits.<br/>
+                        - A <strong>byte</strong> is a group of 8 bits. It's the standard unit of memory size in most modern computers.
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">

@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: {
-    default: 'MathMaster Calculators',
-    template: '%s – MathMaster',
+    default: 'Calculation.site Calculators',
+    template: '%s – Calculation.site',
   },
   description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
 };

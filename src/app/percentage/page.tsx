@@ -16,11 +16,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A versatile set of free online calculators for various percentage-based problems, including percentage of a number, percentage change, and more.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/percentage",
+  "url": "https://calculation.site/percentage",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to solve linear equations for the variable 'x'.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/algebra",
+  "url": "https://calculation.site/algebra",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

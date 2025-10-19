@@ -9,23 +9,23 @@ import type { Metadata } from 'next';
 // This component cannot be a server component because it uses an onClick handler
 // export const metadata: Metadata = {
 //   title: 'Contact Us',
-//   description: 'Get in touch with the MathMaster team. We welcome your feedback, suggestions, and inquiries.',
+//   description: 'Get in touch with the Calculation.site team. We welcome your feedback, suggestions, and inquiries.',
 // };
 
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  "name": "Contact MathMaster",
-  "description": "Contact page for MathMaster calculators. Reach out for support, feedback, or inquiries.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/contact",
+  "name": "Contact Calculation.site",
+  "description": "Contact page for Calculation.site calculators. Reach out for support, feedback, or inquiries.",
+  "url": "https://calculation.site/contact",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://mathmaster-studio-5398649656-398ca.web.app/contact"
+    "@id": "https://calculation.site/contact"
   }
 };
 

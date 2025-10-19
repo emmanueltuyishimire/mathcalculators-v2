@@ -17,11 +17,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A comprehensive set of free online fraction calculators for arithmetic, simplification, and decimal conversion.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/fraction",
+  "url": "https://calculation.site/fraction",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

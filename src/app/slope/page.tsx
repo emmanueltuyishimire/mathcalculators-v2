@@ -13,11 +13,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A dynamic slope calculator that finds the slope, angle, distance, and line equation from two points, or finds a second point given a slope and distance.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/slope",
+  "url": "https://calculation.site/slope",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

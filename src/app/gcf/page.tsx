@@ -18,11 +18,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to find the greatest common factor (GCF) of a set of numbers, with step-by-step solutions.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/gcf",
+  "url": "https://calculation.site/gcf",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

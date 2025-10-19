@@ -71,7 +71,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     className="flex items-center gap-2 text-lg font-semibold"
                 >
                     <Sigma className="h-6 w-6" />
-                    <span className="">MathMaster</span>
+                    <span className="">Calculation.site</span>
                 </Link>
                 {navItems.map((item) => (
                     <Link
@@ -91,7 +91,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 className="flex items-center gap-2 text-lg font-semibold md:text-base ml-4 md:ml-0"
             >
                 <Sigma className="h-6 w-6" />
-                <span className="hidden sm:inline-block">MathMaster</span>
+                <span className="hidden sm:inline-block">Calculation.site</span>
             </Link>
         </div>
         <div className="flex items-center justify-end gap-2 ml-auto">

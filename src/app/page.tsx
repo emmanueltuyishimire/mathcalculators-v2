@@ -87,7 +87,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-              MathMaster: Simple & Powerful Calculators
+              Calculation.site: Simple & Powerful Calculators
             </h1>
             <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
               Your one-stop solution for all mathematical calculations. From basic arithmetic to advanced functions.

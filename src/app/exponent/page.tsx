@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to solve for any variable in an exponential equation (aⁿ = y) and learn about exponent laws.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/exponent",
+  "url": "https://calculation.site/exponent",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

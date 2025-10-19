@@ -19,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/calculus",
+  "url": "https://calculation.site/calculus",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

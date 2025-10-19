@@ -18,11 +18,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A free online calculator to determine the percent error between an observed (experimental) and a true (accepted) value.",
-  "url": "https://mathmaster-studio-5398649656-398ca.web.app/percent-error",
+  "url": "https://calculation.site/percent-error",
   "publisher": {
     "@type": "Organization",
-    "name": "MathMaster",
-    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+    "name": "Calculation.site",
+    "url": "https://calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",
