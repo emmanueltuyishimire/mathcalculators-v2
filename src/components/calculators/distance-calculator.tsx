@@ -8,13 +8,25 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Separator } from '../ui/separator';
+
+interface TwoDResult {
+    distance: number;
+    deltaX: number;
+    deltaY: number;
+    slope: number | 'undefined';
+    angleDeg: number | 'N/A';
+    equation: string;
+    yIntercept: number | string;
+    xIntercept: number | string;
+}
 
 // 2D Calculator
 const TwoDCalculator = () => {
     const { toast } = useToast();
     const [p1, setP1] = useState({ x: '1', y: '1' });
     const [p2, setP2] = useState({ x: '4', y: '5' });
-    const [distance, setDistance] = useState<number | null>(null);
+    const [result, setResult] = useState<TwoDResult | null>(null);
 
     const calculate = () => {
         const x1 = parseFloat(p1.x);
@@ -27,11 +39,40 @@ const TwoDCalculator = () => {
             return;
         }
 
-        const dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        setDistance(dist);
+        const deltaX = x2 - x1;
+        const deltaY = y2 - y1;
+        const distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+
+        let slope: number | 'undefined' = 'undefined';
+        let angleDeg: number | 'N/A' = 'N/A';
+        let equation = `x = ${x1.toFixed(2)}`;
+        let yIntercept: number | string = 'none';
+        let xIntercept: number | string = x1;
+
+        if (Math.abs(deltaX) > 1e-9) {
+            slope = deltaY / deltaX;
+            angleDeg = Math.atan(slope) * (180 / Math.PI);
+            yIntercept = y1 - slope * x1;
+            equation = `y = ${slope.toFixed(4)}x + ${yIntercept.toFixed(4)}`;
+            xIntercept = Math.abs(slope) > 1e-9 ? -yIntercept / slope : 'none';
+        }
+
+        setResult({
+            distance,
+            deltaX,
+            deltaY,
+            slope,
+            angleDeg,
+            equation,
+            yIntercept,
+            xIntercept,
+        });
     };
 
-    useEffect(calculate, []);
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -70,9 +111,34 @@ const TwoDCalculator = () => {
                 </div>
                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
-            {distance !== null && (
-                <CardFooter>
-                    <p className="font-mono text-center w-full">Distance: {distance.toFixed(4)}</p>
+            {result !== null && (
+                <CardFooter className="flex-col items-start gap-4">
+                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
+                        <h4 className="font-semibold">Distance Result</h4>
+                        <p className="font-mono text-lg"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
+                        <div>
+                            <h5 className="font-medium text-sm mt-2">Steps:</h5>
+                            <div className="font-mono text-xs space-y-1 bg-background/50 p-2 rounded-md">
+                                <p>d = √(({p2.x}) - ({p1.x}))² + (({p2.y}) - ({p1.y}))²</p>
+                                <p>d = √({result.deltaX})² + ({result.deltaY})²</p>
+                                <p>d = √({Math.pow(result.deltaX, 2)} + {Math.pow(result.deltaY, 2)})</p>
+                                <p>d = √{Math.pow(result.distance, 2)}</p>
+                                <p>d = {result.distance.toFixed(4)}</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div className="w-full p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md space-y-3">
+                        <h4 className="font-semibold">Line Properties</h4>
+                        <p className="font-mono text-sm"><b>ΔX = </b> {p2.x} - {p1.x} = {result.deltaX}</p>
+                        <p className="font-mono text-sm"><b>ΔY = </b> {p2.y} - {p1.y} = {result.deltaY}</p>
+                        <p className="font-mono text-sm"><b>Slope (m) = </b> ΔY/ΔX = {result.deltaY}/{result.deltaX} = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
+                        <p className="font-mono text-sm"><b>Angle (θ) = </b> {typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</p>
+                        <Separator className="my-2 bg-blue-200 dark:bg-blue-800" />
+                        <h5 className="font-medium text-sm">Equation of the line:</h5>
+                        <p className="font-mono text-sm">{result.equation}</p>
+                        <p className="font-mono text-sm"><b>Y-Intercept (b): </b>{typeof result.yIntercept === 'number' ? result.yIntercept.toFixed(4) : result.yIntercept}</p>
+                        <p className="font-mono text-sm"><b>X-Intercept: </b>{typeof result.xIntercept === 'number' ? result.xIntercept.toFixed(4) : result.xIntercept}</p>
+                    </div>
                 </CardFooter>
             )}
         </Card>
@@ -103,7 +169,10 @@ const ThreeDCalculator = () => {
         setDistance(dist);
     };
 
-    useEffect(calculate, []);
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -176,7 +245,10 @@ const LatLongCalculator = () => {
         setDistance({ km, miles });
     };
 
-    useEffect(calculate, []);
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
