@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -94,9 +94,9 @@ export default function FactorCalculator() {
         }
     };
     
-    useState(() => {
+    useEffect(() => {
         calculate();
-    });
+    }, []);
 
     return (
         <Card className="shadow-lg">
@@ -110,6 +110,7 @@ export default function FactorCalculator() {
                         id="number-input"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && calculate()}
                         placeholder="e.g., 120"
                         className="font-mono"
                     />
@@ -120,15 +121,15 @@ export default function FactorCalculator() {
                 <CardFooter className="flex-col items-start gap-4">
                      <div className="w-full p-4 bg-muted rounded-lg space-y-2">
                         <h3 className="font-semibold">Factors:</h3>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="text-sm">
                             {result.allFactors.join(', ')}
-                        </div>
+                        </p>
                     </div>
                      <div className="w-full p-4 bg-muted rounded-lg space-y-2">
                         <h3 className="font-semibold">Factor Pairs:</h3>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="text-sm">
                             {result.factorPairs.map(pair => `(${pair.join(', ')})`).join(' ')}
-                        </div>
+                        </p>
                     </div>
                      <div className="w-full p-4 bg-muted rounded-lg space-y-2">
                         <h3 className="font-semibold">Prime Factors:</h3>
