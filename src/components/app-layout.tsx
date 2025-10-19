@@ -51,51 +51,66 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
-        <div className="flex items-center">
-            <Sheet>
-            <SheetTrigger asChild>
-                <Button
-                variant="outline"
-                size="icon"
-                className="shrink-0 md:hidden"
-                aria-label="Toggle navigation menu"
-                >
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation menu</span>
-                </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-                <nav className="grid gap-6 text-lg font-medium">
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 text-lg font-semibold"
-                >
-                    <Sigma className="h-6 w-6" />
-                    <span className="">Math Calculators</span>
-                </Link>
-                {navItems.map((item) => (
-                    <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn("hover:text-foreground", pathname.startsWith(item.href) ? "text-foreground" : "text-muted-foreground")}
-
-                    >
-                    {item.label}
-                    </Link>
-                ))}
-                </nav>
-            </SheetContent>
-            </Sheet>
+        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-lg font-semibold md:text-base"
+          >
+            <Sigma className="h-6 w-6" />
+            <span className="sr-only">Math Calculators</span>
+          </Link>
+          {navItems.map((item) => (
             <Link
-                href="/"
-                className="flex items-center gap-2 text-lg font-semibold md:text-base ml-4 md:ml-0"
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "transition-colors hover:text-foreground",
+                pathname.startsWith(item.href) ? "text-foreground" : "text-muted-foreground"
+              )}
             >
-                <Sigma className="h-6 w-6" />
-                <span className="hidden sm:inline-block">Math Calculators</span>
+              {item.label}
             </Link>
-        </div>
-        <div className="flex items-center justify-end gap-2 ml-auto">
-          <ThemeToggle />
+          ))}
+        </nav>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0 md:hidden"
+              aria-label="Toggle navigation menu"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <nav className="grid gap-6 text-lg font-medium">
+              <Link
+                href="/"
+                className="flex items-center gap-2 text-lg font-semibold"
+              >
+                <Sigma className="h-6 w-6" />
+                <span>Math Calculators</span>
+              </Link>
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "hover:text-foreground",
+                    pathname.startsWith(item.href) ? "text-foreground" : "text-muted-foreground"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </SheetContent>
+        </Sheet>
+        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+            <div className="ml-auto flex-1 sm:flex-initial">
+                 <ThemeToggle />
+            </div>
         </div>
       </header>
       <div className="flex flex-1 flex-col">{children}</div>
