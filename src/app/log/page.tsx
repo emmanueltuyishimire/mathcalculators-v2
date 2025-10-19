@@ -238,9 +238,7 @@ export default function LogPage() {
             </div>
 
             <HowToUseGuide />
-
-            <EducationalContent />
-
+            
             <section className="text-center">
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
                 <div className="flex flex-wrap justify-center gap-2 mt-4">
@@ -252,6 +250,8 @@ export default function LogPage() {
                     </Button>
                 </div>
             </section>
+            
+            <EducationalContent />
         </div>
       </main>
     </div>

@@ -3,6 +3,8 @@ import { PageHeader } from '@/components/page-header';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Algebra Calculator',
@@ -42,6 +44,17 @@ export default function AlgebraPage() {
         <div className="mx-auto max-w-2xl space-y-8">
           <AlgebraCalculator />
           <HowToUseGuide />
+            <section className="text-center">
+                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    <Button asChild variant="outline">
+                        <Link href="/scientific">Scientific Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/basic">Basic Calculators</Link>
+                    </Button>
+                </div>
+            </section>
         </div>
       </main>
     </div>

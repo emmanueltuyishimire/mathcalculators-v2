@@ -3,6 +3,8 @@ import BigNumberCalculator from '@/components/calculators/big-number-calculator'
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Big Number Calculator',
@@ -120,6 +122,17 @@ export default function BigNumberPage() {
             
             <BigNumberCalculator />
             <HowToUseGuide />
+            <section className="text-center">
+                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    <Button asChild variant="outline">
+                        <Link href="/scientific-notation">Scientific Notation Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/exponent">Exponent Calculator</Link>
+                    </Button>
+                </div>
+            </section>
             <EducationalContent />
         </div>
       </main>

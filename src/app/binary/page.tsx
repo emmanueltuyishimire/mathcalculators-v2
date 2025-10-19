@@ -4,11 +4,34 @@ import BinaryCalculator from '@/components/calculators/binary-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Binary Calculator',
     description: 'Perform binary arithmetic, and convert between binary and decimal values with ease. Supports addition, subtraction, multiplication, and division of binary numbers.',
 };
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Binary Calculators</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Binary Arithmetic:</strong> Enter two binary numbers in the first calculator, select an operation (+, -, ×, ÷), and click "Calculate". The results will be shown in both binary and decimal form.
+                </li>
+                <li>
+                    <strong>Binary to Decimal:</strong> Enter a binary number in the second calculator to see its decimal equivalent instantly.
+                </li>
+                <li>
+                    <strong>Decimal to Binary:</strong> Enter a decimal number in the third calculator to get its binary representation.
+                </li>
+            </ol>
+        </CardContent>
+    </Card>
+);
 
 const EducationalContent = () => (
     <Card>
@@ -96,7 +119,18 @@ export default function BinaryPage() {
             </section>
             
             <BinaryCalculator />
-
+            <HowToUseGuide />
+            <section className="text-center">
+                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    <Button asChild variant="outline">
+                        <Link href="/hex">Hex Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/basic">Basic Calculators</Link>
+                    </Button>
+                </div>
+            </section>
             <EducationalContent />
         </div>
       </main>
