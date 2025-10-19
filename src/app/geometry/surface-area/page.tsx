@@ -46,12 +46,96 @@ const EducationalContent = () => (
         <AccordionItem value="item-1">
             <AccordionTrigger className="text-xl font-semibold">Understanding Surface Area</AccordionTrigger>
             <AccordionContent className="space-y-4 text-muted-foreground">
-                <p>Surface area is the total area that the surface of a three-dimensional object occupies. It is the sum of the areas of all the faces (or surfaces) on the object. For example, the surface area of a cube is the sum of the areas of its six square faces. The standard international (SI) unit for surface area is the square meter (m²).</p>
-                <p>For shapes with curved surfaces, like a sphere or cone, the surface area calculation involves the mathematical constant π (pi). Understanding surface area is crucial in many practical applications, such as determining the amount of material needed to cover an object or the amount of paint required to coat a surface.</p>
+                <p>Surface area is a measure of the total area that the surface of a three-dimensional object occupies. It’s the sum of the areas of all the faces and curved surfaces of an object. Think of it as the amount of wrapping paper needed to cover a gift or the amount of paint required for a wall.</p>
+                <p>The calculators on this page help you find the surface area for various common shapes. For a deeper dive into the properties of these shapes, you might also find the <Link href="/geometry/volume" className="text-primary hover:underline">Volume Calculator</Link> and <Link href="/geometry/area" className="text-primary hover:underline">Area Calculator</Link> useful.</p>
+            </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+            <AccordionTrigger className="text-xl font-semibold">About the Shapes</AccordionTrigger>
+            <AccordionContent className="space-y-8 text-muted-foreground">
+                <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Sphere</h4>
+                    <p>The surface area (SA) of a sphere is calculated with the formula <code className="font-mono bg-background p-1 rounded-md">SA = 4πr²</code>, where 'r' is the radius.</p>
+                    <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: The Studious Truffle Eater</h5>
+                        <p className="text-sm mt-2">Xael, a meticulous student of confectionery, wants to calculate the total surface area of a chocolate truffle to understand its texture distribution. Given a truffle with a radius of 0.4 inches, the calculation is:</p>
+                        <p className="font-mono text-sm mt-2">SA = 4 × π × (0.4)² ≈ 2.011 in²</p>
+                    </div>
+                </div>
+                <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Cone</h4>
+                    <p>A cone's surface area is the sum of its circular base and its slanted lateral side. The formulas are:</p>
+                    <ul className="list-disc list-inside pl-4 font-mono text-sm bg-background p-2 rounded-md my-2">
+                        <li>Base SA = πr²</li>
+                        <li>Lateral SA = πr√(r² + h²)</li>
+                        <li>Total SA = πr(r + √(r² + h²))</li>
+                    </ul>
+                    <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: The DIY Rice Hat</h5>
+                        <p className="text-sm mt-2">Athena is crafting a traditional conical rice hat for a cultural festival. She needs to know the amount of material required for the lateral surface. With a planned radius of 1.2 feet and a height of 0.6 feet, she calculates:</p>
+                        <p className="font-mono text-sm mt-2">Lateral SA = π × 1.2 × √(1.2² + 0.6²) ≈ 5.05 ft²</p>
+                    </div>
+                </div>
+                 <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Cube</h4>
+                    <p>A cube has six identical square faces. Its surface area is found with: <code className="font-mono bg-background p-1 rounded-md">SA = 6a²</code>, where 'a' is the length of one edge.</p>
+                    <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: The Custom Rubik's Cube</h5>
+                        <p className="text-sm mt-2">Anne is designing a custom Rubik's Cube with all-black faces for her minimalist brother. The customization fee is based on the total surface area. For a cube with a 3-inch edge:</p>
+                        <p className="font-mono text-sm mt-2">SA = 6 × (3)² = 54 in²</p>
+                    </div>
+                </div>
+                 <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Cylindrical Tank</h4>
+                    <p>The surface area of a closed cylinder includes two circular bases and the lateral surface. The formulas are:</p>
+                     <ul className="list-disc list-inside pl-4 font-mono text-sm bg-background p-2 rounded-md my-2">
+                        <li>Base SA = 2πr²</li>
+                        <li>Lateral SA = 2πrh</li>
+                        <li>Total SA = 2πr(r + h)</li>
+                    </ul>
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: The Fish Tank Bath</h5>
+                        <p className="text-sm mt-2">Jeremy, an eccentric bather, wants to know if his cylindrical fish tank loses heat faster than a standard bathtub. To find out, he calculates the surface area of his tank, which has a height of 5 feet and a radius of 3 feet:</p>
+                        <p className="font-mono text-sm mt-2">Total SA = 2π × 3(3 + 5) ≈ 150.796 ft²</p>
+                    </div>
+                </div>
+                <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Rectangular Tank</h4>
+                    <p>The surface area is the sum of the areas of its six rectangular faces: <code className="font-mono bg-background p-1 rounded-md">SA = 2(lw + lh + wh)</code>.</p>
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: The Surprise Gift Box</h5>
+                        <p className="text-sm mt-2">A sister is wrapping a surprise gift for her brother in a rectangular box measuring 2 ft by 3 ft by 4 ft. To buy the right amount of wrapping paper, she calculates the surface area:</p>
+                        <p className="font-mono text-sm mt-2">SA = 2 × (2×3 + 2×4 + 3×4) = 2 × (6 + 8 + 12) = 52 ft²</p>
+                    </div>
+                </div>
+                 <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Capsule</h4>
+                    <p>A capsule's surface area consists of a cylinder's lateral area and the area of a sphere (formed by the two hemispherical ends): <code className="font-mono bg-background p-1 rounded-md">SA = 4πr² + 2πrh</code>.</p>
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: The Placebo Pill</h5>
+                        <p className="text-sm mt-2">A pharmaceutical designer is creating a new placebo pill and needs to calculate the surface area for a sugar coating. For a capsule with a radius of 0.1 inches and a cylindrical height of 0.4 inches:</p>
+                        <p className="font-mono text-sm mt-2">SA = 4π(0.1)² + 2π(0.1)(0.4) ≈ 0.377 in²</p>
+                    </div>
+                </div>
+                 <div className="space-y-2">
+                    <h4 className="font-semibold text-foreground">Spherical Cap</h4>
+                    <p>The total surface area of a solid spherical cap is the sum of its circular base and its curved surface. The formulas are:</p>
+                    <ul className="list-disc list-inside pl-4 font-mono text-sm bg-background p-2 rounded-md my-2">
+                        <li>Base SA = πr²</li>
+                        <li>Cap SA = 2πRh</li>
+                        <li>Total SA = π(r² + 2Rh)</li>
+                    </ul>
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                        <h5 className="font-semibold">Example: A Piece of the Globe</h5>
+                        <p className="text-sm mt-2">Jennifer takes a segment of her brother's globe to have as her own. To find the surface area of her hollow piece (the cap itself, without the base), from a globe with radius (R) of 0.9 feet and a cap height (h) of 0.6 feet, she calculates:</p>
+                        <p className="font-mono text-sm mt-2">Cap SA = 2π × 0.9 × 0.6 ≈ 3.393 ft²</p>
+                    </div>
+                </div>
             </AccordionContent>
         </AccordionItem>
     </Accordion>
 );
+
 
 export default function SurfaceAreaPage() {
   return (
