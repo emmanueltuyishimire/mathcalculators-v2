@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Factor Calculator - Find All Factors and Prime Factors',
+    title: 'Factor Calculator',
     description: 'A free online calculator to find all factors and the prime factorization of any given integer. Includes explanations and a factor tree example.',
 };
 

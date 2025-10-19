@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-  title: 'Trigonometry Calculator Online – Free & Accurate',
+  title: 'Trigonometry Calculator',
   description: 'Use our free online trigonometry calculator to solve math problems. Supports fractions, trig, logs, exponents, and more. Casio & TI features included.',
 };
 

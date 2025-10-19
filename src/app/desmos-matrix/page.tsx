@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-    title: 'Desmos Matrix Calculator – Interactive Online Tool',
+    title: 'Desmos Matrix Calculator',
     description: 'A free, interactive Desmos-style matrix calculator. Perform matrix operations, visualize transformations, and learn linear algebra with an intuitive interface.',
 };
 

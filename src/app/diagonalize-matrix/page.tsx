@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'Diagonalize Matrix Calculator – Online Eigenvalue & Eigenvector Tool',
+  title: 'Diagonalize Matrix Calculator',
   description: 'Use our free Diagonalize Matrix Calculator to compute eigenvalues, eigenvectors, and diagonal matrices online. Step-by-step explanations included for learning linear algebra easily.',
 };
 

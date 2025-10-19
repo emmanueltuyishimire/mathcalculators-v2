@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Augmented Matrix & RREF Calculator – Solve Linear Systems',
+    title: 'RREF Calculator',
     description: 'An online calculator to solve systems of linear equations using an augmented matrix and computing the Reduced Row Echelon Form (RREF). Includes step-by-step options.',
 };
 

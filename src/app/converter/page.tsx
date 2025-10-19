@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
-    title: 'Unit Converter',
+    title: 'Unit Converter Calculator',
     description: 'A versatile unit converter for length, mass, temperature, and more. Quickly and accurately convert between different units of measurement.',
 };
 
