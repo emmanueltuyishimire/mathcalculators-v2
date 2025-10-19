@@ -2,9 +2,10 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, Milestone, ShieldCheck, Circle } from 'lucide-react';
+import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, Circle, ShieldCheck, Milestone } from 'lucide-react';
 
 function HeroSection() {
   return (
@@ -15,11 +16,11 @@ function HeroSection() {
       }}
     >
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
-        <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
-            Unlock Your Potential with Our Free Calculators
+        <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
+          The Ultimate Free Online Calculator
         </h1>
-        <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
-            From basic arithmetic to advanced calculus, our comprehensive suite of calculators is designed to provide instant, accurate solutions. Whether you're a student, professional, or just curious, find the right tool for your needs — all for free.
+        <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
+          From basic arithmetic to advanced calculus, our comprehensive suite of calculators is designed for students, professionals, and the perpetually curious. Get instant, accurate answers and master complex concepts with our easy-to-use tools—all for free. Find your calculator and start solving.
         </p>
            <Button asChild variant="secondary" size="lg" className="mt-6">
             <Link href="#tools">Explore Calculators</Link>
@@ -32,67 +33,71 @@ function HeroSection() {
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
+        image: "/math%20calculator%20background%20image%201.webp",
         tools: [
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
-            { href: '/scientific', label: 'Scientific', icon: FlaskConical },
-            { href: '/algebra', label: 'Algebra', icon: Type },
-            { href: '/fraction', label: 'Fraction', icon: Divide },
-            { href: '/percentage', label: 'Percentage', icon: Percent },
-            { href: '/exponent', label: 'Exponent', icon: Superscript },
-            { href: '/log', label: 'Logarithm', icon: FunctionSquare },
-            { href: '/root', label: 'Root', icon: Radical },
-            { href: '/rounding', label: 'Rounding', icon: CheckCircle },
-            { href: '/factor', label: 'Factor', icon: Gavel },
-            { href: '/gcf', label: 'GCF', icon: Hand },
-            { href: '/lcm', label: 'LCM', icon: Proportions },
-            { href: '/binary', label: 'Binary', icon: Binary },
-            { href: '/hex', label: 'Hexadecimal', icon: Code },
-            { href: '/big-number', label: 'Big Number', icon: InfinityIcon },
+            { href: '/scientific', label: 'Scientific Calculator', icon: FlaskConical },
+            { href: '/algebra', label: 'Algebra Calculator', icon: Type },
+            { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
+            { href: '/percentage', label: 'Percentage Calculator', icon: Percent },
+            { href: '/exponent', label: 'Exponent Calculator', icon: Superscript },
+            { href: '/log', label: 'Logarithm Calculator', icon: FunctionSquare },
+            { href: '/root', label: 'Root Calculator', icon: Radical },
+            { href: '/rounding', label: 'Rounding Calculator', icon: CheckCircle },
+            { href: '/factor', label: 'Factor Calculator', icon: Gavel },
+            { href: '/gcf', label: 'GCF Calculator', icon: Hand },
+            { href: '/lcm', label: 'LCM Calculator', icon: Proportions },
+            { href: '/binary', label: 'Binary Calculator', icon: Binary },
+            { href: '/hex', label: 'Hexadecimal Calculator', icon: Code },
+            { href: '/big-number', label: 'Big Number Calculator', icon: InfinityIcon },
         ]
     },
     {
         title: "Geometry & Trigonometry",
+        image: "/math%20calculator%20background%20image7.webp",
         tools: [
-            { href: '/geometry', label: 'Geometry', icon: Square },
-            { href: '/trigonometry', label: 'Trigonometry', icon: MoreVertical },
-            { href: '/pythagorean', label: 'Pythagorean', icon: Sigma },
-            { href: '/right-triangle', label: 'Right Triangle', icon: Triangle },
-            { href: '/slope', label: 'Slope', icon: TrendingUp },
-            { href: '/distance', label: 'Distance', icon: Move3d },
-            { href: '/geometry/area', label: 'Area', icon: Square },
-            { href: '/geometry/volume', label: 'Volume', icon: Volume },
-            { href: '/geometry/surface-area', label: 'Surface Area', icon: Waves },
-            { href: '/geometry/circle', label: 'Circle', icon: Circle },
+            { href: '/geometry', label: 'Geometry Calculators', icon: Square },
+            { href: '/trigonometry', label: 'Trigonometry Calculator', icon: MoreVertical },
+            { href: '/pythagorean', label: 'Pythagorean Theorem Calculator', icon: Sigma },
+            { href: '/right-triangle', label: 'Right Triangle Calculator', icon: Triangle },
+            { href: '/slope', label: 'Slope Calculator', icon: TrendingUp },
+            { href: '/distance', label: 'Distance Calculator', icon: Move3d },
+            { href: '/geometry/area', label: 'Area Calculator', icon: Square },
+            { href: '/geometry/volume', label: 'Volume Calculator', icon: Volume },
+            { href: '/geometry/surface-area', label: 'Surface Area Calculator', icon: Waves },
+            { href: '/geometry/circle', label: 'Circle Calculator', icon: Circle },
         ]
     },
     {
         title: "Statistics & Probability",
+        image: "/math%20calculator%20background%20image%203.webp",
         tools: [
-            { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
-            { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode', icon: BarChartHorizontal },
-            { href: '/statistics/standard-deviation', label: 'Standard Deviation', icon: Sigma },
-            { href: '/statistics/sample-size', label: 'Sample Size', icon: Percent },
-            { href: '/statistics/probability', label: 'Probability', icon: Percent },
-            { href: '/statistics/permutation-combination', label: 'Permutation & Combination', icon: FunctionSquare },
-            { href: '/statistics/z-score', label: 'Z-Score', icon: Sigma },
-            { href: '/statistics/confidence-interval', label: 'Confidence Interval', icon: ShieldCheck },
-            { href: '/statistics/sequences', label: 'Sequences', icon: Milestone },
-             { href: '/random', label: 'Random Number', icon: Shuffle },
+            { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
+            { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
+            { href: '/statistics/standard-deviation', label: 'Standard Deviation Calculator', icon: Sigma },
+            { href: '/statistics/sample-size', label: 'Sample Size Calculator', icon: Percent },
+            { href: '/statistics/probability', label: 'Probability Calculator', icon: Percent },
+            { href: '/statistics/permutation-combination', label: 'Permutation & Combination Calculator', icon: FunctionSquare },
+            { href: '/statistics/z-score', label: 'Z-Score Calculator', icon: Sigma },
+            { href: '/statistics/confidence-interval', label: 'Confidence Interval Calculator', icon: ShieldCheck },
+            { href: '/statistics/sequences', label: 'Sequence Calculators', icon: Milestone },
+             { href: '/random', label: 'Random Number Generator', icon: Shuffle },
         ]
     },
     {
         title: "Advanced & Specialty",
+        image: "/math%20calculator%20background%20image%201.webp",
         tools: [
-            { href: '/calculus', label: 'Calculus', icon: Sigma },
-            { href: '/matrix', label: 'Matrix', icon: Table },
-            { href: '/rref', label: 'RREF', icon: Sigma },
-            { href: '/desmos-matrix', label: 'Desmos Matrix', icon: Table },
-            { href: '/diagonalize-matrix', label: 'Diagonalize Matrix', icon: Table },
+            { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
+            { href: '/matrix', label: 'Matrix Calculators', icon: Table },
+            { href: '/rref', label: 'RREF Calculator', icon: Sigma },
+            { href: '/desmos-matrix', label: 'Desmos Matrix Calculator', icon: Table },
+            { href: '/diagonalize-matrix', label: 'Diagonalize Matrix Calculator', icon: Table },
             { href: '/converter', label: 'Unit Converter', icon: Replace },
-            { href: '/half-life', label: 'Half-Life', icon: Atom },
-            { href: '/percent-error', label: 'Percent Error', icon: AlertTriangle },
-            { href: '/ratio', label: 'Ratio', icon: Proportions },
-            { href: '/destiny-matrix', label: 'Destiny Matrix', icon: Star },
+            { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
+            { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
+            { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
+            { href: '/destiny-matrix', label: 'Destiny Matrix Calculator', icon: Star },
         ]
     }
 ];
@@ -104,10 +109,21 @@ export default function Home() {
       <HeroSection />
 
       <main className="flex-1 p-4 md:p-6 lg:p-12">
-        <section id="tools" className="space-y-12">
+        <section id="tools" className="space-y-16">
             {calculatorCategories.map(category => (
                 <div key={category.title}>
-                    <h2 className="text-3xl font-bold text-center mb-8">{category.title}</h2>
+                    <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg">
+                        <Image
+                            src={category.image}
+                            alt={`${category.title} category background`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <h2 className="text-3xl md:text-4xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                         {category.tools.map((tool) => (
                             <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
