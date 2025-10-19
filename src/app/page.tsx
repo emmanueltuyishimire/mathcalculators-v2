@@ -5,15 +5,11 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle } from 'lucide-react';
-import { useState, useEffect } from 'react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 function HeroSection() {
   return (
-    <section 
-      className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
-      style={{ backgroundImage: "url('/math-calculator-background-image1.webp')" }}
-    >
+    <section className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center hero-background">
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-primary-foreground">
             Master Geometry
