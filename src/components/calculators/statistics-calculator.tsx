@@ -25,8 +25,8 @@ interface Stats {
 
 export default function StatisticsCalculator() {
   const [display, setDisplay] = useState('0');
-  const [dataset, setDataset] = useState<number[]>([]);
-  const [csvData, setCsvData] = useState('10, 2, 38, 23, 38, 23, 21');
+  const [dataset, setDataset] = useState<number[]>([5, 10, 15, 20, 25]);
+  const [csvData, setCsvData] = useState('5, 10, 15, 20, 25');
   const { toast } = useToast();
 
   const stats: Stats | null = useMemo(() => {
@@ -207,7 +207,7 @@ export default function StatisticsCalculator() {
                   id="csvData"
                   value={csvData}
                   onChange={(e) => setCsvData(e.target.value)}
-                  placeholder="e.g., 10, 2, 38, 23, 38, 23, 21"
+                  placeholder="e.g., 5, 10, 15, 20, 25"
                   className="h-24 font-mono"
               />
               <Button onClick={handleLoadCsv} className="w-full">Load Data</Button>

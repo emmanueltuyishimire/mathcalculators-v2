@@ -49,7 +49,7 @@ const confidenceLevels = [
 
 
 export default function StandardDeviationCalculator() {
-  const [data, setData] = useState('10, 12, 23, 23, 16, 23, 21, 16');
+  const [data, setData] = useState('5, 10, 15, 20, 25');
   const [type, setType] = useState<'population' | 'sample'>('population');
   const [calculatedStats, setCalculatedStats] = useState<Stats | null>(null);
 
@@ -126,7 +126,7 @@ export default function StandardDeviationCalculator() {
             id="data"
             value={data}
             onChange={(e) => setData(e.target.value)}
-            placeholder="e.g., 10, 12, 23, 23, 16, 23, 21, 16"
+            placeholder="e.g., 5, 10, 15, 20, 25"
             className="h-24 font-mono"
             aria-label="Enter numbers separated by commas"
           />

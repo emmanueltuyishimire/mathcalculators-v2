@@ -11,9 +11,9 @@ import { jStat } from 'jstat';
 
 function ZScoreFormulaCalculator() {
     const { toast } = useToast();
-    const [rawScore, setRawScore] = useState('5');
-    const [mean, setMean] = useState('3');
-    const [stdDev, setStdDev] = useState('2');
+    const [rawScore, setRawScore] = useState('85');
+    const [mean, setMean] = useState('75');
+    const [stdDev, setStdDev] = useState('5');
     const [zScore, setZScore] = useState<number | null>(null);
 
     const calculate = () => {
@@ -74,7 +74,7 @@ function ZScoreFormulaCalculator() {
 
 function ZScoreProbabilityConverter() {
     const { toast } = useToast();
-    const [zScore, setZScore] = useState('2');
+    const [zScore, setZScore] = useState('1.5');
     const [results, setResults] = useState<any>(null);
 
     const calculate = () => {
@@ -126,8 +126,8 @@ function ZScoreProbabilityConverter() {
 
 function ZScoreRangeCalculator() {
     const { toast } = useToast();
-    const [z1, setZ1] = useState('-1');
-    const [z2, setZ2] = useState('0');
+    const [z1, setZ1] = useState('-0.5');
+    const [z2, setZ2] = useState('1.0');
     const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {

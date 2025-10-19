@@ -72,7 +72,7 @@ const degToDMS = (deg: number) => {
 export default function RightTriangleCalculator() {
     const { toast } = useToast();
     
-    const [values, setValues] = useState({ a: '3', b: '', c: '5', alpha: '', beta: '' });
+    const [values, setValues] = useState({ a: '5', b: '', c: '', alpha: '30', beta: '' });
     const [angleUnit, setAngleUnit] = useState<AngleUnit>('degree');
     const [results, setResults] = useState<CalculationResult | null>(null);
 
@@ -240,7 +240,9 @@ export default function RightTriangleCalculator() {
                             <CardDescription>{givenString()}</CardDescription>
                          </CardHeader>
                          <CardContent className="space-y-2 text-sm font-mono">
-                             <p><b>b = {results.b.toFixed(4)}</b></p>
+                             <p><b>Side a = {results.a.toFixed(4)}</b></p>
+                             <p><b>Side b = {results.b.toFixed(4)}</b></p>
+                             <p><b>Hypotenuse c = {results.c.toFixed(4)}</b></p>
                              <p><b>∠α = {results.alpha.deg.toFixed(4)}° = {results.alpha.dms} = {results.alpha.rad.toFixed(4)} rad</b></p>
                              <p><b>∠β = {results.beta.deg.toFixed(4)}° = {results.beta.dms} = {results.beta.rad.toFixed(4)} rad</b></p>
                              <p><b>Altitude h = {results.h.toFixed(4)}</b></p>
@@ -269,4 +271,3 @@ export default function RightTriangleCalculator() {
         </Card>
     );
 }
-

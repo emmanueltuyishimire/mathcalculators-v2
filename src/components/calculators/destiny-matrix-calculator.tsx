@@ -41,7 +41,7 @@ const numberInterpretations: { [key: number]: string } = {
 
 export default function DestinyMatrixCalculator() {
   const { toast } = useToast();
-  const [birthDate, setBirthDate] = useState('1990-08-15');
+  const [birthDate, setBirthDate] = useState('1985-11-25');
   const [matrixPoints, setMatrixPoints] = useState<{[key:string]: number} | null>(null);
   const [analysis, setAnalysis] = useState<{ [key: string]: string }>({});
 

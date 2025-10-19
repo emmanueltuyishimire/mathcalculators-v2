@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 export default function AlgebraCalculator() {
-  const [equation, setEquation] = useState('2x + 4 = 10');
+  const [equation, setEquation] = useState('3x - 5 = 16');
   const [result, setResult] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,8 +18,8 @@ export default function AlgebraCalculator() {
     setTimeout(() => {
       // A real implementation would parse and solve the equation.
       // For this demo, we'll return a placeholder result based on the example.
-      if (equation === '2x + 4 = 10') {
-        setResult('Solution: x = 3');
+      if (equation === '3x - 5 = 16') {
+        setResult('Solution: x = 7');
       } else {
         setResult('Could not solve equation. Please use a simple linear format like "ax + b = c".');
       }
@@ -40,7 +40,7 @@ export default function AlgebraCalculator() {
             id="equation"
             value={equation}
             onChange={(e) => setEquation(e.target.value)}
-            placeholder="e.g., 2x + 4 = 10"
+            placeholder="e.g., 3x - 5 = 16"
             className="text-lg font-mono"
           />
         </div>

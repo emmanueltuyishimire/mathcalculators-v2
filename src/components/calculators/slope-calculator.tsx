@@ -25,8 +25,8 @@ interface TwoPointResult {
 
 const TwoPointsCalculator = () => {
   const { toast } = useToast();
-  const [p1, setP1] = useState({ x: '1', y: '1' });
-  const [p2, setP2] = useState({ x: '2', y: '2' });
+  const [p1, setP1] = useState({ x: '3', y: '5' });
+  const [p2, setP2] = useState({ x: '8', y: '12' });
   const [result, setResult] = useState<TwoPointResult | null>(null);
 
   const calculate = () => {
@@ -169,10 +169,10 @@ const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title:
 
 const OnePointSlopeCalculator = () => {
     const { toast } = useToast();
-    const [point, setPoint] = useState({ x: '1', y: '1' });
-    const [distance, setDistance] = useState('5');
-    const [slope, setSlope] = useState('0.75');
-    const [angle, setAngle] = useState('36.87');
+    const [point, setPoint] = useState({ x: '2', y: '4' });
+    const [distance, setDistance] = useState('10');
+    const [slope, setSlope] = useState('1.5');
+    const [angle, setAngle] = useState('56.31');
     const [inputType, setInputType] = useState<'slope' | 'angle'>('slope');
     const [result, setResult] = useState<OnePointResult | null>(null);
 

@@ -27,9 +27,9 @@ const confidenceLevels = [
 
 export default function ConfidenceIntervalCalculator() {
     const { toast } = useToast();
-    const [sampleSize, setSampleSize] = useState('50');
-    const [sampleMean, setSampleMean] = useState('20.6');
-    const [stdDev, setStdDev] = useState('3.2');
+    const [sampleSize, setSampleSize] = useState('100');
+    const [sampleMean, setSampleMean] = useState('85');
+    const [stdDev, setStdDev] = useState('4');
     const [confidence, setConfidence] = useState("1.96");
     const [result, setResult] = useState<{ marginOfError: number, lowerBound: number, upperBound: number } | null>(null);
 

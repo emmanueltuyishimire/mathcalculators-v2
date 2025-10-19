@@ -166,7 +166,7 @@ const VectorDisplay = ({ vector, title }: { vector: number[] | null, title: stri
 export default function DiagonalizeMatrixCalculator() {
   const { toast } = useToast();
   const [size, setSize] = useState(2);
-  const [matrixA, setMatrixA] = useState<Matrix>(() => [[4, 1], [2, 3]]);
+  const [matrixA, setMatrixA] = useState<Matrix>(() => [[5, -1], [3, 1]]);
 
   const [eigenvalues, setEigenvalues] = useState<number[] | null>(null);
   const [eigenvectors, setEigenvectors] = useState<Matrix | null>(null);

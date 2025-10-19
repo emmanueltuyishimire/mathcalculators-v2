@@ -20,8 +20,8 @@ const factorial = (n: number): number => {
 
 export default function PermutationCombinationCalculator() {
     const { toast } = useToast();
-    const [n, setN] = useState('6');
-    const [r, setR] = useState('2');
+    const [n, setN] = useState('10');
+    const [r, setR] = useState('3');
     const [results, setResults] = useState<{ permutation: number, combination: number } | null>(null);
 
     const calculate = () => {

@@ -24,8 +24,8 @@ interface TwoEventResult {
 
 function TwoEventsCalculator() {
   const { toast } = useToast();
-  const [pA, setPA] = useState('0.5');
-  const [pB, setPB] = useState('0.4');
+  const [pA, setPA] = useState('0.6');
+  const [pB, setPB] = useState('0.7');
   const [results, setResults] = useState<TwoEventResult | null>(null);
 
   const calculate = () => {
@@ -117,10 +117,10 @@ function TwoEventsCalculator() {
 
 function SeriesEventsCalculator() {
     const { toast } = useToast();
-    const [pA, setPA] = useState('0.6');
-    const [nA, setNA] = useState('5');
-    const [pB, setPB] = useState('0.3');
-    const [nB, setNB] = useState('3');
+    const [pA, setPA] = useState('0.8');
+    const [nA, setNA] = useState('4');
+    const [pB, setPB] = useState('0.2');
+    const [nB, setNB] = useState('5');
     const [results, setResults] = useState<any>(null);
 
     const calculate = () => {
@@ -198,10 +198,10 @@ const confidenceIntervals = [
 
 function NormalDistributionCalculator() {
     const { toast } = useToast();
-    const [mean, setMean] = useState('0');
-    const [std, setStd] = useState('1');
-    const [lb, setLb] = useState('-1');
-    const [rb, setRb] = useState('1');
+    const [mean, setMean] = useState('5');
+    const [std, setStd] = useState('2');
+    const [lb, setLb] = useState('4');
+    const [rb, setRb] = useState('6');
     const [result, setResult] = useState<NormalDistResult | null>(null);
 
     const calculate = () => {

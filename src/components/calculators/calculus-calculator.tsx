@@ -82,10 +82,10 @@ export default function CalculusCalculator() {
               title="Derivative"
               description="Find the derivative of a function with respect to x."
               inputLabel="f(x) ="
-              initialValue="x^2"
+              initialValue="x^3"
               placeholder="e.g., x^3 + 2x"
               resultPrefix="d/dx"
-              mockResult="2x"
+              mockResult="3x^2"
             />
           </TabsContent>
           <TabsContent value="integral" className="mt-6">
@@ -93,10 +93,10 @@ export default function CalculusCalculator() {
               title="Integral"
               description="Find the indefinite integral of a function with respect to x."
               inputLabel="∫ f(x) dx"
-              initialValue="2x"
+              initialValue="3x^2"
               placeholder="e.g., 3x^2"
               resultPrefix="∫"
-              mockResult="x^2 + C"
+              mockResult="x^3 + C"
             />
           </TabsContent>
           <TabsContent value="limit" className="mt-6">
@@ -104,10 +104,10 @@ export default function CalculusCalculator() {
               title="Limit"
               description="Find the limit of a function as x approaches a value."
               inputLabel="lim x→a f(x)"
-              initialValue="(x^2 - 1)/(x - 1) as x->1"
+              initialValue="(x^2 - 4)/(x - 2) as x->2"
               placeholder="e.g., (sin(x)/x) as x->0"
               resultPrefix="lim"
-              mockResult="2"
+              mockResult="4"
             />
           </TabsContent>
         </Tabs>

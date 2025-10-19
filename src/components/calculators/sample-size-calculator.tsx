@@ -30,7 +30,7 @@ function FindSampleSize() {
     const [confidence, setConfidence] = useState("1.96");
     const [marginError, setMarginError] = useState("5");
     const [popProp, setPopProp] = useState("50");
-    const [popSize, setPopSize] = useState("");
+    const [popSize, setPopSize] = useState("20000");
     const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {
@@ -100,8 +100,8 @@ function FindSampleSize() {
 function FindMarginOfError() {
     const { toast } = useToast();
     const [confidence, setConfidence] = useState("1.96");
-    const [sampleSize, setSampleSize] = useState("100");
-    const [popProp, setPopProp] = useState("60");
+    const [sampleSize, setSampleSize] = useState("500");
+    const [popProp, setPopProp] = useState("50");
     const [popSize, setPopSize] = useState("");
     const [result, setResult] = useState<number | null>(null);
 

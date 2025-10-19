@@ -27,7 +27,7 @@ const StatDisplay = ({ label, value }: { label: string; value: string | number }
 );
 
 export default function MeanMedianModeCalculator() {
-  const [data, setData] = useState('10, 2, 38, 23, 38, 23, 21');
+  const [data, setData] = useState('8, 12, 12, 15, 17, 22, 23, 30');
   const [stats, setStats] = useState<Stats | null>(null);
 
   const calculate = () => {
@@ -97,7 +97,7 @@ export default function MeanMedianModeCalculator() {
                         id="data"
                         value={data}
                         onChange={(e) => setData(e.target.value)}
-                        placeholder="e.g., 10, 2, 38, 23, 38, 23, 21"
+                        placeholder="e.g., 8, 12, 12, 15, 17, 22, 23, 30"
                         className="h-24 font-mono text-base"
                         aria-label="Enter numbers separated by commas"
                     />

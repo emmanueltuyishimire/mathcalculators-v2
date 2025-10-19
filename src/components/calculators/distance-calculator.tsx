@@ -24,8 +24,8 @@ interface TwoDResult {
 // 2D Calculator
 const TwoDCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ x: '1', y: '1' });
-    const [p2, setP2] = useState({ x: '4', y: '5' });
+    const [p1, setP1] = useState({ x: '2', y: '3' });
+    const [p2, setP2] = useState({ x: '10', y: '8' });
     const [result, setResult] = useState<TwoDResult | null>(null);
 
     const calculate = () => {
@@ -155,8 +155,8 @@ interface ThreeDResult {
 // 3D Calculator
 const ThreeDCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ x: '1', y: '1', z: '1' });
-    const [p2, setP2] = useState({ x: '2', y: '2', z: '2' });
+    const [p1, setP1] = useState({ x: '1', y: '2', z: '3' });
+    const [p2, setP2] = useState({ x: '4', y: '5', z: '6' });
     const [result, setResult] = useState<ThreeDResult | null>(null);
 
     const calculate = () => {
@@ -236,8 +236,8 @@ const ThreeDCalculator = () => {
 // Latitude/Longitude Calculator
 const LatLongCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ lat: '38.8976', lon: '-77.0366' }); // White House
-    const [p2, setP2] = useState({ lat: '39.9496', lon: '-75.1503' }); // Independence Hall
+    const [p1, setP1] = useState({ lat: '40.7128', lon: '-74.0060' }); // New York
+    const [p2, setP2] = useState({ lat: '34.0522', lon: '-118.2437' }); // Los Angeles
     const [distance, setDistance] = useState<{ km: number, miles: number } | null>(null);
 
     const calculate = () => {
