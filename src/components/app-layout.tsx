@@ -45,14 +45,6 @@ const navItems = [
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
-const externalLinks = [
-    { href: "https://math.calculation.site", label: "Math Calculators", description: "A wide range of calculators for all your mathematical needs.", icon: Sigma },
-    { href: "https://health.calculation.site", label: "Health & Fitness", description: "Calculators for BMI, BMR, TDEE, and other health metrics.", icon: Heart },
-    { href: "https://finance.calculation.site", label: "Financial Calculators", description: "Tools for loans, investments, mortgages, and more.", icon: Landmark },
-    { href: "https://unit-convertor.calculation.site", label: "Unit Converter", description: "A comprehensive tool for converting between various units.", icon: MoreVertical },
-    { href: "https://calculation.site", label: "Blog", description: "Read articles and guides about calculations and our tools.", icon: BookOpen },
-]
-
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -91,27 +83,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     {item.label}
                     </Link>
                 ))}
-                 <NavigationMenu orientation="vertical" className="w-full">
-                    <NavigationMenuList className="flex-col items-start space-x-0 space-y-1 w-full">
-                        <NavigationMenuItem className="w-full">
-                        <NavigationMenuTrigger className="w-full justify-start">More</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul className="grid w-[250px] gap-3 p-4">
-                                {externalLinks.map((link) => (
-                                    <ListItem
-                                        key={link.label}
-                                        title={link.label}
-                                        href={link.href}
-                                        target="_blank"
-                                    >
-                                        {link.description}
-                                    </ListItem>
-                                ))}
-                            </ul>
-                        </NavigationMenuContent>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
                 </nav>
             </SheetContent>
             </Sheet>
@@ -134,23 +105,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                         </Link>
                     </NavigationMenuItem>
                 ))}
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>More</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                             {externalLinks.map((link) => (
-                                <ListItem
-                                    key={link.label}
-                                    title={link.label}
-                                    href={link.href}
-                                    target="_blank"
-                                >
-                                    {link.description}
-                                </ListItem>
-                            ))}
-                        </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
 
@@ -162,29 +116,3 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
