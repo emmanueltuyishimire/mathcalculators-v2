@@ -278,10 +278,6 @@ const OnePointSlopeCalculator = () => {
 
 export default function SlopeCalculator() {
 
-  const handleCalculate = (data: any) => {
-    // This function is now empty as we removed the firestore logic
-  };
-
   return (
     <Card className="shadow-lg">
       <CardContent className="p-6">
