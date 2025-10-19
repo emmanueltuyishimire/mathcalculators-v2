@@ -21,13 +21,13 @@ const HowToUseGuide = () => (
                     <strong>Enter a Number:</strong> Type the number you want to round into the "Number" input field.
                 </li>
                 <li>
-                    <strong>Select Rounding Method:</strong> Choose a rounding method from the dropdown (e.g., Round half up, Round down).
+                    <strong>Choose Precision:</strong> Select how you want to round the number from the "Precision" dropdown. You can choose a standard decimal place or enter a custom one by selecting "Custom".
                 </li>
                 <li>
-                    <strong>Choose Precision:</strong> Select how you want to round the number from the "Precision" dropdown. You can choose a standard decimal place or enter a custom one.
+                    <strong>Adjust Settings (Optional):</strong> Click the "Settings" button to open a dialog where you can change the rounding method (e.g., Round half up, Round down, etc.).
                 </li>
                 <li>
-                    <strong>View the Result:</strong> The rounded number will appear automatically in the result field.
+                    <strong>View the Result:</strong> The rounded number will appear automatically in the result field as you make changes.
                 </li>
             </ol>
         </CardContent>
@@ -95,13 +95,6 @@ const RoundingMethodsGuide = () => (
                     <AccordionContent className="space-y-2 text-muted-foreground">
                         <p>Rounds half values to the next integer closer to zero.</p>
                         <p className="font-mono text-sm">5.5 ⇒ 5 | -5.5 ⇒ -5</p>
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="fractions">
-                    <AccordionTrigger>Rounding to Fractions</AccordionTrigger>
-                    <AccordionContent className="space-y-2 text-muted-foreground">
-                        <p>This rounds a value to the nearest multiple of a chosen fraction, which is useful in fields like engineering and carpentry.</p>
-                        <p className="font-mono text-sm">Example (to nearest 1/8): 15.65 ⇒ 15 5/8 (15.625)</p>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
