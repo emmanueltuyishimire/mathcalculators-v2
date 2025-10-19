@@ -25,7 +25,7 @@ const basicTools = [
   { href: '/lcm', label: 'Least Common Multiple', icon: Gavel },
   { href: '/gcf', label: 'Greatest Common Factor', icon: Hand },
   { href: '/factor', label: 'Factor Calculator', icon: Gavel },
-  { href: '#', 'label': 'Rounding Calculator', icon: CheckCircle },
+  { href: '/rounding', 'label': 'Rounding Calculator', icon: CheckCircle },
   { href: '/matrix', label: 'Matrix Calculator', icon: Table },
   { href: '#', label: 'Scientific Notation', icon: Type },
   { href: '#', label: 'Big Number Calculator', icon: InfinityIcon },
