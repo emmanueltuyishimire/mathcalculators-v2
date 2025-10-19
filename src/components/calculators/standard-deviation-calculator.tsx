@@ -49,7 +49,7 @@ const confidenceLevels = [
 
 
 export default function StandardDeviationCalculator() {
-  const [data, setData] = useState('5, 10, 15, 20, 25');
+  const [data, setData] = useState('');
   const [type, setType] = useState<'population' | 'sample'>('population');
   const [calculatedStats, setCalculatedStats] = useState<Stats | null>(null);
 

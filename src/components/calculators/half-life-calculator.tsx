@@ -12,12 +12,12 @@ import { ArrowRightLeft } from 'lucide-react';
 function HalfLifeDecayCalculator() {
     const { toast } = useToast();
     const [values, setValues] = useState({
-        Nt: '10',
-        N0: '100',
-        t: '50',
+        Nt: '',
+        N0: '',
+        t: '',
         t1_2: '',
     });
-    const [fieldToSolve, setFieldToSolve] = useState<'Nt' | 'N0' | 't' | 't1_2'>('t1_2');
+    const [fieldToSolve, setFieldToSolve] = useState<'Nt' | 'N0' | 't' | 't1_2' | null>(null);
 
     const handleInputChange = (field: keyof typeof values, value: string) => {
         const newValues = { ...values, [field]: value };
@@ -26,6 +26,8 @@ function HalfLifeDecayCalculator() {
         
         if (emptyFields.length === 1) {
             setFieldToSolve(emptyFields[0]);
+        } else {
+            setFieldToSolve(null);
         }
         
         setValues(newValues);
@@ -42,7 +44,10 @@ function HalfLifeDecayCalculator() {
         const knownValues = [!isNaN(numNt), !isNaN(numN0), !isNaN(numT), !isNaN(numT1_2)].filter(Boolean).length;
 
         if (knownValues !== 3) {
-            return; // Not enough info to calculate, or too much
+            if (Object.values(values).some(v => v !== '')) {
+                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please provide exactly three values to calculate the fourth.' });
+            }
+            return;
         }
         
         try {
@@ -75,13 +80,9 @@ function HalfLifeDecayCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [values]);
-
     const handleClear = () => {
       setValues({ Nt: '', N0: '', t: '', t1_2: '' });
+      setFieldToSolve(null);
     }
 
     return (
@@ -110,6 +111,7 @@ function HalfLifeDecayCalculator() {
                     </div>
                 </div>
                 <div className="flex gap-2">
+                     <Button onClick={calculate} className="w-full">Calculate</Button>
                     <Button onClick={handleClear} variant="outline" className="w-full">Clear</Button>
                 </div>
             </CardContent>
@@ -119,11 +121,11 @@ function HalfLifeDecayCalculator() {
 
 function HalfLifeConversionCalculator() {
     const { toast } = useToast();
-    const [values, setValues] = useState({ t1_2: '10', tau: '', lambda: '' });
+    const [values, setValues] = useState({ t1_2: '', tau: '', lambda: '' });
 
     const calculate = (changed: 't1_2' | 'tau' | 'lambda', value: string) => {
         const numValue = parseFloat(value);
-        if (isNaN(numValue)) {
+        if (value === '' || isNaN(numValue)) {
             setValues({ t1_2: changed === 't1_2' ? value : '', tau: changed === 'tau' ? value : '', lambda: changed === 'lambda' ? value : '' });
             return;
         }
@@ -144,11 +146,6 @@ function HalfLifeConversionCalculator() {
         }
     };
     
-    // Initial calculation
-    useEffect(() => {
-        calculate('t1_2', '10');
-    }, []);
-
     return (
         <Card>
             <CardHeader>

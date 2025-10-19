@@ -28,9 +28,9 @@ const confidenceLevels = [
 function FindSampleSize() {
     const { toast } = useToast();
     const [confidence, setConfidence] = useState("1.96");
-    const [marginError, setMarginError] = useState("5");
+    const [marginError, setMarginError] = useState('');
     const [popProp, setPopProp] = useState("50");
-    const [popSize, setPopSize] = useState("20000");
+    const [popSize, setPopSize] = useState("");
     const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {
@@ -40,11 +40,14 @@ function FindSampleSize() {
         const N = popSize ? parseFloat(popSize) : Infinity;
 
         if (isNaN(z) || isNaN(e) || isNaN(p) || p < 0 || p > 1 || e <= 0) {
-            toast({
-                variant: 'destructive',
-                title: "Invalid Input",
-                description: "Please check your inputs. Margin of error must be positive and proportion between 0-100.",
-            });
+            if(marginError) {
+                toast({
+                    variant: 'destructive',
+                    title: "Invalid Input",
+                    description: "Please check your inputs. Margin of error must be positive and proportion between 0-100.",
+                });
+            }
+            setResult(null);
             return;
         }
 
@@ -100,7 +103,7 @@ function FindSampleSize() {
 function FindMarginOfError() {
     const { toast } = useToast();
     const [confidence, setConfidence] = useState("1.96");
-    const [sampleSize, setSampleSize] = useState("500");
+    const [sampleSize, setSampleSize] = useState("");
     const [popProp, setPopProp] = useState("50");
     const [popSize, setPopSize] = useState("");
     const [result, setResult] = useState<number | null>(null);
@@ -112,11 +115,14 @@ function FindMarginOfError() {
         const N = popSize ? parseFloat(popSize) : Infinity;
 
         if (isNaN(z) || isNaN(n) || isNaN(p) || p < 0 || p > 1 || n <= 0) {
-            toast({
-                variant: 'destructive',
-                title: "Invalid Input",
-                description: "Please check your inputs. Sample size must be positive and proportion between 0-100.",
-            });
+             if (sampleSize) {
+                toast({
+                    variant: 'destructive',
+                    title: "Invalid Input",
+                    description: "Please check your inputs. Sample size must be positive and proportion between 0-100.",
+                });
+            }
+            setResult(null);
             return;
         }
 

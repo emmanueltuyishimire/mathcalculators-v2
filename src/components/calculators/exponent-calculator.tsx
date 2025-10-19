@@ -12,9 +12,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 export default function ExponentCalculator() {
     const { toast } = useToast();
-    const [base, setBase] = useState('2');
-    const [exponent, setExponent] = useState('5');
-    const [result, setResult] = useState('32');
+    const [base, setBase] = useState('');
+    const [exponent, setExponent] = useState('');
+    const [result, setResult] = useState('');
     const [useE, setUseE] = useState(false);
     const [steps, setSteps] = useState<string | null>(null);
 

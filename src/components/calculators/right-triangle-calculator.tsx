@@ -72,7 +72,7 @@ const degToDMS = (deg: number) => {
 export default function RightTriangleCalculator() {
     const { toast } = useToast();
     
-    const [values, setValues] = useState({ a: '5', b: '', c: '', alpha: '30', beta: '' });
+    const [values, setValues] = useState({ a: '', b: '', c: '', alpha: '', beta: '' });
     const [angleUnit, setAngleUnit] = useState<AngleUnit>('degree');
     const [results, setResults] = useState<CalculationResult | null>(null);
 
@@ -174,12 +174,6 @@ export default function RightTriangleCalculator() {
         setValues({ a: '', b: '', c: '', alpha: '', beta: ''});
         setResults(null);
     }
-    
-    // Initial calculation on mount
-    useEffect(() => {
-        calculate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const givenString = () => {
         if (!results || !results.inputs) return '';

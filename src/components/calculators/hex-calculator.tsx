@@ -12,8 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 // --- Hex Arithmetic Calculator ---
 const HexArithmeticCalculator = () => {
     const { toast } = useToast();
-    const [val1, setVal1] = useState('8AB');
-    const [val2, setVal2] = useState('B78');
+    const [val1, setVal1] = useState('');
+    const [val2, setVal2] = useState('');
     const [op, setOp] = useState('+');
     const [result, setResult] = useState('');
     const [decimalResult, setDecimalResult] = useState('');
@@ -21,13 +21,13 @@ const HexArithmeticCalculator = () => {
     const calculate = () => {
         try {
             const hexRegex = /^[0-9a-fA-F]+$/;
-            if ((val1 && !hexRegex.test(val1)) || (val2 && !hexRegex.test(val2))) {
-                if (val1 || val2) throw new Error("Inputs must be valid hexadecimal strings.");
+            if (!val1 || !val2) {
                 setResult('');
                 setDecimalResult('');
                 return;
             }
-            if (!val1 || !val2) {
+            if ((val1 && !hexRegex.test(val1)) || (val2 && !hexRegex.test(val2))) {
+                if (val1 || val2) throw new Error("Inputs must be valid hexadecimal strings.");
                 setResult('');
                 setDecimalResult('');
                 return;
@@ -103,17 +103,17 @@ const HexArithmeticCalculator = () => {
 // --- Hex to Decimal Converter ---
 const HexToDecConverter = () => {
     const { toast } = useToast();
-    const [hex, setHex] = useState('DAD');
+    const [hex, setHex] = useState('');
     const [decimal, setDecimal] = useState('');
 
     const convert = () => {
         try {
-             if (hex && !/^[0-9a-fA-F]+$/.test(hex)) {
-                throw new Error("Input must be a valid hexadecimal string.");
-            }
             if (!hex) {
                  setDecimal('');
                  return;
+            }
+             if (hex && !/^[0-9a-fA-F]+$/.test(hex)) {
+                throw new Error("Input must be a valid hexadecimal string.");
             }
             setDecimal(BigInt(`0x${hex}`).toString());
         } catch (e: any) {
@@ -148,7 +148,7 @@ const HexToDecConverter = () => {
 // --- Decimal to Hex Converter ---
 const DecToHexConverter = () => {
     const { toast } = useToast();
-    const [decimal, setDecimal] = useState('225');
+    const [decimal, setDecimal] = useState('');
     const [hex, setHex] = useState('');
 
     const convert = () => {

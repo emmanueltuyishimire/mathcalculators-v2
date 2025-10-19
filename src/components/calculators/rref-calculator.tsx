@@ -114,7 +114,7 @@ export default function RrefCalculator() {
   const { toast } = useToast();
   const [rows, setRows] = useState(3);
   const [cols, setCols] = useState(4);
-  const [matrix, setMatrix] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(4).fill(0)));
+  const [matrix, setMatrix] = useState<Matrix>(() => Array(3).fill(0).map(() => Array(4).fill('')));
   const [history, setHistory] = useState<Matrix[]>([]);
   const [solution, setSolution] = useState<string>('');
   const [rrefMatrix, setRrefMatrix] = useState<Matrix | null>(null);
@@ -126,7 +126,7 @@ export default function RrefCalculator() {
   const resizeMatrix = useCallback((newRows: number, newCols: number, currentMatrix: Matrix): Matrix => {
     newRows = Math.max(1, Math.min(newRows, 8));
     newCols = Math.max(2, Math.min(newCols, 9));
-    const newMatrix = Array(newRows).fill(0).map(() => Array(newCols).fill(0));
+    const newMatrix: Matrix = Array(newRows).fill(0).map(() => Array(newCols).fill(''));
     for (let i = 0; i < Math.min(newRows, currentMatrix.length); i++) {
       for (let j = 0; j < Math.min(newCols, currentMatrix[0]?.length || 0); j++) {
         newMatrix[i][j] = currentMatrix[i][j];
@@ -146,7 +146,7 @@ export default function RrefCalculator() {
 
   const updateCurrentMatrix = (newMatrix: Matrix, toastTitle: string, toastDescription: string) => {
     setHistory(prev => [...prev, matrix]);
-    setMatrix(newMatrix);
+    setMatrix(newMatrix.map(row => row.map(cell => typeof cell === 'number' ? cell.toFixed(4).replace(/\.?0+$/, '') : cell)));
     setRrefMatrix(null);
     setSolution('');
     toast({ title: toastTitle, description: toastDescription });
@@ -203,7 +203,7 @@ export default function RrefCalculator() {
                     lead++;
                     if (cols === lead) {
                         const finalRrefMatrix = numMatrix.map(row => row.map(cell => Number(cell.toFixed(10))));
-                        setRrefMatrix(finalRrefMatrix);
+                        setRrefMatrix(finalRrefMatrix.map(row => row.map(cell => cell.toString())));
                         analyzeSolution(finalRrefMatrix);
                         toast({ title: "RREF Calculated", description: "The matrix is now in row-reduced echelon form." });
                         return;
@@ -226,7 +226,7 @@ export default function RrefCalculator() {
         }
         
         const finalRrefMatrix = numMatrix.map(row => row.map(cell => parseFloat(cell.toPrecision(10))));
-        setRrefMatrix(finalRrefMatrix);
+        setRrefMatrix(finalRrefMatrix.map(row => row.map(cell => cell.toString())));
         analyzeSolution(finalRrefMatrix);
         toast({ title: "RREF Calculated", description: "The matrix is now in row-reduced echelon form." });
     } catch(e: any) {

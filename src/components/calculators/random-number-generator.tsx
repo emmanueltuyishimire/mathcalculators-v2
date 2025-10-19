@@ -12,8 +12,8 @@ import { Textarea } from '../ui/textarea';
 
 const SimpleGenerator = () => {
     const { toast } = useToast();
-    const [lower, setLower] = useState('1');
-    const [upper, setUpper] = useState('100');
+    const [lower, setLower] = useState('');
+    const [upper, setUpper] = useState('');
     const [result, setResult] = useState('');
 
     const generate = () => {
@@ -59,8 +59,8 @@ const SimpleGenerator = () => {
 
 const ComprehensiveGenerator = () => {
     const { toast } = useToast();
-    const [lower, setLower] = useState('0.5');
-    const [upper, setUpper] = useState('150.8');
+    const [lower, setLower] = useState('');
+    const [upper, setUpper] = useState('');
     const [count, setCount] = useState('5');
     const [type, setType] = useState<'integer' | 'decimal'>('decimal');
     const [precision, setPrecision] = useState('10');

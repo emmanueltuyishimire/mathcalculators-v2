@@ -23,8 +23,8 @@ interface CalculationResult {
 
 export default function PythagoreanCalculator() {
     const { toast } = useToast();
-    const [a, setA] = useState('5');
-    const [b, setB] = useState('12');
+    const [a, setA] = useState('');
+    const [b, setB] = useState('');
     const [c, setC] = useState('');
     const [result, setResult] = useState<CalculationResult | null>(null);
 

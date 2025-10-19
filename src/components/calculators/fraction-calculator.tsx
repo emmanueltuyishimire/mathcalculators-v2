@@ -31,13 +31,18 @@ interface BasicCalcResult {
 }
 function BasicFractionCalculator() {
     const { toast } = useToast();
-    const [f1, setF1] = useState({ n: '2', d: '7' });
-    const [f2, setF2] = useState({ n: '3', d: '8' });
+    const [f1, setF1] = useState({ n: '', d: '' });
+    const [f2, setF2] = useState({ n: '', d: '' });
     const [op, setOp] = useState('+');
     const [result, setResult] = useState<BasicCalcResult | null>(null);
 
     const calculate = () => {
         try {
+            if (!f1.n || !f1.d || !f2.n || !f2.d) {
+                setResult(null);
+                return;
+            }
+
             const n1 = BigInt(f1.n);
             let d1 = BigInt(f1.d);
             const n2 = BigInt(f2.n);
@@ -125,11 +130,6 @@ function BasicFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -188,13 +188,18 @@ interface MixedCalcResult {
 }
 function MixedNumbersCalculator() {
     const { toast } = useToast();
-    const [m1, setM1] = useState({ w: '-2', n: '3', d: '4' });
-    const [m2, setM2] = useState({ w: '3', n: '5', d: '7' });
+    const [m1, setM1] = useState({ w: '', n: '', d: '' });
+    const [m2, setM2] = useState({ w: '', n: '', d: '' });
     const [op, setOp] = useState('+');
     const [result, setResult] = useState<MixedCalcResult | null>(null);
 
     const calculate = () => {
         try {
+             if (!m1.w || !m1.n || !m1.d || !m2.w || !m2.n || !m2.d) {
+                setResult(null);
+                return;
+            }
+
             const w1 = BigInt(m1.w || '0'), n1 = BigInt(m1.n), d1 = BigInt(m1.d);
             const w2 = BigInt(m2.w || '0'), n2 = BigInt(m2.n), d2 = BigInt(m2.d);
             if (d1 === 0n || d2 === 0n) throw new Error("Denominator cannot be zero.");
@@ -289,11 +294,6 @@ function MixedNumbersCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
-    
-     useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
      return (
         <Card>
@@ -340,11 +340,15 @@ function MixedNumbersCalculator() {
 
 function SimplifyFractionCalculator() {
     const { toast } = useToast();
-    const [frac, setFrac] = useState({ n: '98', d: '21' });
+    const [frac, setFrac] = useState({ n: '', d: '' });
     const [result, setResult] = useState<{ n: bigint, d: bigint } | null>(null);
 
     const calculate = () => {
         try {
+            if (!frac.n || !frac.d) {
+                setResult(null);
+                return;
+            }
             const n = BigInt(frac.n);
             let d = BigInt(frac.d);
             if (d === 0n) throw new Error("Denominator cannot be zero.");
@@ -363,11 +367,6 @@ function SimplifyFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -384,11 +383,15 @@ function SimplifyFractionCalculator() {
 
 function DecimalToFraction() {
     const { toast } = useToast();
-    const [dec, setDec] = useState('1.375');
+    const [dec, setDec] = useState('');
     const [result, setResult] = useState<{ n: bigint; d: bigint; w: bigint; rem: bigint; steps: string[] } | null>(null);
 
     const calculate = () => {
       try {
+        if (!dec) {
+            setResult(null);
+            return;
+        }
         const num = parseFloat(dec);
         if (isNaN(num)) {
           setResult(null);
@@ -428,11 +431,6 @@ function DecimalToFraction() {
       }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <Card>
             <CardHeader><CardTitle className="text-xl">Decimal to Fraction</CardTitle></CardHeader>
@@ -471,11 +469,15 @@ function DecimalToFraction() {
 
 function FractionToDecimal() {
     const { toast } = useToast();
-    const [frac, setFrac] = useState({ n: '2', d: '7' });
+    const [frac, setFrac] = useState({ n: '', d: '' });
     const [result, setResult] = useState('');
 
     const calculate = () => {
       try {
+        if (!frac.n || !frac.d) {
+            setResult('');
+            return;
+        }
         const n = parseFloat(frac.n), d = parseFloat(frac.d);
         if (isNaN(n) || isNaN(d) || d === 0) {
             if(d === 0) throw new Error("Denominator cannot be zero.");
@@ -487,11 +489,6 @@ function FractionToDecimal() {
         toast({ variant: 'destructive', title: 'Error', description: e.message });
       }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -507,13 +504,17 @@ function FractionToDecimal() {
 
 function BigNumberFractionCalculator() {
     const { toast } = useToast();
-    const [f1, setF1] = useState({ n: '1234', d: '748892928829' });
-    const [f2, setF2] = useState({ n: '33434421132232234333', d: '8877277388288288288' });
+    const [f1, setF1] = useState({ n: '', d: '' });
+    const [f2, setF2] = useState({ n: '', d: '' });
     const [op, setOp] = useState('+');
     const [result, setResult] = useState<{ n: bigint, d: bigint, w: bigint, rem: bigint } | null>(null);
 
     const calculate = () => {
         try {
+            if (!f1.n || !f1.d || !f2.n || !f2.d) {
+                setResult(null);
+                return;
+            }
             const n1 = BigInt(f1.n), d1 = BigInt(f1.d);
             const n2 = BigInt(f2.n), d2 = BigInt(f2.d);
             if (d1 === 0n || d2 === 0n) throw new Error("Denominator cannot be zero.");
@@ -541,11 +542,6 @@ function BigNumberFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: 'Could not calculate. Ensure inputs are valid integers.' });
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>

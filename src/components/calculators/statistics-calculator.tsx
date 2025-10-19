@@ -25,8 +25,8 @@ interface Stats {
 
 export default function StatisticsCalculator() {
   const [display, setDisplay] = useState('0');
-  const [dataset, setDataset] = useState<number[]>([5, 10, 15, 20, 25]);
-  const [csvData, setCsvData] = useState('5, 10, 15, 20, 25');
+  const [dataset, setDataset] = useState<number[]>([]);
+  const [csvData, setCsvData] = useState('');
   const { toast } = useToast();
 
   const stats: Stats | null = useMemo(() => {

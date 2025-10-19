@@ -12,14 +12,19 @@ import { useToast } from '@/hooks/use-toast';
 // --- Binary Arithmetic Calculator ---
 const BinaryArithmeticCalculator = () => {
     const { toast } = useToast();
-    const [val1, setVal1] = useState('110110');
-    const [val2, setVal2] = useState('100101');
+    const [val1, setVal1] = useState('');
+    const [val2, setVal2] = useState('');
     const [op, setOp] = useState('+');
     const [result, setResult] = useState('');
     const [decimalResult, setDecimalResult] = useState('');
 
     const calculate = () => {
         try {
+            if (!val1 || !val2) {
+                setResult('');
+                setDecimalResult('');
+                return;
+            }
             if (!/^[01]+$/.test(val1) || !/^[01]+$/.test(val2)) {
                 if (val1 || val2) throw new Error("Inputs must be valid binary strings.");
                 setResult('');
@@ -96,11 +101,15 @@ const BinaryArithmeticCalculator = () => {
 // --- Binary to Decimal Converter ---
 const BinToDecConverter = () => {
     const { toast } = useToast();
-    const [binary, setBinary] = useState('110110');
+    const [binary, setBinary] = useState('');
     const [decimal, setDecimal] = useState('');
 
     const convert = () => {
         try {
+             if (!binary) {
+                setDecimal('');
+                return;
+            }
              if (!/^[01]+$/.test(binary)) {
                 if (binary) throw new Error("Input must be a valid binary string.");
                 setDecimal('');
@@ -139,11 +148,15 @@ const BinToDecConverter = () => {
 // --- Decimal to Binary Converter ---
 const DecToBinConverter = () => {
     const { toast } = useToast();
-    const [decimal, setDecimal] = useState('54');
+    const [decimal, setDecimal] = useState('');
     const [binary, setBinary] = useState('');
 
     const convert = () => {
         try {
+            if (!decimal) {
+                setBinary('');
+                return;
+            }
             const num = parseInt(decimal, 10);
             if (isNaN(num)) {
                  if (decimal) throw new Error("Input must be a valid integer.");

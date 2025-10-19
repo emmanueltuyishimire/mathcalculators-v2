@@ -19,12 +19,12 @@ interface CircleValues {
 export default function CircleCalculator() {
     const { toast } = useToast();
     const [values, setValues] = useState<CircleValues>({
-        radius: '5',
-        diameter: '10',
-        circumference: (10 * Math.PI).toFixed(5),
-        area: (25 * Math.PI).toFixed(5)
+        radius: '',
+        diameter: '',
+        circumference: '',
+        area: ''
     });
-    const [lastChanged, setLastChanged] = useState<CircleProperty>('radius');
+    const [lastChanged, setLastChanged] = useState<CircleProperty | null>(null);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -34,15 +34,15 @@ export default function CircleCalculator() {
         setValues(prev => ({...prev, [name]: value }));
 
         const numValue = parseFloat(value);
-        if (isNaN(numValue) || numValue < 0) {
-            if (value !== '') {
+        if (value === '' || isNaN(numValue) || numValue < 0) {
+            if (value !== '' && (isNaN(numValue) || numValue < 0)) {
                 toast({
                     variant: 'destructive',
                     title: 'Invalid Input',
                     description: 'Please enter a non-negative number.',
                 });
             }
-             // Clear other fields if input is invalid
+             // Clear other fields if input is invalid or empty
             setValues({
                 radius: changedProperty === 'radius' ? value : '',
                 diameter: changedProperty === 'diameter' ? value : '',

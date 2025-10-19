@@ -25,8 +25,8 @@ interface TwoPointResult {
 
 const TwoPointsCalculator = () => {
   const { toast } = useToast();
-  const [p1, setP1] = useState({ x: '3', y: '5' });
-  const [p2, setP2] = useState({ x: '8', y: '12' });
+  const [p1, setP1] = useState({ x: '', y: '' });
+  const [p2, setP2] = useState({ x: '', y: '' });
   const [result, setResult] = useState<TwoPointResult | null>(null);
 
   const calculate = () => {
@@ -36,8 +36,10 @@ const TwoPointsCalculator = () => {
     const y2 = parseFloat(p2.y);
 
     if ([x1, y1, x2, y2].some(isNaN)) {
-      toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all points.' });
       setResult(null);
+      if (p1.x || p1.y || p2.x || p2.y) {
+        toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all points.' });
+      }
       return;
     }
 
@@ -83,11 +85,6 @@ const TwoPointsCalculator = () => {
       });
     }
   };
-
-  useEffect(() => {
-    calculate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Card className="border-none shadow-none">
@@ -169,10 +166,10 @@ const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title:
 
 const OnePointSlopeCalculator = () => {
     const { toast } = useToast();
-    const [point, setPoint] = useState({ x: '2', y: '4' });
-    const [distance, setDistance] = useState('10');
-    const [slope, setSlope] = useState('1.5');
-    const [angle, setAngle] = useState('56.31');
+    const [point, setPoint] = useState({ x: '', y: '' });
+    const [distance, setDistance] = useState('');
+    const [slope, setSlope] = useState('');
+    const [angle, setAngle] = useState('');
     const [inputType, setInputType] = useState<'slope' | 'angle'>('slope');
     const [result, setResult] = useState<OnePointResult | null>(null);
 
@@ -186,7 +183,7 @@ const OnePointSlopeCalculator = () => {
         if(inputType === 'slope') {
             m = parseFloat(slope);
             if (isNaN(m)) {
-                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid slope.'});
+                if (slope) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid slope.'});
                 setResult(null);
                 return;
             };
@@ -195,7 +192,7 @@ const OnePointSlopeCalculator = () => {
         } else {
             const angleDeg = parseFloat(angle);
             if(isNaN(angleDeg)) {
-                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid angle.'});
+                if (angle) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid angle.'});
                 setResult(null);
                 return;
             }
@@ -205,7 +202,7 @@ const OnePointSlopeCalculator = () => {
         }
 
         if ([x1, y1, d].some(isNaN)) {
-             toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please fill all required fields with valid numbers.' });
+             if (point.x || point.y || distance) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please fill all required fields with valid numbers.' });
              setResult(null);
              return;
         }
@@ -228,11 +225,6 @@ const OnePointSlopeCalculator = () => {
             xIntercept
         });
     }
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
     <Card className="border-none shadow-none">

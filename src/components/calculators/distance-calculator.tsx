@@ -24,8 +24,8 @@ interface TwoDResult {
 // 2D Calculator
 const TwoDCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ x: '2', y: '3' });
-    const [p2, setP2] = useState({ x: '10', y: '8' });
+    const [p1, setP1] = useState({ x: '', y: '' });
+    const [p2, setP2] = useState({ x: '', y: '' });
     const [result, setResult] = useState<TwoDResult | null>(null);
 
     const calculate = () => {
@@ -35,7 +35,10 @@ const TwoDCalculator = () => {
         const y2 = parseFloat(p2.y);
 
         if ([x1, y1, x2, y2].some(isNaN)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all coordinates.' });
+            setResult(null);
+            if (p1.x || p1.y || p2.x || p2.y) {
+                 toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all coordinates.' });
+            }
             return;
         }
 
@@ -68,11 +71,6 @@ const TwoDCalculator = () => {
             xIntercept,
         });
     };
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -155,8 +153,8 @@ interface ThreeDResult {
 // 3D Calculator
 const ThreeDCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ x: '1', y: '2', z: '3' });
-    const [p2, setP2] = useState({ x: '4', y: '5', z: '6' });
+    const [p1, setP1] = useState({ x: '', y: '', z: '' });
+    const [p2, setP2] = useState({ x: '', y: '', z: '' });
     const [result, setResult] = useState<ThreeDResult | null>(null);
 
     const calculate = () => {
@@ -168,7 +166,10 @@ const ThreeDCalculator = () => {
         const z2 = parseFloat(p2.z);
 
         if ([x1, y1, z1, x2, y2, z2].some(isNaN)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all coordinates.' });
+             if (p1.x || p1.y || p1.z || p2.x || p2.y || p2.z) {
+                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all coordinates.' });
+            }
+            setResult(null);
             return;
         }
 
@@ -178,11 +179,6 @@ const ThreeDCalculator = () => {
         const distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
         setResult({ distance, deltaX, deltaY, deltaZ });
     };
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -236,8 +232,8 @@ const ThreeDCalculator = () => {
 // Latitude/Longitude Calculator
 const LatLongCalculator = () => {
     const { toast } = useToast();
-    const [p1, setP1] = useState({ lat: '40.7128', lon: '-74.0060' }); // New York
-    const [p2, setP2] = useState({ lat: '34.0522', lon: '-118.2437' }); // Los Angeles
+    const [p1, setP1] = useState({ lat: '', lon: '' });
+    const [p2, setP2] = useState({ lat: '', lon: '' });
     const [distance, setDistance] = useState<{ km: number, miles: number } | null>(null);
 
     const calculate = () => {
@@ -247,7 +243,10 @@ const LatLongCalculator = () => {
         const lon2 = parseFloat(p2.lon);
 
         if ([lat1, lon1, lat2, lon2].some(isNaN)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid latitude/longitude values.' });
+             if (p1.lat || p1.lon || p2.lat || p2.lon) {
+                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid latitude/longitude values.' });
+            }
+            setDistance(null);
             return;
         }
 
@@ -267,11 +266,6 @@ const LatLongCalculator = () => {
         const miles = km * 0.621371;
         setDistance({ km, miles });
     };
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>

@@ -11,8 +11,8 @@ import { Separator } from '../ui/separator';
 const ThreeFieldCalculator = () => {
     const { toast } = useToast();
     const [part, setPart] = useState('');
-    const [whole, setWhole] = useState('150');
-    const [percent, setPercent] = useState('25');
+    const [whole, setWhole] = useState('');
+    const [percent, setPercent] = useState('');
 
     const calculate = () => {
         const numPart = parseFloat(part);
@@ -76,9 +76,9 @@ const ThreeFieldCalculator = () => {
 
 
 const CommonPhrasesCalculator = () => {
-    const [val1, setVal1] = useState({p: '25', w: '150', r: ''});
-    const [val2, setVal2] = useState({part: '37.5', whole: '150', r: ''});
-    const [val3, setVal3] = useState({part: '37.5', p: '25', r: ''});
+    const [val1, setVal1] = useState({p: '', w: '', r: ''});
+    const [val2, setVal2] = useState({part: '', whole: '', r: ''});
+    const [val3, setVal3] = useState({part: '', p: '', r: ''});
     
     const calc1 = () => {
         const p = parseFloat(val1.p);
@@ -155,8 +155,8 @@ const CommonPhrasesCalculator = () => {
 
 const PercentageDifferenceCalculator = () => {
     const { toast } = useToast();
-    const [val1, setVal1] = useState('100');
-    const [val2, setVal2] = useState('120');
+    const [val1, setVal1] = useState('');
+    const [val2, setVal2] = useState('');
     const [result, setResult] = useState('');
 
     const calculate = () => {
@@ -196,9 +196,9 @@ const PercentageDifferenceCalculator = () => {
 
 const PercentageChangeCalculator = () => {
     const { toast } = useToast();
-    const [initial, setInitial] = useState('100');
+    const [initial, setInitial] = useState('');
     const [final, setFinal] = useState('');
-    const [change, setChange] = useState('10');
+    const [change, setChange] = useState('');
     const [result, setResult] = useState<string | null>(null);
 
     const calculate = (direction: 'increase' | 'decrease') => {

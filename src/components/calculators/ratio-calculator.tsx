@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 function ProportionCalculator() {
     const { toast } = useToast();
-    const [values, setValues] = useState({ a: '3', b: '4', c: '600', d: '' });
+    const [values, setValues] = useState({ a: '', b: '', c: '', d: '' });
 
     const calculate = () => {
         const a = parseFloat(values.a);
@@ -21,11 +21,13 @@ function ProportionCalculator() {
         
         const knownCount = [!isNaN(a), !isNaN(b), !isNaN(c), !isNaN(d)].filter(Boolean).length;
         if (knownCount !== 3) {
-            toast({
-                variant: 'destructive',
-                title: "Invalid Input",
-                description: "Please provide exactly three values to calculate the fourth.",
-            });
+            if (Object.values(values).some(v => v !== '')) {
+                toast({
+                    variant: 'destructive',
+                    title: "Invalid Input",
+                    description: "Please provide exactly three values to calculate the fourth.",
+                });
+            }
             return;
         }
 
@@ -49,11 +51,6 @@ function ProportionCalculator() {
             toast({ variant: 'destructive', title: "Calculation Error", description: e.message });
         }
     };
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -79,10 +76,10 @@ function ProportionCalculator() {
 
 function RatioScalingCalculator() {
     const { toast } = useToast();
-    const [valA, setValA] = useState('250');
-    const [valB, setValB] = useState('280');
-    const [factor, setFactor] = useState('2.5');
-    const [operation, setOperation] = useState<'shrink' | 'enlarge'>('shrink');
+    const [valA, setValA] = useState('');
+    const [valB, setValB] = useState('');
+    const [factor, setFactor] = useState('2');
+    const [operation, setOperation] = useState<'shrink' | 'enlarge'>('enlarge');
     const [result, setResult] = useState<string>('');
 
     const calculate = () => {
@@ -90,10 +87,18 @@ function RatioScalingCalculator() {
         const b = parseFloat(valB);
         const f = parseFloat(factor);
 
-        if (isNaN(a) || isNaN(b) || isNaN(f) || f <= 0) {
-            toast({ variant: 'destructive', title: "Invalid Input", description: "Please enter valid numbers. Factor must be positive." });
+        if (isNaN(a) || isNaN(b) || isNaN(f)) {
+             if (valA || valB || factor) {
+                toast({ variant: 'destructive', title: "Invalid Input", description: "Please enter valid numbers for all fields." });
+            }
+            setResult('');
             return;
         }
+        if (f <= 0) {
+            toast({ variant: 'destructive', title: "Invalid Input", description: "Factor must be positive." });
+            return;
+        }
+
 
         let resA, resB;
         if (operation === 'shrink') {

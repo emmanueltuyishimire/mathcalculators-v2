@@ -1,9 +1,8 @@
-
 "use client";
 
 import React, { useState } from 'react';
 import { PageHeader } from '@/components/page-header';
-import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import LogCalculator from '@/components/calculators/log-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
@@ -16,9 +15,9 @@ import { Switch } from '@/components/ui/switch';
 
 const LogEquationCalculator = () => {
     const { toast } = useToast();
-    const [base, setBase] = useState('e');
-    const [number, setNumber] = useState('100');
-    const [result, setResult] = useState('4.60517');
+    const [base, setBase] = useState('');
+    const [number, setNumber] = useState('');
+    const [result, setResult] = useState('');
     
     const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
         const newValues = { base, number, result };
@@ -26,18 +25,14 @@ const LogEquationCalculator = () => {
         
         const emptyFields = Object.keys(newValues).filter(key => newValues[key as keyof typeof newValues] === '');
         
+        if (field === 'base') setBase(value);
+        if (field === 'number') setNumber(value);
+        if (field === 'result') setResult(value);
+
         if (emptyFields.length !== 1) {
-            if (field === 'base') setBase(value);
-            if (field === 'number') setNumber(value);
-            if (field === 'result') setResult(value);
-        } else {
-             if (field === 'base') setBase(value);
-             if (field === 'number') setNumber(value);
-             if (field === 'result') setResult(value);
-             // Clear the field that needs to be calculated
-             if (emptyFields[0] === 'base') setBase('');
-             if (emptyFields[0] === 'number') setNumber('');
-             if (emptyFields[0] === 'result') setResult('');
+            setBase(field === 'base' ? value : '');
+            setNumber(field === 'number' ? value : '');
+            setResult(field === 'result' ? value : '');
         }
     }
 
@@ -236,7 +231,7 @@ export default function LogPage() {
                 </p>
             </section>
             
-            <ScientificCalculator />
+            <LogCalculator />
 
             <div className="py-4">
                 <LogEquationCalculator />

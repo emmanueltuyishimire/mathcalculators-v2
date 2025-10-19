@@ -27,7 +27,7 @@ const StatDisplay = ({ label, value }: { label: string; value: string | number }
 );
 
 export default function MeanMedianModeCalculator() {
-  const [data, setData] = useState('8, 12, 12, 15, 17, 22, 23, 30');
+  const [data, setData] = useState('');
   const [stats, setStats] = useState<Stats | null>(null);
 
   const calculate = () => {
@@ -81,11 +81,6 @@ export default function MeanMedianModeCalculator() {
         sortedData: sorted.join(', '),
     });
   };
-
-  // Auto-calculate on initial render
-  useState(() => {
-    calculate();
-  });
 
   return (
     <div className="space-y-6">

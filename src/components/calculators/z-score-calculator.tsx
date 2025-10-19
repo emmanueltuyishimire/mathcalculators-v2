@@ -11,9 +11,9 @@ import { jStat } from 'jstat';
 
 function ZScoreFormulaCalculator() {
     const { toast } = useToast();
-    const [rawScore, setRawScore] = useState('85');
-    const [mean, setMean] = useState('75');
-    const [stdDev, setStdDev] = useState('5');
+    const [rawScore, setRawScore] = useState('');
+    const [mean, setMean] = useState('');
+    const [stdDev, setStdDev] = useState('');
     const [zScore, setZScore] = useState<number | null>(null);
 
     const calculate = () => {
@@ -22,23 +22,21 @@ function ZScoreFormulaCalculator() {
         const sigma = parseFloat(stdDev);
 
         if (isNaN(x) || isNaN(mu) || isNaN(sigma)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all fields.' });
+            if(rawScore || mean || stdDev) {
+              toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all fields.' });
+            }
+            setZScore(null);
             return;
         }
         if (sigma <= 0) {
              toast({ variant: 'destructive', title: 'Invalid Input', description: 'Standard deviation must be positive.' });
+             setZScore(null);
             return;
         }
 
         const z = (x - mu) / sigma;
         setZScore(z);
     };
-    
-    // Initial calculation
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -80,13 +78,14 @@ function ZScoreFormulaCalculator() {
 
 function ZScoreProbabilityConverter() {
     const { toast } = useToast();
-    const [zScore, setZScore] = useState('1.5');
+    const [zScore, setZScore] = useState('');
     const [results, setResults] = useState<any>(null);
 
     const calculate = () => {
         const z = parseFloat(zScore);
         if (isNaN(z)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid Z-score.' });
+            if(zScore) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid Z-score.' });
+            setResults(null);
             return;
         }
         
@@ -98,11 +97,6 @@ function ZScoreProbabilityConverter() {
 
         setResults({ p_less, p_greater, p_0_to_z, p_between, p_outside });
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>
@@ -132,27 +126,29 @@ function ZScoreProbabilityConverter() {
 
 function ZScoreRangeCalculator() {
     const { toast } = useToast();
-    const [z1, setZ1] = useState('-0.5');
-    const [z2, setZ2] = useState('1.0');
+    const [z1, setZ1] = useState('');
+    const [z2, setZ2] = useState('');
     const [result, setResult] = useState<number | null>(null);
 
     const calculate = () => {
         const z1_num = parseFloat(z1);
         const z2_num = parseFloat(z2);
 
-        if (isNaN(z1_num) || isNaN(z2_num) || z1_num > z2_num) {
+        if (isNaN(z1_num) || isNaN(z2_num)) {
+             if (z1 || z2) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please provide both Z-scores.' });
+             setResult(null);
+            return;
+        }
+
+        if (z1_num > z2_num) {
             toast({ variant: 'destructive', title: 'Invalid Input', description: 'Left bound (Z1) cannot be greater than right bound (Z2).' });
+             setResult(null);
             return;
         }
 
         const prob = jStat.normal.cdf(z2_num, 0, 1) - jStat.normal.cdf(z1_num, 0, 1);
         setResult(prob);
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card>

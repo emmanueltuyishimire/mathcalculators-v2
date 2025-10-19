@@ -25,8 +25,8 @@ interface Steps {
 
 export default function PercentErrorCalculator() {
     const { toast } = useToast();
-    const [observed, setObserved] = useState('10');
-    const [trueVal, setTrueVal] = useState('11');
+    const [observed, setObserved] = useState('');
+    const [trueVal, setTrueVal] = useState('');
     const [result, setResult] = useState<Result | null>(null);
     const [steps, setSteps] = useState<Steps | null>(null);
 
@@ -35,11 +35,13 @@ export default function PercentErrorCalculator() {
         const trueNum = parseFloat(trueVal);
 
         if (isNaN(obsNum) || isNaN(trueNum)) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please enter valid numbers for both values.',
-            });
+            if (observed || trueVal) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please enter valid numbers for both values.',
+                });
+            }
             setResult(null);
             setSteps(null);
             return;
@@ -70,12 +72,6 @@ export default function PercentErrorCalculator() {
             finalAbsolute: absoluteError.toFixed(10),
         });
     };
-    
-    // Auto-calculate on mount
-    useEffect(() => {
-        calculate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <Card className="shadow-lg">

@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 function ArithmeticCalculator() {
-    const [a1, setA1] = useState('3');
-    const [d, setD] = useState('4');
-    const [n, setN] = useState('15');
+    const [a1, setA1] = useState('');
+    const [d, setD] = useState('');
+    const [n, setN] = useState('');
     const [result, setResult] = useState<{ an: number; sum: number } | null>(null);
 
     const handleCalculate = () => {
@@ -69,9 +69,9 @@ function ArithmeticCalculator() {
 }
 
 function GeometricCalculator() {
-    const [g1, setG1] = useState('3');
-    const [r, setR] = useState('2');
-    const [n, setN] = useState('10');
+    const [g1, setG1] = useState('');
+    const [r, setR] = useState('');
+    const [n, setN] = useState('');
     const [result, setResult] = useState<{ an: number; sum: string | number } | null>(null);
 
     const handleCalculate = () => {
@@ -136,7 +136,7 @@ function GeometricCalculator() {
 }
 
 function FibonacciCalculator() {
-    const [n, setN] = useState('12');
+    const [n, setN] = useState('');
     const [result, setResult] = useState<{ fibN: number, sequence: string } | null>(null);
     
     const handleCalculate = () => {

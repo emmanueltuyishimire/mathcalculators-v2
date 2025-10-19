@@ -53,7 +53,7 @@ function CalculatorTab({
           className="font-mono"
         />
       </div>
-      <Button onClick={handleCalculate} disabled={isLoading} className="w-full bg-accent hover:bg-accent/90">
+      <Button onClick={handleCalculate} disabled={isLoading || !expression} className="w-full bg-accent hover:bg-accent/90">
         {isLoading ? 'Calculating...' : 'Calculate'}
       </Button>
       {result && (
@@ -82,7 +82,7 @@ export default function CalculusCalculator() {
               title="Derivative"
               description="Find the derivative of a function with respect to x."
               inputLabel="f(x) ="
-              initialValue="x^3"
+              initialValue=""
               placeholder="e.g., x^3 + 2x"
               resultPrefix="d/dx"
               mockResult="3x^2"
@@ -93,7 +93,7 @@ export default function CalculusCalculator() {
               title="Integral"
               description="Find the indefinite integral of a function with respect to x."
               inputLabel="∫ f(x) dx"
-              initialValue="3x^2"
+              initialValue=""
               placeholder="e.g., 3x^2"
               resultPrefix="∫"
               mockResult="x^3 + C"
@@ -104,7 +104,7 @@ export default function CalculusCalculator() {
               title="Limit"
               description="Find the limit of a function as x approaches a value."
               inputLabel="lim x→a f(x)"
-              initialValue="(x^2 - 4)/(x - 2) as x->2"
+              initialValue=""
               placeholder="e.g., (sin(x)/x) as x->0"
               resultPrefix="lim"
               mockResult="4"

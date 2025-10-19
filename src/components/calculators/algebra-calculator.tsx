@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 
 export default function AlgebraCalculator() {
-  const [equation, setEquation] = useState('3x - 5 = 16');
+  const [equation, setEquation] = useState('');
   const [result, setResult] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -20,7 +20,7 @@ export default function AlgebraCalculator() {
       // For this demo, we'll return a placeholder result based on the example.
       if (equation === '3x - 5 = 16') {
         setResult('Solution: x = 7');
-      } else {
+      } else if (equation) {
         setResult('Could not solve equation. Please use a simple linear format like "ax + b = c".');
       }
       setIsLoading(false);
@@ -44,7 +44,7 @@ export default function AlgebraCalculator() {
             className="text-lg font-mono"
           />
         </div>
-        <Button onClick={handleSolve} disabled={isLoading} className="w-full bg-accent hover:bg-accent/90">
+        <Button onClick={handleSolve} disabled={isLoading || !equation} className="w-full bg-accent hover:bg-accent/90">
           {isLoading ? 'Solving...' : 'Solve for x'}
         </Button>
       </CardContent>

@@ -50,7 +50,7 @@ export default function UnitConverter() {
   const [category, setCategory] = useState<UnitCategory>('Length');
   const [fromUnit, setFromUnit] = useState('Meter');
   const [toUnit, setToUnit] = useState('Foot');
-  const [fromValue, setFromValue] = useState('1');
+  const [fromValue, setFromValue] = useState('');
   const [toValue, setToValue] = useState('');
 
   const units = useMemo(() => Object.keys(unitConfig[category]), [category]);
@@ -59,11 +59,13 @@ export default function UnitConverter() {
     const currentUnits = Object.keys(unitConfig[category]);
     setFromUnit(currentUnits[0]);
     setToUnit(currentUnits[1] || currentUnits[0]);
+    setFromValue('');
+    setToValue('');
   }, [category]);
   
   useEffect(() => {
     const fromValNum = parseFloat(fromValue);
-    if (isNaN(fromValNum)) {
+    if (fromValue === '' || isNaN(fromValNum)) {
       setToValue('');
       return;
     }
