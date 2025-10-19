@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 interface SurfaceAreaCalculatorProps {
     shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Square Pyramid';
     inputs: { name: string; label: string; }[];
-    calculate: (inputs: { [key: string]: number }) => { [key: string]: number | string };
+    calculate: (inputs: { [key: string]: number }) => { [key: string]: number | string | object };
 }
 
 const lengthUnits = {
@@ -46,10 +46,10 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
     );
     const [results, setResults] = useState<{ [key: string]: string }>({});
     const [unit, setUnit] = useState<Unit>('Meter');
-    const [steps, setSteps] = useState<string[]>([]);
+    const [steps, setSteps] = useState<any>(null);
 
     const handleCalculate = () => {
-        setSteps([]);
+        setSteps(null);
         const conversionFactor = lengthUnits[unit];
         try {
             const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
@@ -73,30 +73,30 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
             const calcResults = calculate(parsedInputs);
             const finalResults: { [key: string]: string } = {};
 
-            if (shape === 'Sphere' && 'Total' in calcResults) {
-                const { r: originalR } = Object.entries(inputValues).reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as {[key:string]: string});
-                const rNum = parseFloat(originalR);
-                if(isNaN(rNum)) {
-                    throw new Error("Invalid radius provided.");
-                }
-                setSteps([
-                    `4πr²`,
-                    `4 × π × ${originalR}²`,
-                    `${4 * rNum**2}π`,
-                    (calcResults['Total'] as number / Math.pow(conversionFactor, 2)).toFixed(10),
-                ]);
-                finalResults['Total'] = (calcResults['Total'] as number / Math.pow(conversionFactor, 2)).toFixed(4);
-            } else {
-                 for (const key in calcResults) {
-                    const resultVal = calcResults[key];
-                    if (typeof resultVal === 'number') {
-                        finalResults[key] = (resultVal / Math.pow(conversionFactor, 2)).toFixed(4);
-                    } else {
-                        finalResults[key] = resultVal;
-                    }
-                }
+            if (calcResults.steps) {
+                setSteps(calcResults.steps);
+                // Convert final values in steps to selected unit
+                const finalStepValues: {[key: string]: string} = {};
+                Object.keys(calcResults.final || {}).forEach(key => {
+                    const val = (calcResults.final as any)[key];
+                     if(typeof val === 'number') {
+                        finalStepValues[key] = (val / Math.pow(conversionFactor, 2)).toFixed(4);
+                     } else {
+                        finalStepValues[key] = val;
+                     }
+                });
+                setResults(finalStepValues);
+                return;
             }
 
+            for (const key in calcResults) {
+                const resultVal = calcResults[key];
+                if (typeof resultVal === 'number') {
+                    finalResults[key] = (resultVal / Math.pow(conversionFactor, 2)).toFixed(4);
+                } else if (typeof resultVal !== 'object') { // Exclude 'steps' object
+                    finalResults[key] = resultVal as string;
+                }
+            }
 
             setResults(finalResults);
         } catch (e: any) {
@@ -106,9 +106,11 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                 description: e.message,
             });
             setResults({});
-            setSteps([]);
+            setSteps(null);
         }
     };
+    
+    const originalInputs = Object.entries(inputValues).reduce((acc, [key, value]) => ({...acc, [key]: parseFloat(value) || 0}), {} as {[key: string]: number});
 
     return (
         <Card className="overflow-hidden">
@@ -142,11 +144,48 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                         </div>
                     ))}
                     <Button onClick={handleCalculate} className="w-full">Calculate</Button>
-                    {steps.length > 0 ? (
-                         <div className="pt-2 space-y-2">
-                            <Label>Calculation Steps</Label>
-                            <div className="font-mono text-base p-3 bg-muted rounded-md space-y-1">
-                                {steps.map((step, i) => <p key={i}>= {step} {i === steps.length - 1 ? `${unitAbbreviations[unit]}²` : ''}</p>)}
+                    {steps ? (
+                         <div className="pt-2 space-y-4">
+                            <Label>Results</Label>
+                            <div className="font-mono text-sm space-y-3">
+                                {steps.base && (
+                                    <div>
+                                        <p className="font-semibold text-base">Base Surface Area</p>
+                                        <div className="p-2 bg-muted rounded-md mt-1">
+                                            <p>= {steps.base.formula.replace('{r}', String(originalInputs.r))}</p>
+                                            <p>= {steps.base.piTerm}π</p>
+                                            <p>= {results.Base} {unitAbbreviations[unit]}²</p>
+                                        </div>
+                                    </div>
+                                )}
+                                 {steps.lateral && (
+                                    <div>
+                                        <p className="font-semibold text-base">Lateral Surface Area</p>
+                                        <div className="p-2 bg-muted rounded-md mt-1">
+                                            <p>= {steps.lateral.formula.replace('{r}', String(originalInputs.r)).replace('{h}', String(originalInputs.h))}</p>
+                                            <p>= {steps.lateral.piTerm}π</p>
+                                            <p>= {results.Lateral} {unitAbbreviations[unit]}²</p>
+                                        </div>
+                                    </div>
+                                )}
+                                 {steps.total && (
+                                     <div>
+                                        <p className="font-semibold text-base">Total Surface Area</p>
+                                        <div className="p-2 bg-muted rounded-md mt-1">
+                                            <p>= {results.Total} {unitAbbreviations[unit]}²</p>
+                                        </div>
+                                    </div>
+                                 )}
+                                {steps.sphere && (
+                                    <div>
+                                         <p className="font-semibold text-base">Surface Area</p>
+                                        <div className="p-2 bg-muted rounded-md mt-1">
+                                            <p>= {steps.sphere.formula.replace('{r}', String(originalInputs.r))}</p>
+                                            <p>= {steps.sphere.piTerm}π</p>
+                                            <p>= {results.Total} {unitAbbreviations[unit]}²</p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ) : Object.keys(results).length > 0 && (
@@ -173,7 +212,17 @@ const calculators: SurfaceAreaCalculatorProps[] = [
     {
         shape: 'Sphere',
         inputs: [{ name: 'r', label: 'Radius (r)' }],
-        calculate: ({ r }) => ({ Total: 4 * Math.PI * Math.pow(r, 2) }),
+        calculate: ({ r }) => {
+            return {
+                final: { Total: 4 * Math.PI * r**2 },
+                steps: {
+                    sphere: {
+                        formula: '4πr² = 4×π×{r}²',
+                        piTerm: `${4 * r**2}`
+                    }
+                }
+            }
+        },
     },
     {
         shape: 'Cone',
@@ -182,7 +231,20 @@ const calculators: SurfaceAreaCalculatorProps[] = [
             const slantHeight = Math.sqrt(r*r + h*h);
             const lateral = Math.PI * r * slantHeight;
             const base = Math.PI * r*r;
-            return { Base: base, Lateral: lateral, Total: base + lateral };
+            return {
+                final: { Base: base, Lateral: lateral, Total: base + lateral },
+                steps: {
+                    base: {
+                        formula: 'π×{r}²',
+                        piTerm: `${r**2}`
+                    },
+                    lateral: {
+                        formula: 'π×{r}×√({r}² + {h}²)',
+                        piTerm: `${(r * slantHeight).toFixed(4)}`
+                    },
+                    total: {}
+                }
+            };
         },
     },
     {
