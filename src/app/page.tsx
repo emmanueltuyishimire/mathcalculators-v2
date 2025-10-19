@@ -11,7 +11,7 @@ function HeroSection() {
     <section
       className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
       style={{
-        backgroundImage: "url('/math%20calculator%20background%20image%203.webp')",
+        backgroundImage: "url('/math%20calculator%20background%20image%201.webp')",
       }}
     >
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
