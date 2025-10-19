@@ -145,12 +145,19 @@ const TwoDCalculator = () => {
     );
 };
 
+interface ThreeDResult {
+    distance: number;
+    deltaX: number;
+    deltaY: number;
+    deltaZ: number;
+}
+
 // 3D Calculator
 const ThreeDCalculator = () => {
     const { toast } = useToast();
     const [p1, setP1] = useState({ x: '1', y: '1', z: '1' });
     const [p2, setP2] = useState({ x: '2', y: '2', z: '2' });
-    const [distance, setDistance] = useState<number | null>(null);
+    const [result, setResult] = useState<ThreeDResult | null>(null);
 
     const calculate = () => {
         const x1 = parseFloat(p1.x);
@@ -165,8 +172,11 @@ const ThreeDCalculator = () => {
             return;
         }
 
-        const dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
-        setDistance(dist);
+        const deltaX = x2 - x1;
+        const deltaY = y2 - y1;
+        const deltaZ = z2 - z1;
+        const distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+        setResult({ distance, deltaX, deltaY, deltaZ });
     };
 
     useEffect(() => {
@@ -201,9 +211,22 @@ const ThreeDCalculator = () => {
                 </div>
                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
-            {distance !== null && (
+            {result !== null && (
                 <CardFooter>
-                    <p className="font-mono text-center w-full">Distance: {distance.toFixed(4)}</p>
+                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
+                        <h4 className="font-semibold">Distance Result</h4>
+                        <p className="font-mono text-lg"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
+                        <div>
+                            <h5 className="font-medium text-sm mt-2">Steps:</h5>
+                            <div className="font-mono text-xs space-y-1 bg-background/50 p-2 rounded-md">
+                                <p>d = √(({p2.x}) - ({p1.x}))² + (({p2.y}) - ({p1.y}))² + (({p2.z}) - ({p1.z}))²</p>
+                                <p>d = √({result.deltaX})² + ({result.deltaY})² + ({result.deltaZ})²</p>
+                                <p>d = √({Math.pow(result.deltaX, 2)} + {Math.pow(result.deltaY, 2)} + {Math.pow(result.deltaZ, 2)})</p>
+                                <p>d = √{Math.pow(result.distance, 2)}</p>
+                                <p>d = {result.distance.toFixed(4)}</p>
+                            </div>
+                        </div>
+                    </div>
                 </CardFooter>
             )}
         </Card>
