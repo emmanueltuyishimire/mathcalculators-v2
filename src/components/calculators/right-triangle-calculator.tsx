@@ -72,7 +72,7 @@ const degToDMS = (deg: number) => {
 export default function RightTriangleCalculator() {
     const { toast } = useToast();
     
-    const [values, setValues] = useState({ a: '', b: '', c: '', alpha: '', beta: '' });
+    const [values, setValues] = useState({ a: '3', b: '4', c: '', alpha: '', beta: '' });
     const [angleUnit, setAngleUnit] = useState<AngleUnit>('degree');
     const [results, setResults] = useState<CalculationResult | null>(null);
 
@@ -94,7 +94,9 @@ export default function RightTriangleCalculator() {
         const sideCount = [!isNaN(numA), !isNaN(numB), !isNaN(numC)].filter(Boolean).length;
 
         if (knownCount !== 2 || sideCount === 0) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please provide exactly two values, including at least one side.' });
+            if (Object.values(values).some(v => v !== '')) {
+                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please provide exactly two values, including at least one side.' });
+            }
             setResults(null);
             return;
         }
@@ -169,6 +171,11 @@ export default function RightTriangleCalculator() {
             setResults(null);
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleClear = () => {
         setValues({ a: '', b: '', c: '', alpha: '', beta: ''});

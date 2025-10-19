@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -53,7 +53,7 @@ interface GcfResult {
 
 export default function GcfCalculator() {
     const { toast } = useToast();
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState('330, 75, 450, 225');
     const [result, setResult] = useState<GcfResult | null>(null);
 
     const calculate = () => {
@@ -119,6 +119,11 @@ export default function GcfCalculator() {
         }
     };
     
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const formatFactors = (factors: Map<bigint, number>) => {
         if (factors.size === 0) return '1';
         const expandedFactors: bigint[] = [];

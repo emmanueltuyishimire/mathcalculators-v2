@@ -1,13 +1,14 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface Stats {
   mean: number;
@@ -49,7 +50,7 @@ const confidenceLevels = [
 
 
 export default function StandardDeviationCalculator() {
-  const [data, setData] = useState('');
+  const [data, setData] = useState('5, 10, 15, 20, 25');
   const [type, setType] = useState<'population' | 'sample'>('population');
   const [calculatedStats, setCalculatedStats] = useState<Stats | null>(null);
 
@@ -110,6 +111,10 @@ export default function StandardDeviationCalculator() {
         sumOfSquares, sem, frequency, sortedData: sorted.join(', '), type 
     });
   };
+  
+  useEffect(() => {
+    calculate();
+  }, [data, type]);
   
   const stats = calculatedStats;
 
@@ -260,5 +265,3 @@ export default function StandardDeviationCalculator() {
     </div>
   );
 }
-
-    

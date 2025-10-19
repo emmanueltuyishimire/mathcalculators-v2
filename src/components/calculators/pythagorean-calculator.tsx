@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -23,8 +23,8 @@ interface CalculationResult {
 
 export default function PythagoreanCalculator() {
     const { toast } = useToast();
-    const [a, setA] = useState('');
-    const [b, setB] = useState('');
+    const [a, setA] = useState('3');
+    const [b, setB] = useState('4');
     const [c, setC] = useState('');
     const [result, setResult] = useState<CalculationResult | null>(null);
 
@@ -51,11 +51,13 @@ export default function PythagoreanCalculator() {
         const providedValues = [!isNaN(valA), !isNaN(valB), !isNaN(valC)].filter(Boolean).length;
 
         if (providedValues !== 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly two values to calculate the third.',
-            });
+            if (a || b || c) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please provide exactly two values to calculate the third.',
+                });
+            }
             setResult(null);
             return;
         }
@@ -110,6 +112,11 @@ export default function PythagoreanCalculator() {
             setResult(null);
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     const handleClear = () => {
       setA('');

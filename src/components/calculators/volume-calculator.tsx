@@ -11,7 +11,7 @@ import { VolumeDiagram } from '@/components/volume-diagram';
 
 interface VolumeCalculatorProps {
     shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Ellipsoid' | 'Square Pyramid' | 'Tube';
-    inputs: { name: string; label: string; }[];
+    inputs: { name: string; label: string; defaultValue: string }[];
     calculate: (inputs: { [key: string]: number }) => number | string;
 }
 
@@ -42,7 +42,7 @@ type Unit = keyof typeof lengthUnits;
 const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calculate }) => {
     const { toast } = useToast();
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>(
-        inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {})
+        inputs.reduce((acc, input) => ({ ...acc, [input.name]: input.defaultValue }), {})
     );
     const [volume, setVolume] = useState<string>('');
     const [unit, setUnit] = useState<Unit>('Meter');
@@ -74,11 +74,13 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
             }
         } else {
              if (Object.values(parsedInputs).some(v => isNaN(v))) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Missing Inputs',
-                    description: 'Please fill in all fields for the calculation.',
-                });
+                if (Object.values(inputValues).some(v => v !== '')) {
+                  toast({
+                      variant: 'destructive',
+                      title: 'Missing Inputs',
+                      description: 'Please fill in all fields for the calculation.',
+                  });
+                }
                 return;
             }
         }
@@ -96,6 +98,11 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
             setVolume('');
         }
     };
+    
+    useEffect(() => {
+        handleCalculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [inputValues, unit]);
 
     return (
         <Card className="overflow-hidden">
@@ -149,37 +156,37 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
 const calculators: VolumeCalculatorProps[] = [
     {
         shape: 'Sphere',
-        inputs: [{ name: 'r', label: 'Radius (r)' }],
+        inputs: [{ name: 'r', label: 'Radius (r)', defaultValue: '5' }],
         calculate: ({ r }) => (4/3) * Math.PI * Math.pow(r, 3),
     },
     {
         shape: 'Cone',
-        inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'r', label: 'Base Radius (r)', defaultValue: '3' }, { name: 'h', label: 'Height (h)', defaultValue: '10' }],
         calculate: ({ r, h }) => (1/3) * Math.PI * Math.pow(r, 2) * h,
     },
     {
         shape: 'Cube',
-        inputs: [{ name: 'a', label: 'Edge Length (a)' }],
+        inputs: [{ name: 'a', label: 'Edge Length (a)', defaultValue: '5' }],
         calculate: ({ a }) => Math.pow(a, 3),
     },
     {
         shape: 'Cylinder',
-        inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'r', label: 'Base Radius (r)', defaultValue: '4' }, { name: 'h', label: 'Height (h)', defaultValue: '10' }],
         calculate: ({ r, h }) => Math.PI * Math.pow(r, 2) * h,
     },
     {
         shape: 'Rectangular Tank',
-        inputs: [{ name: 'l', label: 'Length (l)' }, { name: 'w', label: 'Width (w)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'l', label: 'Length (l)', defaultValue: '10' }, { name: 'w', label: 'Width (w)', defaultValue: '5' }, { name: 'h', label: 'Height (h)', defaultValue: '3' }],
         calculate: ({ l, w, h }) => l * w * h,
     },
     {
         shape: 'Capsule',
-        inputs: [{ name: 'r', label: 'Radius (r)' }, { name: 'h', label: 'Cylinder Height (h)' }],
+        inputs: [{ name: 'r', label: 'Radius (r)', defaultValue: '3' }, { name: 'h', label: 'Cylinder Height (h)', defaultValue: '10' }],
         calculate: ({ r, h }) => (Math.PI * Math.pow(r, 2) * h) + ((4/3) * Math.PI * Math.pow(r, 3)),
     },
     {
         shape: 'Spherical Cap',
-        inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'R', label: 'Ball Radius (R)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'r', label: 'Base Radius (r)', defaultValue: '3' }, { name: 'R', label: 'Ball Radius (R)', defaultValue: '5' }, { name: 'h', label: 'Height (h)', defaultValue: '' }],
         calculate: ({ r, R, h }) => {
             if (!isNaN(h) && !isNaN(R)) {
                  if (h > 2 * R) throw new Error("Height cannot be greater than the sphere's diameter.");
@@ -198,22 +205,22 @@ const calculators: VolumeCalculatorProps[] = [
     },
     {
         shape: 'Conical Frustum',
-        inputs: [{ name: 'r', label: 'Top Radius (r)' }, { name: 'R', label: 'Bottom Radius (R)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'r', label: 'Top Radius (r)', defaultValue: '3' }, { name: 'R', label: 'Bottom Radius (R)', defaultValue: '5' }, { name: 'h', label: 'Height (h)', defaultValue: '10' }],
         calculate: ({ r, R, h }) => (1/3) * Math.PI * h * (Math.pow(R, 2) + R*r + Math.pow(r, 2)),
     },
     {
         shape: 'Ellipsoid',
-        inputs: [{ name: 'a', label: 'Axis 1 (a)' }, { name: 'b', label: 'Axis 2 (b)' }, { name: 'c', label: 'Axis 3 (c)' }],
+        inputs: [{ name: 'a', label: 'Axis 1 (a)', defaultValue: '3' }, { name: 'b', label: 'Axis 2 (b)', defaultValue: '4' }, { name: 'c', label: 'Axis 3 (c)', defaultValue: '5' }],
         calculate: ({ a, b, c }) => (4/3) * Math.PI * a * b * c,
     },
     {
         shape: 'Square Pyramid',
-        inputs: [{ name: 'a', label: 'Base Edge (a)' }, { name: 'h', label: 'Height (h)' }],
+        inputs: [{ name: 'a', label: 'Base Edge (a)', defaultValue: '6' }, { name: 'h', label: 'Height (h)', defaultValue: '10' }],
         calculate: ({ a, h }) => (1/3) * Math.pow(a, 2) * h,
     },
      {
         shape: 'Tube',
-        inputs: [{ name: 'd1', label: 'Outer Diameter (d1)' }, { name: 'd2', label: 'Inner Diameter (d2)' }, { name: 'l', label: 'Length (l)' }],
+        inputs: [{ name: 'd1', label: 'Outer Diameter (d1)', defaultValue: '10' }, { name: 'd2', label: 'Inner Diameter (d2)', defaultValue: '8' }, { name: 'l', label: 'Length (l)', defaultValue: '20' }],
         calculate: ({ d1, d2, l }) => {
             if (d1 <= d2) throw new Error("Outer diameter must be greater than inner diameter.");
             return (Math.PI * l / 4) * (Math.pow(d1, 2) - Math.pow(d2, 2));

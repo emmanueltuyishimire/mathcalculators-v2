@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 function ProportionCalculator() {
     const { toast } = useToast();
-    const [values, setValues] = useState({ a: '', b: '', c: '', d: '' });
+    const [values, setValues] = useState({ a: '1', b: '2', c: '3', d: '' });
 
     const calculate = () => {
         const a = parseFloat(values.a);
@@ -51,6 +51,12 @@ function ProportionCalculator() {
             toast({ variant: 'destructive', title: "Calculation Error", description: e.message });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [values.a, values.b, values.c, values.d]);
+
 
     return (
         <Card>
@@ -76,8 +82,8 @@ function ProportionCalculator() {
 
 function RatioScalingCalculator() {
     const { toast } = useToast();
-    const [valA, setValA] = useState('');
-    const [valB, setValB] = useState('');
+    const [valA, setValA] = useState('3');
+    const [valB, setValB] = useState('4');
     const [factor, setFactor] = useState('2');
     const [operation, setOperation] = useState<'shrink' | 'enlarge'>('enlarge');
     const [result, setResult] = useState<string>('');
@@ -110,6 +116,11 @@ function RatioScalingCalculator() {
         }
         setResult(`${resA.toFixed(4)} : ${resB.toFixed(4)}`);
     }
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [valA, valB, factor, operation]);
 
     return (
         <Card>

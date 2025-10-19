@@ -25,8 +25,8 @@ interface TwoPointResult {
 
 const TwoPointsCalculator = () => {
   const { toast } = useToast();
-  const [p1, setP1] = useState({ x: '', y: '' });
-  const [p2, setP2] = useState({ x: '', y: '' });
+  const [p1, setP1] = useState({ x: '2', y: '3' });
+  const [p2, setP2] = useState({ x: '8', y: '7' });
   const [result, setResult] = useState<TwoPointResult | null>(null);
 
   const calculate = () => {
@@ -85,6 +85,11 @@ const TwoPointsCalculator = () => {
       });
     }
   };
+  
+  useEffect(() => {
+    calculate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Card className="border-none shadow-none">
@@ -149,26 +154,11 @@ interface OnePointResult {
     xIntercept: number | string;
 }
 
-const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title: string, data: OnePointResultData, equation: string, yIntercept: number | string, xIntercept: number | string }) => (
-    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2 mt-4">
-        <h4 className="font-bold">{title}</h4>
-        <p className="font-mono text-sm"><b>Second Point (x₂, y₂):</b> ({data.x2.toFixed(4)}, {data.y2.toFixed(4)})</p>
-        <p className="font-mono text-sm"><b>Change in X (ΔX):</b> {data.deltaX.toFixed(4)}</p>
-        <p className="font-mono text-sm"><b>Change in Y (ΔY):</b> {data.deltaY.toFixed(4)}</p>
-         <Separator className="my-2 bg-green-200 dark:bg-green-800" />
-        <h4 className="font-semibold">Line Properties</h4>
-        <p className="font-mono text-sm"><b>Equation:</b> {equation}</p>
-        <p className="font-mono text-sm"><b>Y-Intercept:</b> {typeof yIntercept === 'number' ? yIntercept.toFixed(4) : yIntercept}</p>
-        <p className="font-mono text-sm"><b>X-Intercept:</b> {typeof xIntercept === 'number' ? xIntercept.toFixed(4) : xIntercept}</p>
-    </div>
-);
-
-
 const OnePointSlopeCalculator = () => {
     const { toast } = useToast();
-    const [point, setPoint] = useState({ x: '', y: '' });
-    const [distance, setDistance] = useState('');
-    const [slope, setSlope] = useState('');
+    const [point, setPoint] = useState({ x: '1', y: '1' });
+    const [distance, setDistance] = useState('5');
+    const [slope, setSlope] = useState('2');
     const [angle, setAngle] = useState('');
     const [inputType, setInputType] = useState<'slope' | 'angle'>('slope');
     const [result, setResult] = useState<OnePointResult | null>(null);
@@ -225,6 +215,11 @@ const OnePointSlopeCalculator = () => {
             xIntercept
         });
     }
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
     <Card className="border-none shadow-none">
@@ -284,6 +279,21 @@ const OnePointSlopeCalculator = () => {
     </Card>
     );
 };
+
+const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title: string, data: OnePointResultData, equation: string, yIntercept: number | string, xIntercept: number | string }) => (
+    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2 mt-4">
+        <h4 className="font-bold">{title}</h4>
+        <p className="font-mono text-sm"><b>Second Point (x₂, y₂):</b> ({data.x2.toFixed(4)}, {data.y2.toFixed(4)})</p>
+        <p className="font-mono text-sm"><b>Change in X (ΔX):</b> {data.deltaX.toFixed(4)}</p>
+        <p className="font-mono text-sm"><b>Change in Y (ΔY):</b> {data.deltaY.toFixed(4)}</p>
+         <Separator className="my-2 bg-green-200 dark:bg-green-800" />
+        <h4 className="font-semibold">Line Properties</h4>
+        <p className="font-mono text-sm"><b>Equation:</b> {equation}</p>
+        <p className="font-mono text-sm"><b>Y-Intercept:</b> {typeof yIntercept === 'number' ? yIntercept.toFixed(4) : yIntercept}</p>
+        <p className="font-mono text-sm"><b>X-Intercept:</b> {typeof xIntercept === 'number' ? xIntercept.toFixed(4) : xIntercept}</p>
+    </div>
+);
+
 
 export default function SlopeCalculator() {
 

@@ -25,8 +25,8 @@ interface Steps {
 
 export default function PercentErrorCalculator() {
     const { toast } = useToast();
-    const [observed, setObserved] = useState('');
-    const [trueVal, setTrueVal] = useState('');
+    const [observed, setObserved] = useState('10.5');
+    const [trueVal, setTrueVal] = useState('10');
     const [result, setResult] = useState<Result | null>(null);
     const [steps, setSteps] = useState<Steps | null>(null);
 
@@ -72,6 +72,11 @@ export default function PercentErrorCalculator() {
             finalAbsolute: absoluteError.toFixed(10),
         });
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [observed, trueVal]);
 
     return (
         <Card className="shadow-lg">

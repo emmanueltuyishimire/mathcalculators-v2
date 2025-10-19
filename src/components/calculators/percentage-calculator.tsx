@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,8 +11,8 @@ import { Separator } from '../ui/separator';
 const ThreeFieldCalculator = () => {
     const { toast } = useToast();
     const [part, setPart] = useState('');
-    const [whole, setWhole] = useState('');
-    const [percent, setPercent] = useState('');
+    const [whole, setWhole] = useState('300');
+    const [percent, setPercent] = useState('20');
 
     const calculate = () => {
         const numPart = parseFloat(part);
@@ -21,11 +21,13 @@ const ThreeFieldCalculator = () => {
 
         const knownValues = [!isNaN(numPart), !isNaN(numWhole), !isNaN(numPercent)].filter(Boolean).length;
         if (knownValues !== 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly two values to calculate the third.',
-            });
+            if (part || whole || percent) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please provide exactly two values to calculate the third.',
+                });
+            }
             return;
         }
 
@@ -44,6 +46,11 @@ const ThreeFieldCalculator = () => {
              toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [part, whole, percent]);
     
     const handleClear = () => {
         setPart('');
@@ -76,9 +83,9 @@ const ThreeFieldCalculator = () => {
 
 
 const CommonPhrasesCalculator = () => {
-    const [val1, setVal1] = useState({p: '', w: '', r: ''});
-    const [val2, setVal2] = useState({part: '', whole: '', r: ''});
-    const [val3, setVal3] = useState({part: '', p: '', r: ''});
+    const [val1, setVal1] = useState({p: '20', w: '300', r: ''});
+    const [val2, setVal2] = useState({part: '15', whole: '50', r: ''});
+    const [val3, setVal3] = useState({part: '20', p: '40', r: ''});
     
     const calc1 = () => {
         const p = parseFloat(val1.p);
@@ -95,6 +102,10 @@ const CommonPhrasesCalculator = () => {
         const p = parseFloat(val3.p);
         if(!isNaN(part) && !isNaN(p) && p !== 0) setVal3({...val3, r: (part / (p/100)).toFixed(2)});
     }
+    
+    useEffect(() => { calc1(); }, [val1.p, val1.w]);
+    useEffect(() => { calc2(); }, [val2.part, val2.whole]);
+    useEffect(() => { calc3(); }, [val3.part, val3.p]);
 
     return (
         <Card className="w-full">
@@ -155,15 +166,16 @@ const CommonPhrasesCalculator = () => {
 
 const PercentageDifferenceCalculator = () => {
     const { toast } = useToast();
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
+    const [val1, setVal1] = useState('10');
+    const [val2, setVal2] = useState('12');
     const [result, setResult] = useState('');
 
     const calculate = () => {
         const v1 = parseFloat(val1);
         const v2 = parseFloat(val2);
         if(isNaN(v1) || isNaN(v2)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for both values.' });
+            if (val1 || val2) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for both values.' });
+            setResult('');
             return;
         }
         if ((v1 + v2) === 0) {
@@ -173,6 +185,11 @@ const PercentageDifferenceCalculator = () => {
         const diff = (Math.abs(v1 - v2) / ((v1 + v2) / 2)) * 100;
         setResult(diff.toFixed(2));
     };
+
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [val1, val2]);
 
     return (
         <Card>
@@ -196,9 +213,9 @@ const PercentageDifferenceCalculator = () => {
 
 const PercentageChangeCalculator = () => {
     const { toast } = useToast();
-    const [initial, setInitial] = useState('');
+    const [initial, setInitial] = useState('100');
     const [final, setFinal] = useState('');
-    const [change, setChange] = useState('');
+    const [change, setChange] = useState('10');
     const [result, setResult] = useState<string | null>(null);
 
     const calculate = (direction: 'increase' | 'decrease') => {
@@ -221,6 +238,11 @@ const PercentageChangeCalculator = () => {
 
         setFinal(finalValue.toFixed(2));
     };
+    
+    useEffect(() => {
+        calculate('increase');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initial, change]);
 
     return (
         <Card>

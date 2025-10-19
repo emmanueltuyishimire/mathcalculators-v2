@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -64,7 +64,7 @@ interface LcmResult {
 
 export default function LcmCalculator() {
     const { toast } = useToast();
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState('12, 18, 30');
     const [result, setResult] = useState<LcmResult | null>(null);
 
     const calculate = () => {
@@ -155,6 +155,11 @@ export default function LcmCalculator() {
         }
     };
     
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const formatFactors = (factors: Map<bigint, number>) => {
         if (factors.size === 0) return '1';
         const expandedFactors: bigint[] = [];

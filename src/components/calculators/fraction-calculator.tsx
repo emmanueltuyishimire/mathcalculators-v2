@@ -31,8 +31,8 @@ interface BasicCalcResult {
 }
 function BasicFractionCalculator() {
     const { toast } = useToast();
-    const [f1, setF1] = useState({ n: '', d: '' });
-    const [f2, setF2] = useState({ n: '', d: '' });
+    const [f1, setF1] = useState({ n: '1', d: '2' });
+    const [f2, setF2] = useState({ n: '3', d: '4' });
     const [op, setOp] = useState('+');
     const [result, setResult] = useState<BasicCalcResult | null>(null);
 
@@ -130,6 +130,11 @@ function BasicFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [op]);
 
     return (
         <Card>
@@ -188,8 +193,8 @@ interface MixedCalcResult {
 }
 function MixedNumbersCalculator() {
     const { toast } = useToast();
-    const [m1, setM1] = useState({ w: '', n: '', d: '' });
-    const [m2, setM2] = useState({ w: '', n: '', d: '' });
+    const [m1, setM1] = useState({ w: '1', n: '1', d: '2' });
+    const [m2, setM2] = useState({ w: '2', n: '3', d: '4' });
     const [op, setOp] = useState('+');
     const [result, setResult] = useState<MixedCalcResult | null>(null);
 
@@ -294,6 +299,11 @@ function MixedNumbersCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [op]);
 
      return (
         <Card>
@@ -340,7 +350,7 @@ function MixedNumbersCalculator() {
 
 function SimplifyFractionCalculator() {
     const { toast } = useToast();
-    const [frac, setFrac] = useState({ n: '', d: '' });
+    const [frac, setFrac] = useState({ n: '12', d: '18' });
     const [result, setResult] = useState<{ n: bigint, d: bigint } | null>(null);
 
     const calculate = () => {
@@ -367,6 +377,11 @@ function SimplifyFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
+    
+     useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -383,7 +398,7 @@ function SimplifyFractionCalculator() {
 
 function DecimalToFraction() {
     const { toast } = useToast();
-    const [dec, setDec] = useState('');
+    const [dec, setDec] = useState('0.75');
     const [result, setResult] = useState<{ n: bigint; d: bigint; w: bigint; rem: bigint; steps: string[] } | null>(null);
 
     const calculate = () => {
@@ -431,6 +446,11 @@ function DecimalToFraction() {
       }
     };
     
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dec]);
+    
     return (
         <Card>
             <CardHeader><CardTitle className="text-xl">Decimal to Fraction</CardTitle></CardHeader>
@@ -469,7 +489,7 @@ function DecimalToFraction() {
 
 function FractionToDecimal() {
     const { toast } = useToast();
-    const [frac, setFrac] = useState({ n: '', d: '' });
+    const [frac, setFrac] = useState({ n: '3', d: '4' });
     const [result, setResult] = useState('');
 
     const calculate = () => {
@@ -489,6 +509,11 @@ function FractionToDecimal() {
         toast({ variant: 'destructive', title: 'Error', description: e.message });
       }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [frac]);
 
     return (
         <Card>
@@ -504,8 +529,8 @@ function FractionToDecimal() {
 
 function BigNumberFractionCalculator() {
     const { toast } = useToast();
-    const [f1, setF1] = useState({ n: '', d: '' });
-    const [f2, setF2] = useState({ n: '', d: '' });
+    const [f1, setF1] = useState({ n: '98765432109876543210', d: '12345678901234567890' });
+    const [f2, setF2] = useState({ n: '1', d: '2' });
     const [op, setOp] = useState('+');
     const [result, setResult] = useState<{ n: bigint, d: bigint, w: bigint, rem: bigint } | null>(null);
 
@@ -542,6 +567,11 @@ function BigNumberFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: 'Could not calculate. Ensure inputs are valid integers.' });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [op]);
 
     return (
         <Card>
