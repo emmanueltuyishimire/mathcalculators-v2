@@ -37,7 +37,6 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { AppFooter } from './app-footer';
 
 const navItems = [
-  { href: '/scientific', label: 'Scientific', icon: FlaskConical },
   { href: '/basic', label: 'Basic', icon: Calculator },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
