@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
@@ -83,12 +83,14 @@ export default function TrigonometryCalculator() {
                 <Select value={funcName} onValueChange={setFuncName}>
                     <SelectTrigger id="function-select"><SelectValue/></SelectTrigger>
                     <SelectContent>
-                        <optgroup label="Direct Functions">
+                        <SelectGroup>
+                            <SelectLabel>Direct Functions</SelectLabel>
                             {Object.keys(directTrigFunctions).map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
-                        </optgroup>
-                        <optgroup label="Inverse Functions">
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Inverse Functions</SelectLabel>
                             {Object.keys(inverseTrigFunctions).map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
-                        </optgroup>
+                        </SelectGroup>
                     </SelectContent>
                 </Select>
             </div>
