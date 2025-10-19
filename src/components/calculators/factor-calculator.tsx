@@ -9,17 +9,19 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
 
-const getFactors = (num: number): number[] => {
-    if (num === 0) return [];
+const getFactorsAndPairs = (num: number): { factors: number[], pairs: [number, number][] } => {
+    if (num === 0) return { factors: [], pairs: [] };
     const n = Math.abs(num);
     const factors = new Set<number>();
+    const pairs: [number, number][] = [];
     for (let i = 1; i <= Math.sqrt(n); i++) {
         if (n % i === 0) {
             factors.add(i);
             factors.add(n / i);
+            pairs.push([i, n / i]);
         }
     }
-    return Array.from(factors).sort((a, b) => a - b);
+    return { factors: Array.from(factors).sort((a, b) => a - b), pairs };
 };
 
 const getPrimeFactorization = (num: number): number[] => {
@@ -41,12 +43,13 @@ const getPrimeFactorization = (num: number): number[] => {
 
 interface FactorResult {
     allFactors: number[];
+    factorPairs: [number, number][];
     primeFactors: number[];
 }
 
 export default function FactorCalculator() {
     const { toast } = useToast();
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState('120');
     const [result, setResult] = useState<FactorResult | null>(null);
 
     const calculate = () => {
@@ -78,9 +81,9 @@ export default function FactorCalculator() {
         }
 
         try {
-            const allFactors = getFactors(num);
+            const { factors, pairs } = getFactorsAndPairs(num);
             const primeFactors = getPrimeFactorization(num);
-            setResult({ allFactors, primeFactors });
+            setResult({ allFactors: factors, factorPairs: pairs, primeFactors });
         } catch (e: any) {
             toast({
                 variant: 'destructive',
@@ -90,6 +93,10 @@ export default function FactorCalculator() {
              setResult(null);
         }
     };
+    
+    useState(() => {
+        calculate();
+    });
 
     return (
         <Card className="shadow-lg">
@@ -111,18 +118,22 @@ export default function FactorCalculator() {
             </CardContent>
             {result && (
                 <CardFooter className="flex-col items-start gap-4">
-                     <div className="w-full p-4 bg-muted rounded-lg">
-                        <h3 className="font-semibold mb-2">All Factors:</h3>
+                     <div className="w-full p-4 bg-muted rounded-lg space-y-2">
+                        <h3 className="font-semibold">Factors:</h3>
                         <div className="flex flex-wrap gap-2">
-                            {result.allFactors.map((factor, index) => (
-                                <Badge key={index} variant="secondary">{factor}</Badge>
-                            ))}
+                            {result.allFactors.join(', ')}
                         </div>
                     </div>
-                     <div className="w-full p-4 bg-muted rounded-lg">
-                        <h3 className="font-semibold mb-2">Prime Factors:</h3>
+                     <div className="w-full p-4 bg-muted rounded-lg space-y-2">
+                        <h3 className="font-semibold">Factor Pairs:</h3>
+                        <div className="flex flex-wrap gap-2">
+                            {result.factorPairs.map(pair => `(${pair.join(', ')})`).join(' ')}
+                        </div>
+                    </div>
+                     <div className="w-full p-4 bg-muted rounded-lg space-y-2">
+                        <h3 className="font-semibold">Prime Factors:</h3>
                          <p className="font-mono text-primary">
-                            {result.primeFactors.join(' × ')}
+                            {input} = {result.primeFactors.join(' × ')}
                         </p>
                     </div>
                 </CardFooter>

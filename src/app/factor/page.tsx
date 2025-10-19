@@ -25,9 +25,10 @@ const HowToUseGuide = () => (
                     <strong>Calculate:</strong> Click the "Calculate" button.
                 </li>
                 <li>
-                    <strong>View Results:</strong> The calculator will display two sets of results:
+                    <strong>View Results:</strong> The calculator will display three sets of results:
                     <ul className="list-disc list-inside pl-6 mt-1">
-                        <li><b>All Factors:</b> A complete list of all integers that divide your number evenly.</li>
+                        <li><b>Factors:</b> A complete list of all integers that divide your number evenly.</li>
+                        <li><b>Factor Pairs:</b> The pairs of numbers that multiply together to give your number.</li>
                         <li><b>Prime Factors:</b> The set of prime numbers that, when multiplied together, equal your number.</li>
                     </ul>
                 </li>
