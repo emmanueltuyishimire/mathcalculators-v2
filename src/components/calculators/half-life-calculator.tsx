@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -17,45 +17,74 @@ function HalfLifeDecayCalculator() {
         t: '50',
         t1_2: '',
     });
+    const [fieldToSolve, setFieldToSolve] = useState<'Nt' | 'N0' | 't' | 't1_2'>('t1_2');
+
+    const handleInputChange = (field: keyof typeof values, value: string) => {
+        const newValues = { ...values, [field]: value };
+        
+        const emptyFields = (Object.keys(newValues) as Array<keyof typeof values>).filter(key => newValues[key] === '');
+        
+        if (emptyFields.length === 1) {
+            setFieldToSolve(emptyFields[0]);
+        }
+        
+        setValues(newValues);
+    };
 
     const calculate = () => {
         const { Nt, N0, t, t1_2 } = values;
+        
         const numNt = Nt ? parseFloat(Nt) : NaN;
         const numN0 = N0 ? parseFloat(N0) : NaN;
         const numT = t ? parseFloat(t) : NaN;
         const numT1_2 = t1_2 ? parseFloat(t1_2) : NaN;
-
+        
         const knownValues = [!isNaN(numNt), !isNaN(numN0), !isNaN(numT), !isNaN(numT1_2)].filter(Boolean).length;
 
-        if (knownValues !== 3) {
-            toast({
+        if (knownValues < 3) {
+            return; // Not enough info to calculate
+        }
+        
+        if (knownValues > 3) {
+             toast({
                 variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly three values to calculate the fourth.',
+                title: 'Too Many Values',
+                description: 'Please clear one field to calculate it.',
             });
             return;
         }
 
         try {
-            if (isNaN(numNt)) {
+            let newValues = { ...values };
+            
+            if (fieldToSolve === 'Nt') {
                 const result = numN0 * Math.pow(0.5, numT / numT1_2);
-                setValues(prev => ({ ...prev, Nt: result.toPrecision(5) }));
-            } else if (isNaN(numN0)) {
+                newValues.Nt = result.toPrecision(5);
+            } else if (fieldToSolve === 'N0') {
                 const result = numNt / Math.pow(0.5, numT / numT1_2);
-                setValues(prev => ({ ...prev, N0: result.toPrecision(5) }));
-            } else if (isNaN(numT)) {
-                 if (numNt / numN0 <= 0) throw new Error("Ratio of quantities must be positive for log calculation.");
+                newValues.N0 = result.toPrecision(5);
+            } else if (fieldToSolve === 't') {
+                 if (numNt <= 0 || numN0 <=0 || numNt / numN0 <= 0) throw new Error("Quantities must be positive for log calculation.");
                 const result = numT1_2 * (Math.log(numNt / numN0) / Math.log(0.5));
-                setValues(prev => ({ ...prev, t: result.toPrecision(5) }));
-            } else { // isNaN(numT1_2)
-                if (numNt / numN0 <= 0) throw new Error("Ratio of quantities must be positive for log calculation.");
+                newValues.t = result.toPrecision(5);
+            } else if (fieldToSolve === 't1_2') {
+                if (numNt <= 0 || numN0 <=0 || numNt / numN0 <= 0) throw new Error("Quantities must be positive for log calculation.");
                 const result = numT * (Math.log(0.5) / Math.log(numNt / numN0));
-                setValues(prev => ({ ...prev, t1_2: result.toPrecision(5) }));
+                 if (result < 0) throw new Error("Inputs result in a negative half-life. Please check values.");
+                newValues.t1_2 = result.toPrecision(5);
             }
+            
+            setValues(newValues);
+
         } catch (e: any) {
              toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [values, fieldToSolve]);
 
     const handleClear = () => {
       setValues({ Nt: '', N0: '', t: '', t1_2: '' });
@@ -71,23 +100,22 @@ function HalfLifeDecayCalculator() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="Nt">Quantity Remains (Nt)</Label>
-                        <Input id="Nt" type="number" value={values.Nt} onChange={(e) => setValues({ ...values, Nt: e.target.value })} />
+                        <Input id="Nt" type="number" value={values.Nt} onChange={(e) => handleInputChange('Nt', e.target.value)} />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="N0">Initial Quantity (N0)</Label>
-                        <Input id="N0" type="number" value={values.N0} onChange={(e) => setValues({ ...values, N0: e.target.value })} />
+                        <Input id="N0" type="number" value={values.N0} onChange={(e) => handleInputChange('N0', e.target.value)} />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="t">Time Elapsed (t)</Label>
-                        <Input id="t" type="number" value={values.t} onChange={(e) => setValues({ ...values, t: e.target.value })} />
+                        <Input id="t" type="number" value={values.t} onChange={(e) => handleInputChange('t', e.target.value)} />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="t1_2">Half-Life (t½)</Label>
-                        <Input id="t1_2" type="number" value={values.t1_2} onChange={(e) => setValues({ ...values, t1_2: e.target.value })} />
+                        <Input id="t1_2" type="number" value={values.t1_2} onChange={(e) => handleInputChange('t1_2', e.target.value)} />
                     </div>
                 </div>
                 <div className="flex gap-2">
-                    <Button onClick={calculate} className="w-full">Calculate</Button>
                     <Button onClick={handleClear} variant="outline" className="w-full">Clear</Button>
                 </div>
             </CardContent>
@@ -99,29 +127,33 @@ function HalfLifeConversionCalculator() {
     const { toast } = useToast();
     const [values, setValues] = useState({ t1_2: '10', tau: '', lambda: '' });
 
-    const calculate = (changed: 't1_2' | 'tau' | 'lambda') => {
-        const { t1_2, tau, lambda } = values;
-        const numT1_2 = parseFloat(t1_2);
-        const numTau = parseFloat(tau);
-        const numLambda = parseFloat(lambda);
+    const calculate = (changed: 't1_2' | 'tau' | 'lambda', value: string) => {
+        const numValue = parseFloat(value);
+        if (isNaN(numValue)) {
+            setValues({ t1_2: changed === 't1_2' ? value : '', tau: changed === 'tau' ? value : '', lambda: changed === 'lambda' ? value : '' });
+            return;
+        }
 
         try {
-            if (changed === 't1_2' && !isNaN(numT1_2)) {
-                if (numT1_2 <= 0) throw new Error("Half-life must be positive.");
-                setValues({ t1_2, tau: (numT1_2 / Math.LN2).toPrecision(5), lambda: (Math.LN2 / numT1_2).toPrecision(5) });
-            } else if (changed === 'tau' && !isNaN(numTau)) {
-                if (numTau <= 0) throw new Error("Mean lifetime must be positive.");
-                setValues({ tau, t1_2: (numTau * Math.LN2).toPrecision(5), lambda: (1 / numTau).toPrecision(5) });
-            } else if (changed === 'lambda' && !isNaN(numLambda)) {
-                 if (numLambda <= 0) throw new Error("Decay constant must be positive.");
-                setValues({ lambda, t1_2: (Math.LN2 / numLambda).toPrecision(5), tau: (1 / numLambda).toPrecision(5) });
-            } else {
-                 setValues({ t1_2: values.t1_2, tau: '', lambda: '' });
+            if (changed === 't1_2') {
+                if (numValue <= 0) throw new Error("Half-life must be positive.");
+                setValues({ t1_2: value, tau: (numValue / Math.LN2).toPrecision(5), lambda: (Math.LN2 / numValue).toPrecision(5) });
+            } else if (changed === 'tau') {
+                if (numValue <= 0) throw new Error("Mean lifetime must be positive.");
+                setValues({ tau: value, t1_2: (numValue * Math.LN2).toPrecision(5), lambda: (1 / numValue).toPrecision(5) });
+            } else if (changed === 'lambda') {
+                 if (numValue <= 0) throw new Error("Decay constant must be positive.");
+                setValues({ lambda: value, t1_2: (Math.LN2 / numValue).toPrecision(5), tau: (1 / numValue).toPrecision(5) });
             }
         } catch(e: any) {
              toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
         }
     };
+    
+    // Initial calculation
+    useEffect(() => {
+        calculate('t1_2', '10');
+    }, []);
 
     return (
         <Card>
@@ -133,15 +165,15 @@ function HalfLifeConversionCalculator() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
                     <div className="space-y-2">
                         <Label htmlFor="conv-t1_2">Half-Life (t½)</Label>
-                        <Input id="conv-t1_2" type="number" value={values.t1_2} onChange={e => {setValues({ t1_2: e.target.value, tau: '', lambda: ''}); calculate('t1_2');}} />
+                        <Input id="conv-t1_2" type="number" value={values.t1_2} onChange={e => calculate('t1_2', e.target.value)} />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="conv-tau">Mean Lifetime (τ)</Label>
-                        <Input id="conv-tau" type="number" value={values.tau} onChange={e => {setValues({ tau: e.target.value, t1_2: '', lambda: ''}); calculate('tau');}} />
+                        <Input id="conv-tau" type="number" value={values.tau} onChange={e => calculate('tau', e.target.value)} />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="conv-lambda">Decay Constant (λ)</Label>
-                        <Input id="conv-lambda" type="number" value={values.lambda} onChange={e => {setValues({ lambda: e.target.value, t1_2: '', tau: ''}); calculate('lambda');}} />
+                        <Input id="conv-lambda" type="number" value={values.lambda} onChange={e => calculate('lambda', e.target.value)} />
                     </div>
                 </div>
                  <CardDescription className="text-xs pt-2">
