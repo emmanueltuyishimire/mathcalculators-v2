@@ -1,6 +1,6 @@
 
 import { PageHeader } from '@/components/page-header';
-import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import TrigonometryCalculator from '@/components/calculators/trigonometry-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -124,19 +124,16 @@ const HowToUseGuide = () => (
         <CardContent className="space-y-4 text-muted-foreground">
             <ol className="list-decimal list-inside space-y-2">
                 <li>
-                    <strong>Angle Mode:</strong> First, ensure you've selected the correct angle mode. Toggle between <strong>RAD</strong> (Radians) and <strong>DEG</strong> (Degrees) using the button at the top.
+                    <strong>Select Function:</strong> Choose the trigonometric function you want to use (e.g., sin, cos, asin) from the dropdown menu.
                 </li>
                 <li>
-                    <strong>Entering Expressions:</strong> Use the keypad to input your numbers and operations. Use parentheses `()` for complex expressions.
+                    <strong>Enter Value:</strong> Input the number or angle into the input field. For direct functions (sin, cos, etc.), this is an angle. For inverse functions (asin, acos, etc.), this is a numeric ratio.
                 </li>
                  <li>
-                    <strong>Trigonometric Functions:</strong> Click `sin`, `cos`, `tan`, etc., to apply the function. For inverse functions (`sin⁻¹`), click the `2nd` button first.
+                    <strong>Angle Unit:</strong> Select whether your input (or desired output for inverse functions) is in <strong>Degrees</strong> or <strong>Radians</strong>.
                 </li>
                 <li>
-                    <strong>Calculate:</strong> Press the `=` button to get the final result.
-                </li>
-                <li>
-                    <strong>Memory Functions:</strong> Use `M+`, `M-`, `MR`, and `MC` to manage stored values for multi-step calculations.
+                    <strong>Calculate:</strong> Press the <strong>Calculate</strong> button to see the result.
                 </li>
             </ol>
              <div className="p-4 bg-accent/50 rounded-lg">
@@ -145,9 +142,10 @@ const HowToUseGuide = () => (
                     To find the sine of 30 degrees:
                 </p>
                 <ol className="list-decimal list-inside text-sm text-muted-foreground mt-2 pl-4">
-                    <li>Set the mode to <strong>DEG</strong>.</li>
-                    <li>Press `sin(`, then `3`, `0`, `)`.</li>
-                    <li>Press `=`. The result is `0.5`.</li>
+                    <li>Select "sin" as the function.</li>
+                    <li>Enter "30" as the value.</li>
+                    <li>Set the unit to "Degrees".</li>
+                    <li>Click "Calculate". The result is `0.5`.</li>
                 </ol>
             </div>
         </CardContent>
@@ -180,18 +178,12 @@ const FaqSection = () => (
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4">
-                    <AccordionTrigger>What are hyperbolic functions (sinh, cosh, tanh)?</AccordionTrigger>
+                    <AccordionTrigger>What are csc, sec, and cot?</AccordionTrigger>
                     <AccordionContent>
-                        Hyperbolic functions are analogs of the ordinary trigonometric functions, but defined using the hyperbola rather than the circle. They appear in the solutions to many linear differential equations, such as the equation defining a catenary curve (the shape of a hanging chain).
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-5">
-                    <AccordionTrigger>How do the memory functions (M+, M-, MR, MC) work?</AccordionTrigger>
-                    <AccordionContent>
-                        - **M+**: Adds the current display value to the number stored in memory.<br/>
-                        - **M-**: Subtracts the current display value from the number in memory.<br/>
-                        - **MR**: Recalls the number from memory and displays it.<br/>
-                        - **MC**: Clears the memory (sets it to 0).
+                        These are the reciprocal trigonometric functions:<br/>
+                        - **Cosecant (csc)** is the reciprocal of sine (1/sin).<br/>
+                        - **Secant (sec)** is the reciprocal of cosine (1/cos).<br/>
+                        - **Cotangent (cot)** is the reciprocal of tangent (1/tan).
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
@@ -213,24 +205,24 @@ export default function TrigonometryPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Trigonometry Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-4xl space-y-12">
+          <div className="mx-auto max-w-2xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Trigonometry Calculator Online – Free & Accurate
+                    Trigonometry Calculator Online
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
                     Your go-to free online trigonometry calculator for complex math problems. It's fast, accurate, and easy to use.
                 </p>
             </section>
             
-            <ScientificCalculator />
+            <TrigonometryCalculator />
 
             <HowToUseGuide />
 
             <section className="space-y-8">
                 <h2 className="text-3xl font-bold">What is a Trigonometry Calculator?</h2>
                 <p className="text-muted-foreground">
-                    A trigonometry calculator is an essential tool for students, engineers, and professionals who need to perform complex mathematical calculations. Unlike a basic calculator, a trigonometry calculator includes functions for trigonometry, logarithms, exponents, and more. Our free trigonometry calculator app provides a powerful and easy-to-use interface right in your browser, with features comparable to leading brands like Casio and Texas Instruments (TI). Whether you're tackling homework or complex engineering problems, this tool is designed to be your reliable companion. For more general calculations, try our <Link href="/scientific" className="text-primary hover:underline">Scientific Calculator</Link>.
+                    A trigonometry calculator is an essential tool for students, engineers, and professionals who need to perform complex mathematical calculations involving angles and side lengths of triangles. This specialized tool provides functions for sine, cosine, tangent, and their inverses. Our free trigonometry calculator app provides a powerful and easy-to-use interface right in your browser. For more general calculations, try our <Link href="/scientific" className="text-primary hover:underline">Scientific Calculator</Link>.
                 </p>
             </section>
             <FaqSection />
