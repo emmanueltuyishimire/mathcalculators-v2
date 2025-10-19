@@ -1,150 +1,173 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
-export default function LogCalculator() {
-    const { toast } = useToast();
-    const [base, setBase] = useState('10');
-    const [argument, setArgument] = useState('100');
-    const [result, setResult] = useState('2');
-    const [steps, setSteps] = useState<string | null>(null);
+const ScientificCalculator = () => {
+  const [displayValue, setDisplayValue] = useState('0');
+  const [isResult, setIsResult] = useState(false);
+  const { toast } = useToast();
 
-     const handleBaseChange = (value: string) => {
-        setBase(value);
-        setArgument('');
-        setResult('');
-        setSteps(null);
-    };
-
-    const handleArgumentChange = (value: string) => {
-        setArgument(value);
-        setBase('');
-        setResult('');
-        setSteps(null);
-    };
-
-    const handleResultChange = (value: string) => {
-        setResult(value);
-        setBase('');
-        setArgument('');
-        setSteps(null);
-    };
-
-    const calculate = () => {
-        setSteps(null);
-        
-        const baseStr = base.toLowerCase().trim();
-        const baseNum = baseStr === 'e' ? Math.E : parseFloat(base);
-        const argNum = parseFloat(argument);
-        const resNum = parseFloat(result);
-
-        const knownValues = [!isNaN(baseNum), !isNaN(argNum), !isNaN(resNum)].filter(Boolean).length;
-
-        if (knownValues !== 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly two values to solve for the third.',
-            });
-            return;
-        }
-
-        try {
-            if (isNaN(resNum)) {
-                if (baseNum <= 0 || baseNum === 1) throw new Error("Base must be positive and not equal to 1.");
-                if (argNum <= 0) throw new Error("Argument must be positive for real logarithms.");
-                const newResult = Math.log(argNum) / Math.log(baseNum);
-                setResult(newResult.toString());
-                setSteps(`y = log${baseStr}(${argNum}) = ${newResult.toFixed(10)}`);
-            } else if (isNaN(argNum)) {
-                const newArgument = Math.pow(baseNum, resNum);
-                setArgument(newArgument.toString());
-                 setSteps(`x = ${baseStr}^${resNum} = ${newArgument.toFixed(10)}`);
-            } else { // isNaN(baseNum) is implied
-                if (argNum <= 0 || argNum === 1) throw new Error("Argument must be positive and not equal to 1 for finding the base.");
-                if (resNum === 0) throw new Error("Result cannot be zero when solving for the base.");
-                const newBase = Math.pow(argNum, 1 / resNum);
-                setBase(newBase.toString());
-                setSteps(`b = ${argNum}^(1/${resNum}) = ${newBase.toFixed(10)}`);
-            }
-        } catch (e: any) {
-            toast({
-                variant: 'destructive',
-                title: 'Calculation Error',
-                description: e.message || 'An error occurred during calculation.',
-            });
-        }
-    };
-
-    const handleClear = () => {
-        setBase('');
-        setArgument('');
-        setResult('');
-        setSteps(null);
+  const handleButtonClick = (value: string) => {
+    if (isResult) {
+      setDisplayValue(value);
+      setIsResult(false);
+      return;
     }
+    setDisplayValue(prev => (prev === '0' && value !== '.' ? value : prev + value));
+  };
 
-    return (
-        <Card className="shadow-lg">
-            <CardHeader>
-                <CardTitle>logₐ(x) = y</CardTitle>
-                <CardDescription>Enter any two values to find the third. Base can be 'e'.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                 <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
-                    <span className="self-center">log</span>
-                    <Input
-                        id="base"
-                        value={base}
-                        onChange={(e) => handleBaseChange(e.target.value)}
-                        className="w-20 text-center text-sm self-end"
-                        placeholder="a"
-                        aria-label="Base (a)"
-                    />
-                    <Input
-                        id="argument"
-                        type="number"
-                        value={argument}
-                        onChange={(e) => handleArgumentChange(e.target.value)}
-                        className="w-24 text-center"
-                        placeholder="x"
-                        aria-label="Argument (x)"
-                    />
-                    <span className="self-center">=</span>
-                    <Input
-                        id="result"
-                        type="number"
-                        value={result}
-                        onChange={(e) => handleResultChange(e.target.value)}
-                        className="w-24 text-center"
-                        placeholder="y"
-                        aria-label="Result (y)"
-                    />
-                </div>
-                <div className="flex gap-2 pt-2">
-                    <Button onClick={calculate} className="w-full">Calculate</Button>
-                    <Button onClick={handleClear} variant="outline" className="w-full">Clear</Button>
-                </div>
-            </CardContent>
-            {steps && (
-                <CardFooter>
-                     <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
-                            <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words">
-                                    {steps}
-                                </div>
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </CardFooter>
-            )}
-        </Card>
-    );
-}
+  const handleOperatorClick = (operator: string) => {
+    setIsResult(false);
+    setDisplayValue(prev => `${prev} ${operator} `);
+  };
+
+  const handleClear = () => {
+    setDisplayValue('0');
+    setIsResult(false);
+  };
+  
+  const handleAllClear = () => {
+    handleClear();
+  };
+
+  const handleBackspace = () => {
+    if (isResult) {
+      handleClear();
+      return;
+    }
+    setDisplayValue(prev => prev.length > 1 ? prev.slice(0, -1) : '0');
+  };
+
+  const handleFunctionClick = (func: string) => {
+     if (isResult) {
+      setDisplayValue(`${func}(`);
+      setIsResult(false);
+    } else {
+       setDisplayValue(prev => (prev === '0' ? `${func}(` : `${prev}${func}(`));
+    }
+  };
+
+  const applyImmediateFunction = (fn: (x: number) => number | string, funcName: string) => {
+    try {
+        const result = fn(parseFloat(displayValue));
+        if (isNaN(Number(result)) || !isFinite(Number(result))) throw new Error(`Invalid result from ${funcName}`);
+        setDisplayValue(String(result));
+        setIsResult(true);
+    } catch (e: any) {
+        toast({
+            variant: "destructive",
+            title: "Function Error",
+            description: e.message || `Could not apply ${funcName}.`,
+        });
+        setIsResult(true);
+    }
+  };
+
+  const handleEquals = () => {
+    try {
+      let expression = displayValue
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/\^/g, '**')
+        .replace(/log\(/g, 'Math.log10(')
+        .replace(/ln\(/g, 'Math.log(');
+
+      // Handle custom log_b(x) using change of base: log_b(x) = log(x)/log(b)
+      expression = expression.replace(/log_(\d+)\((.*?)\)/g, '(Math.log($2)/Math.log($1))');
+      
+      if (displayValue.split('(').length !== displayValue.split(')').length) {
+        throw new Error("Mismatched parentheses");
+      }
+      
+      const result = new Function('return ' + expression)();
+      setDisplayValue(String(result));
+      setIsResult(true);
+    } catch (error: any) {
+       toast({
+        variant: "destructive",
+        title: "Invalid Expression",
+        description: error.message || "Please check your input.",
+      });
+      setIsResult(true);
+    }
+  };
+
+  const buttonLayout = [
+    { label: '(', type: 'char', variant: 'secondary' },
+    { label: ')', type: 'char', variant: 'secondary' },
+    { label: 'C', type: 'clear', variant: 'destructive' },
+    { label: 'AC', type: 'all-clear', variant: 'destructive' },
+    { label: '⌫', type: 'backspace', variant: 'destructive' },
+
+    { label: 'xʸ', type: 'op', value: '^', variant: 'secondary' },
+    { label: 'log', type: 'func', variant: 'secondary' },
+    { label: '7', type: 'char' },
+    { label: '8', type: 'char' },
+    { label: '9', type: 'char' },
+
+    { label: 'eˣ', type: 'func_imm', fn: (x:number) => Math.exp(x), variant: 'secondary' },
+    { label: 'ln', type: 'func', variant: 'secondary' },
+    { label: '4', type: 'char' },
+    { label: '5', type: 'char' },
+    { label: '6', type: 'char' },
+
+    { label: '1/x', type: 'func_imm', fn: (x:number) => 1/x, variant: 'secondary' },
+    { label: 'log_b', type: 'func', value: 'log_', variant: 'secondary' },
+    { label: '1', type: 'char' },
+    { label: '2', type: 'char' },
+    { label: '3', type: 'char' },
+    
+    { label: '÷', type: 'op', variant: 'accent' },
+    { label: '×', type: 'op', variant: 'accent' },
+    { label: '-', type: 'op', variant: 'accent' },
+    { label: '+', type: 'op', variant: 'accent' },
+    { label: '=', type: 'equals', variant: 'default' },
+
+    { label: '0', type: 'char' },
+    { label: '.', type: 'char' },
+  ];
+
+  const renderButton = (btnConfig: any) => {
+    const { label, type, value, variant, fn } = btnConfig;
+
+    let onClick;
+    switch (type) {
+      case 'op': onClick = () => handleOperatorClick(value || label); break;
+      case 'char': onClick = () => handleButtonClick(label); break;
+      case 'func': onClick = () => handleFunctionClick(value || label); break;
+      case 'func_imm': onClick = () => applyImmediateFunction(fn, label); break;
+      case 'clear': onClick = handleClear; break;
+      case 'all-clear': onClick = handleAllClear; break;
+      case 'backspace': onClick = handleBackspace; break;
+      case 'equals': onClick = handleEquals; break;
+      default: onClick = () => handleButtonClick(label);
+    }
+    
+    return <Button key={label} variant={variant || 'outline'} className="h-12 text-base" onClick={onClick}>{label}</Button>;
+  }
+
+  return (
+    <Card className="shadow-lg max-w-md mx-auto">
+        <CardContent className="p-2">
+            <Input 
+                readOnly 
+                value={displayValue} 
+                className="mb-2 h-16 text-right text-4xl font-mono bg-muted" 
+                aria-label="Calculator display"
+            />
+            <div className="grid grid-cols-5 gap-2">
+                {buttonLayout.map(renderButton)}
+                <div className="col-span-2">{renderButton({ label: '0', type: 'char' })}</div>
+                {renderButton({ label: '.', type: 'char' })}
+            </div>
+        </CardContent>
+    </Card>
+  );
+};
+
+export default ScientificCalculator;

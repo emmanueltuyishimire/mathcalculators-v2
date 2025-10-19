@@ -1,192 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { PageHeader } from '@/components/page-header';
-// import type { Metadata } from 'next'; // Cannot be used in client component
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import Link from 'next/link';
+import ScientificCalculator from '@/components/calculators/log-calculator';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-function LogCalculator() {
-    const { toast } = useToast();
-    const [base, setBase] = useState('e');
-    const [argument, setArgument] = useState('100');
-    const [result, setResult] = useState('');
-    const [calculation, setCalculation] = useState<string | null>(null);
-    const [exponentialForm, setExponentialForm] = useState<string | null>(null);
-
-    const handleBaseChange = (value: string) => {
-        setBase(value);
-        setArgument('');
-        setResult('');
-        setCalculation(null);
-        setExponentialForm(null);
-    };
-
-    const handleArgumentChange = (value: string) => {
-        setArgument(value);
-        setBase('');
-        setResult('');
-        setCalculation(null);
-        setExponentialForm(null);
-    };
-
-    const handleResultChange = (value: string) => {
-        setResult(value);
-        setBase('');
-        setArgument('');
-        setCalculation(null);
-        setExponentialForm(null);
-    };
-
-    const calculate = () => {
-        setCalculation(null);
-        setExponentialForm(null);
-        
-        const baseStr = base.toLowerCase().trim();
-        const baseNum = baseStr === 'e' ? Math.E : parseFloat(base);
-        const argNum = parseFloat(argument);
-        const resNum = parseFloat(result);
-
-        const knownValues = [!isNaN(baseNum), !isNaN(argNum), !isNaN(resNum)].filter(Boolean).length;
-
-        if (knownValues !== 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly two values to solve for the third.',
-            });
-            return;
-        }
-
-        try {
-            if (isNaN(resNum)) {
-                if (baseNum <= 0 || baseNum === 1) throw new Error("Base must be positive and not equal to 1.");
-                if (argNum <= 0) throw new Error("Argument must be positive for real logarithms.");
-                const newResult = Math.log(argNum) / Math.log(baseNum);
-                setResult(newResult.toString());
-                setCalculation(`log${baseStr}(${argNum}) = ${newResult.toPrecision(15)}`);
-                setExponentialForm(`${baseStr}^${newResult.toPrecision(15)} = ${argNum}`);
-            } else if (isNaN(argNum)) {
-                const newArgument = Math.pow(baseNum, resNum);
-                setArgument(newArgument.toString());
-                setCalculation(`log${baseStr}(${newArgument.toPrecision(15)}) = ${resNum}`);
-                setExponentialForm(`${baseStr}^${resNum} = ${newArgument.toPrecision(15)}`);
-            } else { // isNaN(baseNum) is implied because we check for 2 knowns
-                if (argNum <= 0 || argNum === 1) throw new Error("Argument must be positive and not equal to 1 for finding the base.");
-                if (resNum === 0) throw new Error("Result cannot be zero when solving for the base.");
-                const newBase = Math.pow(argNum, 1 / resNum);
-                setBase(newBase.toString());
-                setCalculation(`log${newBase.toPrecision(15)}(${argNum}) = ${resNum}`);
-                setExponentialForm(`${newBase.toPrecision(15)}^${resNum} = ${argNum}`);
-            }
-        } catch (e: any) {
-            toast({
-                variant: 'destructive',
-                title: 'Calculation Error',
-                description: e.message || 'An error occurred during calculation.',
-            });
-        }
-    };
-
-    useEffect(() => {
-        // Initial calculation on load
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const handleClear = () => {
-        setBase('');
-        setArgument('');
-        setResult('');
-        setCalculation(null);
-        setExponentialForm(null);
-    }
-
-    return (
-        <Card className="shadow-lg">
-            <CardHeader>
-                <CardTitle>logₐ(x) = y</CardTitle>
-                <CardDescription>Enter any two values to find the third.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
-                    <span className="self-center">log</span>
-                    <Input
-                        id="base"
-                        value={base}
-                        onChange={(e) => handleBaseChange(e.target.value)}
-                        className="w-20 text-center text-sm self-end"
-                        placeholder="a"
-                        aria-label="Base (a)"
-                    />
-                    <Input
-                        id="argument"
-                        type="number"
-                        value={argument}
-                        onChange={(e) => handleArgumentChange(e.target.value)}
-                        className="w-24 text-center"
-                        placeholder="x"
-                        aria-label="Argument (x)"
-                    />
-                    <span className="self-center">=</span>
-                    <Input
-                        id="result"
-                        type="number"
-                        value={result}
-                        onChange={(e) => handleResultChange(e.target.value)}
-                        className="w-24 text-center"
-                        placeholder="y"
-                        aria-label="Result (y)"
-                    />
-                </div>
-                <div className="flex gap-2">
-                    <Button onClick={calculate} className="w-full">Calculate</Button>
-                    <Button variant="outline" onClick={handleClear} className="w-full">Clear</Button>
-                </div>
-            </CardContent>
-            {calculation && exponentialForm && (
-                <CardFooter>
-                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                        <h3 className="font-bold text-lg">Result</h3>
-                        <p className="font-mono text-primary break-all">{calculation}</p>
-                        <p className="font-mono text-muted-foreground text-sm break-all">{exponentialForm}</p>
-                    </div>
-                </CardFooter>
-            )}
-        </Card>
-    );
-}
-
-const HowToUseGuide = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>How to Use the Log Calculator</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
-            <p>This calculator solves logarithmic equations in the form <strong>logₐ(x) = y</strong>.</p>
-            <ol className="list-decimal list-inside space-y-2">
-                <li>
-                    <strong>Enter Two Values:</strong> Fill in any two of the three input fields: Base (a), Argument (x), or Result (y). Leave the field you want to solve for empty.
-                </li>
-                <li>
-                    <strong>Use 'e' as Base (Optional):</strong> To use Euler's number (e ≈ 2.718), simply type 'e' into the Base input field.
-                </li>
-                <li>
-                    <strong>Calculate:</strong> Click the "Calculate" button to compute the missing value.
-                </li>
-                <li>
-                    <strong>View the Result:</strong> The answer and its exponential equivalent will appear in the result section below.
-                </li>
-            </ol>
-        </CardContent>
-    </Card>
-);
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const EducationalContent = () => (
     <Card>
@@ -225,6 +45,7 @@ const EducationalContent = () => (
 
             <div>
                 <h3 className="text-xl font-semibold text-foreground">3. Calculator Logic (Pseudocode)</h3>
+                <p className="text-muted-foreground mt-2">The calculator uses the following logic to solve for different variables:</p>
                 <div className="font-mono text-sm bg-muted p-4 rounded-md space-y-2 mt-2">
                     <p>// Inputs: base (b), number (y), exponent (x)</p>
                     <p>// Determine which variable is missing</p>
@@ -252,6 +73,35 @@ const EducationalContent = () => (
     </Card>
 );
 
+const HowToUseGuide = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle>How to Use the Logarithm Calculator</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4 text-muted-foreground">
+        <ol className="list-decimal list-inside space-y-2">
+          <li>
+            <strong>Basic Calculations:</strong> Use the number keys to enter values. Use <code className="font-mono bg-muted p-1 rounded-md">log</code> for base 10, <code className="font-mono bg-muted p-1 rounded-md">ln</code> for base e.
+            <br />
+            <em>Example: To find log(100), press <code className="font-mono bg-muted p-1 rounded-md">log</code>, then <code className="font-mono bg-muted p-1 rounded-md">(</code>, <code className="font-mono bg-muted p-1 rounded-md">1</code>, <code className="font-mono bg-muted p-1 rounded-md">0</code>, <code className="font-mono bg-muted p-1 rounded-md">0</code>, <code className="font-mono bg-muted p-1 rounded-md">)</code>, and <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
+          </li>
+          <li>
+            <strong>Custom Base (log_b):</strong> To calculate a logarithm with a custom base, use the <code className="font-mono bg-muted p-1 rounded-md">log_b</code> key. The format is <code className="font-mono bg-muted p-1 rounded-md">log_BASE(NUMBER)</code>.
+            <br />
+            <em>Example: To find log₂(8), type <code className="font-mono bg-muted p-1 rounded-md">log_2(8)</code> using the keypad and then press <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
+          </li>
+          <li>
+            <strong>Exponents:</strong> Use the <code className="font-mono bg-muted p-1 rounded-md">xʸ</code> button for powers.
+            <br />
+            <em>Example: To calculate 2⁵, press <code className="font-mono bg-muted p-1 rounded-md">2</code>, then <code className="font-mono bg-muted p-1 rounded-md">^</code>, then <code className="font-mono bg-muted p-1 rounded-md">5</code>, and <code className="font-mono bg-muted p-1 rounded-md">=</code>.</em>
+          </li>
+          <li>
+            <strong>Clear Buttons:</strong> Use <code className="font-mono bg-muted p-1 rounded-md">C</code> to clear the last entry or <code className="font-mono bg-muted p-1 rounded-md">AC</code> to clear everything.
+          </li>
+        </ol>
+      </CardContent>
+    </Card>
+  );
 
 export default function LogPage() {
   return (
@@ -264,11 +114,11 @@ export default function LogPage() {
                     Log Calculator (Logarithm)
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide any two values to calculate the third in the logarithm equation logₐx=y. It can accept "e" as a base input.
+                    A powerful calculator for logarithmic and exponential functions.
                 </p>
             </section>
             
-            <LogCalculator />
+            <ScientificCalculator />
 
             <HowToUseGuide />
 
