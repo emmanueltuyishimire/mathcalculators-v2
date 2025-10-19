@@ -17,7 +17,7 @@ const basicTools = [
   { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
   { href: '/exponent', label: 'Exponent Calculator', icon: Superscript },
   { href: '/binary', label: 'Binary Calculator', icon: Binary },
-  { href: '#', label: 'Hex Calculator', icon: Code },
+  { href: '/hex', label: 'Hex Calculator', icon: Code },
   { href: '#', label: 'Half-Life Calculator', icon: Atom },
   { href: '#', label: 'Quadratic Formula', icon: Sigma },
   { href: '#', label: 'Log Calculator', icon: Calculator },
