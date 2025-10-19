@@ -23,7 +23,7 @@ const basicTools = [
   { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
   { href: '/root', label: 'Root Calculator', icon: Radical },
   { href: '/lcm', label: 'Least Common Multiple', icon: Gavel },
-  { href: '#', label: 'Greatest Common Factor', icon: Hand },
+  { href: '/gcf', label: 'Greatest Common Factor', icon: Hand },
   { href: '#', label: 'Factor Calculator', icon: Gavel },
   { href: '#', 'label': 'Rounding Calculator', icon: CheckCircle },
   { href: '/matrix', label: 'Matrix Calculator', icon: Table },
