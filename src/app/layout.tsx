@@ -24,6 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
+      <head>
+        {/* Google AdSense Auto Ads */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" crossOrigin="anonymous"></script>
+        <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
+      </head>
       <body className={cn(inter.variable, "font-body antialiased")} suppressHydrationWarning>
         <FirebaseClientProvider>
           <ThemeProvider
