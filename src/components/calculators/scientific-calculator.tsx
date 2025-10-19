@@ -267,9 +267,9 @@ export default function ScientificCalculator() {
   }
 
   return (
-    <Card className="shadow-xl max-w-md mx-auto bg-gray-300 dark:bg-gray-800 text-white p-2 border-4 border-gray-400 dark:border-gray-900 rounded-2xl">
+    <Card className="shadow-xl max-w-md mx-auto bg-gray-800 text-white p-2 border-4 border-black rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
-        <div className="w-full mb-1 rounded-lg border-2 border-gray-400 dark:border-gray-900 bg-gray-100 dark:bg-gray-900 p-2 text-right text-3xl font-mono text-black dark:text-white break-all h-20 flex items-end justify-end shadow-inner">
+        <div className="w-full mb-1 rounded-lg border-2 border-black bg-green-200 dark:bg-green-900 p-2 text-right text-3xl font-mono text-black dark:text-green-50 break-all h-20 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
@@ -318,5 +318,7 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
+
+    
 
     
