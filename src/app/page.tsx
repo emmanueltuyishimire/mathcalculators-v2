@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d } from 'lucide-react';
+import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle } from 'lucide-react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
@@ -17,6 +17,12 @@ const tools = [
     label: 'Basic',
     icon: Calculator,
     description: 'Simple arithmetic operations.',
+  },
+  {
+    href: '/pythagorean',
+    label: 'Pythagorean',
+    icon: Triangle,
+    description: 'Solve right-angled triangles.',
   },
   {
     href: '/algebra',
