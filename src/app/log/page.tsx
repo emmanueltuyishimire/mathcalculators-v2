@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/page-header';
-import type { Metadata } from 'next';
+// import type { Metadata } from 'next'; // Cannot be used in client component
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,11 +11,9 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Link from 'next/link';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 // Metadata can't be dynamically generated in a client component, 
-// but we can define it for the page.
-// export const metadata: Metadata = { ... };
+// but we can define it for the page if we move it to a layout or server component.
 
 function LogCalculator() {
     const { toast } = useToast();
@@ -23,9 +21,11 @@ function LogCalculator() {
     const [argument, setArgument] = useState('100');
     const [result, setResult] = useState('');
     const [calculation, setCalculation] = useState<string | null>(null);
+    const [exponentialForm, setExponentialForm] = useState<string | null>(null);
 
     const calculate = () => {
         setCalculation(null);
+        setExponentialForm(null);
         
         const baseStr = base.toLowerCase().trim();
         const baseNum = baseStr === 'e' ? Math.E : parseFloat(base);
@@ -50,16 +50,19 @@ function LogCalculator() {
                 const newResult = Math.log(argNum) / Math.log(baseNum);
                 setResult(newResult.toString());
                 setCalculation(`log${baseStr}(${argNum}) = ${newResult.toPrecision(15)}`);
+                setExponentialForm(`${baseStr}^${newResult.toPrecision(15)} = ${argNum}`);
             } else if (isNaN(argNum)) {
                 const newArgument = Math.pow(baseNum, resNum);
                 setArgument(newArgument.toString());
-                setCalculation(`${baseStr}^${resNum} = ${newArgument.toPrecision(15)}`);
-            } else if (isNaN(baseNum)) {
+                setCalculation(`log${baseStr}(${newArgument.toPrecision(15)}) = ${resNum}`);
+                setExponentialForm(`${baseStr}^${resNum} = ${newArgument.toPrecision(15)}`);
+            } else { // isNaN(baseNum) is implied because we check for 2 knowns
                 if (argNum <= 0 || argNum === 1) throw new Error("Argument must be positive and not equal to 1 for finding the base.");
                 if (resNum === 0) throw new Error("Result cannot be zero when solving for the base.");
                 const newBase = Math.pow(argNum, 1 / resNum);
                 setBase(newBase.toString());
-                setCalculation(`${newBase.toPrecision(15)}^${resNum} = ${argNum}`);
+                setCalculation(`log${newBase.toPrecision(15)}(${argNum}) = ${resNum}`);
+                setExponentialForm(`${newBase.toPrecision(15)}^${resNum} = ${argNum}`);
             }
         } catch (e: any) {
             toast({
@@ -75,29 +78,70 @@ function LogCalculator() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const handleClear = () => {
+        setBase('');
+        setArgument('');
+        setResult('');
+        setCalculation(null);
+        setExponentialForm(null);
+    }
+
     return (
         <Card className="shadow-lg">
-            <CardContent className="pt-6 space-y-4">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-lg font-semibold text-center">
+            <CardHeader>
+                <CardTitle>logₐ(x) = y</CardTitle>
+                <CardDescription>Enter any two values to find the third.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
                     <span className="self-center">log</span>
-                    <Input id="base" value={base} onChange={e => setBase(e.target.value)} className="w-20 text-center text-sm self-end" placeholder="b"/>
+                    <Input id="base" value={base} onChange={e => setBase(e.target.value)} className="w-20 text-center text-sm self-end" placeholder="a"/>
                     <Input id="argument" type="number" value={argument} onChange={e => setArgument(e.target.value)} className="w-24 text-center" placeholder="x" />
                     <span className="self-center">=</span>
                     <Input id="result" type="number" value={result} onChange={e => setResult(e.target.value)} className="w-24 text-center" placeholder="y"/>
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
+                <div className="flex gap-2">
+                    <Button onClick={calculate} className="w-full">Calculate</Button>
+                    <Button variant="outline" onClick={handleClear} className="w-full">Clear</Button>
+                </div>
             </CardContent>
-            {calculation && (
+            {calculation && exponentialForm && (
                 <CardFooter>
                      <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <h3 className="font-bold text-lg">Result</h3>
                         <p className="font-mono text-primary break-all">{calculation}</p>
+                        <p className="font-mono text-muted-foreground text-sm break-all">{exponentialForm}</p>
                     </div>
                 </CardFooter>
             )}
         </Card>
     );
 }
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Log Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <p>This calculator solves logarithmic equations in the form <strong>logₐ(x) = y</strong>.</p>
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Enter Two Values:</strong> Fill in any two of the three input fields: Base (a), Argument (x), or Result (y). Leave the field you want to solve for empty.
+                </li>
+                <li>
+                    <strong>Use 'e' as Base (Optional):</strong> To use Euler's number (e ≈ 2.718), simply type 'e' into the Base input field.
+                </li>
+                <li>
+                    <strong>Calculate:</strong> Click the "Calculate" button to compute the missing value. The calculator also updates automatically as you type.
+                </li>
+                <li>
+                    <strong>View the Result:</strong> The answer and its exponential equivalent will appear in the result section below.
+                </li>
+            </ol>
+        </CardContent>
+    </Card>
+);
 
 const EducationalContent = () => (
     <Card>
@@ -169,6 +213,8 @@ export default function LogPage() {
             </section>
             
             <LogCalculator />
+
+            <HowToUseGuide />
 
             <EducationalContent />
 
