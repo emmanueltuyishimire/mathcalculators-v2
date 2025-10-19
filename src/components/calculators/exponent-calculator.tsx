@@ -2,21 +2,24 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 export default function ExponentCalculator() {
     const { toast } = useToast();
     const [base, setBase] = useState('2');
     const [exponent, setExponent] = useState('5');
-    const [result, setResult] = useState('');
+    const [result, setResult] = useState('32');
     const [useE, setUseE] = useState(false);
+    const [steps, setSteps] = useState<string | null>(null);
 
     const calculate = () => {
+        setSteps(null);
         const baseNum = useE ? Math.E : parseFloat(base);
         const expNum = parseFloat(exponent);
         const resNum = parseFloat(result);
@@ -36,14 +39,21 @@ export default function ExponentCalculator() {
             if (isNaN(resNum)) {
                 const newResult = Math.pow(baseNum, expNum);
                 setResult(newResult.toString());
+                if (Number.isInteger(expNum) && expNum > 0 && expNum <= 10) {
+                     setSteps(`${baseNum}^${expNum} = ${Array(expNum).fill(baseNum).join(' × ')} = ${newResult}`);
+                } else {
+                     setSteps(`${baseNum}^${expNum} = ${newResult}`);
+                }
             } else if (isNaN(baseNum) && !useE) {
                 if (resNum < 0 && expNum % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
                 const newBase = Math.pow(resNum, 1 / expNum);
                 setBase(newBase.toString());
+                setSteps(`a = ${resNum}^(1/${expNum}) = ${newBase}`);
             } else if (isNaN(expNum)) {
                 if (baseNum <= 0 || resNum <= 0) throw new Error("Logarithms require positive base and result.");
                 const newExponent = Math.log(resNum) / Math.log(baseNum);
                 setExponent(newExponent.toString());
+                 setSteps(`n = logₐ(y) = log${baseNum.toFixed(2)}(${resNum}) = ${newExponent}`);
             }
         } catch (e: any) {
             toast({
@@ -59,6 +69,7 @@ export default function ExponentCalculator() {
       setExponent('');
       setResult('');
       setUseE(false);
+      setSteps(null);
     }
     
     const handleUseEChange = (checked: boolean) => {
@@ -102,6 +113,20 @@ export default function ExponentCalculator() {
                     <Button onClick={handleClear} variant="outline" className="w-full">Clear</Button>
                 </div>
             </CardContent>
+            {steps && (
+                <CardFooter>
+                     <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words">
+                                    {steps}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </CardFooter>
+            )}
         </Card>
     );
 }
