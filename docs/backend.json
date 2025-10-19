@@ -1,67 +1,9 @@
 {
-  "entities": {
-    "SlopeCalculation": {
-      "title": "SlopeCalculation",
-      "type": "object",
-      "description": "Represents a slope calculation with input parameters and results.",
-      "properties": {
-        "userId": {
-            "type": "string",
-            "description": "The UID of the user who made the calculation."
-        },
-        "x1": {
-          "type": "number",
-          "description": "The x-coordinate of the first point."
-        },
-        "y1": {
-          "type": "number",
-          "description": "The y-coordinate of the first point."
-        },
-        "x2": {
-          "type": "number",
-          "description": "The x-coordinate of the second point."
-        },
-        "y2": {
-          "type": "number",
-          "description": "The y-coordinate of the second point."
-        },
-        "slope": {
-          "type": "number",
-          "description": "The calculated slope of the line."
-        },
-        "angle": {
-          "type": "number",
-          "description": "The calculated angle of the line in degrees."
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The timestamp of when the calculation was performed."
-        }
-      },
-      "required": [
-        "userId",
-        "x1",
-        "y1",
-        "x2",
-        "y2",
-        "slope",
-        "angle",
-        "timestamp"
-      ]
-    }
-  },
+  "entities": {},
   "auth": {
     "providers": [
       "anonymous"
     ]
   },
-  "firestore": {
-    "/slope_calculations/{slopeCalculationId}": {
-      "schema": {
-        "$ref": "#/entities/SlopeCalculation"
-      },
-      "description": "Stores slope calculation data."
-    }
-  }
+  "firestore": {}
 }

@@ -10,9 +10,6 @@ import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { useFirestore, useUser } from '@/firebase';
-import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import { collection, serverTimestamp } from 'firebase/firestore';
 
 interface TwoPointResult {
     slope: number | 'undefined';
@@ -26,7 +23,7 @@ interface TwoPointResult {
     deltaY: number;
 }
 
-const TwoPointsCalculator = ({ onCalculate }: { onCalculate: (data: any) => void }) => {
+const TwoPointsCalculator = () => {
   const { toast } = useToast();
   const [p1, setP1] = useState({ x: '1', y: '1' });
   const [p2, setP2] = useState({ x: '2', y: '2' });
@@ -56,10 +53,6 @@ const TwoPointsCalculator = ({ onCalculate }: { onCalculate: (data: any) => void
         angleDeg = angleRad * (180 / Math.PI);
     }
     
-    onCalculate({
-        x1, y1, x2, y2, slope: slope === 'undefined' ? Infinity : slope, angle: angleDeg === 'N/A' ? 90 : angleDeg
-    });
-
     if (slope === 'undefined') {
         setResult({
             slope: 'undefined',
@@ -168,7 +161,7 @@ const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title:
 );
 
 
-const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => void }) => {
+const OnePointSlopeCalculator = () => {
     const { toast } = useToast();
     const [point, setPoint] = useState({ x: '1', y: '1' });
     const [distance, setDistance] = useState('5');
@@ -210,8 +203,6 @@ const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => 
 
         const posRes: OnePointResultData = { x2: x1 + deltaX, y2: y1 + deltaY, deltaX, deltaY, angle: finalAngle };
         const negRes: OnePointResultData = { x2: x1 - deltaX, y2: y1 - deltaY, deltaX: -deltaX, deltaY: -deltaY, angle: finalAngle + 180 };
-
-        onCalculate({ x1, y1, x2: posRes.x2, y2: posRes.y2, slope: m, angle: finalAngle });
 
         const yIntercept = y1 - m * x1;
         const xIntercept = m === 0 ? 'none' : -yIntercept / m;
@@ -286,20 +277,9 @@ const OnePointSlopeCalculator = ({ onCalculate }: { onCalculate: (data: any) => 
 };
 
 export default function SlopeCalculator() {
-  const firestore = useFirestore();
-  const { user } = useUser();
 
   const handleCalculate = (data: any) => {
-    if (!firestore || !user) return;
-    
-    const calculationData = {
-      ...data,
-      userId: user.uid, // Add user ID to the document
-      timestamp: serverTimestamp()
-    };
-    
-    const calculationsCollection = collection(firestore, 'slope_calculations');
-    addDocumentNonBlocking(calculationsCollection, calculationData);
+    // This function is now empty as we removed the firestore logic
   };
 
   return (
@@ -311,10 +291,10 @@ export default function SlopeCalculator() {
                 <TabsTrigger value="one-point-slope">1 Point & Slope</TabsTrigger>
             </TabsList>
             <TabsContent value="two-points" className="mt-6">
-                <TwoPointsCalculator onCalculate={handleCalculate} />
+                <TwoPointsCalculator />
             </TabsContent>
             <TabsContent value="one-point-slope" className="mt-6">
-                <OnePointSlopeCalculator onCalculate={handleCalculate} />
+                <OnePointSlopeCalculator />
             </TabsContent>
         </Tabs>
       </CardContent>
