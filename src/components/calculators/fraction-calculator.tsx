@@ -33,7 +33,17 @@ function BasicFractionCalculator() {
     const [f1, setF1] = useState({ n: '2', d: '7' });
     const [f2, setF2] = useState({ n: '3', d: '8' });
     const [op, setOp] = useState('+');
-    const [result, setResult] = useState<BasicCalcResult | null>(null);
+    const [result, setResult] = useState<BasicCalcResult | null>({
+        n: 37n,
+        d: 56n,
+        decimal: "0.660714",
+        steps: {
+            step1: "2/7 + 3/8",
+            step2: "(2 × 8) / (7 × 8) + (3 × 7) / (8 × 7)",
+            step3: "16/56 + 21/56",
+            step4: "(16 + 21)/56"
+        }
+    });
 
     const calculate = () => {
         try {
@@ -56,17 +66,17 @@ function BasicFractionCalculator() {
                     resN = n1 * d2 + n2 * d1;
                     resD = d1 * d2;
                     step1 = `${f1.n}/${f1.d} + ${f2.n}/${f2.d}`;
-                    step2 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f2.d}) + (${f2.n} × ${f1.d}) / (${f2.d} × ${f1.d})`;
+                    step2 = `(${f1.n} × ${d2}) / (${f1.d} × ${d2}) + (${f2.n} × ${d1}) / (${f2.d} × ${d1})`;
                     step3 = `${n1*d2}/${resD} + ${n2*d1}/${resD}`;
-                    step4 = `${n1*d2 + n2*d1}/${resD}`;
+                    step4 = `(${n1*d2} + ${n2*d1})/${resD}`;
                     break;
                 case '-':
                     resN = n1 * d2 - n2 * d1;
                     resD = d1 * d2;
                     step1 = `${f1.n}/${f1.d} - ${f2.n}/${f2.d}`;
-                    step2 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f2.d}) - (${f2.n} × ${f1.d}) / (${f2.d} × ${f1.d})`;
+                    step2 = `(${f1.n} × ${d2}) / (${f1.d} × ${d2}) - (${f2.n} × ${d1}) / (${f2.d} × ${d1})`;
                     step3 = `${n1*d2}/${resD} - ${n2*d1}/${resD}`;
-                    step4 = `${n1*d2 - n2*d1}/${resD}`;
+                    step4 = `(${n1*d2} - ${n2*d1})/${resD}`;
                     break;
                 case '×':
                     resN = n1 * n2;
@@ -81,8 +91,8 @@ function BasicFractionCalculator() {
                     resD = d1 * n2;
                     if (resD === 0n) throw new Error("Division by zero fraction.");
                     step1 = `${f1.n}/${f1.d} ÷ ${f2.n}/${f2.d}`;
-                    step2 = `${f1.n}/${f1.d} × ${f2.d}/${f2.n}`;
-                    step3 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f2.n})`;
+                    step2 = `${f1.n}/${f1.d} × ${d2}/${n2}`;
+                    step3 = `(${f1.n} × ${d2}) / (${f1.d} × ${n2})`;
                     step4 = `${resN}/${resD}`;
                     break;
                 default:
@@ -105,7 +115,7 @@ function BasicFractionCalculator() {
                 finalD = -finalD;
             }
             
-            const decimal = (Number(finalN) / Number(finalD)).toString();
+            const decimal = (Number(resN) / Number(resD)).toFixed(6);
 
             setResult({ n: finalN, d: finalD, decimal, steps: {step1, step2, step3, step4} });
 
@@ -161,12 +171,20 @@ function BasicFractionCalculator() {
 }
 
 // --- Mixed Numbers Calculator ---
+interface MixedCalcResult {
+  w: bigint;
+  n: bigint;
+  d: bigint;
+  decimal: string;
+  steps: string[];
+  explanation: string[];
+}
 function MixedNumbersCalculator() {
     const { toast } = useToast();
     const [m1, setM1] = useState({ w: '-2', n: '3', d: '4' });
     const [m2, setM2] = useState({ w: '3', n: '5', d: '7' });
     const [op, setOp] = useState('+');
-    const [result, setResult] = useState<{ w: bigint, n: bigint, d: bigint } | null>(null);
+    const [result, setResult] = useState<MixedCalcResult | null>(null);
 
     const calculate = () => {
         try {
@@ -181,13 +199,39 @@ function MixedNumbersCalculator() {
             const improperN2 = ( (w2 > 0n ? w2 : -w2) * d2 + n2) * sign2;
             
             let resN: bigint, resD: bigint;
-            
-            switch (op) {
-                case '+': resN = improperN1 * d2 + improperN2 * d1; resD = d1 * d2; break;
-                case '-': resN = improperN1 * d2 - improperN2 * d1; resD = d1 * d2; break;
-                case '×': resN = improperN1 * improperN2; resD = d1 * d2; break;
-                case '÷': resN = improperN1 * d2; resD = d1 * improperN2; if (resD === 0n) throw new Error("Division by zero."); break;
-                default: throw new Error("Invalid operator");
+            let steps: string[] = [];
+            let explanation: string[] = [];
+
+            if (op === '+' || op === '-') {
+                const wholeSum = op === '+' ? w1 + w2 : w1 - w2;
+                const fracN1 = n1 * sign1;
+                const fracN2 = n2 * sign2;
+                const fracResN = op === '+' ? fracN1 * d2 + fracN2 * d1 : fracN1 * d2 - fracN2 * d1;
+                const fracResD = d1 * d2;
+                
+                resN = wholeSum * fracResD + fracResN;
+                resD = fracResD;
+
+                steps.push(`${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d}`);
+                steps.push(`= (${m1.w} ${op} ${m2.w}) + (${fracN1}/${d1} ${op} ${fracN2}/${d2})`);
+                steps.push(`= ${wholeSum} + (${fracN1*d2}/${fracResD} ${op} ${fracN2*d1}/${fracResD})`);
+                steps.push(`= ${wholeSum} + (${fracResN}/${fracResD})`);
+                
+                explanation.push(`Combine the whole numbers: ${m1.w} ${op} ${m2.w} = ${wholeSum}`);
+                explanation.push(`For the fractions, find a common denominator (LCM of ${d1} and ${d2} is ${fracResD}):`);
+                explanation.push(`${fracN1}/${d1} + ${fracN2}/${d2} = ${fracN1*d2}/${fracResD} + ${fracN2*d1}/${fracResD} = ${fracResN}/${fracResD}`);
+                explanation.push(`Combine the whole number and fraction: ${wholeSum} + ${fracResN}/${fracResD}`);
+
+
+            } else { // Multiplication and Division
+                 resN = op === '×' ? improperN1 * improperN2 : improperN1 * d2;
+                 resD = op === '×' ? d1 * d2 : d1 * improperN2;
+                 if (op === '÷' && resD === 0n) throw new Error("Division by zero.");
+                 steps.push(`${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d}`);
+                 steps.push(`= ${improperN1}/${d1} ${op} ${improperN2}/${d2}`);
+                 explanation.push(`First, convert mixed numbers to improper fractions:`);
+                 explanation.push(`${m1.w} ${m1.n}/${m1.d} = ${improperN1}/${d1}`);
+                 explanation.push(`${m2.w} ${m2.n}/${m2.d} = ${improperN2}/${d2}`);
             }
             
             const commonDivisor = gcd(resN, resD);
@@ -200,9 +244,14 @@ function MixedNumbersCalculator() {
             }
 
             const finalW = finalN / finalD;
-            const finalRemainderN = finalN > 0n ? finalN % finalD : -(finalN % finalD);
+            const finalRemainderN = finalN >= 0n ? finalN % finalD : -(finalN % finalD);
+            
+            steps.push(`= ${finalN}/${finalD}`);
+            if (finalW !== 0n && finalRemainderN !== 0n) {
+                steps.push(`= ${finalW} ${finalRemainderN}/${finalD}`);
+            }
 
-            setResult({ w: finalW, n: finalRemainderN, d: finalD });
+            setResult({ w: finalW, n: finalRemainderN, d: finalD, decimal: (Number(resN)/Number(resD)).toFixed(6), steps, explanation });
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
@@ -221,6 +270,31 @@ function MixedNumbersCalculator() {
                 <Button onClick={calculate}>=</Button>
                 {result ? <MixedNumberInput w={String(result.w)} n={String(result.n)} d={String(result.d)} readOnly /> : <MixedNumberInput w="?" n="?" d="?" readOnly />}
             </CardContent>
+             {result && (
+                <CardFooter className="flex-col items-start gap-4">
+                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <p>Result in decimals: <b>{result.decimal}</b></p>
+                    </div>
+                     <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                   {result.steps.map((step, i) => <p key={i}>{step}</p>)}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="item-2">
+                            <AccordionTrigger>Further Explanation</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md text-sm break-words space-y-2">
+                                   {result.explanation.map((exp, i) => <p key={i}>{exp}</p>)}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </CardFooter>
+            )}
         </Card>
     );
 }
