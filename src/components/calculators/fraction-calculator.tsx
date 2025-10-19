@@ -2,11 +2,12 @@
 "use client";
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 // Helper function for GCD using BigInt for large number support
 const gcd = (a: bigint, b: bigint): bigint => {
@@ -16,12 +17,23 @@ const gcd = (a: bigint, b: bigint): bigint => {
 };
 
 // --- Basic Fraction Calculator ---
+interface BasicCalcResult {
+  n: bigint;
+  d: bigint;
+  decimal: string;
+  steps: {
+    step1: string;
+    step2: string;
+    step3: string;
+    step4: string;
+  };
+}
 function BasicFractionCalculator() {
     const { toast } = useToast();
     const [f1, setF1] = useState({ n: '2', d: '7' });
     const [f2, setF2] = useState({ n: '3', d: '8' });
     const [op, setOp] = useState('+');
-    const [result, setResult] = useState<{ n: bigint, d: bigint } | null>(null);
+    const [result, setResult] = useState<BasicCalcResult | null>(null);
 
     const calculate = () => {
         try {
@@ -32,50 +44,70 @@ function BasicFractionCalculator() {
 
             if (d1 === 0n || d2 === 0n) throw new Error("Denominator cannot be zero.");
             
-            // Handle negative denominators
             if (d1 < 0n) { d1 = -d1; }
             if (d2 < 0n) { d2 = -d2; }
 
 
             let resN: bigint, resD: bigint;
+            let step1 = '', step2 = '', step3 = '', step4 = '';
 
             switch (op) {
                 case '+':
                     resN = n1 * d2 + n2 * d1;
                     resD = d1 * d2;
+                    step1 = `${f1.n}/${f1.d} + ${f2.n}/${f2.d}`;
+                    step2 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f2.d}) + (${f2.n} × ${f1.d}) / (${f2.d} × ${f1.d})`;
+                    step3 = `${n1*d2}/${resD} + ${n2*d1}/${resD}`;
+                    step4 = `${n1*d2 + n2*d1}/${resD}`;
                     break;
                 case '-':
                     resN = n1 * d2 - n2 * d1;
                     resD = d1 * d2;
+                    step1 = `${f1.n}/${f1.d} - ${f2.n}/${f2.d}`;
+                    step2 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f2.d}) - (${f2.n} × ${f1.d}) / (${f2.d} × ${f1.d})`;
+                    step3 = `${n1*d2}/${resD} - ${n2*d1}/${resD}`;
+                    step4 = `${n1*d2 - n2*d1}/${resD}`;
                     break;
                 case '×':
                     resN = n1 * n2;
                     resD = d1 * d2;
+                    step1 = `${f1.n}/${f1.d} × ${f2.n}/${f2.d}`;
+                    step2 = `(${f1.n} × ${f2.n}) / (${f1.d} × ${f2.d})`;
+                    step3 = `${resN}/${resD}`;
+                    step4 = ``;
                     break;
                 case '÷':
                     resN = n1 * d2;
                     resD = d1 * n2;
                     if (resD === 0n) throw new Error("Division by zero fraction.");
+                    step1 = `${f1.n}/${f1.d} ÷ ${f2.n}/${f2.d}`;
+                    step2 = `${f1.n}/${f1.d} × ${f2.d}/${f2.n}`;
+                    step3 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f2.n})`;
+                    step4 = `${resN}/${resD}`;
                     break;
                 default:
                     throw new Error("Invalid operator");
             }
             
-            if (resN === 0n) {
-                setResult({ n: 0n, d: 1n });
-                return;
+            let finalN = resN;
+            let finalD = resD;
+            
+            if (resN !== 0n) {
+                const commonDivisor = gcd(resN, resD);
+                finalN = resN / commonDivisor;
+                finalD = resD / commonDivisor;
+            } else {
+              finalD = 1n;
             }
-
-            const commonDivisor = gcd(resN, resD);
-            let finalN = resN / commonDivisor;
-            let finalD = resD / commonDivisor;
 
             if(finalD < 0n) {
                 finalN = -finalN;
                 finalD = -finalD;
             }
+            
+            const decimal = (Number(finalN) / Number(finalD)).toString();
 
-            setResult({ n: finalN, d: finalD });
+            setResult({ n: finalN, d: finalD, decimal, steps: {step1, step2, step3, step4} });
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
@@ -85,7 +117,7 @@ function BasicFractionCalculator() {
     return (
         <Card>
             <CardContent className="pt-6">
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-2">
                     <FractionInput n={f1.n} d={f1.d} onNChange={v => setF1({...f1, n: v})} onDChange={v => setF1({...f1, d: v})} />
                     <Select value={op} onValueChange={setOp}>
                         <SelectTrigger className="w-[60px]"><SelectValue /></SelectTrigger>
@@ -99,11 +131,31 @@ function BasicFractionCalculator() {
                     <FractionInput n={f2.n} d={f2.d} onNChange={v => setF2({...f2, n: v})} onDChange={v => setF2({...f2, d: v})} />
                     <Button onClick={calculate}>=</Button>
                     <div className="flex items-center gap-2">
-                        <span className="text-2xl font-bold">?</span>
                         {result ? <FractionInput n={String(result.n)} d={String(result.d)} readOnly /> : <FractionInput n="?" d="?" readOnly />}
                     </div>
                 </div>
             </CardContent>
+             {result && (
+                <CardFooter className="flex-col items-start gap-4">
+                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <p>Result in decimals: <b>{result.decimal}</b></p>
+                    </div>
+                     <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                    <p>{result.steps.step1}</p>
+                                    {result.steps.step2 && <p>= {result.steps.step2}</p>}
+                                    {result.steps.step3 && <p>= {result.steps.step3}</p>}
+                                    {result.steps.step4 && <p>= {result.steps.step4}</p>}
+                                    <p>= {String(result.n)}/{String(result.d)}</p>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </CardFooter>
+            )}
         </Card>
     );
 }
@@ -162,12 +214,11 @@ function MixedNumbersCalculator() {
             <CardHeader>
                 <CardTitle className="text-xl">Mixed Numbers Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="flex items-center justify-center gap-2">
+            <CardContent className="flex flex-wrap items-center justify-center gap-2">
                 <MixedNumberInput w={m1.w} n={m1.n} d={m1.d} onWChange={v=>setM1({...m1,w:v})} onNChange={v=>setM1({...m1,n:v})} onDChange={v=>setM1({...m1,d:v})}/>
                 <Select value={op} onValueChange={setOp}><SelectTrigger className="w-[60px]"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="+">+</SelectItem><SelectItem value="-">-</SelectItem><SelectItem value="×">×</SelectItem><SelectItem value="÷">÷</SelectItem></SelectContent></Select>
                 <MixedNumberInput w={m2.w} n={m2.n} d={m2.d} onWChange={v=>setM2({...m2,w:v})} onNChange={v=>setM2({...m2,n:v})} onDChange={v=>setM2({...m2,d:v})}/>
                 <Button onClick={calculate}>=</Button>
-                <span className="text-2xl font-bold">?</span>
                 {result ? <MixedNumberInput w={String(result.w)} n={String(result.n)} d={String(result.d)} readOnly /> : <MixedNumberInput w="?" n="?" d="?" readOnly />}
             </CardContent>
         </Card>
@@ -187,10 +238,16 @@ function SimplifyFractionCalculator() {
             let d = BigInt(frac.d);
             if (d === 0n) throw new Error("Denominator cannot be zero.");
 
-            if (d < 0n) { d = -d; }
+            let finalN = n;
+            let finalD = d;
 
-            const common = gcd(n, d);
-            setResult({ n: n / common, d: d / common });
+            if (d < 0n) {
+              finalN = -n;
+              finalD = -d;
+            }
+
+            const common = gcd(finalN, finalD);
+            setResult({ n: finalN / common, d: finalD / common });
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
@@ -202,7 +259,6 @@ function SimplifyFractionCalculator() {
             <CardContent className="flex items-center justify-center gap-2">
                 <FractionInput n={frac.n} d={frac.d} onNChange={v=>setFrac({...frac, n:v})} onDChange={v=>setFrac({...frac, d:v})} />
                 <Button onClick={calculate}>=</Button>
-                 <span className="text-2xl font-bold">?</span>
                 {result ? <FractionInput n={String(result.n)} d={String(result.d)} readOnly /> : <FractionInput n="?" d="?" readOnly />}
             </CardContent>
         </Card>
@@ -248,7 +304,6 @@ function DecimalToFraction() {
             <CardContent className="flex items-center justify-center gap-2">
                 <Input value={dec} onChange={e => setDec(e.target.value)} type="number" className="w-24" />
                 <Button onClick={calculate}>=</Button>
-                 <span className="text-2xl font-bold">?</span>
                 {result ? <FractionInput n={result.n} d={result.d} readOnly /> : <FractionInput n="?" d="?" readOnly />}
             </CardContent>
         </Card>
@@ -280,7 +335,6 @@ function FractionToDecimal() {
             <CardContent className="flex items-center justify-center gap-2">
                 <FractionInput n={frac.n} d={frac.d} onNChange={v=>setFrac({...frac,n:v})} onDChange={v=>setFrac({...frac,d:v})} />
                 <Button onClick={calculate}>=</Button>
-                <span className="text-2xl font-bold">?</span>
                 {result ? <Input value={result} readOnly className="w-24" /> : <Input value="?" readOnly className="w-24" />}
             </CardContent>
         </Card>
@@ -335,7 +389,6 @@ function BigNumberFractionCalculator() {
                 </Select>
                 <FractionInput n={f2.n} d={f2.d} onNChange={v=>setF2({...f2,n:v})} onDChange={v=>setF2({...f2,d:v})} wide/>
                 <Button onClick={calculate}>=</Button>
-                <span className="text-2xl font-bold">?</span>
             </CardContent>
             {result && (
                  <CardContent>
