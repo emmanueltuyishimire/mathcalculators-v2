@@ -6,6 +6,24 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Slope Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A dynamic slope calculator that finds the slope, angle, distance, and line equation from two points, or finds a second point given a slope and distance.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/slope",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 function HowToUseGuide() {
     return (
         <Card>
@@ -112,24 +130,30 @@ const FaqSection = () => (
 
 export default function SlopePage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Slope Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-          <section className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Dynamic Slope Calculator
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              By definition, the slope or gradient of a line describes its steepness, incline, or grade.
-            </p>
-          </section>
-          <SlopeCalculator />
-          <HowToUseGuide />
-          <EducationalContent />
-          <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Slope Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+            <section className="text-center">
+              <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                Dynamic Slope Calculator
+              </h1>
+              <p className="mt-4 text-lg text-muted-foreground">
+                By definition, the slope or gradient of a line describes its steepness, incline, or grade.
+              </p>
+            </section>
+            <SlopeCalculator />
+            <HowToUseGuide />
+            <EducationalContent />
+            <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

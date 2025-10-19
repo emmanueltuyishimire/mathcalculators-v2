@@ -12,6 +12,24 @@ export const metadata: Metadata = {
     description: 'A free online calculator to find the least common multiple (LCM) of a set of numbers. Includes step-by-step solutions using prime factorization.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Least Common Multiple (LCM) Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to find the least common multiple (LCM) of a set of numbers, with step-by-step solutions.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/lcm",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -141,35 +159,41 @@ const FaqSection = () => (
 
 export default function LcmPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Least Common Multiple Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Least Common Multiple Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                   <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Least Common Multiple Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Please provide numbers separated by a comma "," and click the "Calculate" button to find the LCM.
+                  </p>
+              </section>
+            <LcmCalculator />
+            <HowToUseGuide />
             <section className="text-center">
-                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Least Common Multiple Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide numbers separated by a comma "," and click the "Calculate" button to find the LCM.
-                </p>
+              <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+              <div className="flex flex-wrap justify-center gap-2 mt-4">
+                  <Button asChild variant="outline">
+                      <Link href="/basic">Basic Calculators</Link>
+                  </Button>
+                   <Button asChild variant="outline">
+                      <Link href="/fraction">Fraction Calculator</Link>
+                  </Button>
+              </div>
             </section>
-          <LcmCalculator />
-          <HowToUseGuide />
-          <EducationalContent />
-          <FaqSection />
-          <section className="text-center">
-            <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
-                <Button asChild variant="outline">
-                    <Link href="/basic">Basic Calculators</Link>
-                </Button>
-                 <Button asChild variant="outline">
-                    <Link href="/fraction">Fraction Calculator</Link>
-                </Button>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
+            <EducationalContent />
+            <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

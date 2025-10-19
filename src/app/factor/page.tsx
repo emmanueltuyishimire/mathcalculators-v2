@@ -11,6 +11,24 @@ export const metadata: Metadata = {
     description: 'A free online calculator to find all factors and the prime factorization of any given integer. Includes explanations and a factor tree example.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Factor Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to find all factors, factor pairs, and the prime factorization of any integer.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/factor",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -76,34 +94,40 @@ const EducationalContent = () => (
 
 export default function FactorPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Factor Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Factor Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                   <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Factor Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Please provide an integer to calculate its factors and prime factors.
+                  </p>
+              </section>
+            <FactorCalculator />
+            <HowToUseGuide />
             <section className="text-center">
-                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Factor Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide an integer to calculate its factors and prime factors.
-                </p>
+              <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+              <div className="flex flex-wrap justify-center gap-2 mt-4">
+                  <Button asChild variant="outline">
+                      <Link href="/lcm">LCM Calculator</Link>
+                  </Button>
+                   <Button asChild variant="outline">
+                      <Link href="/gcf">GCF Calculator</Link>
+                  </Button>
+              </div>
             </section>
-          <FactorCalculator />
-          <HowToUseGuide />
-          <EducationalContent />
-          <section className="text-center">
-            <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
-                <Button asChild variant="outline">
-                    <Link href="/lcm">LCM Calculator</Link>
-                </Button>
-                 <Button asChild variant="outline">
-                    <Link href="/gcf">GCF Calculator</Link>
-                </Button>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
+            <EducationalContent />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

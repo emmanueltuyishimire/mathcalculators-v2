@@ -13,6 +13,24 @@ export const metadata: Metadata = {
     description: 'A free online calculator for solving ratio problems (A:B = C:D) and scaling ratios up or down.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Ratio Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator for solving ratio proportion problems (A:B = C:D) and scaling ratios up or down.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/ratio",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const aspectRatios = [
     { name: "480p", ratio: "3:2", width: 720, height: 480 },
     { name: "576p", ratio: "5:4", width: 720, height: 576 },
@@ -166,40 +184,46 @@ const FaqSection = () => (
 
 export default function RatioPage() {
     return (
-        <div className="flex flex-1 flex-col">
-            <PageHeader title="Ratio Calculator" />
-            <main className="flex-1 p-4 md:p-6 lg:p-8">
-                <div className="mx-auto max-w-2xl space-y-8">
-                    <section className="text-center">
-                        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                            Ratio Calculator
-                        </h1>
-                        <p className="mt-4 text-lg text-muted-foreground">
-                            Solve for missing values in proportions or scale ratios up and down with ease. Modify the values and click "Calculate" to use.
-                        </p>
-                    </section>
-                    
-                    <RatioCalculator />
+        <>
+          <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+          />
+          <div className="flex flex-1 flex-col">
+              <PageHeader title="Ratio Calculator" />
+              <main className="flex-1 p-4 md:p-6 lg:p-8">
+                  <div className="mx-auto max-w-2xl space-y-8">
+                      <section className="text-center">
+                          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                              Ratio Calculator
+                          </h1>
+                          <p className="mt-4 text-lg text-muted-foreground">
+                              Solve for missing values in proportions or scale ratios up and down with ease. Modify the values and click "Calculate" to use.
+                          </p>
+                      </section>
+                      
+                      <RatioCalculator />
 
-                    <HowToUseGuide />
+                      <HowToUseGuide />
 
-                    <EducationalContent />
-                    
-                    <FaqSection />
-
-                    <section className="text-center">
-                        <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                        <div className="flex flex-wrap justify-center gap-2 mt-4">
-                            <Button asChild variant="outline">
-                                <Link href="/fraction">Fraction Calculator</Link>
-                            </Button>
-                             <Button asChild variant="outline">
-                                <Link href="/percentage">Percentage Calculator</Link>
-                            </Button>
-                        </div>
-                    </section>
-                </div>
-            </main>
-        </div>
+                      <section className="text-center">
+                          <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                          <div className="flex flex-wrap justify-center gap-2 mt-4">
+                              <Button asChild variant="outline">
+                                  <Link href="/fraction">Fraction Calculator</Link>
+                              </Button>
+                               <Button asChild variant="outline">
+                                  <Link href="/percentage">Percentage Calculator</Link>
+                              </Button>
+                          </div>
+                      </section>
+                      
+                      <EducationalContent />
+                      
+                      <FaqSection />
+                  </div>
+              </main>
+          </div>
+        </>
     );
 }

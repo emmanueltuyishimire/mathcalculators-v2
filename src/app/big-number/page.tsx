@@ -12,6 +12,24 @@ export const metadata: Metadata = {
     description: 'A calculator for performing arithmetic on very large numbers. Supports standard integers and E-notation.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Big Number Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A calculator for performing arithmetic on very large numbers that exceed the capacity of standard calculators.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/big-number",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const largeNumberNames = [
     { power: "10⁹", name: "Billion" },
     { power: "10¹²", name: "Trillion" },
@@ -160,35 +178,41 @@ const FaqSection = () => (
 
 export default function BigNumberPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Big Number Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A calculator that can compute very large numbers with high precision.
-                </p>
-            </section>
-            
-            <BigNumberCalculator />
-            <HowToUseGuide />
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/scientific-notation">Scientific Notation Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/exponent">Exponent Calculator</Link>
-                    </Button>
-                </div>
-            </section>
-            <EducationalContent />
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Big Number Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A calculator that can compute very large numbers with high precision.
+                  </p>
+              </section>
+              
+              <BigNumberCalculator />
+              <HowToUseGuide />
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/scientific-notation">Scientific Notation Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/exponent">Exponent Calculator</Link>
+                      </Button>
+                  </div>
+              </section>
+              <EducationalContent />
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

@@ -12,6 +12,24 @@ export const metadata: Metadata = {
     description: 'Solve for the base, exponent, or result in an exponential equation. Learn about exponent laws and rules with examples.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Exponent Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to solve for any variable in an exponential equation (aⁿ = y) and learn about exponent laws.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/exponent",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -118,40 +136,46 @@ const FaqSection = () => (
 
 export default function ExponentPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Exponent Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Exponent Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Enter any two values to solve for the third.
-                </p>
-            </section>
-            
-            <ExponentCalculator />
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Exponent Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Exponent Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Enter any two values to solve for the third.
+                  </p>
+              </section>
+              
+              <ExponentCalculator />
 
-            <HowToUseGuide />
+              <HowToUseGuide />
 
-            <EducationalContent />
-            
-            <FaqSection />
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/scientific">Scientific Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/basic">Basic Calculators</Link>
+                      </Button>
+                  </div>
+              </section>
 
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/scientific">Scientific Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/basic">Basic Calculators</Link>
-                    </Button>
-                </div>
-            </section>
-        </div>
-      </main>
-    </div>
+              <EducationalContent />
+              
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

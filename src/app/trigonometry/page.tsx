@@ -11,6 +11,24 @@ export const metadata: Metadata = {
   description: 'Use our free online trigonometry calculator to solve math problems. Supports fractions, trig, logs, exponents, and more. Casio & TI features included.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Trigonometry Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator for trigonometric functions (sin, cos, tan, csc, sec, cot) and their inverses. Supports both degrees and radians.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/trigonometry",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -184,6 +202,10 @@ const FaqSection = () => (
 export default function TrigonometryPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

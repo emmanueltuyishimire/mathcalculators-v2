@@ -10,6 +10,24 @@ export const metadata: Metadata = {
   description: 'A collection of free fraction calculators for addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Fraction Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A comprehensive set of free online fraction calculators for arithmetic, simplification, and decimal conversion.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/fraction",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -117,23 +135,29 @@ const FaqSection = () => (
 
 export default function FractionPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Fraction Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Fraction Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Below are multiple fraction calculators capable of addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals. Fields above the solid black line represent the numerator, while fields below represent the denominator.
-                </p>
-            </section>
-          <FractionCalculators />
-          <EducationalContent />
-          <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Fraction Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Fraction Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Below are multiple fraction calculators capable of addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals. Fields above the solid black line represent the numerator, while fields below represent the denominator.
+                  </p>
+              </section>
+            <FractionCalculators />
+            <EducationalContent />
+            <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

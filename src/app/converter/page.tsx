@@ -12,6 +12,24 @@ export const metadata: Metadata = {
     description: 'A versatile unit converter for length, mass, temperature, and more. Quickly and accurately convert between different units of measurement.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Unit Converter",
+  "operatingSystem": "All",
+  "applicationCategory": "Utilities",
+  "description": "A versatile unit converter for length, mass, temperature, and other common measurements.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/converter",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -87,23 +105,29 @@ const FaqSection = () => (
 
 export default function ConverterPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Unit Converter" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-          <UnitConverter />
-          <HowToUseGuide />
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/basic">Basic Calculators</Link>
-                    </Button>
-                </div>
-            </section>
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Unit Converter" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+            <UnitConverter />
+            <HowToUseGuide />
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/basic">Basic Calculators</Link>
+                      </Button>
+                  </div>
+              </section>
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

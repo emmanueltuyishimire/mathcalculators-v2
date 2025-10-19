@@ -12,6 +12,24 @@ export const metadata: Metadata = {
   description: 'Solve linear equations with our easy-to-use algebra calculator. Enter your equation and get the solution for x instantly.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Algebra Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to solve linear equations for the variable 'x'.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/algebra",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -87,26 +105,32 @@ const FaqSection = () => (
 
 export default function AlgebraPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Algebra" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-          <AlgebraCalculator />
-          <HowToUseGuide />
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/scientific">Scientific Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/basic">Basic Calculators</Link>
-                    </Button>
-                </div>
-            </section>
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Algebra" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+            <AlgebraCalculator />
+            <HowToUseGuide />
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/scientific">Scientific Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/basic">Basic Calculators</Link>
+                      </Button>
+                  </div>
+              </section>
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

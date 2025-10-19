@@ -10,6 +10,24 @@ export const metadata: Metadata = {
     description: 'A versatile online tool for rounding numbers with various methods, including rounding to the nearest integer, decimal place, or fraction.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Rounding Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A versatile online calculator for rounding numbers using various methods (half up, half down, ceiling, floor) and to different levels of precision.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/rounding",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -141,27 +159,33 @@ const FaqSection = () => (
 
 export default function RoundingPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Rounding Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Rounding Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A tool for rounding numbers with various methods and levels of precision.
-                </p>
-            </section>
-            
-            <RoundingCalculator />
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Rounding Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Rounding Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A tool for rounding numbers with various methods and levels of precision.
+                  </p>
+              </section>
+              
+              <RoundingCalculator />
 
-            <HowToUseGuide />
+              <HowToUseGuide />
 
-            <RoundingMethodsGuide />
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+              <RoundingMethodsGuide />
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

@@ -13,6 +13,24 @@ export const metadata: Metadata = {
     description: 'Perform binary arithmetic, and convert between binary and decimal values with ease. Supports addition, subtraction, multiplication, and division of binary numbers.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Binary Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "Perform binary arithmetic (add, subtract, multiply, divide) and convert between binary and decimal values.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/binary",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -159,36 +177,42 @@ const FaqSection = () => (
 
 export default function BinaryPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Binary Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Binary Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Use the following calculators to perform the addition, subtraction, multiplication, or division of two binary values, as well as convert binary values to decimal values, and vice versa.
-                </p>
-            </section>
-            
-            <BinaryCalculator />
-            <HowToUseGuide />
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/hex">Hex Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/basic">Basic Calculators</Link>
-                    </Button>
-                </div>
-            </section>
-            <EducationalContent />
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Binary Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Binary Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Use the following calculators to perform the addition, subtraction, multiplication, or division of two binary values, as well as convert binary values to decimal values, and vice versa.
+                  </p>
+              </section>
+              
+              <BinaryCalculator />
+              <HowToUseGuide />
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/hex">Hex Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/basic">Basic Calculators</Link>
+                      </Button>
+                  </div>
+              </section>
+              <EducationalContent />
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

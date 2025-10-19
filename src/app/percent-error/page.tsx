@@ -11,6 +11,24 @@ export const metadata: Metadata = {
     description: 'Calculate the percent error between an observed (experimental) value and a true (accepted) value. A key tool for scientific accuracy.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Percent Error Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to determine the percent error between an observed (experimental) and a true (accepted) value.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/percent-error",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -56,39 +74,45 @@ const EducationalContent = () => (
 
 export default function PercentErrorPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Percent Error Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Percent Error Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Calculate the accuracy of a measurement by comparing an observed value to a true value.
-                </p>
-            </section>
-            
-            <PercentErrorCalculator />
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Percent Error Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Percent Error Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Calculate the accuracy of a measurement by comparing an observed value to a true value.
+                  </p>
+              </section>
+              
+              <PercentErrorCalculator />
 
-            <EducationalContent />
-
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/percentage">Percentage Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/scientific">Scientific Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/statistics">Statistics Calculator</Link>
-                    </Button>
-                </div>
-            </section>
-        </div>
-      </main>
-    </div>
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/percentage">Percentage Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/scientific">Scientific Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/statistics">Statistics Calculator</Link>
+                      </Button>
+                  </div>
+              </section>
+              
+              <EducationalContent />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

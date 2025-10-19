@@ -10,6 +10,24 @@ export const metadata: Metadata = {
     description: 'Calculate the distance between two points in 2D, 3D, or on the Earth\'s surface using latitude and longitude.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Distance Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "Calculate the distance between two points in 2D or 3D space, or between two geographical coordinates (latitude and longitude).",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/distance",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -124,27 +142,33 @@ const FaqSection = () => (
 
 export default function DistancePage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Distance Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-12">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Distance Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Find the distance between two points in a 2D plane, 3D space, or between two latitude-longitude coordinates on Earth.
-                </p>
-            </section>
-            
-            <DistanceCalculator />
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Distance Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-4xl space-y-12">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Distance Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Find the distance between two points in a 2D plane, 3D space, or between two latitude-longitude coordinates on Earth.
+                  </p>
+              </section>
+              
+              <DistanceCalculator />
 
-            <HowToUseGuide />
-            
-            <EducationalContent />
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+              <HowToUseGuide />
+              
+              <EducationalContent />
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

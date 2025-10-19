@@ -11,6 +11,24 @@ export const metadata: Metadata = {
     description: 'A free online calculator to find the greatest common factor (GCF) of a set of numbers. Includes step-by-step solutions using prime factorization and the Euclidean algorithm.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Greatest Common Factor (GCF) Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to find the greatest common factor (GCF) of a set of numbers, with step-by-step solutions.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/gcf",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -95,34 +113,40 @@ const EducationalContent = () => (
 
 export default function GcfPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Greatest Common Factor Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Greatest Common Factor Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                   <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Greatest Common Factor Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Please provide numbers separated by a comma "," and click the "Calculate" button to find the GCF.
+                  </p>
+              </section>
+            <GcfCalculator />
+            <HowToUseGuide />
             <section className="text-center">
-                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Greatest Common Factor Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide numbers separated by a comma "," and click the "Calculate" button to find the GCF.
-                </p>
+              <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+              <div className="flex flex-wrap justify-center gap-2 mt-4">
+                  <Button asChild variant="outline">
+                      <Link href="/lcm">LCM Calculator</Link>
+                  </Button>
+                   <Button asChild variant="outline">
+                      <Link href="/basic">Basic Calculators</Link>
+                  </Button>
+              </div>
             </section>
-          <GcfCalculator />
-          <HowToUseGuide />
-          <EducationalContent />
-          <section className="text-center">
-            <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
-                <Button asChild variant="outline">
-                    <Link href="/lcm">LCM Calculator</Link>
-                </Button>
-                 <Button asChild variant="outline">
-                    <Link href="/basic">Basic Calculators</Link>
-                </Button>
-            </div>
-          </section>
-        </div>
-      </main>
-    </div>
+            <EducationalContent />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

@@ -12,6 +12,24 @@ export const metadata: Metadata = {
   description: 'Solve calculus problems including derivatives, integrals, and limits with our powerful online calculator. Supports a wide range of functions.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Calculus Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/calculus",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -89,26 +107,32 @@ const FaqSection = () => (
 
 export default function CalculusPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Calculus" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-          <CalculusCalculator />
-          <HowToUseGuide />
-           <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/scientific">Scientific Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/algebra">Algebra Calculator</Link>
-                    </Button>
-                </div>
-            </section>
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Calculus" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+            <CalculusCalculator />
+            <HowToUseGuide />
+             <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/scientific">Scientific Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/algebra">Algebra Calculator</Link>
+                      </Button>
+                  </div>
+              </section>
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

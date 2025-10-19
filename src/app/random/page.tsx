@@ -10,6 +10,24 @@ export const metadata: Metadata = {
     description: 'A powerful tool to generate random numbers, including integers and decimals with adjustable precision. Supports large numbers and multiple generations.',
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Random Number Generator",
+  "operatingSystem": "All",
+  "applicationCategory": "Utilities",
+  "description": "A tool to generate random numbers, including integers and decimals with adjustable precision, range, and count.",
+  "url": "https://mathmaster-studio-5398649656-398ca.web.app/random",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MathMaster",
+    "url": "https://mathmaster-studio-5398649656-398ca.web.app"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0"
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -96,24 +114,30 @@ const FaqSection = () => (
 
 export default function RandomNumberPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Random Number Generator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Random Number Generator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Generate random integers or decimals with customizable options.
-                </p>
-            </section>
-            <RandomNumberGenerator />
-            <HowToUseGuide />
-            <EducationalContent />
-            <FaqSection />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Random Number Generator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Random Number Generator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Generate random integers or decimals with customizable options.
+                  </p>
+              </section>
+              <RandomNumberGenerator />
+              <HowToUseGuide />
+              <EducationalContent />
+              <FaqSection />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }
