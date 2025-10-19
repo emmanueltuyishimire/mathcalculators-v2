@@ -59,19 +59,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
           <span className="sr-only">Math Calculators</span>
         </Link>
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-             {navItems.map((item) => (
-              <NavigationMenuItem key={item.href}>
-                <Link href={item.href} legacyBehavior passHref>
-                  <NavigationMenuLink active={pathname.startsWith(item.href)} className={navigationMenuTriggerStyle()}>
-                    {item.label}
-                  </NavigationMenuLink>
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
+        
 
         <Sheet>
           <SheetTrigger asChild>
