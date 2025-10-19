@@ -8,10 +8,10 @@ export function AppFooter() {
     return (
         <footer className="border-t bg-background">
             <div className="container mx-auto py-8 px-4 md:px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div className="space-y-4">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+                    <div className="space-y-4 col-span-2 md:col-span-1">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-                            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} className="dark:bg-white dark:p-1 dark:rounded-sm" />
+                            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
                             <span>Math Calculators</span>
                         </Link>
                         <p className="text-sm text-muted-foreground">
@@ -28,6 +28,14 @@ export function AppFooter() {
                         </ul>
                     </div>
                      <div>
+                        <h4 className="font-semibold mb-4">Our Network</h4>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="https://health.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Health & Fitness</a></li>
+                            <li><a href="https://finance.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Financial Calculators</a></li>
+                            <li><a href="https://calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
                         <h4 className="font-semibold mb-4">Company</h4>
                         <ul className="space-y-2 text-sm">
                             <li><Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link></li>
