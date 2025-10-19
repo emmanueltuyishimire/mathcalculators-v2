@@ -5,18 +5,13 @@ import { PageHeader } from '@/components/page-header';
 import BasicTrigCalculator from '@/components/calculators/basic-trig-calculator';
 import RightTriangleSolver from '@/components/calculators/right-triangle-solver';
 import ObliqueTriangleSolver from '@/components/calculators/oblique-triangle-solver';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-
-// This component cannot be a server component because it uses client-side hooks in its children
-// export const metadata: Metadata = {
-//   title: 'Trigonometry Calculator Platform',
-//   description: 'A unified platform for trigonometric calculations, including basic functions, triangle solvers, and more.',
-// };
+// This component must be a client component because it uses client-side hooks in its children (useState, useEffect, etc.)
+// As a result, static metadata export is not possible. SEO can be improved with client-side document.title updates if needed.
 
 const pageSchema = {
   "@context": "https://schema.org",

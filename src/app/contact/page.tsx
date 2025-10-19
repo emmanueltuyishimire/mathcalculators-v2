@@ -1,16 +1,13 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Mail, MessageSquare, User, Send, Star, Heart, Handshake } from 'lucide-react';
 import type { Metadata } from 'next';
 
-// This component cannot be a server component because it uses an onClick handler
-// export const metadata: Metadata = {
-//   title: 'Contact Us',
-//   description: 'Get in touch with the Math Calculators team. We welcome your feedback, suggestions, and inquiries.',
-// };
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: 'Get in touch with the Math Calculators team. We welcome your feedback, suggestions, and inquiries.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -40,8 +37,8 @@ export default function ContactPage() {
         <PageHeader title="Contact Us" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-2xl space-y-12">
-              <section className="text-center">
-                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              <section className="text-center" aria-labelledby="contact-heading">
+                  <h1 id="contact-heading" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Get in Touch
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
@@ -49,13 +46,13 @@ export default function ContactPage() {
                   </p>
               </section>
 
-              <section>
-                 <h2 className="text-2xl font-bold text-center mb-6">What can we help you with?</h2>
+              <section aria-labelledby="help-with-heading">
+                 <h2 id="help-with-heading" className="text-2xl font-bold text-center mb-6">What can we help you with?</h2>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                      <Card>
                          <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <Handshake className="h-6 w-6 text-primary" />
+                                <Handshake className="h-6 w-6 text-primary" aria-hidden="true" />
                                 Sponsorship & Partnerships
                             </CardTitle>
                          </CardHeader>
@@ -66,7 +63,7 @@ export default function ContactPage() {
                      <Card>
                          <CardHeader>
                              <CardTitle className="flex items-center gap-2">
-                                <Heart className="h-6 w-6 text-primary" />
+                                <Heart className="h-6 w-6 text-primary" aria-hidden="true" />
                                 Feedback & Suggestions
                              </CardTitle>
                          </CardHeader>
@@ -77,7 +74,7 @@ export default function ContactPage() {
                       <Card>
                          <CardHeader>
                              <CardTitle className="flex items-center gap-2">
-                                <Star className="h-6 w-6 text-primary" />
+                                <Star className="h-6 w-6 text-primary" aria-hidden="true" />
                                 Special Tools & Feature Requests
                              </CardTitle>
                          </CardHeader>
@@ -88,7 +85,7 @@ export default function ContactPage() {
                       <Card>
                          <CardHeader>
                              <CardTitle className="flex items-center gap-2">
-                                <MessageSquare className="h-6 w-6 text-primary" />
+                                <MessageSquare className="h-6 w-6 text-primary" aria-hidden="true" />
                                 Support & General Inquiries
                              </CardTitle>
                          </CardHeader>
@@ -107,7 +104,7 @@ export default function ContactPage() {
                 <CardContent>
                   <p className="text-muted-foreground">For all inquiries, please email us at:</p>
                   <a href="mailto:calculation250@gmail.com" className="text-lg font-semibold text-primary hover:underline flex items-center justify-center gap-2 mt-2">
-                    <Mail className="h-5 w-5"/> calculation250@gmail.com
+                    <Mail className="h-5 w-5" aria-hidden="true"/> calculation250@gmail.com
                   </a>
                 </CardContent>
               </Card>
