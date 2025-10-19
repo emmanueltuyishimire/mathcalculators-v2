@@ -73,7 +73,7 @@ const calculatorCategories = [
     },
     {
         title: "Statistics & Probability",
-        image: "/math%20calculator%20background%20image6.webp",
+        image: "/math%-20calculator%20background%20image6.webp",
         tools: [
             { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
