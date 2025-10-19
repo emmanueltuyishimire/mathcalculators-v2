@@ -2,11 +2,75 @@
 import { PageHeader } from '@/components/page-header';
 import FractionCalculators from '@/components/calculators/fraction-calculator';
 import type { Metadata } from 'next';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
   title: 'Fraction Calculator',
   description: 'A collection of free fraction calculators for addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals.',
 };
+
+const EducationalContent = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>Mastering Fractions: A Comprehensive Guide</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">What is a Fraction?</h3>
+                <p className="mt-2">In mathematics, a fraction represents a part of a whole. It consists of a <strong>numerator</strong> (the top number) and a <strong>denominator</strong> (the bottom number). The numerator tells us how many equal parts we have, while the denominator shows the total number of parts that make up the whole.</p>
+                <p className="mt-2">For instance, in the fraction 3/8, the numerator is 3 and the denominator is 8. Imagine a pie cut into 8 equal slices. If you eat 3 slices, you have consumed 3/8 of the pie. The remaining portion would be 5/8. A critical rule is that the denominator of a fraction can never be zero, as division by zero is undefined.</p>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">How to Add and Subtract Fractions</h3>
+                <p className="mt-2">Unlike simple integers, fractions need a <strong>common denominator</strong> before you can add or subtract them. Here are two methods to achieve this:</p>
+                
+                <h4 className="font-semibold text-foreground mt-4">Method 1: The Cross-Multiplication Method</h4>
+                <p>A straightforward way to get a common denominator is to multiply the numerator and denominator of each fraction by the denominator of the other. While simple, this method may not result in a simplified fraction.</p>
+                <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">a/b + c/d = (ad + bc) / bd</p>
+                <p><strong>Example:</strong> 3/4 + 1/6 = (3×6 + 1×4) / (4×6) = (18 + 4) / 24 = 22/24, which simplifies to 11/12.</p>
+                
+                <h4 className="font-semibold text-foreground mt-4">Method 2: Using the Least Common Multiple (LCM)</h4>
+                <p>A more efficient method is to find the Least Common Multiple (LCM) of the denominators. The LCM is the smallest number that is a multiple of all the denominators.</p>
+                <p>For the example 3/4 + 1/6, the LCM of 4 and 6 is 12. Convert each fraction to have a denominator of 12:</p>
+                <ul className="list-disc list-inside pl-4 mt-2">
+                    <li>3/4 becomes (3×3)/(4×3) = 9/12</li>
+                    <li>1/6 becomes (1×2)/(6×2) = 2/12</li>
+                </ul>
+                <p>Now, add the numerators: 9/12 + 2/12 = 11/12. This method often gives a simplified result directly.</p>
+            </div>
+            
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">How to Multiply and Divide Fractions</h3>
+                
+                <h4 className="font-semibold text-foreground mt-4">Multiplication</h4>
+                <p>Multiplying fractions is simple: multiply the numerators together and the denominators together. No common denominator is needed.</p>
+                <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">a/b × c/d = ac/bd</p>
+                <p><strong>Example:</strong> 3/4 × 1/6 = 3/24, which simplifies to 1/8.</p>
+
+                <h4 className="font-semibold text-foreground mt-4">Division</h4>
+                <p>To divide fractions, you multiply the first fraction by the <strong>reciprocal</strong> of the second. The reciprocal of a fraction is found by swapping its numerator and denominator (e.g., the reciprocal of 3/4 is 4/3).</p>
+                <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">a/b ÷ c/d = a/b × d/c = ad/bc</p>
+                <p><strong>Example:</strong> 3/4 ÷ 1/6 = 3/4 × 6/1 = 18/4, which simplifies to 9/2.</p>
+            </div>
+            
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Simplifying Fractions</h3>
+                <p className="mt-2">It's standard practice to present fractions in their simplest (or lowest) form. For example, 220/440 is more elegantly written as 1/2. To simplify, you divide both the numerator and the denominator by their <strong>Greatest Common Factor (GCF)</strong>. Our calculator handles this for you automatically.</p>
+            </div>
+
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Converting Between Decimals and Fractions</h3>
+                 <h4 className="font-semibold text-foreground mt-4">Decimal to Fraction</h4>
+                <p>To convert a decimal, count the number of decimal places. This number tells you which power of 10 to use as the denominator. For example, the number 0.1234 has four decimal places, so we use 10⁴ (10,000) as the denominator. The fraction becomes 1234/10000, which simplifies to 617/5000.</p>
+                
+                 <h4 className="font-semibold text-foreground mt-4">Fraction to Decimal</h4>
+                <p>To convert a fraction to a decimal, simply divide the numerator by the denominator. For example, 1/2 can be converted to 0.5. For more complex fractions, this requires long division.</p>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 
 export default function FractionPage() {
   return (
@@ -23,6 +87,7 @@ export default function FractionPage() {
                 </p>
             </section>
           <FractionCalculators />
+          <EducationalContent />
         </div>
       </main>
     </div>
