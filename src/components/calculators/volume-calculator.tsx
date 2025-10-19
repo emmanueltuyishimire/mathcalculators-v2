@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -5,25 +6,21 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { VolumeDiagram } from './volume-diagram';
 
 interface VolumeCalculatorProps {
     shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Ellipsoid' | 'Square Pyramid' | 'Tube';
     inputs: { name: string; label: string; }[];
     calculate: (inputs: { [key: string]: number }) => number | string;
-    imageHint: string;
 }
 
-const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calculate, imageHint }) => {
+const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calculate }) => {
     const { toast } = useToast();
     const [inputValues, setInputValues] = useState<{ [key: string]: string }>(
         inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {})
     );
     const [volume, setVolume] = useState<string>('');
     
-    const placeholderImage = PlaceHolderImages.find(img => img.imageHint === imageHint);
-
     const handleCalculate = () => {
         const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
             const num = parseFloat(value);
@@ -102,18 +99,9 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                         </div>
                     )}
                 </div>
-                {placeholderImage && (
-                     <div className="flex justify-center items-center">
-                        <Image
-                            src={placeholderImage.imageUrl}
-                            alt={`${shape} illustration`}
-                            width={200}
-                            height={200}
-                            className="rounded-lg object-cover"
-                            data-ai-hint={placeholderImage.imageHint}
-                        />
-                    </div>
-                )}
+                <div className="flex justify-center items-center">
+                    <VolumeDiagram shape={shape} className="w-48 h-48 text-foreground" />
+                </div>
             </CardContent>
         </Card>
     );
@@ -124,37 +112,31 @@ const calculators: VolumeCalculatorProps[] = [
         shape: 'Sphere',
         inputs: [{ name: 'r', label: 'Radius (r)' }],
         calculate: ({ r }) => (4/3) * Math.PI * Math.pow(r, 3),
-        imageHint: 'ball'
     },
     {
         shape: 'Cone',
         inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, h }) => (1/3) * Math.PI * Math.pow(r, 2) * h,
-        imageHint: 'cone'
     },
     {
         shape: 'Cube',
         inputs: [{ name: 'a', label: 'Edge Length (a)' }],
         calculate: ({ a }) => Math.pow(a, 3),
-        imageHint: 'cube'
     },
     {
         shape: 'Cylinder',
         inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, h }) => Math.PI * Math.pow(r, 2) * h,
-        imageHint: 'cylinder'
     },
     {
         shape: 'Rectangular Tank',
         inputs: [{ name: 'l', label: 'Length (l)' }, { name: 'w', label: 'Width (w)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ l, w, h }) => l * w * h,
-        imageHint: 'prism'
     },
     {
         shape: 'Capsule',
         inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, h }) => (Math.PI * Math.pow(r, 2) * h) + ((4/3) * Math.PI * Math.pow(r, 3)),
-        imageHint: 'capsule'
     },
     {
         shape: 'Spherical Cap',
@@ -172,25 +154,21 @@ const calculators: VolumeCalculatorProps[] = [
             }
             throw new Error("Requires at least two values to calculate.")
         },
-        imageHint: 'cap'
     },
     {
         shape: 'Conical Frustum',
         inputs: [{ name: 'r', label: 'Top Radius (r)' }, { name: 'R', label: 'Bottom Radius (R)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ r, R, h }) => (1/3) * Math.PI * h * (Math.pow(r, 2) + r*R + Math.pow(R, 2)),
-        imageHint: 'conical frustum'
     },
     {
         shape: 'Ellipsoid',
         inputs: [{ name: 'a', label: 'Axis 1 (a)' }, { name: 'b', label: 'Axis 2 (b)' }, { name: 'c', label: 'Axis 3 (c)' }],
         calculate: ({ a, b, c }) => (4/3) * Math.PI * a * b * c,
-        imageHint: 'ellipsoid'
     },
     {
         shape: 'Square Pyramid',
         inputs: [{ name: 'a', label: 'Base Edge (a)' }, { name: 'h', label: 'Height (h)' }],
         calculate: ({ a, h }) => (1/3) * Math.pow(a, 2) * h,
-        imageHint: 'square pyramid'
     },
      {
         shape: 'Tube',
@@ -199,7 +177,6 @@ const calculators: VolumeCalculatorProps[] = [
             if (d1 <= d2) throw new Error("Outer diameter must be greater than inner diameter.");
             return Math.PI * (Math.pow(d1/2, 2) - Math.pow(d2/2, 2)) * l;
         },
-        imageHint: 'tube'
     },
 ];
 
