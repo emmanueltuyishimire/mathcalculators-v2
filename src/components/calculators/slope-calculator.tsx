@@ -17,6 +17,8 @@ interface TwoPointResult {
     equation: string;
     yIntercept: number | string;
     xIntercept: number | string;
+    deltaX: number;
+    deltaY: number;
 }
 
 const TwoPointsCalculator = () => {
@@ -40,7 +42,7 @@ const TwoPointsCalculator = () => {
     const deltaY = y2 - y1;
     const distance = Math.sqrt(deltaX**2 + deltaY**2);
 
-    if (deltaX === 0) {
+    if (Math.abs(deltaX) < 1e-9) { // Using tolerance for float comparison
         setResult({
             slope: 'undefined',
             angle: 'N/A',
@@ -48,11 +50,13 @@ const TwoPointsCalculator = () => {
             equation: `x = ${x1}`,
             yIntercept: 'none',
             xIntercept: x1,
+            deltaX,
+            deltaY,
         });
     } else {
       const slope = deltaY / deltaX;
       const yIntercept = y1 - slope * x1;
-      const xIntercept = slope === 0 ? 'none' : -yIntercept / slope;
+      const xIntercept = Math.abs(slope) < 1e-9 ? 'none' : -yIntercept / slope;
       const angle = Math.atan(slope) * (180 / Math.PI);
 
       setResult({
@@ -62,6 +66,8 @@ const TwoPointsCalculator = () => {
         equation: `y = ${slope.toFixed(4)}x + ${yIntercept.toFixed(4)}`,
         yIntercept: yIntercept,
         xIntercept: xIntercept,
+        deltaX,
+        deltaY,
       });
     }
   };
@@ -96,10 +102,12 @@ const TwoPointsCalculator = () => {
       </CardContent>
       {result && (
         <CardFooter className="p-0 mt-4">
-          <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
-            <p className="font-mono text-sm">Slope (m) = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
-            <p className="font-mono text-sm">Angle (θ) = {typeof result.angle === 'number' ? `${result.angle.toFixed(4)}°` : result.angle}</p>
-            <p className="font-mono text-sm">Distance (d) = {result.distance.toFixed(4)}</p>
+          <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
+             <p className="font-mono text-sm">Slope (m) = ΔY/ΔX = {result.deltaY}/{result.deltaX} = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
+            <p className="font-mono text-sm">Angle (θ) = arctan(ΔY/ΔX) = {typeof result.angle === 'number' ? `${result.angle.toFixed(4)}°` : result.angle} = {typeof result.slope === 'number' ? (result.angle/45).toFixed(4) : 'N/A'}π</p>
+            <p className="font-mono text-sm">ΔX = {p2.x} - {p1.x} = {result.deltaX}</p>
+            <p className="font-mono text-sm">ΔY = {p2.y} - {p1.y} = {result.deltaY}</p>
+            <p className="font-mono text-sm">Distance (d) = √ΔX² + ΔY² = {result.distance.toFixed(4)}</p>
             <p className="font-mono text-sm">Equation: {result.equation}</p>
             <p className="font-mono text-sm">Y-Intercept (b): {typeof result.yIntercept === 'number' ? result.yIntercept.toFixed(4) : result.yIntercept}</p>
             <p className="font-mono text-sm">X-Intercept: {typeof result.xIntercept === 'number' ? result.xIntercept.toFixed(4) : result.xIntercept}</p>
