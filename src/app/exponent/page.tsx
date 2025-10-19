@@ -11,6 +11,35 @@ export const metadata: Metadata = {
     description: 'Solve for the base, exponent, or result in an exponential equation. Learn about exponent laws and rules with examples.',
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Exponent Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <p>This calculator solves exponential equations in the form <strong>aⁿ = y</strong>.</p>
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Enter Two Values:</strong> Fill in any two of the three input fields: Base (a), Exponent (n), or Result (y). Leave the field you want to solve for empty.
+                </li>
+                 <li>
+                    <strong>Use 'e' as Base (Optional):</strong> If you want to use Euler's number (e ≈ 2.718) as the base, toggle the "Use e as base" switch. This will automatically fill and disable the base input.
+                </li>
+                <li>
+                    <strong>Calculate:</strong> Click the "Calculate" button to find the missing value.
+                </li>
+                <li>
+                    <strong>Clear:</strong> Click the "Clear" button to reset all input fields.
+                </li>
+                 <li>
+                    <strong>View Steps:</strong> If a step-by-step solution is available, an accordion will appear. Click "Show Calculation Steps" to see how the result was derived.
+                </li>
+            </ol>
+        </CardContent>
+    </Card>
+);
+
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -58,6 +87,8 @@ export default function ExponentPage() {
             </section>
             
             <ExponentCalculator />
+
+            <HowToUseGuide />
 
             <EducationalContent />
 

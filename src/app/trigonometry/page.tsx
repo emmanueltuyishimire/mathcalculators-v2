@@ -1,7 +1,9 @@
+
 import { PageHeader } from '@/components/page-header';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
   title: 'Trigonometry Calculator Online – Free & Accurate',
@@ -95,6 +97,44 @@ const faqSchema = {
   ]
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Trigonometry Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Angle Mode:</strong> First, ensure you've selected the correct angle mode. Toggle between <strong>RAD</strong> (Radians) and <strong>DEG</strong> (Degrees) using the button at the top.
+                </li>
+                <li>
+                    <strong>Entering Expressions:</strong> Use the keypad to input your numbers and operations. Use parentheses `()` for complex expressions.
+                </li>
+                 <li>
+                    <strong>Trigonometric Functions:</strong> Click `sin`, `cos`, `tan`, etc., to apply the function. For inverse functions (`sin⁻¹`), click the `2nd` button first.
+                </li>
+                <li>
+                    <strong>Calculate:</strong> Press the `=` button to get the final result.
+                </li>
+                <li>
+                    <strong>Memory Functions:</strong> Use `M+`, `M-`, `MR`, and `MC` to manage stored values for multi-step calculations.
+                </li>
+            </ol>
+             <div className="p-4 bg-accent/50 rounded-lg">
+                <h4 className="font-semibold text-accent-foreground">✅ Example</h4>
+                <p className="text-sm text-muted-foreground mt-2">
+                    To find the sine of 30 degrees:
+                </p>
+                <ol className="list-decimal list-inside text-sm text-muted-foreground mt-2 pl-4">
+                    <li>Set the mode to <strong>DEG</strong>.</li>
+                    <li>Press `sin(`, then `3`, `0`, `)`.</li>
+                    <li>Press `=`. The result is `0.5`.</li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
+
 export default function TrigonometryPage() {
   return (
     <>
@@ -116,6 +156,8 @@ export default function TrigonometryPage() {
             </section>
             
             <ScientificCalculator />
+
+            <HowToUseGuide />
 
             <section className="space-y-8">
                 <h2 className="text-3xl font-bold">What is a Trigonometry Calculator?</h2>

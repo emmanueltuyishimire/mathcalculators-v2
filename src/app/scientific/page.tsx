@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
   title: 'Scientific Calculator Online – Free & Accurate',
@@ -96,6 +97,55 @@ const faqSchema = {
   ]
 };
 
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Scientific Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-muted-foreground">
+            <ol className="list-decimal list-inside space-y-2">
+                <li>
+                    <strong>Entering Numbers & Operators:</strong> Use the number and operator buttons (+, -, ×, ÷) to build your expression in the display.
+                </li>
+                <li>
+                    <strong>Using Functions:</strong> Click a function button (e.g., sin, log, √x) to apply it. For functions like `sin(`, type the number afterward and close the parenthesis.
+                </li>
+                 <li>
+                    <strong>Angle Mode:</strong> Toggle between <strong>RAD</strong> (Radians) and <strong>DEG</strong> (Degrees) for trigonometric calculations.
+                </li>
+                <li>
+                    <strong>Second Functions:</strong> Click the <strong>2nd</strong> button to access alternative functions like x³, ∛x, and inverse trig functions (sin⁻¹, cos⁻¹, tan⁻¹).
+                </li>
+                 <li>
+                    <strong>Memory:</strong> Use <strong>M+</strong>, <strong>M-</strong>, <strong>MR</strong>, and <strong>MC</strong> to store, subtract from, recall, and clear memory.
+                </li>
+                 <li>
+                    <strong>Equals:</strong> Press the <strong>=</strong> button to evaluate the expression.
+                </li>
+                 <li>
+                    <strong>Clearing:</strong>
+                     <ul className="list-disc list-inside pl-6 mt-1">
+                        <li><strong>⌫ (Backspace):</strong> Deletes the last character.</li>
+                        <li><strong>AC (All Clear):</strong> Clears the display and resets memory.</li>
+                    </ul>
+                </li>
+            </ol>
+             <div className="p-4 bg-accent/50 rounded-lg">
+                <h4 className="font-semibold text-accent-foreground">✅ Example Problem</h4>
+                <p className="text-sm text-muted-foreground mt-2">
+                    To calculate <strong>(5 + 3) × sin(30°)</strong>:
+                </p>
+                <ol className="list-decimal list-inside text-sm text-muted-foreground mt-2 pl-4">
+                    <li>Ensure you are in <strong>DEG</strong> mode.</li>
+                    <li>Press: `(`, `5`, `+`, `3`, `)`, `×`, `sin(`, `3`, `0`, `)`, `=`.</li>
+                    <li>The result will be `4`.</li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
+
+
 export default function ScientificPage() {
   return (
     <>
@@ -117,6 +167,8 @@ export default function ScientificPage() {
             </section>
             
             <ScientificCalculator />
+
+            <HowToUseGuide />
 
             <section className="space-y-8">
                 <h2 className="text-3xl font-bold">What is a Scientific Calculator?</h2>
