@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Logarithm, Proportions, SquareRoot, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
+import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -20,9 +20,9 @@ const basicTools = [
   { href: '#', label: 'Hex Calculator', icon: Code },
   { href: '#', label: 'Half-Life Calculator', icon: Atom },
   { href: '#', label: 'Quadratic Formula', icon: Sigma },
-  { href: '#', label: 'Log Calculator', icon: Logarithm },
+  { href: '#', label: 'Log Calculator', icon: Calculator },
   { href: '#', label: 'Ratio Calculator', icon: Proportions },
-  { href: '#', label: 'Root Calculator', icon: SquareRoot },
+  { href: '#', label: 'Root Calculator', icon: Radical },
   { href: '#', label: 'Least Common Multiple', icon: Gavel },
   { href: '#', label: 'Greatest Common Factor', icon: Hand },
   { href: '#', label: 'Factor Calculator', icon: Gavel },
