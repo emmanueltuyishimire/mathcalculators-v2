@@ -16,13 +16,13 @@ function HeroSection() {
     >
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-primary-foreground">
-            Master Geometry
+            Free Online Math Calculator for Every Problem
           </h1>
           <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl mt-4">
-            Calculate area, volume, slope, and more with our intuitive geometry tools.
+            From basic arithmetic to advanced calculus and statistics, get instant, accurate answers. Save time on homework, check your results, and master complex concepts with our easy-to-use tools.
           </p>
            <Button asChild variant="secondary" size="lg" className="mt-6">
-            <Link href="#tools">Explore Tools</Link>
+            <Link href="#tools">Explore Calculators Now</Link>
           </Button>
       </div>
     </section>
