@@ -13,11 +13,8 @@ import {
   BarChartHorizontal,
   Table,
   FlaskConical,
-  Heart,
-  Landmark,
-  BookOpen,
-  Mail,
   Info,
+  Mail,
 } from 'lucide-react';
 import {
   Sheet,
