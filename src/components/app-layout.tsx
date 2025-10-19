@@ -94,7 +94,28 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <span className="hidden sm:inline-block">MathMaster</span>
             </Link>
         </div>
-        
+         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+           <NavigationMenu>
+              <NavigationMenuList>
+                 {navItems.map((item) => (
+                    <NavigationMenuItem key={item.href}>
+                         <Link href={item.href} legacyBehavior passHref>
+                          <NavigationMenuLink
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              pathname.startsWith(item.href)
+                                ? 'bg-accent text-accent-foreground'
+                                : ''
+                            )}
+                          >
+                            {item.label}
+                          </NavigationMenuLink>
+                        </Link>
+                    </NavigationMenuItem>
+                  ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+        </nav>
         <div className="flex items-center justify-end gap-2 ml-auto">
           <ThemeToggle />
         </div>
