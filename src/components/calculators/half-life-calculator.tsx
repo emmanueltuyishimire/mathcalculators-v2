@@ -41,33 +41,27 @@ function HalfLifeDecayCalculator() {
         
         const knownValues = [!isNaN(numNt), !isNaN(numN0), !isNaN(numT), !isNaN(numT1_2)].filter(Boolean).length;
 
-        if (knownValues < 3) {
-            return; // Not enough info to calculate
+        if (knownValues !== 3) {
+            return; // Not enough info to calculate, or too much
         }
         
-        if (knownValues > 3) {
-             toast({
-                variant: 'destructive',
-                title: 'Too Many Values',
-                description: 'Please clear one field to calculate it.',
-            });
-            return;
-        }
-
         try {
             let newValues = { ...values };
+            const currentFieldToSolve = (Object.keys(values) as Array<keyof typeof values>).find(key => values[key] === '') as 'Nt' | 'N0' | 't' | 't1_2' | undefined;
             
-            if (fieldToSolve === 'Nt') {
+            if (!currentFieldToSolve) return;
+
+            if (currentFieldToSolve === 'Nt') {
                 const result = numN0 * Math.pow(0.5, numT / numT1_2);
                 newValues.Nt = result.toPrecision(5);
-            } else if (fieldToSolve === 'N0') {
+            } else if (currentFieldToSolve === 'N0') {
                 const result = numNt / Math.pow(0.5, numT / numT1_2);
                 newValues.N0 = result.toPrecision(5);
-            } else if (fieldToSolve === 't') {
+            } else if (currentFieldToSolve === 't') {
                  if (numNt <= 0 || numN0 <=0 || numNt / numN0 <= 0) throw new Error("Quantities must be positive for log calculation.");
                 const result = numT1_2 * (Math.log(numNt / numN0) / Math.log(0.5));
                 newValues.t = result.toPrecision(5);
-            } else if (fieldToSolve === 't1_2') {
+            } else if (currentFieldToSolve === 't1_2') {
                 if (numNt <= 0 || numN0 <=0 || numNt / numN0 <= 0) throw new Error("Quantities must be positive for log calculation.");
                 const result = numT * (Math.log(0.5) / Math.log(numNt / numN0));
                  if (result < 0) throw new Error("Inputs result in a negative half-life. Please check values.");
@@ -84,7 +78,7 @@ function HalfLifeDecayCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [values, fieldToSolve]);
+    }, [values]);
 
     const handleClear = () => {
       setValues({ Nt: '', N0: '', t: '', t1_2: '' });
