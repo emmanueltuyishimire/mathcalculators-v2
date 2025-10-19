@@ -1,104 +1,153 @@
 
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/page-header';
-import LogCalculator from '@/components/calculators/log-calculator';
 import type { Metadata } from 'next';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-export const metadata: Metadata = {
-    title: 'Logarithm Calculator (log)',
-    description: 'A free online log calculator that solves for any variable in the logarithm equation (log base b of y = x). Supports common bases like e, 10, and 2.',
-};
+// Metadata can't be dynamically generated in a client component, 
+// but we can define it for the page.
+// export const metadata: Metadata = { ... };
+
+function LogCalculator() {
+    const { toast } = useToast();
+    const [base, setBase] = useState('e');
+    const [argument, setArgument] = useState('100');
+    const [result, setResult] = useState('');
+    const [calculation, setCalculation] = useState<string | null>(null);
+
+    const calculate = () => {
+        setCalculation(null);
+        
+        const baseStr = base.toLowerCase().trim();
+        const baseNum = baseStr === 'e' ? Math.E : parseFloat(base);
+        const argNum = parseFloat(argument);
+        const resNum = parseFloat(result);
+
+        const knownValues = [!isNaN(baseNum), !isNaN(argNum), !isNaN(resNum)].filter(Boolean).length;
+
+        if (knownValues !== 2) {
+            toast({
+                variant: 'destructive',
+                title: 'Invalid Input',
+                description: 'Please provide exactly two values to solve for the third.',
+            });
+            return;
+        }
+
+        try {
+            if (isNaN(resNum)) {
+                if (baseNum <= 0 || baseNum === 1) throw new Error("Base must be positive and not equal to 1.");
+                if (argNum <= 0) throw new Error("Argument must be positive for real logarithms.");
+                const newResult = Math.log(argNum) / Math.log(baseNum);
+                setResult(newResult.toString());
+                setCalculation(`log${baseStr}(${argNum}) = ${newResult.toPrecision(15)}`);
+            } else if (isNaN(argNum)) {
+                const newArgument = Math.pow(baseNum, resNum);
+                setArgument(newArgument.toString());
+                setCalculation(`${baseStr}^${resNum} = ${newArgument.toPrecision(15)}`);
+            } else if (isNaN(baseNum)) {
+                if (argNum <= 0 || argNum === 1) throw new Error("Argument must be positive and not equal to 1 for finding the base.");
+                if (resNum === 0) throw new Error("Result cannot be zero when solving for the base.");
+                const newBase = Math.pow(argNum, 1 / resNum);
+                setBase(newBase.toString());
+                setCalculation(`${newBase.toPrecision(15)}^${resNum} = ${argNum}`);
+            }
+        } catch (e: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Calculation Error',
+                description: e.message || 'An error occurred during calculation.',
+            });
+        }
+    };
+
+     useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        <Card className="shadow-lg">
+            <CardContent className="pt-6 space-y-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-lg font-semibold text-center">
+                    <span className="self-center">log</span>
+                    <Input id="base" value={base} onChange={e => setBase(e.target.value)} className="w-20 text-center text-sm self-end" placeholder="b"/>
+                    <Input id="argument" type="number" value={argument} onChange={e => setArgument(e.target.value)} className="w-24 text-center" placeholder="x" />
+                    <span className="self-center">=</span>
+                    <Input id="result" type="number" value={result} onChange={e => setResult(e.target.value)} className="w-24 text-center" placeholder="y"/>
+                </div>
+                <Button onClick={calculate} className="w-full">Calculate</Button>
+            </CardContent>
+            {calculation && (
+                <CardFooter>
+                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <h3 className="font-bold text-lg">Result</h3>
+                        <p className="font-mono text-primary break-all">{calculation}</p>
+                    </div>
+                </CardFooter>
+            )}
+        </Card>
+    );
+}
 
 const EducationalContent = () => (
     <Card>
         <CardHeader>
-            <CardTitle>Logarithms Unlocked: A Practical Guide</CardTitle>
-            <CardDescription>From theory to practical application, here’s what you need to know about logarithms.</CardDescription>
+            <CardTitle>What is Log?</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">1. What is a Logarithm? The Core Idea</h3>
-                <p className="mt-2">A logarithm is the inverse of exponentiation. It answers the question: "What exponent do I need to raise a specific base to, in order to get a certain number?"</p>
-                <p className="font-mono bg-muted p-4 rounded-md my-2 text-center text-lg">If bˣ = y, then logₐ(y) = x</p>
-                <p>The key players are:</p>
-                <ul className="list-disc list-inside pl-4 mt-2">
-                    <li><b>Base (b):</b> The number being raised to a power (must be positive and not 1).</li>
-                    <li><b>Argument (y):</b> The number you want to get.</li>
-                    <li><b>Logarithm (x):</b> The exponent you need.</li>
-                </ul>
-                <h4 className="font-semibold text-foreground mt-4">Commonly Used Bases:</h4>
-                <ul className="list-disc list-inside pl-4 mt-2">
-                    <li><b>Base 10 (Common Log):</b> log₁₀(y) — Widely used in science and engineering.</li>
-                    <li><b>Base e (Natural Log):</b> ln(y) — Foundational in math, physics, and finance.</li>
-                    <li><b>Base 2 (Binary Log):</b> log₂(y) — Essential in computer science and information theory.</li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">2. The Rules of Logarithms</h3>
-                <p className="mt-2">These properties are the shortcuts that make solving logarithmic equations much simpler.</p>
-                <div className="space-y-4 mt-2">
-                    <p><b>Product Rule (Adding Logs):</b> The log of a product is the sum of the logs. <br/><code className="font-mono text-sm bg-muted p-1 rounded-md">logₐ(M · N) = logₐ(M) + logₐ(N)</code></p>
-                    <p><b>Quotient Rule (Subtracting Logs):</b> The log of a quotient is the difference of the logs. <br/><code className="font-mono text-sm bg-muted p-1 rounded-md">logₐ(M / N) = logₐ(M) - logₐ(N)</code></p>
-                    <p><b>Power Rule (Multiplying by an Exponent):</b> An exponent inside a log can be moved out front as a multiplier. <br/><code className="font-mono text-sm bg-muted p-1 rounded-md">logₐ(Mᵏ) = k · logₐ(M)</code></p>
-                    <p><b>Change of Base Formula:</b> This allows you to convert a log from one base to another—it’s how most calculators work! <br/><code className="font-mono text-sm bg-muted p-1 rounded-md">logₐ(y) = logₖ(y) / logₖ(b)</code></p>
-                </div>
-            </div>
+            <p>The logarithm, or log, is the inverse of the mathematical operation of exponentiation. This means that the log of a number is the number that a fixed base has to be raised to in order to yield the number. Conventionally, <b>log</b> implies that base 10 is being used, though the base can technically be anything. When the base is <b>e</b>, <b>ln</b> is usually written, rather than loge. <b>log2</b>, the binary logarithm, is another base that is typically used with logarithms. If, for example:</p>
+            <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">x = bʸ; then y = logₐ(x); where b is the base</p>
+            <p>Each of the mentioned bases is typically used in different applications. Base 10 is commonly used in science and engineering, base e in math and physics, and base 2 in computer science.</p>
             
             <div>
-                <h3 className="text-xl font-semibold text-foreground">3. How the Calculator Works</h3>
-                <p className="mt-2">Our calculator can solve for any of the three variables in the equation <code className="font-mono bg-muted p-1 rounded-md">logₐ(y) = x</code> by rearranging the formula based on your input.</p>
-                <div className="font-mono bg-muted p-4 rounded-md my-2 text-sm">
-                    <p><b>// To find the result (x):</b></p>
-                    <p className="pl-4">x = log(y) / log(b)</p>
-                    <p className="text-xs pl-4 italic">// Uses the change of base formula</p>
-                    <br />
-                    <p><b>// To find the argument (y):</b></p>
-                    <p className="pl-4">y = b ** x</p>
-                    <p className="text-xs pl-4 italic">// The exponential form</p>
-                    <br />
-                    <p><b>// To find the base (b):</b></p>
-                    <p className="pl-4">b = y ** (1/x)</p>
-                    <p className="text-xs pl-4 italic">// Solves for the root</p>
+                <h3 className="text-xl font-semibold text-foreground">Basic Log Rules</h3>
+                <div className="space-y-4 mt-2">
+                    <div>
+                        <p>When the argument of a logarithm is the product of two numerals, the logarithm can be re-written as the addition of the logarithm of each of the numerals.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2">logₐ(x × y) = logₐx + logₐy</p>
+                        <p><b>EX:</b> log(1 × 10) = log(1) + log(10) = 0 + 1 = 1</p>
+                    </div>
+                    <div>
+                        <p>When the argument of a logarithm is a fraction, the logarithm can be re-written as the subtraction of the logarithm of the numerator minus the logarithm of the denominator.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2">logₐ(x / y) = logₐx - logₐy</p>
+                        <p><b>EX:</b> log(10 / 2) = log(10) - log(2) = 1 - 0.301 = 0.699</p>
+                    </div>
+                    <div>
+                        <p>If there is an exponent in the argument of a logarithm, the exponent can be pulled out of the logarithm and multiplied.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2">logₐxʸ = y × logₐx</p>
+                        <p><b>EX:</b> log(2⁶) = 6 × log(2) = 1.806</p>
+                    </div>
+                    <div>
+                        <p>It is also possible to change the base of the logarithm using the following rule.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2">logₐ(x) = logₖ(x) / logₖ(b)</p>
+                        <p><b>EX:</b> log₁₀(x) = log₂(x) / log₂(10)</p>
+                    </div>
+                    <div>
+                         <p>To switch the base and argument, use the following rule.</p>
+                        <p className="font-mono bg-muted p-2 rounded-md my-2">logₐ(c) = 1 / log꜀(b)</p>
+                        <p><b>EX:</b> log₅(2) = 1 / log₂(5)</p>
+                    </div>
+                    <div>
+                        <h4 className="font-semibold text-foreground">Other common logarithms to take note of include:</h4>
+                        <ul className="list-disc list-inside pl-4 mt-2 font-mono bg-muted p-2 rounded-md">
+                            <li>logₐ(1) = 0</li>
+                            <li>logₐ(b) = 1</li>
+                            <li>logₐ(0) = undefined</li>
+                            <li>limₓ→₀ logₐ(x) = -∞</li>
+                            <li>ln(eˣ) = x</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">4. Quick Examples</h3>
-                 <Table className="mt-2">
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Problem</TableHead>
-                            <TableHead>Solution</TableHead>
-                            <TableHead>Because...</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>log₂(8)</TableCell>
-                            <TableCell>3</TableCell>
-                            <TableCell>2³ equals 8.</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>log₁₀(1000)</TableCell>
-                            <TableCell>3</TableCell>
-                            <TableCell>10³ equals 1000.</TableCell>
-                        </TableRow>
-                         <TableRow>
-                            <TableCell>ln(e²)</TableCell>
-                            <TableCell>2</TableCell>
-                            <TableCell>The natural log and 'e' cancel out.</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Find y if log₂(y)=5</TableCell>
-                            <TableCell>32</TableCell>
-                            <TableCell>y = 2⁵, which is 32.</TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
             </div>
         </CardContent>
     </Card>
@@ -107,15 +156,15 @@ const EducationalContent = () => (
 export default function LogPage() {
   return (
     <div className="flex flex-1 flex-col">
-      <PageHeader title="Logarithm Calculator" />
+      <PageHeader title="Log Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-2xl space-y-8">
             <section className="text-center">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Logarithm Calculator (log)
+                    Log Calculator (Logarithm)
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A powerful tool to solve for any variable in a logarithm equation. Enter any two values in <code className="font-mono">logₐ(y)=x</code> to find the missing one. It supports any numeric base, including the natural log base 'e'.
+                    Please provide any two values to calculate the third in the logarithm equation logbx=y. It can accept "e" as a base input.
                 </p>
             </section>
             
