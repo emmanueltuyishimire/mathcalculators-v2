@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const basicTools = [
   { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
-  { href: '#', label: 'Fraction Calculator', icon: Divide },
+  { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
   { href: '#', label: 'Percentage Calculator', icon: Percent },
   { href: '#', label: 'Random Number Generator', icon: Shuffle },
   { href: '#', label: 'Percent Error Calculator', icon: AlertTriangle },
@@ -57,7 +57,7 @@ export default function BasicCategoryPage() {
                       <CardTitle>{tool.label}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">{tool.description || 'An essential calculation tool.'}</p>
+                      <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
                     </CardContent>
                   </Card>
                 </Link>
