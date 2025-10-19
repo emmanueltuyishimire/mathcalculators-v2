@@ -128,10 +128,10 @@ const calculators: AreaCalculatorProps[] = [
         shape: 'Triangle',
         inputs: [{ name: 'a', label: 'Edge 1 (a)' }, { name: 'b', label: 'Edge 2 (b)' }, { name: 'c', label: 'Edge 3 (c)' }],
         calculate: ({ a, b, c }) => {
-            const s = (a + b + c) / 2;
-            if (s <= a || s <= b || s <= c) {
-                throw new Error("Invalid triangle sides.");
+            if (a + b <= c || a + c <= b || b + c <= a) {
+                throw new Error("Invalid triangle: The sum of any two sides must be greater than the third.");
             }
+            const s = (a + b + c) / 2;
             return Math.sqrt(s * (s - a) * (s - b) * (s - c)); // Heron's formula
         },
     },
