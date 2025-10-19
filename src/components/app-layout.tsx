@@ -94,11 +94,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                 {navItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
-                    <Link href={item.href} legacyBehavior passHref>
-                        <NavigationMenuLink active={pathname.startsWith(item.href)} className={navigationMenuTriggerStyle()}>
-                            {item.label}
-                        </NavigationMenuLink>
-                    </Link>
+                    <NavigationMenuLink asChild active={pathname.startsWith(item.href)}>
+                      <Link href={item.href} className={navigationMenuTriggerStyle()}>
+                          {item.label}
+                      </Link>
+                    </NavigationMenuLink>
                 </NavigationMenuItem>
                 ))}
             </NavigationMenuList>
