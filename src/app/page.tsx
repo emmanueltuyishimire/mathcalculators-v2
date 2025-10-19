@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -37,7 +36,7 @@ function HeroSection() {
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
-        image: "/math%20calculator%20background%20image2.webp",
+        image: "/math%20calculator%20background%20image6.webp",
         tools: [
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
             { href: '/scientific', label: 'Scientific Calculator', icon: FlaskConical },
@@ -74,7 +73,7 @@ const calculatorCategories = [
     },
     {
         title: "Statistics & Probability",
-        image: "/math%20calculator%20background%20image2.webp",
+        image: "/math%20calculator%20background%20image6.webp",
         tools: [
             { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
@@ -90,7 +89,7 @@ const calculatorCategories = [
     },
     {
         title: "Advanced & Specialty",
-        image: "/math%20calculator%20background%20image2.webp",
+        image: "/math%20calculator%20background%20image4.webp",
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
             { href: '/matrix', label: 'Matrix Calculators', icon: Table },
