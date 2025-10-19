@@ -252,44 +252,44 @@ export default function ScientificCalculator() {
       default: onClick = () => handleButtonClick(label);
     }
 
-    const button3dClasses = 'border-b-2 active:border-b-0 active:translate-y-px';
+    const button3dClasses = 'border-b-4 active:border-b-0 active:translate-y-1';
     let variantClasses = '';
     switch(variant) {
       case 'default': variantClasses = `bg-primary text-primary-foreground hover:bg-primary/90 border-primary/70`; break;
-      case 'secondary': variantClasses = `bg-gray-600 text-white hover:bg-gray-500 border-gray-700`; break;
-      case 'destructive': variantClasses = `bg-red-500 text-white hover:bg-red-600 border-red-700`; break;
-      case 'accent': variantClasses = 'bg-blue-500 text-white hover:bg-blue-600 border-blue-700'; break;
-      default: variantClasses = 'bg-gray-200 hover:bg-gray-300 border-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-800';
+      case 'secondary': variantClasses = `bg-gray-600 text-white hover:bg-gray-500 border-gray-900`; break;
+      case 'destructive': variantClasses = `bg-red-500 text-white hover:bg-red-600 border-red-900`; break;
+      case 'accent': variantClasses = 'bg-blue-500 text-white hover:bg-blue-600 border-blue-900'; break;
+      default: variantClasses = 'bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 border-gray-400 dark:border-gray-800';
     }
 
 
-    return <Button key={label} variant={null} className={cn('text-xs h-9 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick}>{label}</Button>;
+    return <Button key={label} variant={null} className={cn('text-lg h-12 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick}>{label}</Button>;
   }
 
   return (
-    <Card className="shadow-xl max-w-md mx-auto bg-gray-800 text-white p-2 border-2 border-gray-900">
+    <Card className="shadow-xl max-w-md mx-auto bg-gray-300 dark:bg-gray-800 text-white p-2 border-4 border-gray-400 dark:border-gray-900 rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
-        <div className="w-full mb-1 rounded-lg border border-gray-700 bg-gray-900 p-2 text-right text-3xl font-mono text-white break-all h-20 flex items-end justify-end shadow-inner">
+        <div className="w-full mb-1 rounded-lg border-2 border-gray-400 dark:border-gray-900 bg-gray-100 dark:bg-gray-900 p-2 text-right text-3xl font-mono text-black dark:text-white break-all h-20 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
-            <Button variant="outline" className="h-7 text-xs bg-gray-700 border-gray-600" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant="outline" className="h-7 text-xs bg-gray-700 border-gray-600" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
-            {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-7 text-xs'))}
-            <Button variant="destructive" className="h-7 text-xs transition-transform transform border-b-2 border-red-700 active:border-b-0 active:translate-y-px" onClick={handleBackspace}>⌫</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-400 dark:bg-gray-700 border-b-4 border-gray-500 dark:border-gray-900 active:border-b-0 active:translate-y-1" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
+            <Button variant={null} className={cn("h-8 text-xs border-b-4 active:border-b-0 active:translate-y-1", show2nd ? "bg-blue-500 text-white border-blue-700" : "bg-gray-400 dark:bg-gray-700 border-gray-500 dark:border-gray-900")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
+            {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-8 text-xs'))}
+            <Button variant={null} className="h-8 text-xs transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleBackspace}>⌫</Button>
         </div>
 
         <div className="w-full grid grid-cols-7 gap-1">
-            {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-7 text-xs'))}
-            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-gray-700 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick('(')}>(</Button>
-            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-gray-700 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick(')')}>)</Button>
-            <Button variant="secondary" className="h-7 text-xs transition-transform transform border-b-2 border-gray-700 active:border-b-0 active:translate-y-px" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
+            {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white dark:bg-gray-600 border-b-4 border-gray-600 dark:border-gray-800 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white dark:bg-gray-600 border-b-4 border-gray-600 dark:border-gray-800 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white dark:bg-gray-600 border-b-4 border-gray-600 dark:border-gray-800 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
-            {functionButtons1.slice(4, 8).map(btn => renderButton(btn, 'secondary', 'h-7 text-xs'))}
-             {trigButtons.slice(0, 3).map(btn => renderButton(btn, 'secondary', 'h-7 text-xs'))}
+            {functionButtons1.slice(4, 8).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
+             {trigButtons.slice(0, 3).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
         </div>
 
         <div className="grid grid-cols-5 gap-1 w-full">
@@ -303,14 +303,14 @@ export default function ScientificCalculator() {
                 {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
             </div>
              <div className="col-span-1 grid grid-cols-1 gap-1">
-                <Button variant={null} className="h-full text-lg transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-2 border-red-700 active:border-b-0 active:translate-y-px" onClick={handleAllClear}>AC</Button>
+                <Button variant={null} className="h-full text-lg transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleAllClear}>AC</Button>
                 {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
             </div>
         </div>
          <div className="w-full grid grid-cols-7 gap-1 mt-1">
-            {trigButtons.slice(3, 6).map(btn => renderButton(btn, 'secondary', 'h-7 text-xs'))}
-            {['sec', 'csc', 'cot'].map(op => renderButton({ label: op, type: 'func', value: op }, 'secondary', 'h-7 text-xs'))}
-            {renderButton({ label: 'π', type: 'char' }, 'secondary', 'h-7 text-xs')}
+            {trigButtons.slice(3, 6).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
+            {['sec', 'csc', 'cot'].map(op => renderButton({ label: op, type: 'func', value: op }, 'secondary', 'h-8 text-xs'))}
+            {renderButton({ label: 'π', type: 'char' }, 'secondary', 'h-8 text-xs')}
         </div>
 
 
@@ -318,3 +318,5 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
+
+    
