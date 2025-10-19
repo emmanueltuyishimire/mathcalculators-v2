@@ -56,7 +56,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           href="/"
           className="mr-4 flex items-center gap-2 text-lg font-semibold md:text-base"
         >
-          <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} />
+          <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} className="dark:bg-white dark:p-1 dark:rounded-sm" />
           <span className="sr-only">Math Calculators</span>
         </Link>
         <NavigationMenu className="hidden md:flex">
@@ -90,7 +90,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} />
+                <Image src="/logo.png" alt="Math Calculators Logo" width={32} height={32} className="dark:bg-white dark:p-1 dark:rounded-sm" />
                 <span>Math Calculators</span>
               </Link>
               {navItems.map((item) => (
