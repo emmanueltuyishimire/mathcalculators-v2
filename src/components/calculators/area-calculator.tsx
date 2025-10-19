@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { AreaDiagram } from './area-diagram';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface AreaCalculatorProps {
@@ -74,7 +73,7 @@ const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculat
             <CardHeader>
                 <CardTitle>{shape} Area Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+            <CardContent>
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <Label htmlFor={`${shape}-unit`}>Unit</Label>
@@ -109,9 +108,6 @@ const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculat
                             </div>
                         </div>
                     )}
-                </div>
-                <div className="flex justify-center items-center md:pt-10">
-                    <AreaDiagram shape={shape} className="w-48 h-48 text-foreground" />
                 </div>
             </CardContent>
         </Card>

@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { PythagoreanDiagram } from '../pythagorean-diagram';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface CalculationResult {
@@ -126,7 +125,7 @@ export default function PythagoreanCalculator() {
                 <CardDescription>Enter any two sides to find the third.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div className="grid grid-cols-1 gap-6 items-center">
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
                             <Label htmlFor="side-a" className="w-12">a =</Label>
@@ -144,9 +143,6 @@ export default function PythagoreanCalculator() {
                              <Button onClick={calculate} className="flex-1">Calculate</Button>
                              <Button onClick={handleClear} variant="outline" className="flex-1">Clear</Button>
                          </div>
-                    </div>
-                     <div className="flex justify-center">
-                        <PythagoreanDiagram a={result?.a.toFixed(4) || a} b={result?.b.toFixed(4) || b} c={result?.c.toFixed(4) || c} />
                     </div>
                 </div>
             </CardContent>
