@@ -90,7 +90,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} className="dark:bg-white dark:p-1 dark:rounded-sm" />
+                <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
                 <span>Math Calculators</span>
               </Link>
               {navItems.map((item) => (
