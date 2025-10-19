@@ -94,6 +94,15 @@ body {
   max-width: 100%;
   position: relative;
   margin: auto;
+  min-height: 400px;
+}
+
+.mySlides {
+  display: none;
+}
+
+img {
+  vertical-align: middle;
 }
 
 /* Fading animation */

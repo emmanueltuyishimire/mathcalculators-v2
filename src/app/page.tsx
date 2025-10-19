@@ -194,17 +194,19 @@ const Slideshow = () => {
   }, [slideIndex]);
 
   return (
-    <div className="slideshow-container relative h-[60vh] min-h-[400px] w-full">
+    <div className="slideshow-container">
       {carouselSlides.map((slide, index) => (
         <div
           key={index}
-          className={`mySlides fade absolute w-full h-full ${index === slideIndex ? 'block' : 'hidden'}`}
-          style={{ position: 'absolute', width: '100%', height: '100%' }}
+          className="mySlides fade"
+          style={{ display: index === slideIndex ? 'block' : 'none' }}
         >
           <Image
             src={slide.imageUrl}
             alt={slide.title}
-            fill
+            layout="responsive"
+            width={1200}
+            height={600}
             className="object-cover"
             priority={index === 0}
             data-ai-hint={slide.dataAiHint}
@@ -224,7 +226,7 @@ const Slideshow = () => {
         </Button>
       </div>
 
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+      <div style={{ textAlign: 'center', position: 'absolute', bottom: '20px', width: '100%', zIndex: 20 }}>
         {carouselSlides.map((_, index) => (
           <span
             key={index}
