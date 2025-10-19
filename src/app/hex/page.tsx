@@ -10,6 +10,40 @@ export const metadata: Metadata = {
     description: 'Perform hexadecimal arithmetic (add, subtract, multiply, divide) and convert between hexadecimal and decimal values with ease.',
 };
 
+const HexMultiplicationTable = () => {
+    const headers = [...Array(16).keys()].map(i => i.toString(16).toUpperCase());
+    const rows = [...Array(16).keys()].map(i => i.toString(16).toUpperCase());
+
+    return (
+        <div>
+            <h3 className="text-xl font-semibold text-foreground">Hexadecimal Multiplication Table</h3>
+            <div className="overflow-x-auto mt-2 rounded-lg border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="text-center font-bold text-primary">×</TableHead>
+                            {headers.map(h => <TableHead key={h} className="text-center font-bold text-primary">{h}</TableHead>)}
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {rows.map((row, rowIndex) => (
+                            <TableRow key={row}>
+                                <TableHead className="text-center font-bold text-primary">{row}</TableHead>
+                                {headers.map((col, colIndex) => (
+                                    <TableCell key={`${row}-${col}`} className="text-center font-mono text-xs">
+                                        {(rowIndex * colIndex).toString(16).toUpperCase()}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
+        </div>
+    );
+};
+
+
 const EducationalContent = () => (
     <Card>
         <CardHeader>
@@ -85,6 +119,7 @@ const EducationalContent = () => (
                     </div>
                 </div>
             </div>
+             <HexMultiplicationTable />
         </CardContent>
     </Card>
 );
