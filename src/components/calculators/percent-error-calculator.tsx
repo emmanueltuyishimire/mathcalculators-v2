@@ -7,12 +7,28 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+interface Result {
+    signedError: number;
+    absoluteError: number;
+}
+
+interface Steps {
+    observed: string;
+    trueVal: string;
+    difference: string;
+    division: string;
+    finalSigned: string;
+    finalAbsolute: string;
+}
 
 export default function PercentErrorCalculator() {
     const { toast } = useToast();
     const [observed, setObserved] = useState('10');
     const [trueVal, setTrueVal] = useState('11');
-    const [result, setResult] = useState<string | null>(null);
+    const [result, setResult] = useState<Result | null>(null);
+    const [steps, setSteps] = useState<Steps | null>(null);
 
     const calculate = () => {
         const obsNum = parseFloat(observed);
@@ -25,6 +41,7 @@ export default function PercentErrorCalculator() {
                 description: 'Please enter valid numbers for both values.',
             });
             setResult(null);
+            setSteps(null);
             return;
         }
 
@@ -35,11 +52,23 @@ export default function PercentErrorCalculator() {
                 description: 'True Value cannot be zero.',
             });
             setResult(null);
+            setSteps(null);
             return;
         }
 
-        const percentError = (Math.abs(obsNum - trueNum) / Math.abs(trueNum)) * 100;
-        setResult(percentError.toFixed(4));
+        const difference = obsNum - trueNum;
+        const signedError = (difference / trueNum) * 100;
+        const absoluteError = (Math.abs(difference) / Math.abs(trueNum)) * 100;
+        
+        setResult({ signedError, absoluteError });
+        setSteps({
+            observed: obsNum.toString(),
+            trueVal: trueNum.toString(),
+            difference: difference.toString(),
+            division: (difference / trueNum).toFixed(10),
+            finalSigned: signedError.toFixed(10),
+            finalAbsolute: absoluteError.toFixed(10),
+        });
     };
     
     // Auto-calculate on mount
@@ -79,10 +108,29 @@ export default function PercentErrorCalculator() {
                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result !== null && (
-                <CardFooter>
+                <CardFooter className="flex-col items-start gap-4">
                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                        <h3 className="font-bold text-lg">Percent Error: <span className="text-primary">{result}%</span></h3>
+                        <h3 className="font-bold text-lg mb-2">Results</h3>
+                        <p><b>Percent Error:</b> <span className="font-mono text-primary">{result.signedError.toFixed(4)}%</span></p>
+                        <p><b>Absolute Percent Error:</b> <span className="font-mono text-primary">{result.absoluteError.toFixed(4)}%</span></p>
                     </div>
+                    {steps && (
+                         <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="item-1">
+                                <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
+                                <AccordionContent>
+                                    <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                        <p>Percent Error = ((Vobserved - Vtrue) / Vtrue) × 100%</p>
+                                        <p>= (({steps.observed}) - ({steps.trueVal})) / {steps.trueVal}</p>
+                                        <p>= {steps.difference} / {steps.trueVal}</p>
+                                        <p>= {steps.division} × 100%</p>
+                                        <p>= {steps.finalSigned}% (signed error)</p>
+                                        <p>= {steps.finalAbsolute}% (absolute error)</p>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                    )}
                 </CardFooter>
             )}
         </Card>

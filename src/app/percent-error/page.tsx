@@ -26,17 +26,20 @@ const EducationalContent = () => (
 
             <div>
                 <h3 className="text-xl font-semibold text-foreground">The Formula</h3>
-                <p className="mt-2">The formula for calculating percent error is:</p>
+                <p className="mt-2">The most common formula for calculating percent error is the absolute error formula:</p>
                 <p className="font-mono bg-muted p-4 rounded-md text-center text-lg my-2">
-                    Percent Error = (|Observed Value - True Value| / |True Value|) × 100%
+                    Absolute Percent Error = (|Observed Value - True Value| / |True Value|) × 100%
                 </p>
-                <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li><b>Observed Value (or Experimental Value):</b> The value you measured in your experiment.</li>
-                    <li><b>True Value (or Accepted Value):</b> The known, correct value.</li>
-                </ul>
                 <p className="mt-2">
-                    The absolute value is used in the numerator to ensure the error is a positive number. However, some conventions drop the absolute value to indicate whether the observed value was higher or lower than the true value.
+                    This formula uses the absolute value to ensure the error is always a positive number, which is useful for understanding the magnitude of the error.
                 </p>
+                <p className="mt-2">
+                    However, sometimes it's useful to know the direction of the error (whether your observation was an overestimate or an underestimate). In this case, you can use the signed percent error formula:
+                </p>
+                <p className="font-mono bg-muted p-4 rounded-md text-center text-lg my-2">
+                    Signed Percent Error = ((Observed Value - True Value) / True Value) × 100%
+                </p>
+                 <p className="mt-2">Our calculator provides both values for a complete analysis.</p>
             </div>
 
             <div>
