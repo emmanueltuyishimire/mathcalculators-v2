@@ -3,12 +3,45 @@ import { PageHeader } from '@/components/page-header';
 import DistanceCalculator from '@/components/calculators/distance-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
     title: 'Distance Calculator',
     description: 'Calculate the distance between two points in 2D, 3D, or on the Earth\'s surface using latitude and longitude.',
 };
+
+const HowToUseGuide = () => (
+    <Card>
+        <CardHeader>
+            <CardTitle>How to Use the Distance Calculator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-muted-foreground">
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">2D Distance Calculator</h3>
+                <p className="mt-2">This tool finds the straight-line distance between two points on a flat plane.</p>
+                <ol className="list-decimal list-inside pl-4 mt-2">
+                    <li>Enter the X and Y coordinates for both Point 1 and Point 2.</li>
+                    <li>The calculator will automatically compute the distance, slope, angle, and the equation of the line connecting the points.</li>
+                </ol>
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">3D Distance Calculator</h3>
+                <p className="mt-2">This extends the 2D calculator to three dimensions.</p>
+                <ol className="list-decimal list-inside pl-4 mt-2">
+                    <li>Enter the X, Y, and Z coordinates for both Point 1 and Point 2.</li>
+                    <li>The calculator will display the direct distance between the points in 3D space.</li>
+                </ol>
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">Latitude & Longitude Distance</h3>
+                <p className="mt-2">This calculates the great-circle distance (shortest path) between two points on the Earth's surface.</p>
+                 <ol className="list-decimal list-inside pl-4 mt-2">
+                    <li>Input the latitude and longitude for two different geographical locations.</li>
+                    <li>The result will be the distance in both kilometers and miles.</li>
+                </ol>
+            </div>
+        </CardContent>
+    </Card>
+);
 
 const EducationalContent = () => (
     <Card>
@@ -62,21 +95,10 @@ export default function DistancePage() {
             </section>
             
             <DistanceCalculator />
+
+            <HowToUseGuide />
             
             <EducationalContent />
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Distance on a Map</CardTitle>
-                <CardDescription>Click two points on the map to find the shortest distance between them.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                 <div className="relative h-[400px] w-full bg-muted rounded-lg flex items-center justify-center">
-                    <p className="text-muted-foreground">Interactive map coming soon!</p>
-                     <Image src="https://picsum.photos/seed/map/1200/800" alt="Map placeholder" layout="fill" objectFit="cover" className="rounded-lg opacity-20" />
-                </div>
-              </CardContent>
-            </Card>
         </div>
       </main>
     </div>
