@@ -85,7 +85,7 @@ export default function CalculatorsPage() {
         className="relative w-full h-64 bg-cover bg-center"
       >
         <Image
-            src="/math%20calculator%20background%20image2.webp"
+            src="math%20calculator%20background%20image2.webp"
             alt="An abstract background image with mathematical symbols"
             fill
             priority

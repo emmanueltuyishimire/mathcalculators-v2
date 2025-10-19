@@ -45,7 +45,7 @@ export default function RootLayout({
         {/* Google AdSense Auto Ads */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" crossOrigin="anonymous"></script>
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="favicon.ico" sizes="any" />
       </head>
       <body className={cn(inter.variable, "font-body antialiased")} suppressHydrationWarning>
         <FirebaseClientProvider>
