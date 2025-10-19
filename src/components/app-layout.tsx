@@ -17,6 +17,7 @@ import {
   Landmark,
   BookOpen,
   Mail,
+  Info,
 } from 'lucide-react';
 import {
   Sheet,
@@ -35,6 +36,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AppFooter } from './app-footer';
 
 const navItems = [
   { href: '/scientific', label: 'Scientific', icon: FlaskConical },
@@ -42,6 +44,7 @@ const navItems = [
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
+  { href: '/about', label: 'About', icon: Info },
   { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
@@ -98,7 +101,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                  {navItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
-                        <Link href={item.href} legacyBehavior passHref>
+                         <Link href={item.href} legacyBehavior passHref>
                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname.startsWith(item.href) ? "text-foreground bg-accent/50" : "text-muted-foreground")}>
                             {item.label}
                             </NavigationMenuLink>
@@ -113,6 +116,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       <div className="flex flex-1 flex-col">{children}</div>
+      <AppFooter />
     </div>
   );
 }
