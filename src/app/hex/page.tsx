@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 const HexMultiplicationTable = () => {
     const headers = [...Array(16).keys()].map(i => i.toString(16).toUpperCase());
     const rows = [...Array(16).keys()].map(i => i.toString(16).toUpperCase());
+    const perfectSquares = new Set(['1', '4', '9', '10', '19', '24', '31', '40', '51', '64', '79', '90', 'A9', 'C4', 'E1']);
 
     return (
         <div>
@@ -29,11 +30,15 @@ const HexMultiplicationTable = () => {
                         {rows.map((row, rowIndex) => (
                             <TableRow key={row}>
                                 <TableHead className="text-center font-bold text-primary bg-primary/10 sticky left-0">{row}</TableHead>
-                                {headers.map((col, colIndex) => (
-                                    <TableCell key={`${row}-${col}`} className="text-center font-mono text-xs">
-                                        {(rowIndex * colIndex).toString(16).toUpperCase()}
-                                    </TableCell>
-                                ))}
+                                {headers.map((col, colIndex) => {
+                                    const value = (rowIndex * colIndex).toString(16).toUpperCase();
+                                    const isPerfectSquare = rowIndex === colIndex;
+                                    return (
+                                        <TableCell key={`${row}-${col}`} className={`text-center font-mono text-xs ${isPerfectSquare ? 'bg-primary/20 text-primary font-bold' : ''}`}>
+                                            {value}
+                                        </TableCell>
+                                    )
+                                })}
                             </TableRow>
                         ))}
                     </TableBody>
