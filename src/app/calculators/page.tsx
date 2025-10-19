@@ -83,10 +83,14 @@ export default function CalculatorsPage() {
     <div className="flex flex-1 flex-col">
       <section
         className="relative w-full h-64 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/math%20calculator%20background%20image2.webp')",
-        }}
       >
+        <Image
+            src="/math%20calculator%20background%20image2.webp"
+            alt="An abstract background image with mathematical symbols"
+            fill
+            priority
+            className="object-cover"
+        />
         <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
             All Calculators

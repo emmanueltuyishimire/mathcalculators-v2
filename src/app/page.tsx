@@ -11,10 +11,14 @@ function HeroSection() {
   return (
     <section
       className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/math%20calculator%20background%20image%201.webp')",
-      }}
     >
+       <Image
+        src="/math%20calculator%20background%20image%201.webp"
+        alt="Abstract mathematical background with glowing formulas"
+        fill
+        priority
+        className="object-cover"
+        />
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
         <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
           Unlock the Power of Numbers

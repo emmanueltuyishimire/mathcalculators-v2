@@ -51,27 +51,27 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-lg font-semibold md:text-base"
-          >
-            <Sigma className="h-6 w-6" />
-            <span className="sr-only">Math Calculators</span>
-          </Link>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "transition-colors hover:text-foreground",
-                pathname.startsWith(item.href) ? "text-foreground" : "text-muted-foreground"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <Link
+          href="/"
+          className="mr-4 flex items-center gap-2 text-lg font-semibold md:text-base"
+        >
+          <Sigma className="h-6 w-6" />
+          <span className="sr-only">Math Calculators</span>
+        </Link>
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList>
+             {navItems.map((item) => (
+              <NavigationMenuItem key={item.href}>
+                <Link href={item.href} legacyBehavior passHref>
+                  <NavigationMenuLink active={pathname.startsWith(item.href)} className={navigationMenuTriggerStyle()}>
+                    {item.label}
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+
         <Sheet>
           <SheetTrigger asChild>
             <Button
@@ -107,10 +107,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </nav>
           </SheetContent>
         </Sheet>
-        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-            <div className="ml-auto flex-1 sm:flex-initial">
-                 <ThemeToggle />
-            </div>
+        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
+             <ThemeToggle />
         </div>
       </header>
       <div className="flex flex-1 flex-col">{children}</div>
@@ -118,3 +116,29 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
