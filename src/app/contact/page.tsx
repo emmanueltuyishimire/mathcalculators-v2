@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Mail, MessageSquare, User, Send } from 'lucide-react';
+import { Mail, MessageSquare, User, Send, Star, Heart, Handshake } from 'lucide-react';
 import type { Metadata } from 'next';
 
 // This component cannot be a server component because it uses an onClick handler
@@ -86,6 +86,57 @@ export default function ContactPage() {
                       We'd love to hear from you! Whether you have a question, feedback, or a suggestion, please don't hesitate to reach out.
                   </p>
               </section>
+
+              <section>
+                 <h2 className="text-2xl font-bold text-center mb-6">What can we help you with?</h2>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <Card>
+                         <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Handshake className="h-6 w-6 text-primary" />
+                                Sponsorship & Partnerships
+                            </CardTitle>
+                         </CardHeader>
+                         <CardContent>
+                            <p className="text-muted-foreground">Interested in collaborating or sponsoring our platform? We're open to partnerships that align with our mission of making math accessible.</p>
+                         </CardContent>
+                     </Card>
+                     <Card>
+                         <CardHeader>
+                             <CardTitle className="flex items-center gap-2">
+                                <Heart className="h-6 w-6 text-primary" />
+                                Feedback & Suggestions
+                             </CardTitle>
+                         </CardHeader>
+                         <CardContent>
+                            <p className="text-muted-foreground">Have an idea for a new calculator or a suggestion to improve our existing tools? Your feedback is invaluable to us.</p>
+                         </CardContent>
+                     </Card>
+                      <Card>
+                         <CardHeader>
+                             <CardTitle className="flex items-center gap-2">
+                                <Star className="h-6 w-6 text-primary" />
+                                Special Tools & Feature Requests
+                             </CardTitle>
+                         </CardHeader>
+                         <CardContent>
+                            <p className="text-muted-foreground">Looking for a specific calculator that you can't find? Let us know what you need, and we might build it for you.</p>
+                         </CardContent>
+                     </Card>
+                      <Card>
+                         <CardHeader>
+                             <CardTitle className="flex items-center gap-2">
+                                <MessageSquare className="h-6 w-6 text-primary" />
+                                Support & General Inquiries
+                             </CardTitle>
+                         </CardHeader>
+                         <CardContent>
+                            <p className="text-muted-foreground">If you need help using our calculators, have a question, or want to report an issue, we're here to assist.</p>
+                         </CardContent>
+                     </Card>
+                 </div>
+              </section>
+
 
               <Card className="text-center">
                 <CardHeader>
