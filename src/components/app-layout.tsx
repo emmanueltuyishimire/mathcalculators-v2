@@ -18,6 +18,13 @@ import {
   SheetContent,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -77,11 +84,25 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         
         <Link
           href="/"
-          className="flex items-center gap-2 text-lg font-semibold"
+          className="flex items-center gap-2 text-lg font-semibold mr-4"
         >
           <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
           <span className="sr-only sm:not-sr-only">Math Calculators</span>
         </Link>
+        
+        <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+                {navItems.map((item) => (
+                <NavigationMenuItem key={item.href}>
+                    <Link href={item.href} legacyBehavior passHref>
+                        <NavigationMenuLink active={pathname.startsWith(item.href)} className={navigationMenuTriggerStyle()}>
+                            {item.label}
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
+                ))}
+            </NavigationMenuList>
+        </NavigationMenu>
         
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
              <ThemeToggle />
