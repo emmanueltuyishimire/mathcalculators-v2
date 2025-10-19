@@ -16,6 +16,7 @@ import {
   Heart,
   Landmark,
   BookOpen,
+  Mail,
 } from 'lucide-react';
 import {
   Sheet,
@@ -41,6 +42,7 @@ const navItems = [
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
+  { href: '/contact', label: 'Contact', icon: Mail },
 ];
 
 const externalLinks = [
