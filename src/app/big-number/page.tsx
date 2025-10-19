@@ -1,3 +1,4 @@
+
 import BigNumberCalculator from '@/components/calculators/big-number-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -61,16 +62,26 @@ const HowToUseGuide = () => (
 const EducationalContent = () => (
     <Card>
         <CardHeader>
-            <CardTitle>Working with Big Numbers</CardTitle>
+            <CardTitle>Why Use a Big Number Calculator?</CardTitle>
+            <CardDescription>Exploring numbers beyond the limits of standard calculators.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
-            <p>Most standard calculators can only handle numbers up to a certain size, typically around 10 decimal places. While sufficient for daily use, this limitation is problematic in fields requiring extreme precision, such as cosmology, astronomy, mathematics, and cryptography. Big number calculators exist to overcome this, providing far higher levels of accuracy.</p>
-            <p>Big numbers appear in many real-world contexts, from the number of atoms in the universe to the vast number of combinations in cryptographic keys.</p>
+            <p>Most standard calculators can only handle numbers up to a certain size, typically around 10-15 decimal places. While sufficient for daily use, this limitation is problematic in fields requiring extreme precision, such as cosmology, astronomy, mathematics, and cryptography. Big number calculators exist to overcome this, providing far higher levels of accuracy.</p>
             
             <div>
-                <h3 className="text-xl font-semibold text-foreground">Names of Large Numbers</h3>
-                <p className="mt-2">Below is a table showing the names of some very large numbers based on powers of 10.</p>
-                <div className="overflow-x-auto mt-2 rounded-lg border">
+                <h3 className="text-xl font-semibold text-foreground">Real-World Applications</h3>
+                <p className="mt-2">Big numbers appear in many real-world contexts, from the number of atoms in the universe to the vast number of combinations in cryptographic keys. Here are a few examples:</p>
+                <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li><b>Cosmology:</b> Estimating the number of atoms in the observable universe (around 10⁸⁰).</li>
+                    <li><b>Cryptography:</b> Modern encryption relies on the difficulty of factoring very large numbers, often with hundreds of digits.</li>
+                    <li><b>Combinatorics:</b> Calculating the number of possible arrangements, such as the number of ways to shuffle a deck of cards (52!, which is approximately 8 x 10⁶⁷).</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 className="text-xl font-semibold text-foreground">A Journey into Large Number Names</h3>
+                <p className="mt-2">Beyond practical applications, exploring the names of large numbers is a fascinating journey into the scale of the universe and imagination. Below is a table showing the names of some very large numbers based on powers of 10.</p>
+                <div className="overflow-x-auto mt-4 rounded-lg border">
                     <Table>
                         <TableHeader>
                             <TableRow>
@@ -103,7 +114,7 @@ export default function BigNumberPage() {
                     Big Number Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A calculator that can compute very large numbers.
+                    A calculator that can compute very large numbers with high precision.
                 </p>
             </section>
             
