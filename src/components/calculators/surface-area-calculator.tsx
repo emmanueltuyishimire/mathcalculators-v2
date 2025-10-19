@@ -73,12 +73,16 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
             const calcResults = calculate(parsedInputs);
             const finalResults: { [key: string]: string } = {};
 
-            if (shape === 'Sphere' && 'Total' in calcResults && 'steps' in calcResults) {
+            if (shape === 'Sphere' && 'Total' in calcResults) {
                 const { r: originalR } = Object.entries(inputValues).reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as {[key:string]: string});
+                const rNum = parseFloat(originalR);
+                if(isNaN(rNum)) {
+                    throw new Error("Invalid radius provided.");
+                }
                 setSteps([
                     `4πr²`,
                     `4 × π × ${originalR}²`,
-                    `${4 * parseFloat(originalR)**2}π`,
+                    `${4 * rNum**2}π`,
                     (calcResults['Total'] as number / Math.pow(conversionFactor, 2)).toFixed(10),
                 ]);
                 finalResults['Total'] = (calcResults['Total'] as number / Math.pow(conversionFactor, 2)).toFixed(4);
@@ -102,6 +106,7 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                 description: e.message,
             });
             setResults({});
+            setSteps([]);
         }
     };
 
