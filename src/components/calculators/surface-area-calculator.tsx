@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { VolumeDiagram } from '@/components/volume-diagram';
 
 interface SurfaceAreaCalculatorProps {
     shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Square Pyramid' | 'Ellipsoid';
@@ -156,7 +157,10 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
             <CardHeader>
                 <CardTitle>{shape} Surface Area Calculator</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex justify-center items-center">
+                    <VolumeDiagram shape={shape} />
+                </div>
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <Label htmlFor={`${shape}-unit`}>Unit</Label>
