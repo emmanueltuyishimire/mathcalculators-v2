@@ -259,6 +259,9 @@ export default function ScientificCalculator() {
       case 'secondary': variantClasses = `bg-gray-600 text-white hover:bg-gray-500 border-gray-900`; break;
       case 'destructive': variantClasses = `bg-red-500 text-white hover:bg-red-600 border-red-900`; break;
       case 'accent': variantClasses = 'bg-blue-500 text-white hover:bg-blue-600 border-blue-900'; break;
+      case 'outline': 
+        variantClasses = 'bg-gray-200 text-black border-gray-400 hover:bg-gray-300';
+        break;
       default: variantClasses = 'bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 border-gray-400 dark:border-gray-800';
     }
 
@@ -267,24 +270,24 @@ export default function ScientificCalculator() {
   }
 
   return (
-    <Card className="shadow-xl max-w-md mx-auto bg-gray-800 text-white p-2 border-4 border-black rounded-2xl">
+    <Card className="shadow-xl max-w-md mx-auto bg-gray-700 text-white p-2 border-4 border-black rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
-        <div className="w-full mb-1 rounded-lg border-2 border-black bg-green-200 dark:bg-green-900 p-2 text-right text-3xl font-mono text-black dark:text-green-50 break-all h-20 flex items-end justify-end shadow-inner">
+        <div className="w-full mb-1 rounded-lg border-2 border-black bg-black p-2 text-right text-3xl font-mono text-green-400 break-all h-20 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
-            <Button variant={null} className="h-8 text-xs bg-gray-400 dark:bg-gray-700 border-b-4 border-gray-500 dark:border-gray-900 active:border-b-0 active:translate-y-1" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant={null} className={cn("h-8 text-xs border-b-4 active:border-b-0 active:translate-y-1", show2nd ? "bg-blue-500 text-white border-blue-700" : "bg-gray-400 dark:bg-gray-700 border-gray-500 dark:border-gray-900")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-400 border-b-4 border-gray-500 active:border-b-0 active:translate-y-1" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
+            <Button variant={null} className={cn("h-8 text-xs border-b-4 active:border-b-0 active:translate-y-1", show2nd ? "bg-blue-500 text-white border-blue-700" : "bg-gray-400 border-gray-500")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
             {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-8 text-xs'))}
             <Button variant={null} className="h-8 text-xs transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleBackspace}>⌫</Button>
         </div>
 
         <div className="w-full grid grid-cols-7 gap-1">
             {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white dark:bg-gray-600 border-b-4 border-gray-600 dark:border-gray-800 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white dark:bg-gray-600 border-b-4 border-gray-600 dark:border-gray-800 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white dark:bg-gray-600 border-b-4 border-gray-600 dark:border-gray-800 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
@@ -318,7 +321,3 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
-
-    
-
-    
