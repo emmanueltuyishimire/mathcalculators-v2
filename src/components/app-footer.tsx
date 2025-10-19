@@ -2,7 +2,7 @@
 "use client";
 
 import Link from 'next/link';
-import { Sigma } from 'lucide-react';
+import Image from 'next/image';
 
 export function AppFooter() {
     return (
@@ -11,7 +11,7 @@ export function AppFooter() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-                            <Sigma className="h-6 w-6" />
+                            <Image src="/logo.png" alt="Math Calculators Logo" width={24} height={24} />
                             <span>Math Calculators</span>
                         </Link>
                         <p className="text-sm text-muted-foreground">

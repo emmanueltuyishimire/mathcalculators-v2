@@ -3,6 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   Calculator,
@@ -55,7 +56,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           href="/"
           className="mr-4 flex items-center gap-2 text-lg font-semibold md:text-base"
         >
-          <Sigma className="h-6 w-6" />
+          <Image src="/logo.png" alt="Math Calculators Logo" width={24} height={24} />
           <span className="sr-only">Math Calculators</span>
         </Link>
         <NavigationMenu className="hidden md:flex">
@@ -89,7 +90,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 href="/"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Sigma className="h-6 w-6" />
+                <Image src="/logo.png" alt="Math Calculators Logo" width={24} height={24} />
                 <span>Math Calculators</span>
               </Link>
               {navItems.map((item) => (
