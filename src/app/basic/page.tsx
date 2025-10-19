@@ -28,7 +28,7 @@ const basicTools = [
   { href: '/rounding', 'label': 'Rounding Calculator', icon: CheckCircle },
   { href: '/matrix', label: 'Matrix Calculator', icon: Table },
   { href: '/scientific-notation', label: 'Scientific Notation', icon: Type },
-  { href: '#', label: 'Big Number Calculator', icon: InfinityIcon },
+  { href: '/big-number', label: 'Big Number Calculator', icon: InfinityIcon },
 ];
 
 export default function BasicCategoryPage() {
