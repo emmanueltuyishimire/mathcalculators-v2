@@ -8,6 +8,16 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Settings } from 'lucide-react';
 
 type RoundingMethod = 
   | 'half-up' | 'half-down' | 'up' | 'down' | 'half-even' | 'half-odd' 
@@ -25,18 +35,21 @@ const precisionOptions: { [key: string]: number } = {
 
 export default function RoundingCalculator() {
     const { toast } = useToast();
-    const [number, setNumber] = useState('');
+    const [number, setNumber] = useState('15.65');
     const [method, setMethod] = useState<RoundingMethod>('half-up');
     const [precision, setPrecision] = useState('0'); // Default to Ones
+    const [customPrecision, setCustomPrecision] = useState('');
     const [result, setResult] = useState('');
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     useEffect(() => {
         calculate();
-    }, [number, method, precision]);
+    }, [number, method, precision, customPrecision]);
     
     const calculate = () => {
         const num = parseFloat(number);
-        const prec = parseInt(precision);
+        const precValue = precision === 'custom' ? customPrecision : precision;
+        const prec = parseInt(precValue, 10);
 
         if (isNaN(num)) {
             if (number) toast({ variant: 'destructive', title: 'Invalid Number', description: 'Please enter a valid number to round.'});
@@ -45,7 +58,6 @@ export default function RoundingCalculator() {
         }
 
         if (isNaN(prec)) {
-             toast({ variant: 'destructive', title: 'Invalid Precision', description: 'Please select or enter a valid precision level.'});
              setResult('');
              return;
         }
@@ -102,38 +114,65 @@ export default function RoundingCalculator() {
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="number-input">Number to Round</Label>
+                    <Label htmlFor="number-input">Number</Label>
                     <Input id="number-input" type="number" value={number} onChange={e => setNumber(e.target.value)} />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="method-select">Rounding Method</Label>
-                        <Select value={method} onValueChange={v => setMethod(v as RoundingMethod)}>
-                            <SelectTrigger id="method-select"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="half-up">Round half up</SelectItem>
-                                <SelectItem value="half-down">Round half down</SelectItem>
-                                <SelectItem value="up">Round up (Ceiling)</SelectItem>
-                                <SelectItem value="down">Round down (Floor)</SelectItem>
-                                <SelectItem value="half-even">Round half to even</SelectItem>
-                                <SelectItem value="half-odd">Round half to odd</SelectItem>
-                                <SelectItem value="half-away-zero">Round half away from zero</SelectItem>
-                                <SelectItem value="half-towards-zero">Round half towards zero</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="precision-select">Precision</Label>
-                        <Select value={precision} onValueChange={setPrecision}>
-                            <SelectTrigger id="precision-select"><SelectValue /></SelectTrigger>
-                            <SelectContent>
-                                {Object.entries(precisionOptions).map(([label, value]) => (
-                                    <SelectItem key={label} value={String(value)}>{label}</SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                <div className="space-y-2">
+                    <Label htmlFor="precision-select">Precision</Label>
+                    <Select value={precision} onValueChange={setPrecision}>
+                        <SelectTrigger id="precision-select"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                            {Object.entries(precisionOptions).map(([label, value]) => (
+                                <SelectItem key={label} value={String(value)}>{label} ({value})</SelectItem>
+                            ))}
+                             <SelectItem value="custom">Custom</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
+                 {precision === 'custom' && (
+                    <div className="space-y-2">
+                        <Label htmlFor="custom-precision">Custom Decimal Places</Label>
+                        <Input id="custom-precision" type="number" value={customPrecision} onChange={e => setCustomPrecision(e.target.value)} placeholder="e.g., 4" />
+                    </div>
+                 )}
+
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="w-full">
+                        <Settings className="mr-2 h-4 w-4" /> Settings
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Rounding Settings</DialogTitle>
+                      <DialogDescription>
+                        Choose a rounding method to change how tie-breaking values (like 5.5) are handled.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="method-select">Rounding Method</Label>
+                            <Select value={method} onValueChange={v => setMethod(v as RoundingMethod)}>
+                                <SelectTrigger id="method-select"><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="half-up">Round half up</SelectItem>
+                                    <SelectItem value="half-down">Round half down</SelectItem>
+                                    <SelectItem value="up">Round up (Ceiling)</SelectItem>
+                                    <SelectItem value="down">Round down (Floor)</SelectItem>
+                                    <SelectItem value="half-even">Round half to even</SelectItem>
+                                    <SelectItem value="half-odd">Round half to odd</SelectItem>
+                                    <SelectItem value="half-away-zero">Round half away from zero</SelectItem>
+                                    <SelectItem value="half-towards-zero">Round half towards zero</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                     <DialogFooter>
+                        <Button onClick={() => setIsDialogOpen(false)}>Done</Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+
             </CardContent>
             {result && (
                 <CardFooter>
