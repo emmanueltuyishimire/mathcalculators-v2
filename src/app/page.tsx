@@ -199,6 +199,7 @@ const Slideshow = () => {
         <div
           key={index}
           className={`mySlides fade absolute w-full h-full ${index === slideIndex ? 'block' : 'hidden'}`}
+          style={{ position: 'absolute', width: '100%', height: '100%' }}
         >
           <Image
             src={slide.imageUrl}
