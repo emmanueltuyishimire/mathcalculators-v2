@@ -19,7 +19,7 @@ const basicTools = [
   { href: '/binary', label: 'Binary Calculator', icon: Binary },
   { href: '/hex', label: 'Hex Calculator', icon: Code },
   { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
-  { href: '#', label: 'Quadratic Formula', icon: Sigma },
+  { href: '/quadratic', label: 'Quadratic Formula', icon: Sigma },
   { href: '#', label: 'Log Calculator', icon: Calculator },
   { href: '#', label: 'Ratio Calculator', icon: Proportions },
   { href: '#', label: 'Root Calculator', icon: Radical },
