@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Square, Waves, Volume } from 'lucide-react';
@@ -46,7 +47,7 @@ export default function GeometryPage() {
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {geometryTools.map((tool) => (
-                <Link href={tool.href} key={tool.href} className="group">
+                <Link href={tool.href} key={tool.label} className="group">
                   <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
                     <CardHeader className="flex flex-row items-center gap-4 space-y-0">
                        <div className="rounded-full bg-primary/10 p-3 text-primary">
