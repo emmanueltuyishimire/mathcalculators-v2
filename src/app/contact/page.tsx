@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -8,10 +10,11 @@ import { Button } from '@/components/ui/button';
 import { Mail, MessageSquare, User, Send } from 'lucide-react';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with the MathMaster team. We welcome your feedback, suggestions, and inquiries.',
-};
+// This component cannot be a server component because it uses an onClick handler
+// export const metadata: Metadata = {
+//   title: 'Contact Us',
+//   description: 'Get in touch with the MathMaster team. We welcome your feedback, suggestions, and inquiries.',
+// };
 
 const pageSchema = {
   "@context": "https://schema.org",
