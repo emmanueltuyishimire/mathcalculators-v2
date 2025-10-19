@@ -203,25 +203,28 @@ function MixedNumbersCalculator() {
             let explanation: string[] = [];
 
             if (op === '+' || op === '-') {
+                steps.push(`${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d}`);
+                steps.push(`= (${m1.w} ${op} ${m2.w}) + (${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d})`);
+                
                 const wholeSum = op === '+' ? w1 + w2 : w1 - w2;
                 const fracN1 = n1 * sign1;
                 const fracN2 = n2 * sign2;
-                const fracResN = op === '+' ? fracN1 * d2 + fracN2 * d1 : fracN1 * d2 - fracN2 * d1;
                 const fracResD = d1 * d2;
+                const commonFracN1 = fracN1 * d2;
+                const commonFracN2 = fracN2 * d1;
+
+                steps.push(`= ${wholeSum} + (${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD})`);
                 
+                const fracResN = op === '+' ? commonFracN1 + commonFracN2 : commonFracN1 - commonFracN2;
+                steps.push(`= ${wholeSum} + (${fracResN}/${fracResD})`);
+
                 resN = wholeSum * fracResD + fracResN;
                 resD = fracResD;
 
-                steps.push(`${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d}`);
-                steps.push(`= (${m1.w} ${op} ${m2.w}) + (${fracN1}/${d1} ${op} ${fracN2}/${d2})`);
-                steps.push(`= ${wholeSum} + (${fracN1*d2}/${fracResD} ${op} ${fracN2*d1}/${fracResD})`);
-                steps.push(`= ${wholeSum} + (${fracResN}/${fracResD})`);
-                
                 explanation.push(`Combine the whole numbers: ${m1.w} ${op} ${m2.w} = ${wholeSum}`);
-                explanation.push(`For the fractions, find a common denominator (LCM of ${d1} and ${d2} is ${fracResD}):`);
-                explanation.push(`${fracN1}/${d1} + ${fracN2}/${d2} = ${fracN1*d2}/${fracResD} + ${fracN2*d1}/${fracResD} = ${fracResN}/${fracResD}`);
-                explanation.push(`Combine the whole number and fraction: ${wholeSum} + ${fracResN}/${fracResD}`);
-
+                explanation.push(`For the fractions, find a common denominator (${d1 * d2}):`);
+                explanation.push(`${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d} = ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD} = ${fracResN}/${fracResD}`);
+                explanation.push(`Combine the whole number and fraction: ${wholeSum} + ${fracResN}/${fracResD} = ${resN}/${resD}`);
 
             } else { // Multiplication and Division
                  resN = op === '×' ? improperN1 * improperN2 : improperN1 * d2;
@@ -232,6 +235,10 @@ function MixedNumbersCalculator() {
                  explanation.push(`First, convert mixed numbers to improper fractions:`);
                  explanation.push(`${m1.w} ${m1.n}/${m1.d} = ${improperN1}/${d1}`);
                  explanation.push(`${m2.w} ${m2.n}/${m2.d} = ${improperN2}/${d2}`);
+                 if (op === '÷') {
+                    steps.push(`= ${improperN1}/${d1} × ${d2}/${improperN2}`);
+                 }
+                 steps.push(`= ${resN}/${resD}`);
             }
             
             const commonDivisor = gcd(resN, resD);
@@ -343,7 +350,7 @@ function SimplifyFractionCalculator() {
 function DecimalToFraction() {
     const { toast } = useToast();
     const [dec, setDec] = useState('1.375');
-    const [result, setResult] = useState<{ n: string, d: string } | null>(null);
+    const [result, setResult] = useState<{ n: bigint; d: bigint; w: bigint; rem: bigint; steps: string[] } | null>(null);
 
     const calculate = () => {
       try {
@@ -353,20 +360,28 @@ function DecimalToFraction() {
           return;
         }
 
-        if (Number.isInteger(num)) {
-          setResult({ n: String(num), d: '1' });
-          return;
-        }
-
-        const str = String(num);
+        const str = dec.toString();
         const decimalPart = str.split('.')[1] || '';
         const p = decimalPart.length;
 
-        const numerator = BigInt(Math.round(num * (10 ** p)));
-        const denominator = BigInt(10 ** p);
+        const multiplier = 10 ** p;
+        const initialNum = BigInt(Math.round(num * multiplier));
+        const initialDen = BigInt(multiplier);
 
-        const common = gcd(numerator, denominator);
-        setResult({ n: String(numerator / common), d: String(denominator / common) });
+        const common = gcd(initialNum, initialDen);
+        const finalN = initialNum / common;
+        const finalD = finalDen / common;
+
+        const w = finalN / finalD;
+        const rem = finalN % finalD;
+
+        const steps = [
+            `${dec} = ${dec} × ${multiplier} / ${multiplier} = ${initialNum}/${initialDen}`,
+            `GCD(${initialNum}, ${initialDen}) = ${common}`,
+            `${initialNum} ÷ ${common} / ${initialDen} ÷ ${common} = ${finalN}/${finalD}`
+        ];
+
+        setResult({ n: finalN, d: finalD, w, rem, steps });
       } catch (e: any) {
          toast({ variant: 'destructive', title: 'Error', description: 'Could not convert decimal.' });
       }
@@ -378,8 +393,33 @@ function DecimalToFraction() {
             <CardContent className="flex items-center justify-center gap-2">
                 <Input value={dec} onChange={e => setDec(e.target.value)} type="number" className="w-24" />
                 <Button onClick={calculate}>=</Button>
-                {result ? <FractionInput n={result.n} d={result.d} readOnly /> : <FractionInput n="?" d="?" readOnly />}
+                {result ? (
+                    <div className="flex items-center gap-2">
+                        <FractionInput n={String(result.n)} d={String(result.d)} readOnly />
+                         {result.w > 0 && result.rem !== 0n && (
+                            <>
+                                <span>=</span>
+                                <MixedNumberInput w={String(result.w)} n={String(result.rem)} d={String(result.d)} readOnly />
+                            </>
+                        )}
+                    </div>
+                ) : <FractionInput n="?" d="?" readOnly />}
             </CardContent>
+            {result && (
+                <CardFooter>
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                   {result.steps.map((step, i) => <p key={i}>{step}</p>)}
+                                   {result.w > 0 && result.rem !== 0n && <p>= {result.w} {result.rem}/{result.d}</p>}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </CardFooter>
+            )}
         </Card>
     )
 }
