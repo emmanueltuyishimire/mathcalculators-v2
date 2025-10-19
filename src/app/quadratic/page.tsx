@@ -2,7 +2,7 @@
 import { PageHeader } from '@/components/page-header';
 import QuadraticCalculator from '@/components/calculators/quadratic-calculator';
 import type { Metadata } from 'next';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
