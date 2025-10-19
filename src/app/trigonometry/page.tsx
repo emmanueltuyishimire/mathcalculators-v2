@@ -2,16 +2,15 @@
 "use client";
 
 import { PageHeader } from '@/components/page-header';
-import BasicTrigCalculator from '@/components/calculators/basic-trig-calculator';
+import BasicTrigCalculator from '@/components/calculators/trigonometry-calculator';
 import RightTriangleSolver from '@/components/calculators/right-triangle-solver';
 import ObliqueTriangleSolver from '@/components/calculators/oblique-triangle-solver';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-// This component must be a client component because it uses client-side hooks in its children (useState, useEffect, etc.)
-// As a result, static metadata export is not possible. SEO can be improved with client-side document.title updates if needed.
+import type { Metadata } from 'next';
+import { useEffect } from 'react';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -28,8 +27,13 @@ const pageSchema = {
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0"
+  "softwareVersion": "1.0.0",
+  "offers": {
+      "@type": "Offer",
+      "price": "0"
+  }
 };
+
 
 const HowToUseGuide = () => (
     <Card>
@@ -52,9 +56,8 @@ const HowToUseGuide = () => (
                             </TableHeader>
                             <TableBody>
                                 <TableRow><TableCell>🔹 Basic Trigonometric Functions</TableCell><TableCell>Compute sin, cos, tan, cot, sec, or csc for any angle.</TableCell></TableRow>
-                                <TableRow><TableCell>🔹 Inverse Trigonometric Functions</TableCell><TableCell>Find the angle from a given ratio using arcsin, arccos, or arctan.</TableCell></TableRow>
                                 <TableRow><TableCell>🔹 Right Triangle Solver</TableCell><TableCell>Find missing sides or angles of a right triangle using basic trig ratios.</TableCell></TableRow>
-                                <TableRow><TableCell>🔹 Non-Right Triangle Solver</TableCell><TableCell>Solve any triangle (Law of Sines and Law of Cosines).</TableCell></TableRow>
+                                <TableRow><TableCell>🔹 Oblique Triangle Solver</TableCell><TableCell>Solve any triangle (Law of Sines and Law of Cosines).</TableCell></TableRow>
                             </TableBody>
                         </Table>
                     </AccordionContent>
@@ -145,6 +148,11 @@ const FaqSection = () => (
 );
 
 export default function TrigonometryPage() {
+    
+  useEffect(() => {
+    document.title = 'Trigonometry Calculator Platform – Math Calculators';
+  }, []);
+
   return (
     <>
       <script

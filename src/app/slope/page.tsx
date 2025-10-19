@@ -1,10 +1,16 @@
-
 'use client';
 import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Slope Calculator',
+    description: 'A dynamic slope calculator that finds the slope, angle, distance, and line equation from two points, or finds a second point given a slope and distance.',
+};
+
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -13,11 +19,11 @@ const pageSchema = {
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
   "description": "A dynamic slope calculator that finds the slope, angle, distance, and line equation from two points, or finds a second point given a slope and distance.",
-  "url": "https://calculation.site/slope",
+  "url": "https://maths.calculation.site/slope",
   "publisher": {
     "@type": "Organization",
-    "name": "Calculation.site",
-    "url": "https://calculation.site"
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",

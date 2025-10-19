@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -45,6 +45,11 @@ export default function BasicTrigCalculator() {
       setResult(null);
     }
   };
+  
+  useEffect(() => {
+    calculateTrig();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [funcName, inputValue, unit]);
 
   return (
     <Card>

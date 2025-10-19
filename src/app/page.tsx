@@ -10,6 +10,7 @@ function HeroSection() {
   return (
     <section
       className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
+      aria-labelledby="hero-heading"
     >
        <Image
         src="/math%20calculator%20background%20image%201.webp"
@@ -19,7 +20,7 @@ function HeroSection() {
         className="object-cover"
         />
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
-        <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
+        <h1 id="hero-heading" className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
           Unlock the Power of Numbers
         </h1>
         <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
@@ -115,7 +116,7 @@ export default function Home() {
         <section id="tools" className="space-y-16">
             {calculatorCategories.map(category => (
                 <div key={category.title}>
-                    <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg">
+                    <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg" role="presentation">
                         <Image
                             src={category.image}
                             alt={`${category.title} category background`}
@@ -133,7 +134,7 @@ export default function Home() {
                             <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
                                 <CardHeader className="flex flex-col items-center text-center p-4">
                                 <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                                    <tool.icon className="h-6 w-6" />
+                                    <tool.icon className="h-6 w-6" aria-hidden="true" />
                                 </div>
                                 <CardTitle className="text-base">{tool.label}</CardTitle>
                                 </CardHeader>

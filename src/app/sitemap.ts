@@ -58,11 +58,11 @@ const staticRoutes = [
   '/statistics/z-score',
   '/terms-of-service',
   '/trigonometry',
-];
+].map(route => ({
+  url: `${URL}${route}`,
+  lastModified: new Date(),
+}));
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return staticRoutes.map((route) => ({
-    url: `${URL}${route}`,
-    lastModified: new Date(),
-  }));
+  return staticRoutes;
 }
