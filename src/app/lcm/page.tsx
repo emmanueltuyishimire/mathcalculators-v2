@@ -19,55 +19,55 @@ const EducationalContent = () => (
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
-                <h3 className="text-xl font-semibold text-foreground">What is the LCM?</h3>
+                <h3 className="text-xl font-semibold text-foreground">What is the Least Common Multiple (LCM)?</h3>
                 <p className="mt-2">
-                    The <strong>Least Common Multiple (LCM)</strong> of a set of integers is the smallest positive integer that is a multiple of every number in the set. For example, the LCM of 4 and 6 is 12, because 12 is the smallest positive number that is divisible by both 4 and 6.
+                    In mathematics, the least common multiple, also known as the lowest common multiple of two (or more) integers a and b, is the smallest positive integer that is divisible by both. It is commonly denoted as LCM(a, b).
                 </p>
             </div>
             
             <div>
                 <h3 className="text-xl font-semibold text-foreground">How to Find the LCM</h3>
-                <p className="mt-2">There are several methods to find the LCM. The calculator above uses the prime factorization method, which is very efficient for larger numbers.</p>
+                <p className="mt-2">There are multiple ways to find a least common multiple. Here are a few common methods:</p>
                 
-                <div className="mt-4 space-y-4">
-                    <h4 className="font-semibold text-foreground">Method 1: Listing Multiples (for small numbers)</h4>
-                     <ol className="list-decimal list-inside space-y-2">
-                        <li>List the multiples of each number.</li>
-                        <li>Find the first multiple that appears in all lists.</li>
-                    </ol>
-                    <p className="p-2 bg-muted rounded-md text-sm">
-                        <b>Example: Find the LCM of 4 and 6</b><br/>
-                        Multiples of 4: 4, 8, <b>12</b>, 16, 20, 24, ...<br/>
-                        Multiples of 6: 6, <b>12</b>, 18, 24, ...<br/>
-                        The first common multiple is <b>12</b>.
-                    </p>
+                <div className="mt-4 space-y-6">
+                    <div>
+                        <h4 className="font-semibold text-foreground">Brute Force Method</h4>
+                         <p className="mt-1">This basic method involves listing the multiples of each integer until you find the first common multiple.</p>
+                        <p className="p-2 bg-muted rounded-md text-sm mt-2">
+                            <b>Example: Find LCM(18, 26)</b><br/>
+                            18: 18, 36, 54, 72, 90, 108, 126, 144, 162, 180, 198, 216, <b>234</b>, ...<br/>
+                            26: 26, 52, 78, 104, 130, 156, 182, 208, <b>234</b>, ...<br/>
+                            As can be seen, this method can be fairly tedious, and is far from ideal.
+                        </p>
+                    </div>
 
-                    <h4 className="font-semibold text-foreground">Method 2: Prime Factorization (used by this calculator)</h4>
-                    <ol className="list-decimal list-inside space-y-2">
-                        <li>Find the prime factorization of each number.</li>
-                        <li>For each prime factor, find the highest power that appears in any of the factorizations.</li>
-                        <li>Multiply these highest powers together.</li>
-                    </ol>
-                     <p className="p-2 bg-muted rounded-md text-sm">
-                        <b>Example: Find the LCM of 12 and 18</b><br/>
-                        Prime factorization of 12: 2 × 2 = 2²<br/>
-                        Prime factorization of 18: 2 × 3 × 3 = 2 × 3²<br/>
-                        Highest power of 2 is 2². Highest power of 3 is 3².<br/>
-                        LCM = 2² × 3² = 4 × 9 = <b>36</b>.
-                    </p>
+                    <div>
+                        <h4 className="font-semibold text-foreground">Prime Factorization Method</h4>
+                        <p className="mt-1">A more systematic way to find the LCM is to use prime factorization. This involves breaking down each number into its product of prime numbers. The LCM is then determined by multiplying the highest power of each prime number together.</p>
+                         <p className="p-2 bg-muted rounded-md text-sm mt-2">
+                            <b>Example: Find LCM(21, 14, 38)</b><br/>
+                            Prime factorization of 21: 3 × 7<br/>
+                            Prime factorization of 14: 2 × 7<br/>
+                            Prime factorization of 38: 2 × 19<br/>
+                            The LCM is therefore: 3 × 7 × 2 × 19 = <b>798</b>.
+                        </p>
+                        <p className="mt-2 text-xs">Note that computing the LCM this way, while more efficient than using the "brute force" method, is still limited to smaller numbers.</p>
+                    </div>
 
-                    <h4 className="font-semibold text-foreground">Method 3: Using the GCF (Greatest Common Factor)</h4>
-                    <p>For two numbers, you can use the formula: <code className="font-mono bg-muted p-1 rounded-md">LCM(a, b) = (|a × b|) / GCF(a, b)</code>. To find the LCM of more than two numbers, you can apply this formula iteratively.</p>
+                    <div>
+                        <h4 className="font-semibold text-foreground">Greatest Common Divisor (GCD) Method</h4>
+                        <p className="mt-1">A third viable method for finding the LCM is using the greatest common divisor (also known as GCF). The procedure for finding the LCM of two numbers (a, b) is to divide their product by their GCF: <code className="font-mono text-xs bg-muted p-1 rounded-md">(a × b) / GCF(a, b)</code>.</p>
+                        <p className="mt-2">When finding the LCM of more than two numbers, you can apply this method iteratively. For example, for LCM(a, b, c), you would first find the LCM of a and b, let's call it q, and then find the LCM of q and c.</p>
+                         <p className="p-2 bg-muted rounded-md text-sm mt-2">
+                            <b>Example: Find LCM(21, 14, 38)</b><br/>
+                            First, find LCM(14, 38). GCF(14, 38) = 2.<br/>
+                            LCM(14, 38) = (14 × 38) / 2 = 266.<br/>
+                            Next, find LCM(21, 266). GCF(21, 266) = 7.<br/>
+                            LCM(21, 266) = (21 × 266) / 7 = <b>798</b>.
+                        </p>
+                        <p className="mt-2 text-xs">It is not important which LCM is calculated first as long as all numbers are used. Depending on the particular situation, each method has its own merits.</p>
+                    </div>
                 </div>
-            </div>
-
-             <div>
-                <h3 className="text-xl font-semibold text-foreground">Real-World Applications</h3>
-                <ul className="list-disc list-inside space-y-2 mt-2">
-                    <li><b>Fractions:</b> Finding a common denominator to add or subtract fractions (e.g., to add 1/4 + 1/6, the LCM of 4 and 6 is 12).</li>
-                    <li><b>Scheduling:</b> Solving problems where events repeat at different intervals. For example, if two events happen every 4 and 6 days respectively, they will occur on the same day every 12 days (the LCM).</li>
-                    <li><b>Puzzles and Games:</b> Many mathematical puzzles and number theory problems rely on understanding LCM and GCF.</li>
-                </ul>
             </div>
         </CardContent>
     </Card>
@@ -79,6 +79,14 @@ export default function LcmPage() {
       <PageHeader title="Least Common Multiple Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <div className="mx-auto max-w-2xl space-y-8">
+            <section className="text-center">
+                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                    Least Common Multiple Calculator
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                    Please provide numbers separated by a comma "," and click the "Calculate" button to find the LCM.
+                </p>
+            </section>
           <LcmCalculator />
           <EducationalContent />
           <section className="text-center">
