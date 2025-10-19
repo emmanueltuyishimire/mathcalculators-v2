@@ -88,7 +88,7 @@ const carouselSlides = [
     description: 'From basic arithmetic to advanced functions, solve any problem with ease.',
     link: '/scientific',
     buttonText: 'Get Started',
-    imageUrl: '/math calculator background image1.webp',
+    imageUrl: '/math%20calculator%20background%20image1.webp',
     dataAiHint: 'abstract science',
   },
   {
@@ -96,7 +96,7 @@ const carouselSlides = [
     description: 'Calculate area, volume, surface area and more for common geometric shapes.',
     link: '/geometry',
     buttonText: 'Explore Geometry',
-    imageUrl: '/math calculator background image2.webp',
+    imageUrl: '/math%20calculator%20background%20image2.webp',
     dataAiHint: 'geometric shapes',
   },
   {
@@ -104,7 +104,7 @@ const carouselSlides = [
     description: 'Analyze data with our tools for mean, median, mode, standard deviation, and more.',
     link: '/statistics',
     buttonText: 'Analyze Data',
-    imageUrl: '/math calculator background image3.webp',
+    imageUrl: '/math%20calculator%20background%20image3.webp',
     dataAiHint: 'data chart',
   },
    {
@@ -112,7 +112,7 @@ const carouselSlides = [
     description: 'Perform matrix operations like addition, multiplication, inverse, and transpose effortlessly.',
     link: '/matrix',
     buttonText: 'Open Matrix Calculator',
-    imageUrl: '/math calculator background image4.webp',
+    imageUrl: '/math%20calculator%20background%20image4.webp',
     dataAiHint: 'digital matrix',
   },
    {
@@ -120,7 +120,7 @@ const carouselSlides = [
     description: 'Add, subtract, multiply, and divide fractions with our simple and intuitive fraction calculator.',
     link: '/fraction',
     buttonText: 'Use Fraction Calculator',
-    imageUrl: '/math calculator background image5.webp',
+    imageUrl: '/math%20calculator%20background%20image5.webp',
     dataAiHint: 'mathematical fractions',
   },
   {
@@ -128,7 +128,7 @@ const carouselSlides = [
     description: 'Quickly find the missing side of any right-angled triangle using the Pythagorean theorem.',
     link: '/pythagorean',
     buttonText: 'Solve Triangles',
-    imageUrl: '/math calculator background image6.webp',
+    imageUrl: '/math%20calculator%20background%20image6.webp',
     dataAiHint: 'triangle geometry',
   },
   {
@@ -136,7 +136,7 @@ const carouselSlides = [
     description: 'Seamlessly convert between various units of length, mass, temperature, and more.',
     link: '/converter',
     buttonText: 'Open Converter',
-    imageUrl: '/math calculator background image7.webp',
+    imageUrl: '/math%20calculator%20background%20image7.webp',
     dataAiHint: 'measurement units',
   },
   {
@@ -144,7 +144,7 @@ const carouselSlides = [
     description: 'Our percentage calculator helps you with all your percentage-related calculations effortlessly.',
     link: '/percentage',
     buttonText: 'Calculate Percentages',
-    imageUrl: '/math calculator background image8.webp',
+    imageUrl: '/math%20calculator%20background%20image8.webp',
     dataAiHint: 'percentage sign',
   },
   {
@@ -152,7 +152,7 @@ const carouselSlides = [
     description: 'Explore the world of numerology and gain insights into your personality and life path.',
     link: '/destiny-matrix',
     buttonText: 'Discover Your Matrix',
-    imageUrl: '/math calculator background image9.webp',
+    imageUrl: '/math%20calculator%20background%20image9.webp',
     dataAiHint: 'mystical symbols',
   },
   {
@@ -160,7 +160,7 @@ const carouselSlides = [
     description: 'Solve trigonometric equations with functions like sine, cosine, and tangent.',
     link: '/trigonometry',
     buttonText: 'Use Trig Calculator',
-    imageUrl: '/math calculator background image10.webp',
+    imageUrl: '/math%20calculator%20background%20image10.webp',
     dataAiHint: 'trigonometry waves',
   },
   {
@@ -168,7 +168,7 @@ const carouselSlides = [
     description: 'Solve linear equations and algebraic expressions with our intuitive calculator.',
     link: '/algebra',
     buttonText: 'Solve Algebra',
-    imageUrl: '/math calculator background image11.webp',
+    imageUrl: '/math%20calculator%20background%20image11.webp',
     dataAiHint: 'algebra equations',
   },
   {
@@ -176,7 +176,7 @@ const carouselSlides = [
     description: 'Find derivatives, integrals, and limits for complex functions in seconds.',
     link: '/calculus',
     buttonText: 'Try Calculus Tools',
-    imageUrl: '/math calculator background image12.webp',
+    imageUrl: '/math%20calculator%20background%20image12.webp',
     dataAiHint: 'calculus graph',
   },
 ];
