@@ -21,7 +21,7 @@ const basicTools = [
   { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
   { href: '/log', label: 'Log Calculator', icon: Calculator },
   { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
-  { href: '#', label: 'Root Calculator', icon: Radical },
+  { href: '/root', label: 'Root Calculator', icon: Radical },
   { href: '#', label: 'Least Common Multiple', icon: Gavel },
   { href: '#', label: 'Greatest Common Factor', icon: Hand },
   { href: '#', label: 'Factor Calculator', icon: Gavel },
