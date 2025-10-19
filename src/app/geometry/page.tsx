@@ -1,7 +1,7 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Square, Waves, Volume } from 'lucide-react';
+import { Square, Waves, Volume, Circle } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -21,6 +21,12 @@ const geometryTools = [
     label: 'Area Calculator',
     icon: Square,
     description: 'Calculate the area of common 2D shapes.',
+  },
+  {
+    href: '/geometry/circle',
+    label: 'Circle Calculator',
+    icon: Circle,
+    description: 'Calculate radius, diameter, circumference, and area.',
   },
   {
     href: '#', // Placeholder for Surface Area Calculator
