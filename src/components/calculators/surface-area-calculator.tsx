@@ -419,7 +419,14 @@ const calculators: SurfaceAreaCalculatorProps[] = [
             const base = a * a;
             const slantHeight = Math.sqrt(h*h + (a/2)*(a/2));
             const lateral = 2 * a * slantHeight;
-            return { Base: base, Lateral: lateral, Total: base + lateral };
+            return {
+                final: { Base: base, Lateral: lateral, Total: base + lateral },
+                 steps: {
+                    base: { formula: 'a² = {a}²' },
+                    lateral: { formula: '2×a×√((a/2)² + h²) = 2×{a}×√(({a}/2)² + {h}²)' },
+                    total: {}
+                }
+            };
         },
     },
     {
