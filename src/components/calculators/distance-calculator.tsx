@@ -299,9 +299,11 @@ const LatLongCalculator = () => {
                  <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {distance && (
-                <CardFooter className="flex-col items-start gap-1">
-                    <p className="font-mono">Distance: {distance.km.toFixed(2)} km</p>
-                    <p className="font-mono">Distance: {distance.miles.toFixed(2)} miles</p>
+                <CardFooter>
+                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <p className="font-mono text-sm">The distance between [{p1.lat}, {p1.lon}] and [{p2.lat}, {p2.lon}] is:</p>
+                        <p className="font-mono text-lg mt-2"><b>{distance.km.toFixed(1)} km</b> or <b>{distance.miles.toFixed(1)} miles</b></p>
+                    </div>
                 </CardFooter>
             )}
         </Card>
