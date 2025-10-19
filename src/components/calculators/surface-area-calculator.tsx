@@ -46,8 +46,10 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
     );
     const [results, setResults] = useState<{ [key: string]: string }>({});
     const [unit, setUnit] = useState<Unit>('Meter');
+    const [steps, setSteps] = useState<string[]>([]);
 
     const handleCalculate = () => {
+        setSteps([]);
         const conversionFactor = lengthUnits[unit];
         try {
             const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
@@ -68,18 +70,29 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                 }
             }
 
-
             const calcResults = calculate(parsedInputs);
             const finalResults: { [key: string]: string } = {};
 
-            for (const key in calcResults) {
-                const resultVal = calcResults[key];
-                 if (typeof resultVal === 'number') {
-                    finalResults[key] = (resultVal / Math.pow(conversionFactor, 2)).toFixed(4);
-                } else {
-                    finalResults[key] = resultVal;
+            if (shape === 'Sphere' && 'Total' in calcResults && 'steps' in calcResults) {
+                const { r: originalR } = Object.entries(inputValues).reduce((acc, [key, value]) => ({...acc, [key]: value}), {} as {[key:string]: string});
+                setSteps([
+                    `4πr²`,
+                    `4 × π × ${originalR}²`,
+                    `${4 * parseFloat(originalR)**2}π`,
+                    (calcResults['Total'] as number / Math.pow(conversionFactor, 2)).toFixed(10),
+                ]);
+                finalResults['Total'] = (calcResults['Total'] as number / Math.pow(conversionFactor, 2)).toFixed(4);
+            } else {
+                 for (const key in calcResults) {
+                    const resultVal = calcResults[key];
+                    if (typeof resultVal === 'number') {
+                        finalResults[key] = (resultVal / Math.pow(conversionFactor, 2)).toFixed(4);
+                    } else {
+                        finalResults[key] = resultVal;
+                    }
                 }
             }
+
 
             setResults(finalResults);
         } catch (e: any) {
@@ -124,7 +137,14 @@ const CalculatorCard: React.FC<SurfaceAreaCalculatorProps> = ({ shape, inputs, c
                         </div>
                     ))}
                     <Button onClick={handleCalculate} className="w-full">Calculate</Button>
-                    {Object.keys(results).length > 0 && (
+                    {steps.length > 0 ? (
+                         <div className="pt-2 space-y-2">
+                            <Label>Calculation Steps</Label>
+                            <div className="font-mono text-base p-3 bg-muted rounded-md space-y-1">
+                                {steps.map((step, i) => <p key={i}>= {step} {i === steps.length - 1 ? `${unitAbbreviations[unit]}²` : ''}</p>)}
+                            </div>
+                        </div>
+                    ) : Object.keys(results).length > 0 && (
                         <div className="pt-2 space-y-2">
                             <Label>Surface Area Results</Label>
                             {Object.entries(results).map(([key, value]) => (
