@@ -26,6 +26,17 @@ const lengthUnits = {
     Yard: 0.9144,
 };
 
+const unitAbbreviations: { [key: string]: string } = {
+    Meter: 'm',
+    Centimeter: 'cm',
+    Decimeter: 'dm',
+    Millimeter: 'mm',
+    Kilometer: 'km',
+    Foot: 'ft',
+    Inch: 'in',
+    Yard: 'yd',
+};
+
 type Unit = keyof typeof lengthUnits;
 
 const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calculate }) => {
@@ -122,7 +133,7 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                         <div className="pt-2">
                             <Label>Volume</Label>
                              <div className="font-mono text-lg p-2 bg-muted rounded-md text-center">
-                                {volume} {unit}³
+                                {volume} {unitAbbreviations[unit]}³
                             </div>
                         </div>
                     )}
@@ -163,8 +174,8 @@ const calculators: VolumeCalculatorProps[] = [
     },
     {
         shape: 'Capsule',
-        inputs: [{ name: 'r', label: 'Base Radius (r)' }, { name: 'h', label: 'Height (h)' }],
-        calculate: ({ r, h }) => Math.PI * Math.pow(r, 2) * h + (4/3) * Math.PI * Math.pow(r, 3),
+        inputs: [{ name: 'r', label: 'Radius (r)' }, { name: 'h', label: 'Cylinder Height (h)' }],
+        calculate: ({ r, h }) => (Math.PI * Math.pow(r, 2) * h) + ((4/3) * Math.PI * Math.pow(r, 3)),
     },
     {
         shape: 'Spherical Cap',
