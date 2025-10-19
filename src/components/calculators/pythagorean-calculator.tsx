@@ -8,18 +8,46 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { PythagoreanDiagram } from '../pythagorean-diagram';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+interface CalculationResult {
+    a: number;
+    b: number;
+    c: number;
+    angleA: { deg: number; dms: string; rad: number; };
+    angleB: { deg: number; dms: string; rad: number; };
+    area: number;
+    perimeter: number;
+    h: number;
+    steps: string;
+}
 
 export default function PythagoreanCalculator() {
     const { toast } = useToast();
     const [a, setA] = useState('3');
     const [b, setB] = useState('4');
     const [c, setC] = useState('');
-    const [calculationSteps, setCalculationSteps] = useState('');
+    const [result, setResult] = useState<CalculationResult | null>(null);
+
+    const degToDMS = (deg: number) => {
+        let d = Math.floor(deg);
+        let min = Math.floor((deg - d) * 60);
+        let sec = Math.round(((deg - d) * 60 - min) * 60);
+        if (sec === 60) {
+            min++;
+            sec = 0;
+        }
+        if (min === 60) {
+            d++;
+            min = 0;
+        }
+        return `${d}°${min}'${sec}"`;
+    };
 
     const calculate = () => {
-        const valA = a ? parseFloat(a) : NaN;
-        const valB = b ? parseFloat(b) : NaN;
-        const valC = c ? parseFloat(c) : NaN;
+        let valA = a ? parseFloat(a) : NaN;
+        let valB = b ? parseFloat(b) : NaN;
+        let valC = c ? parseFloat(c) : NaN;
 
         const providedValues = [!isNaN(valA), !isNaN(valB), !isNaN(valC)].filter(Boolean).length;
 
@@ -29,44 +57,58 @@ export default function PythagoreanCalculator() {
                 title: 'Invalid Input',
                 description: 'Please provide exactly two values to calculate the third.',
             });
-            setCalculationSteps('');
+            setResult(null);
             return;
         }
 
         let steps = '';
         try {
-            if (!isNaN(valA) && !isNaN(valB)) {
-                // Calculate c
+            if (isNaN(valC)) { // Calculate c
                 if (valA <= 0 || valB <= 0) throw new Error("Sides 'a' and 'b' must be positive.");
                 const cSquared = valA**2 + valB**2;
-                const resultC = Math.sqrt(cSquared);
-                setC(resultC.toFixed(4));
-                steps = `c = √(a² + b²) = √(${valA}² + ${valB}²) = √(${valA**2} + ${valB**2}) = √${cSquared.toFixed(4)} = ${resultC.toFixed(4)}`;
-            } else if (!isNaN(valA) && !isNaN(valC)) {
-                // Calculate b
-                if (valA <= 0 || valC <= 0) throw new Error("Sides 'a' and 'c' must be positive.");
-                if (valC <= valA) throw new Error("Side 'c' (hypotenuse) must be greater than side 'a'.");
-                const bSquared = valC**2 - valA**2;
-                const resultB = Math.sqrt(bSquared);
-                setB(resultB.toFixed(4));
-                 steps = `b = √(c² - a²) = √(${valC}² - ${valA}²) = √(${valC**2} - ${valA**2}) = √${bSquared.toFixed(4)} = ${resultB.toFixed(4)}`;
-            } else if (!isNaN(valB) && !isNaN(valC)) {
-                // Calculate a
+                valC = Math.sqrt(cSquared);
+                setC(valC.toFixed(4));
+                steps = `c = √(a² + b²) = √(${valA}² + ${valB}²) = √(${valA**2} + ${valB**2}) = √${cSquared.toFixed(4)} = ${valC.toFixed(4)}`;
+            } else if (isNaN(valA)) { // Calculate a
                 if (valB <= 0 || valC <= 0) throw new Error("Sides 'b' and 'c' must be positive.");
                 if (valC <= valB) throw new Error("Side 'c' (hypotenuse) must be greater than side 'b'.");
                 const aSquared = valC**2 - valB**2;
-                const resultA = Math.sqrt(aSquared);
-                setA(resultA.toFixed(4));
-                 steps = `a = √(c² - b²) = √(${valC}² - ${valB}²) = √(${valC**2} - ${valB**2}) = √${aSquared.toFixed(4)} = ${resultA.toFixed(4)}`;
+                valA = Math.sqrt(aSquared);
+                setA(valA.toFixed(4));
+                steps = `a = √(c² - b²) = √(${valC}² - ${valB}²) = √(${valC**2} - ${valB**2}) = √${aSquared.toFixed(4)} = ${valA.toFixed(4)}`;
+            } else { // Calculate b
+                if (valA <= 0 || valC <= 0) throw new Error("Sides 'a' and 'c' must be positive.");
+                if (valC <= valA) throw new Error("Side 'c' (hypotenuse) must be greater than side 'a'.");
+                const bSquared = valC**2 - valA**2;
+                valB = Math.sqrt(bSquared);
+                setB(valB.toFixed(4));
+                steps = `b = √(c² - a²) = √(${valC}² - ${valA}²) = √(${valC**2} - ${valA**2}) = √${bSquared.toFixed(4)} = ${valB.toFixed(4)}`;
             }
-             setCalculationSteps(steps);
+
+            const area = (valA * valB) / 2;
+            const perimeter = valA + valB + valC;
+            const h = (valA * valB) / valC;
+            
+            const angleARad = Math.asin(valA / valC);
+            const angleADeg = angleARad * (180 / Math.PI);
+            
+            const angleBRad = Math.asin(valB / valC);
+            const angleBDeg = angleBRad * (180 / Math.PI);
+
+            setResult({
+                a: valA, b: valB, c: valC,
+                angleA: { deg: angleADeg, dms: degToDMS(angleADeg), rad: angleARad },
+                angleB: { deg: angleBDeg, dms: degToDMS(angleBDeg), rad: angleBRad },
+                area, perimeter, h, steps
+            });
+
         } catch(e: any) {
             toast({
                 variant: 'destructive',
                 title: 'Calculation Error',
                 description: e.message
             });
-            setCalculationSteps('');
+            setResult(null);
         }
     };
     
@@ -74,7 +116,7 @@ export default function PythagoreanCalculator() {
       setA('');
       setB('');
       setC('');
-      setCalculationSteps('');
+      setResult(null);
     }
 
     return (
@@ -108,12 +150,32 @@ export default function PythagoreanCalculator() {
                     </div>
                 </div>
             </CardContent>
-            {calculationSteps && (
-                <CardFooter>
+            {result && (
+                <CardFooter className="flex-col items-start space-y-4">
                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                        <h4 className="font-semibold mb-2">Calculation Steps</h4>
-                        <p className="font-mono text-sm break-words">{calculationSteps}</p>
+                        <h4 className="font-semibold mb-2">Results</h4>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-mono">
+                            <div><span className="text-muted-foreground">∠α =</span> {result.angleA.deg.toFixed(4)}°</div>
+                            <div><span className="text-muted-foreground">∠β =</span> {result.angleB.deg.toFixed(4)}°</div>
+                            <div><span className="text-muted-foreground"></span> {result.angleA.dms}</div>
+                            <div><span className="text-muted-foreground"></span> {result.angleB.dms}</div>
+                            <div><span className="text-muted-foreground"></span> {result.angleA.rad.toFixed(4)} rad</div>
+                            <div><span className="text-muted-foreground"></span> {result.angleB.rad.toFixed(4)} rad</div>
+                            <div className="col-span-2 mt-2 pt-2 border-t"><span className="text-muted-foreground">Area =</span> {result.area.toFixed(4)}</div>
+                            <div><span className="text-muted-foreground">Perimeter =</span> {result.perimeter.toFixed(4)}</div>
+                            <div><span className="text-muted-foreground">Altitude h =</span> {result.h.toFixed(4)}</div>
+                        </div>
                     </div>
+                     <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words">
+                                    {result.steps}
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
                 </CardFooter>
             )}
         </Card>
