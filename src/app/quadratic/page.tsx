@@ -2,9 +2,10 @@
 import { PageHeader } from '@/components/page-header';
 import QuadraticCalculator from '@/components/calculators/quadratic-calculator';
 import type { Metadata } from 'next';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { Separator } from '@/components/ui/separator';
 
 export const metadata: Metadata = {
     title: 'Quadratic Formula Calculator',
@@ -21,8 +22,10 @@ const EducationalContent = () => (
                 <h3 className="text-xl font-semibold text-foreground">What is a Quadratic Equation?</h3>
                 <p className="mt-2">A quadratic equation is a second-degree polynomial equation in a single variable x, with the general form:</p>
                 <p className="font-mono bg-muted p-4 rounded-md text-center text-lg my-2">ax² + bx + c = 0</p>
-                <p>Here, 'a', 'b', and 'c' are coefficients, where 'a' cannot be zero. The solutions to this equation are called its roots.</p>
+                <p>Here, 'a', 'b', and 'c' are coefficients representing known numbers. The coefficient 'a' cannot be zero; otherwise, the equation becomes linear. The solutions to this equation, known as its roots, represent the x-values where the corresponding parabola intersects the x-axis.</p>
             </div>
+
+            <Separator />
 
             <div>
                 <h3 className="text-xl font-semibold text-foreground">The Quadratic Formula</h3>
@@ -36,13 +39,32 @@ const EducationalContent = () => (
                 </ul>
             </div>
             
+            <Separator />
+
             <div>
-                 <h3 className="text-xl font-semibold text-foreground">How to Use the Calculator</h3>
-                <ol className="list-decimal list-inside mt-2 space-y-2">
-                    <li><b>Enter Coefficients:</b> Input the values for a, b, and c into their respective fields.</li>
-                    <li><b>Calculate:</b> Click the "Calculate" button to see the roots.</li>
-                    <li><b>View Steps:</b> The calculator will display the roots and a step-by-step breakdown of how they were found using the quadratic formula.</li>
+                 <h3 className="text-xl font-semibold text-foreground">Derivation of the Formula</h3>
+                <p className="mt-2">The quadratic formula is derived by a method called "completing the square." Here’s a summary of the steps:</p>
+                <ol className="list-decimal list-inside space-y-2 mt-2 font-mono text-sm bg-muted p-4 rounded-md">
+                    <li>Start with the standard form: `ax² + bx + c = 0`</li>
+                    <li>Divide by `a`: `x² + (b/a)x + c/a = 0`</li>
+                    <li>Move `c/a` to the other side: `x² + (b/a)x = -c/a`</li>
+                    <li>Complete the square on the left side by adding `(b/2a)²` to both sides: `x² + (b/a)x + (b/2a)² = -c/a + (b/2a)²`</li>
+                    <li>Factor the left side and simplify the right: `(x + b/2a)² = (b² - 4ac) / 4a²`</li>
+                    <li>Take the square root of both sides: `x + b/2a = ±√(b² - 4ac) / 2a`</li>
+                    <li>Isolate `x` to get the final formula: `x = (-b ± √(b² - 4ac)) / 2a`</li>
                 </ol>
+            </div>
+            
+            <Separator />
+
+             <div>
+                <h3 className="text-xl font-semibold text-foreground">Real-World Applications</h3>
+                <p className="mt-2">Quadratic equations are used in many real-world scenarios, such as:</p>
+                <ul className="list-disc list-inside pl-4 mt-2 space-y-1">
+                    <li><b>Physics:</b> Calculating the trajectory of a projectile.</li>
+                    <li><b>Engineering:</b> Designing curved structures like bridges or antennas.</li>
+                    <li><b>Finance:</b> Modeling profit and loss scenarios.</li>
+                </ul>
             </div>
         </CardContent>
     </Card>
