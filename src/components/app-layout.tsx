@@ -85,6 +85,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         <Link
           href="/"
           className="flex items-center gap-2 text-lg font-semibold mr-4"
+          aria-label="Math Calculators Home"
         >
           <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
           <span className="sr-only sm:not-sr-only">Math Calculators</span>
@@ -94,10 +95,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                 {navItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
-                    <NavigationMenuLink asChild active={pathname.startsWith(item.href)}>
-                      <Link href={item.href} className={navigationMenuTriggerStyle()}>
-                          {item.label}
-                      </Link>
+                     <NavigationMenuLink asChild active={pathname.startsWith(item.href)}>
+                        <Link href={item.href} className={navigationMenuTriggerStyle()}>
+                            {item.label}
+                        </Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 ))}

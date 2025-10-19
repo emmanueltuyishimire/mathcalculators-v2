@@ -138,7 +138,7 @@ function BasicFractionCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [op]);
+    }, []);
 
     return (
         <Card>
@@ -146,7 +146,7 @@ function BasicFractionCalculator() {
                 <div className="flex flex-wrap items-center justify-center gap-2">
                     <FractionInput n={f1.n} d={f1.d} onNChange={v => setF1({...f1, n: v})} onDChange={v => setF1({...f1, d: v})} />
                     <Select value={op} onValueChange={setOp}>
-                        <SelectTrigger className="w-[60px]"><SelectValue /></SelectTrigger>
+                        <SelectTrigger className="w-[60px]" aria-label="Select operation"><SelectValue /></SelectTrigger>
                         <SelectContent>
                             <SelectItem value="+">+</SelectItem>
                             <SelectItem value="-">-</SelectItem>
@@ -307,7 +307,7 @@ function MixedNumbersCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [op]);
+    }, []);
 
      return (
         <Card>
@@ -316,7 +316,7 @@ function MixedNumbersCalculator() {
             </CardHeader>
             <CardContent className="flex flex-wrap items-center justify-center gap-2">
                 <MixedNumberInput w={m1.w} n={m1.n} d={m1.d} onWChange={v=>setM1({...m1,w:v})} onNChange={v=>setM1({...m1,n:v})} onDChange={v=>setM1({...m1,d:v})}/>
-                <Select value={op} onValueChange={setOp}><SelectTrigger className="w-[60px]"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="+">+</SelectItem><SelectItem value="-">-</SelectItem><SelectItem value="×">×</SelectItem><SelectItem value="÷">÷</SelectItem></SelectContent></Select>
+                <Select value={op} onValueChange={setOp}><SelectTrigger className="w-[60px]" aria-label="Select mixed number operation"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="+">+</SelectItem><SelectItem value="-">-</SelectItem><SelectItem value="×">×</SelectItem><SelectItem value="÷">÷</SelectItem></SelectContent></Select>
                 <MixedNumberInput w={m2.w} n={m2.n} d={m2.d} onWChange={v=>setM2({...m2,w:v})} onNChange={v=>setM2({...m2,n:v})} onDChange={v=>setM2({...m2,d:v})}/>
                 <Button onClick={calculate}>=</Button>
                 {result ? <MixedNumberInput w={String(result.w)} n={String(result.n)} d={String(result.d)} readOnly /> : <MixedNumberInput w="?" n="?" d="?" readOnly />}
@@ -517,7 +517,7 @@ function FractionToDecimal() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [frac]);
+    }, []);
 
     return (
         <Card>
@@ -575,7 +575,7 @@ function BigNumberFractionCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [op]);
+    }, []);
 
     return (
         <Card>
@@ -586,7 +586,7 @@ function BigNumberFractionCalculator() {
             <CardContent className="flex flex-wrap items-center justify-center gap-2">
                 <FractionInput n={f1.n} d={f1.d} onNChange={v=>setF1({...f1,n:v})} onDChange={v=>setF1({...f1,d:v})} wide />
                 <Select value={op} onValueChange={setOp}>
-                  <SelectTrigger className="w-[60px]"><SelectValue /></SelectTrigger>
+                  <SelectTrigger className="w-[60px]" aria-label="Select big number operation"><SelectValue /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="+">+</SelectItem>
                     <SelectItem value="-">-</SelectItem>

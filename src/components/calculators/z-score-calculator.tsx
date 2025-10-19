@@ -41,7 +41,7 @@ function ZScoreFormulaCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [rawScore, mean, stdDev]);
 
     return (
         <Card>

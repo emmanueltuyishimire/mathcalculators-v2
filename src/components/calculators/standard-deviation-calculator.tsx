@@ -114,6 +114,7 @@ export default function StandardDeviationCalculator() {
   
   useEffect(() => {
     calculate();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, type]);
   
   const stats = calculatedStats;
@@ -139,7 +140,7 @@ export default function StandardDeviationCalculator() {
         <div className="space-y-2">
             <Label htmlFor="type">It is a</Label>
             <Select value={type} onValueChange={(val) => setType(val as 'population' | 'sample')}>
-                <SelectTrigger id="type" className="w-[180px]">
+                <SelectTrigger id="type" className="w-[180px]" aria-label="Select data type">
                     <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>

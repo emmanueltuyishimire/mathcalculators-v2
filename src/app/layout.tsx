@@ -11,11 +11,27 @@ import { FirebaseClientProvider } from '@/firebase';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://maths.calculation.site'),
   title: {
-    default: 'Math Calculators',
+    default: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
     template: '%s – Math Calculators',
   },
   description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
+  openGraph: {
+    title: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
+    description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
+    images: ['/math%20calculator%20background%20image%201.webp'],
+    url: 'https://maths.calculation.site',
+    siteName: 'Math Calculators',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
+    description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
+    images: ['/math%20calculator%20background%20image%201.webp'],
+  },
 };
 
 export default function RootLayout({

@@ -1,34 +1,10 @@
+
 'use client';
 import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-    title: 'Slope Calculator',
-    description: 'A dynamic slope calculator that finds the slope, angle, distance, and line equation from two points, or finds a second point given a slope and distance.',
-};
-
-
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Slope Calculator",
-  "operatingSystem": "All",
-  "applicationCategory": "EducationalApplication",
-  "description": "A dynamic slope calculator that finds the slope, angle, distance, and line equation from two points, or finds a second point given a slope and distance.",
-  "url": "https://maths.calculation.site/slope",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  },
-  "inLanguage": "en",
-  "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0"
-};
 
 function HowToUseGuide() {
     return (
@@ -137,10 +113,6 @@ const FaqSection = () => (
 export default function SlopePage() {
   return (
     <>
-      <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Slope Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">

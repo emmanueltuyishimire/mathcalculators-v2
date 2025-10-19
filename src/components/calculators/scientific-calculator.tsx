@@ -1,11 +1,12 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 // Helper for factorial
 const factorial = (n: number): number => {
@@ -25,6 +26,22 @@ export default function ScientificCalculator() {
   const [memory, setMemory] = useState(0);
   const [show2nd, setShow2nd] = useState(false);
   const { toast } = useToast();
+
+   useEffect(() => {
+    // This is a client component, so we can safely run this effect
+    // to perform an initial calculation for the default expression.
+    if (displayValue === '0') {
+      setDisplayValue('log_2(8)');
+      // Note: handleEquals will be called in the next render cycle due to state update
+    }
+  }, []);
+
+  useEffect(() => {
+    if (displayValue === 'log_2(8)' && !isResult) {
+      handleEquals();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayValue]);
 
   const handleButtonClick = (value: string) => {
     if (isResult) {
@@ -102,6 +119,7 @@ export default function ScientificCalculator() {
       .replace(/tanh\(/g, 'Math.tanh(')
       .replace(/log\(/g, 'Math.log10(')
       .replace(/ln\(/g, 'Math.log(')
+      .replace(/log_(\d+)\((.*?)\)/g, '(Math.log($2)/Math.log($1))')
       .replace(/(\d+)!/g, (match, n) => `factorial(${n})`)
     );
 

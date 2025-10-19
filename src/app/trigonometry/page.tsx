@@ -9,31 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { Metadata } from 'next';
-import { useEffect } from 'react';
-
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Trigonometry Calculator Platform",
-  "operatingSystem": "All",
-  "applicationCategory": "EducationalApplication",
-  "description": "A free online platform for trigonometric functions (sin, cos, tan), right triangle solvers, and non-right triangle solvers using the Law of Sines and Cosines.",
-  "url": "https://maths.calculation.site/trigonometry",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  },
-  "inLanguage": "en",
-  "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0",
-  "offers": {
-      "@type": "Offer",
-      "price": "0"
-  }
-};
-
 
 const HowToUseGuide = () => (
     <Card>
@@ -148,17 +123,8 @@ const FaqSection = () => (
 );
 
 export default function TrigonometryPage() {
-    
-  useEffect(() => {
-    document.title = 'Trigonometry Calculator Platform – Math Calculators';
-  }, []);
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Trigonometry Platform" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">

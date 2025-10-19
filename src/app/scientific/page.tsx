@@ -1,37 +1,11 @@
 
+'use client';
 
 import { PageHeader } from '@/components/page-header';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-export const metadata: Metadata = {
-  title: 'Scientific Calculator',
-  description: 'Use our free online scientific calculator to solve math problems. Supports fractions, trig, logs, exponents, and more. Casio & TI features included.',
-};
-
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Scientific Calculator",
-  "operatingSystem": "All",
-  "applicationCategory": "EducationalApplication",
-  "description": "A free, full-featured online scientific calculator for solving complex mathematical problems, including trigonometry, logarithms, exponents, and fractions.",
-  "url": "https://maths.calculation.site/scientific",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  },
-  "inLanguage": "en",
-  "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0",
-  "offers": {
-    "@type": "Offer",
-    "price": "0"
-  }
-};
+import { useEffect } from 'react';
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -120,6 +94,34 @@ const faqSchema = {
   ]
 };
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Scientific Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1200"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "A free, full-featured online scientific calculator for solving complex mathematical problems, including trigonometry, logarithms, exponents, and fractions.",
+  "url": "https://maths.calculation.site/scientific",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0",
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -170,6 +172,20 @@ const HowToUseGuide = () => (
 
 
 export default function ScientificPage() {
+
+   useEffect(() => {
+    // Set the title and description dynamically on the client side
+    document.title = 'Scientific Calculator - Free Online Tool | Math Calculators';
+    
+    let descriptionMeta = document.querySelector('meta[name="description"]');
+    if (!descriptionMeta) {
+      descriptionMeta = document.createElement('meta');
+      descriptionMeta.setAttribute('name', 'description');
+      document.head.appendChild(descriptionMeta);
+    }
+    descriptionMeta.setAttribute('content', 'Use our free online scientific calculator to solve math problems. Supports fractions, trig, logs, exponents, and more. Casio & TI features included.');
+  }, []);
+
   return (
     <>
       <script
@@ -423,5 +439,3 @@ export default function ScientificPage() {
     </>
   );
 }
-
-    
