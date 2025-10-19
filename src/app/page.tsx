@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -95,28 +94,31 @@ function Slideshow() {
   }, [slideIndex]);
 
   return (
-    <div className="slideshow-container">
+    <section 
+      className="slideshow-container"
+    >
       {carouselSlides.map((slide, index) => (
         <div
           key={index}
           className="mySlides fade"
           style={{ display: index === slideIndex ? 'block' : 'none' }}
         >
-          <img src={slide.imageUrl.replace(/ /g, '%20')} style={{ width: '100%', height: '60vh', objectFit: 'cover' }} alt={slide.title} data-ai-hint={slide.dataAiHint} />
-           <div className="absolute inset-0 bg-black/50" />
-           <div className="container relative z-10 flex h-full flex-col items-center justify-center space-y-4 text-center text-primary-foreground">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                {slide.title}
-              </h1>
-              <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-                {slide.description}
-              </p>
-               <Button asChild variant="secondary" size="lg">
-                <Link href="#tools">Explore Tools</Link>
-              </Button>
-            </div>
+          <img src={slide.imageUrl.replace(/ /g, '%20')} alt={slide.title} data-ai-hint={slide.dataAiHint} />
         </div>
       ))}
+      
+      <div className="hero-text-overlay">
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+            {carouselSlides[slideIndex].title}
+          </h1>
+          <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
+            {carouselSlides[slideIndex].description}
+          </p>
+           <Button asChild variant="secondary" size="lg">
+            <Link href="#tools">Explore Tools</Link>
+          </Button>
+      </div>
+
       <div style={{ textAlign: 'center', position: 'absolute', bottom: '20px', width: '100%' }}>
         {carouselSlides.map((_, index) => (
           <span
@@ -126,7 +128,7 @@ function Slideshow() {
           ></span>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -151,11 +153,7 @@ const tools = [
 export default function Home() {
   return (
     <>
-      <section 
-        className="relative w-full h-[60vh] min-h-[400px] bg-gray-900"
-      >
-        <Slideshow />
-      </section>
+      <Slideshow />
 
       <main className="flex-1 p-4 md:p-6">
         <section id="tools" className="py-12">
