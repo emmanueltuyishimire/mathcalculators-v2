@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle } from 'lucide-react';
-import Image from 'next/image';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 const tools = [
@@ -87,15 +86,11 @@ const tools = [
 export default function Home() {
   return (
     <>
-      <section className="relative w-full h-[60vh] min-h-[400px]">
-        <Image
-          src="/math-calculator-background-image2.webp"
-          alt="Geometric shapes background"
-          fill
-          style={{ objectFit: 'cover' }}
-          priority
-          data-ai-hint="geometric shapes"
-        />
+      <section 
+        className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
+        style={{ backgroundImage: "url('/math-calculator-background-image2.webp')" }}
+        data-ai-hint="geometric shapes"
+      >
         <div className="absolute inset-0 bg-black/50" />
         <div className="container relative z-10 flex h-full flex-col items-center justify-center space-y-4 text-center text-primary-foreground">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
