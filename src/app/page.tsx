@@ -115,6 +115,30 @@ const carouselSlides = [
     imageUrl: '/math calculator background image4.webp',
     dataAiHint: 'digital matrix',
   },
+  {
+    title: 'Explore Trigonometry',
+    description: 'Solve trigonometric equations with functions like sine, cosine, and tangent.',
+    link: '/trigonometry',
+    buttonText: 'Use Trig Calculator',
+    imageUrl: '/math calculator background image10.webp',
+    dataAiHint: 'trigonometry waves',
+  },
+  {
+    title: 'Simplify Algebra',
+    description: 'Solve linear equations and algebraic expressions with our intuitive calculator.',
+    link: '/algebra',
+    buttonText: 'Solve Algebra',
+    imageUrl: '/math calculator background image11.webp',
+    dataAiHint: 'algebra equations',
+  },
+  {
+    title: 'Conquer Calculus',
+    description: 'Find derivatives, integrals, and limits for complex functions in seconds.',
+    link: '/calculus',
+    buttonText: 'Try Calculus Tools',
+    imageUrl: '/math calculator background image12.webp',
+    dataAiHint: 'calculus graph',
+  },
 ];
 
 export default function Home() {
