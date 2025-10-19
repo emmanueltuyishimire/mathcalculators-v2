@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { SlopeDiagram } from '@/components/calculators/slope-diagram';
 
 export const metadata: Metadata = {
   title: 'Slope Calculator',
@@ -56,7 +57,7 @@ export default function SlopePage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Slope Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
+        <div className="mx-auto max-w-4xl space-y-8">
           <section className="text-center">
             <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Slope Calculator
@@ -66,7 +67,12 @@ export default function SlopePage() {
             </p>
           </section>
 
-          <SlopeCalculator />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="flex justify-center items-center">
+              <SlopeDiagram className="w-full max-w-[350px] h-auto" />
+            </div>
+            <SlopeCalculator />
+          </div>
 
           <EducationalContent />
         </div>
