@@ -15,12 +15,12 @@ function HeroSection() {
       }}
     >
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
-        <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl">
-            Free Online Calculators for Math, Science, and More
-          </h1>
-          <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4">
-            Stuck on a complex problem? Our comprehensive suite of calculators is designed to provide instant, accurate solutions for students, professionals, and curious minds. From basic arithmetic to advanced calculus and statistical analysis, find the right tool for your needs — all for free.
-          </p>
+        <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
+            Unlock Your Potential with Our Free Calculators
+        </h1>
+        <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)' }}>
+            From basic arithmetic to advanced calculus, our comprehensive suite of calculators is designed to provide instant, accurate solutions. Whether you're a student, professional, or just curious, find the right tool for your needs — all for free.
+        </p>
            <Button asChild variant="secondary" size="lg" className="mt-6">
             <Link href="#tools">Explore Calculators</Link>
           </Button>
