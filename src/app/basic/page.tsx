@@ -13,7 +13,7 @@ const basicTools = [
   { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
   { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
   { href: '/percentage', label: 'Percentage Calculator', icon: Percent },
-  { href: '#', label: 'Random Number Generator', icon: Shuffle },
+  { href: '/random', label: 'Random Number Generator', icon: Shuffle },
   { href: '#', label: 'Percent Error Calculator', icon: AlertTriangle },
   { href: '#', label: 'Exponent Calculator', icon: Superscript },
   { href: '#', label: 'Binary Calculator', icon: Binary },
