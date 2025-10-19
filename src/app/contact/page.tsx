@@ -3,10 +3,6 @@
 
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { Mail, MessageSquare, User, Send, Star, Heart, Handshake } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -32,40 +28,6 @@ const pageSchema = {
     "@id": "https://mathmaster-studio-5398649656-398ca.web.app/contact"
   }
 };
-
-const ContactForm = () => {
-    // Note: This is a visual-only form. A real implementation would require a backend or a service like Formspree.
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Send us a Message</CardTitle>
-                <CardDescription>Fill out the form below and we'll get back to you as soon as possible.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-                <div className="space-y-2">
-                    <Label htmlFor="name" className="flex items-center"><User className="mr-2 h-4 w-4 text-muted-foreground" />Name</Label>
-                    <Input id="name" placeholder="Your Name" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="email" className="flex items-center"><Mail className="mr-2 h-4 w-4 text-muted-foreground" />Email Address</Label>
-                    <Input id="email" type="email" placeholder="your.email@example.com" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="subject" className="flex items-center"><MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" />Subject</Label>
-                    <Input id="subject" placeholder="What is your message about?" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="message" className="flex items-center"><MessageSquare className="mr-2 h-4 w-4 text-muted-foreground" />Message</Label>
-                    <Textarea id="message" placeholder="Write your message here..." rows={6} />
-                </div>
-                <Button className="w-full" onClick={() => alert('This is a demo form.')}>
-                    <Send className="mr-2 h-4 w-4" /> Send Message
-                </Button>
-            </CardContent>
-        </Card>
-    );
-};
-
 
 export default function ContactPage() {
   return (
@@ -149,8 +111,6 @@ export default function ContactPage() {
                   </a>
                 </CardContent>
               </Card>
-
-              <ContactForm />
           </div>
         </main>
       </div>
