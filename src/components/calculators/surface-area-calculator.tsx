@@ -10,7 +10,7 @@ import { VolumeDiagram } from './volume-diagram'; // Reusing volume diagrams as 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface SurfaceAreaCalculatorProps {
-    shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Square Pyramid';
+    shape: 'Sphere' | 'Cone' | 'Cube' | 'Cylinder' | 'Rectangular Tank' | 'Capsule' | 'Spherical Cap' | 'Conical Frustum' | 'Square Pyramid' | 'Ellipsoid';
     inputs: { name: string; label: string; }[];
     calculate: (inputs: { [key: string]: number }) => { [key: string]: number | string | object };
 }
@@ -420,6 +420,22 @@ const calculators: SurfaceAreaCalculatorProps[] = [
             const slantHeight = Math.sqrt(h*h + (a/2)*(a/2));
             const lateral = 2 * a * slantHeight;
             return { Base: base, Lateral: lateral, Total: base + lateral };
+        },
+    },
+    {
+        shape: 'Ellipsoid',
+        inputs: [{ name: 'a', label: 'Axis 1 (a)' }, { name: 'b', label: 'Axis 2 (b)' }, { name: 'c', label: 'Axis 3 (c)' }],
+        calculate: ({ a, b, c }) => {
+            const p = 1.6075;
+            const surfaceArea = 4 * Math.PI * Math.pow((Math.pow(a*b, p) + Math.pow(a*c, p) + Math.pow(b*c, p)) / 3, 1/p);
+             return {
+                final: { 'Approx. Total': surfaceArea },
+                steps: {
+                    total: {
+                        formula: '4π × ( ((ab)^1.6 + (ac)^1.6 + (bc)^1.6) / 3 )^(1/1.6)'
+                    }
+                }
+            };
         },
     },
 ];
