@@ -54,10 +54,11 @@ const getPrimeFactorization = (num: bigint): Map<bigint, number> => {
 
 interface LcmResult {
     lcm: string;
+    gcd: string;
     steps: {
         allFactors: { num: bigint, factors: Map<bigint, number> }[];
-        maxExponents: Map<bigint, number>;
         calculation: string;
+        lcmCalculationFactors: string;
     };
 }
 
@@ -86,6 +87,7 @@ export default function LcmCalculator() {
         try {
             // --- Calculation for result ---
             const finalLcm = numbers.reduce((acc, val) => lcm(acc, val));
+            const finalGcd = numbers.reduce((acc, val) => gcd(acc, val));
             
             // --- Calculation for steps ---
             const allFactors = numbers.map(num => ({
@@ -102,15 +104,23 @@ export default function LcmCalculator() {
                 });
             });
 
-            let calculationParts: string[] = [];
+            const lcmCalculationFactorsArray: bigint[] = [];
             maxExponents.forEach((exponent, prime) => {
-                calculationParts.push(`${prime}^${exponent}`);
+                for(let i=0; i<exponent; i++) {
+                    lcmCalculationFactorsArray.push(prime);
+                }
             });
-            const calculationString = calculationParts.join(' × ');
+            lcmCalculationFactorsArray.sort((a,b) => a < b ? -1 : 1);
+
 
             setResult({
                 lcm: finalLcm.toString(),
-                steps: { allFactors, maxExponents, calculation: calculationString }
+                gcd: finalGcd.toString(),
+                steps: { 
+                    allFactors, 
+                    lcmCalculationFactors: lcmCalculationFactorsArray.join(' × '),
+                    calculation: `LCM(${numbers.join(', ')})`
+                }
             });
         } catch (e: any) {
             toast({
@@ -123,10 +133,15 @@ export default function LcmCalculator() {
     };
     
     const formatFactors = (factors: Map<bigint, number>) => {
-        if (factors.size === 0) return '1';
-        return Array.from(factors.entries())
-            .map(([prime, exponent]) => `${prime}${exponent > 1 ? `^${exponent}` : ''}`)
-            .join(' × ');
+        if (factors.size === 0) return String(factors.keys().next().value || 1);
+        const expandedFactors: bigint[] = [];
+         factors.forEach((exponent, prime) => {
+            for(let i=0; i < exponent; i++) {
+                expandedFactors.push(prime);
+            }
+        });
+        expandedFactors.sort((a,b) => a < b ? -1 : 1);
+        return expandedFactors.join(' × ');
     };
 
     return (
@@ -151,26 +166,23 @@ export default function LcmCalculator() {
             {result && (
                 <CardFooter className="flex-col items-start gap-4">
                      <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                        <h3 className="font-bold text-lg">LCM Result: <span className="text-primary font-mono">{result.lcm}</span></h3>
+                        <p className="font-bold">LCM({input}) = <span className="text-primary font-mono">{result.lcm}</span></p>
+                        <p className="font-bold mt-1">GCD({input}) = <span className="text-primary font-mono">{result.gcd}</span></p>
                     </div>
                      <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
-                            <AccordionTrigger>Show Calculation Steps (Prime Factorization)</AccordionTrigger>
+                            <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                             <AccordionContent>
                                 <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-4">
                                     <div>
-                                        <p className="font-semibold mb-2">1. Find the prime factorization of each number:</p>
+                                        <p className="font-semibold mb-2">Prime factorization of the numbers:</p>
                                         {result.steps.allFactors.map(({num, factors}) => (
                                             <p key={String(num)}>{String(num)} = {formatFactors(factors)}</p>
                                         ))}
                                     </div>
                                     <div>
-                                        <p className="font-semibold mb-2">2. Find the highest power of each prime factor:</p>
-                                        <p>{Array.from(result.steps.maxExponents.entries()).map(([p, e]) => `${p}^${e}`).join(', ')}</p>
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold mb-2">3. Multiply them together:</p>
-                                        <p>LCM = {result.steps.calculation}</p>
+                                        <p className="font-semibold mb-2">{result.steps.calculation}</p>
+                                        <p>= {result.steps.lcmCalculationFactors}</p>
                                         <p>= {result.lcm}</p>
                                     </div>
                                 </div>
