@@ -125,7 +125,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                  {navItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
-                        <Link href={item.href} legacyBehavior={false} passHref>
+                        <Link href={item.href} legacyBehavior passHref>
                             <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), pathname.startsWith(item.href) ? "text-foreground bg-accent/50" : "text-muted-foreground")}>
                             {item.label}
                             </NavigationMenuLink>
