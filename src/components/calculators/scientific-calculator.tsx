@@ -252,14 +252,14 @@ export default function ScientificCalculator() {
       default: onClick = () => handleButtonClick(label);
     }
 
-    const button3dClasses = 'border-b-2 active:border-b-0 active:translate-y-px';
+    const button3dClasses = 'border-b-2 active:border-b-0 active:translate-y-px border-foreground/50 dark:border-border/50';
     let variantClasses = '';
     switch(variant) {
       case 'default': variantClasses = `bg-primary text-primary-foreground hover:bg-primary/90 border-primary/70`; break;
       case 'secondary': variantClasses = `bg-secondary text-secondary-foreground hover:bg-secondary/90 border-secondary/70`; break;
       case 'destructive': variantClasses = `bg-destructive text-destructive-foreground hover:bg-destructive/90 border-destructive/70`; break;
       case 'accent': variantClasses = 'bg-accent text-accent-foreground hover:bg-accent/90 border-accent/70'; break;
-      default: variantClasses = 'bg-card hover:bg-muted border-border';
+      default: variantClasses = 'bg-card hover:bg-muted border-input';
     }
 
 
@@ -267,15 +267,15 @@ export default function ScientificCalculator() {
   }
 
   return (
-    <Card className="shadow-xl max-w-md mx-auto bg-card/80 backdrop-blur-sm border-border/50">
+    <Card className="shadow-xl max-w-md mx-auto bg-card/80 backdrop-blur-sm border-foreground/50 dark:border-border/50">
       <CardContent className="flex flex-col items-center gap-1 p-2">
-        <div className="w-full mb-1 rounded-lg border bg-muted/80 p-2 text-right text-3xl font-mono text-foreground break-all h-20 flex items-end justify-end shadow-inner">
+        <div className="w-full mb-1 rounded-lg border border-foreground/50 dark:border-border/50 bg-muted/80 p-2 text-right text-3xl font-mono text-foreground break-all h-20 flex items-end justify-end shadow-inner">
           {displayValue}
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
-            <Button variant="outline" className="h-7 text-xs" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant="outline" className="h-7 text-xs" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
+            <Button variant="outline" className="h-7 text-xs border-foreground/50 dark:border-border/50" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
+            <Button variant="outline" className="h-7 text-xs border-foreground/50 dark:border-border/50" onClick={() => setShow2nd(!show2nd)}>2nd</Button>
             {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-7 text-xs'))}
             <Button variant="destructive" className="h-7 text-xs transition-transform transform border-b-2 border-destructive/70 active:border-b-0 active:translate-y-px" onClick={handleBackspace}>⌫</Button>
         </div>
@@ -318,3 +318,5 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
+
+    
