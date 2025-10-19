@@ -1,11 +1,10 @@
-
 "use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, Circle, ShieldCheck, Milestone } from 'lucide-react';
+import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
 
 function HeroSection() {
   return (
@@ -86,7 +85,7 @@ const calculatorCategories = [
     },
     {
         title: "Advanced & Specialty",
-        image: "/math%20calculator%20background%20image%201.webp",
+        image: "/math%20calculator%20background%20image4.webp",
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
             { href: '/matrix', label: 'Matrix Calculators', icon: Table },
