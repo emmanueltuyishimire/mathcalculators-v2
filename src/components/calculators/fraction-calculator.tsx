@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,7 @@ interface BasicCalcResult {
     step2: string;
     step3: string;
     step4: string;
+    result: string;
   };
 }
 function BasicFractionCalculator() {
@@ -33,17 +34,7 @@ function BasicFractionCalculator() {
     const [f1, setF1] = useState({ n: '2', d: '7' });
     const [f2, setF2] = useState({ n: '3', d: '8' });
     const [op, setOp] = useState('+');
-    const [result, setResult] = useState<BasicCalcResult | null>({
-        n: 37n,
-        d: 56n,
-        decimal: "0.660714",
-        steps: {
-            step1: "2/7 + 3/8",
-            step2: "(2 × 8) / (7 × 8) + (3 × 7) / (8 × 7)",
-            step3: "16/56 + 21/56",
-            step4: "(16 + 21)/56"
-        }
-    });
+    const [result, setResult] = useState<BasicCalcResult | null>(null);
 
     const calculate = () => {
         try {
@@ -59,41 +50,48 @@ function BasicFractionCalculator() {
 
 
             let resN: bigint, resD: bigint;
-            let step1 = '', step2 = '', step3 = '', step4 = '';
+            let step1 = '', step2 = '', step3 = '', step4 = '', finalResultStep = '';
+
+            const n1_str = f1.n;
+            const d1_str = f1.d;
+            const n2_str = f2.n;
+            const d2_str = f2.d;
+            
+            step1 = `${n1_str}/${d1_str} ${op} ${n2_str}/${d2_str}`;
 
             switch (op) {
                 case '+':
                     resN = n1 * d2 + n2 * d1;
                     resD = d1 * d2;
-                    step1 = `${f1.n}/${f1.d} + ${f2.n}/${f2.d}`;
-                    step2 = `(${f1.n} × ${d2}) / (${f1.d} × ${d2}) + (${f2.n} × ${d1}) / (${f2.d} × ${d1})`;
-                    step3 = `${n1*d2}/${resD} + ${n2*d1}/${resD}`;
-                    step4 = `(${n1*d2} + ${n2*d1})/${resD}`;
+                    step2 = `= (${n1_str} × ${d2_str}) / (${d1_str} × ${d2_str}) + (${n2_str} × ${d1_str}) / (${d2_str} × ${d1_str})`;
+                    step3 = `= ${n1*d2}/${resD} + ${n2*d1}/${resD}`;
+                    step4 = `= (${n1*d2} + ${n2*d1})/${resD}`;
+                    finalResultStep = `= ${resN}/${resD}`;
                     break;
                 case '-':
                     resN = n1 * d2 - n2 * d1;
                     resD = d1 * d2;
-                    step1 = `${f1.n}/${f1.d} - ${f2.n}/${f2.d}`;
-                    step2 = `(${f1.n} × ${d2}) / (${f1.d} × ${d2}) - (${f2.n} × ${d1}) / (${f2.d} × ${d1})`;
-                    step3 = `${n1*d2}/${resD} - ${n2*d1}/${resD}`;
-                    step4 = `(${n1*d2} - ${n2*d1})/${resD}`;
+                    step2 = `= (${n1_str} × ${d2_str}) / (${d1_str} × ${d2_str}) - (${n2_str} × ${d1_str}) / (${d2_str} × ${d1_str})`;
+                    step3 = `= ${n1*d2}/${resD} - ${n2*d1}/${resD}`;
+                    step4 = `= (${n1*d2} - ${n2*d1})/${resD}`;
+                    finalResultStep = `= ${resN}/${resD}`;
                     break;
                 case '×':
                     resN = n1 * n2;
                     resD = d1 * d2;
-                    step1 = `${f1.n}/${f1.d} × ${f2.n}/${f2.d}`;
-                    step2 = `(${f1.n} × ${f2.n}) / (${f1.d} × ${f2.d})`;
-                    step3 = `${resN}/${resD}`;
+                    step2 = `= (${n1_str} × ${n2_str}) / (${d1_str} × ${d2_str})`;
+                    step3 = `= ${resN}/${resD}`;
                     step4 = ``;
+                    finalResultStep = `= ${resN}/${resD}`;
                     break;
                 case '÷':
                     resN = n1 * d2;
                     resD = d1 * n2;
                     if (resD === 0n) throw new Error("Division by zero fraction.");
-                    step1 = `${f1.n}/${f1.d} ÷ ${f2.n}/${f2.d}`;
-                    step2 = `${f1.n}/${f1.d} × ${f2.d}/${f1.n}`;
-                    step3 = `(${f1.n} × ${f2.d}) / (${f1.d} × ${f1.n})`;
-                    step4 = `${resN}/${resD}`;
+                    step2 = `= ${n1_str}/${d1_str} × ${d2_str}/${n2_str}`;
+                    step3 = `= (${n1_str} × ${d2_str}) / (${d1_str} × ${n2_str})`;
+                    step4 = `= ${resN}/${resD}`;
+                    finalResultStep = `= ${resN}/${resD}`;
                     break;
                 default:
                     throw new Error("Invalid operator");
@@ -115,15 +113,24 @@ function BasicFractionCalculator() {
                 finalD = -finalD;
             }
             
+            if (resN !== finalN || resD !== finalD) {
+                finalResultStep += ` = ${finalN}/${finalD}`;
+            }
+
             const decimal = (Number(resN) / Number(resD)).toFixed(14);
 
-            setResult({ n: finalN, d: finalD, decimal, steps: {step1, step2, step3, step4} });
+            setResult({ n: finalN, d: finalD, decimal, steps: {step1, step2, step3, step4, result: finalResultStep} });
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
     
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Card>
             <CardContent className="pt-6">
@@ -156,10 +163,10 @@ function BasicFractionCalculator() {
                             <AccordionContent>
                                 <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
                                     <p>{result.steps.step1}</p>
-                                    {result.steps.step2 && <p>= {result.steps.step2}</p>}
-                                    {result.steps.step3 && <p>= {result.steps.step3}</p>}
-                                    {result.steps.step4 && <p>= {result.steps.step4}</p>}
-                                    <p>= {String(result.n)}/{String(result.d)}</p>
+                                    {result.steps.step2 && <p>{result.steps.step2}</p>}
+                                    {result.steps.step3 && <p>{result.steps.step3}</p>}
+                                    {result.steps.step4 && <p>{result.steps.step4}</p>}
+                                    {result.steps.result && <p>{result.steps.result}</p>}
                                 </div>
                             </AccordionContent>
                         </AccordionItem>
@@ -194,22 +201,22 @@ function MixedNumbersCalculator() {
 
             const sign1 = w1 < 0n || m1.w.startsWith('-') ? -1n : 1n;
             const sign2 = w2 < 0n || m2.w.startsWith('-') ? -1n : 1n;
-
-            const improperN1 = ( (w1 > 0n ? w1 : -w1) * d1 + n1) * sign1;
-            const improperN2 = ( (w2 > 0n ? w2 : -w2) * d2 + n2) * sign2;
             
+            const m1Str = `${m1.w} ${m1.n}/${m1.d}`;
+            const m2Str = `${m2.w} ${m2.n}/${m2.d}`;
+
             let resN: bigint, resD: bigint;
             let steps: string[] = [];
             let explanation: string[] = [];
 
             if (op === '+' || op === '-') {
-                steps.push(`${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d}`);
-                steps.push(`= (${m1.w} ${op} ${m2.w}) + (${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d})`);
+                steps.push(`${m1Str} ${op} ${m2Str}`);
+                steps.push(`= (${m1.w} ${op} ${m2.w}) + (${sign1 < 0 ? `-${m1.n}/${m1.d}` : `${m1.n}/${m1.d}`} ${op} ${sign2 < 0 ? `-${m2.n}/${m2.d}` : `${m2.n}/${m2.d}`})`);
                 
                 const wholeSum = op === '+' ? w1 + w2 : w1 - w2;
                 const fracN1 = n1 * sign1;
                 const fracN2 = n2 * sign2;
-                const fracResD = d1 * d2;
+                const fracResD = d1 * d2; // LCM can be used here for efficiency
                 const commonFracN1 = fracN1 * d2;
                 const commonFracN2 = fracN2 * d1;
 
@@ -220,29 +227,34 @@ function MixedNumbersCalculator() {
 
                 resN = wholeSum * fracResD + fracResN;
                 resD = fracResD;
-
-                explanation.push(`For the problem: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ?`);
-                explanation.push(`Combine the whole numbers and fractions together: (${m1.w} ${op} ${m2.w}) + (${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d})`);
+                
+                explanation.push(`For the problem: ${m1Str} ${op} ${m2Str} = ?`);
+                explanation.push(`Combine the whole numbers and fractions together: (${m1.w} ${op} ${m2.w}) + (${sign1 < 0 ? `-${m1.n}/${m1.d}` : `${m1.n}/${m1.d}`} ${op} ${sign2 < 0 ? `-${m2.n}/${m2.d}` : `${m2.n}/${m2.d}`})`);
                 explanation.push(`The whole numbers part is: ${m1.w} ${op} ${m2.w} = ${wholeSum}`);
                 explanation.push(`For the fractions part: The Least Common Multiple (LCM) of ${d1} and ${d2} is ${fracResD}. Multiply the numerator and denominator of each fraction by whatever value will result in the denominator of each fraction being equal to the LCM:`);
-                explanation.push(`${sign1 < 0 ? '-' : ''}${m1.n}/${m1.d} ${op} ${sign2 < 0 ? '-' : ''}${m2.n}/${m2.d} = ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD}`);
-                explanation.push(`Now that the fractions have like denominators, add the numerators: ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD} = ${fracResN}/${fracResD}`);
-                explanation.push(`Put the whole number and fraction together: ${wholeSum} + ${fracResN}/${fracResD} = ${resN}/${resD}`);
-                
+                explanation.push(`${fracN1}/${d1} ${op} ${fracN2}/${d2} = ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD}`);
+                explanation.push(`Now that the fractions have like denominators, perform the operation on the numerators: ${commonFracN1}/${fracResD} ${op} ${commonFracN2}/${fracResD} = ${fracResN}/${fracResD}`);
+                explanation.push(`Put the whole number and fraction together: ${wholeSum} + (${fracResN}/${fracResD}) = ${resN}/${resD}`);
 
             } else { // Multiplication and Division
+                 const improperN1 = ( (w1 > 0n ? w1 : -w1) * d1 + n1) * sign1;
+                 const improperN2 = ( (w2 > 0n ? w2 : -w2) * d2 + n2) * sign2;
                  resN = op === '×' ? improperN1 * improperN2 : improperN1 * d2;
                  resD = op === '×' ? d1 * d2 : d1 * improperN2;
                  if (op === '÷' && resD === 0n) throw new Error("Division by zero.");
-                 steps.push(`${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d}`);
+
+                 steps.push(`${m1Str} ${op} ${m2Str}`);
                  steps.push(`= ${improperN1}/${d1} ${op} ${improperN2}/${d2}`);
                  explanation.push(`First, convert mixed numbers to improper fractions:`);
-                 explanation.push(`${m1.w} ${m1.n}/${m1.d} = ${improperN1}/${d1}`);
-                 explanation.push(`${m2.w} ${m2.n}/${m2.d} = ${improperN2}/${d2}`);
+                 explanation.push(`${m1Str} = ${improperN1}/${d1}`);
+                 explanation.push(`${m2Str} = ${improperN2}/${d2}`);
                  if (op === '÷') {
                     steps.push(`= ${improperN1}/${d1} × ${d2}/${improperN2}`);
+                    explanation.push(`Then, to divide, multiply by the reciprocal:`);
+                 } else {
+                    explanation.push(`Then, multiply the fractions:`);
                  }
-                 steps.push(`= ${resN}/${resD}`);
+                 explanation.push(`(${improperN1} × ${op === '×' ? improperN2 : d2}) / (${d1} × ${op === '×' ? d2 : improperN2}) = ${resN}/${resD}`);
             }
             
             const commonDivisor = gcd(resN, resD);
@@ -256,14 +268,17 @@ function MixedNumbersCalculator() {
 
             const finalW = finalN / finalD;
             const finalRemainderN = finalN >= 0n ? finalN % finalD : -(finalN % finalD);
-            
-            if(explanation.length > 0 && finalW !== 0n && finalRemainderN !== 0n){
-                 explanation.push(`The result is: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ${finalW} ${finalRemainderN}/${finalD}`);
-            } else if (explanation.length > 0) {
-                 explanation.push(`The result is: ${m1.w} ${m1.n}/${m1.d} ${op} ${m2.w} ${m2.n}/${m2.d} = ${finalN}/${finalD}`);
+
+            explanation.push(`The simplified improper fraction is: ${finalN}/${finalD}`);
+
+            if (finalW !== 0n && finalRemainderN !== 0n) {
+                explanation.push(`The result as a mixed number is: ${finalW} ${finalRemainderN}/${finalD}`);
             }
             
-            steps.push(`= ${finalN}/${finalD}`);
+            steps.push(`= ${resN}/${resD}`);
+            if (resN !== finalN || resD !== finalD) {
+                steps.push(`= ${finalN}/${finalD}`);
+            }
             if (finalW !== 0n && finalRemainderN !== 0n) {
                 steps.push(`= ${finalW} ${finalRemainderN}/${finalD}`);
             }
@@ -275,6 +290,11 @@ function MixedNumbersCalculator() {
         }
     };
     
+     useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
      return (
         <Card>
             <CardHeader>
@@ -343,6 +363,11 @@ function SimplifyFractionCalculator() {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -380,15 +405,18 @@ function DecimalToFraction() {
 
         const common = gcd(initialNum, initialDen);
         const finalN = initialNum / common;
-        const finalD = finalDen / common;
+        const finalD = initialDen / common;
 
         const w = finalN / finalD;
         const rem = finalN % finalD;
-
-        const steps = [
-            `${dec} = ${dec} × ${multiplier} / ${multiplier} = ${initialNum}/${initialDen}`,
-            `= ${initialNum} ÷ ${common} / ${initialDen} ÷ ${common} = ${finalN}/${finalD}`,
+        
+        let steps = [
+            `${dec} = (${dec} × ${multiplier}) / (1 × ${multiplier}) = ${initialNum}/${initialDen}`
         ];
+
+        if (common > 1) {
+            steps.push(`= (${initialNum} ÷ ${common}) / (${initialDen} ÷ ${common}) = ${finalN}/${finalD}`);
+        }
 
         if (w > 0n && rem !== 0n) {
             steps.push(`= ${w} ${rem}/${finalD}`);
@@ -399,6 +427,11 @@ function DecimalToFraction() {
          toast({ variant: 'destructive', title: 'Error', description: 'Could not convert decimal.' });
       }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -454,6 +487,11 @@ function FractionToDecimal() {
         toast({ variant: 'destructive', title: 'Error', description: e.message });
       }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Card>
@@ -495,13 +533,20 @@ function BigNumberFractionCalculator() {
             const finalD = resD / commonDivisor;
             
             const finalW = finalN / finalD;
-            const finalRem = finalN % finalD;
+            const finalRem = finalN >= 0n ? finalN % finalD : -(finalN % finalD);
+
 
             setResult({ n: finalN, d: finalD, w: finalW, rem: finalRem });
         } catch (e: any) {
-            toast({ variant: 'destructive', title: 'Error', description: e.message });
+            toast({ variant: 'destructive', title: 'Error', description: 'Could not calculate. Ensure inputs are valid integers.' });
         }
     };
+    
+    useEffect(() => {
+        calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <Card>
             <CardHeader>
@@ -523,11 +568,13 @@ function BigNumberFractionCalculator() {
                 <Button onClick={calculate}>=</Button>
             </CardContent>
             {result && (
-                 <CardContent className="flex flex-wrap items-center justify-center gap-2">
+                 <CardContent className="flex flex-col items-center justify-center gap-4">
                     <FractionInput n={String(result.n)} d={String(result.d)} readOnly wide />
-                    {result.w !== 0n && result.rem !== 0n && <span>=</span>}
                     {result.w !== 0n && result.rem !== 0n && (
-                        <MixedNumberInput w={String(result.w)} n={String(result.rem)} d={String(result.d)} readOnly />
+                        <>
+                            <span>=</span>
+                            <MixedNumberInput w={String(result.w)} n={String(result.rem)} d={String(result.d)} readOnly wide />
+                        </>
                     )}
                  </CardContent>
             )}
@@ -545,10 +592,10 @@ const FractionInput = ({ n, d, onNChange, onDChange, readOnly, wide }: { n: stri
     </div>
 );
 
-const MixedNumberInput = ({ w, n, d, onWChange, onNChange, onDChange, readOnly }: { w:string, n:string, d:string, onWChange?: (v:string)=>void, onNChange?: (v:string)=>void, onDChange?: (v:string)=>void, readOnly?:boolean}) => (
+const MixedNumberInput = ({ w, n, d, onWChange, onNChange, onDChange, readOnly, wide }: { w:string, n:string, d:string, onWChange?: (v:string)=>void, onNChange?: (v:string)=>void, onDChange?: (v:string)=>void, readOnly?:boolean, wide?: boolean}) => (
     <div className="flex items-center gap-1">
-        <Input type="text" value={w} onChange={e => onWChange?.(e.target.value)} readOnly={readOnly} className="w-16 h-12 text-center text-2xl" aria-label="Whole number" />
-        <FractionInput n={n} d={d} onNChange={onNChange} onDChange={onDChange} readOnly={readOnly} />
+        <Input type="text" value={w} onChange={e => onWChange?.(e.target.value)} readOnly={readOnly} className={`h-12 text-center text-2xl ${wide ? 'w-48' : 'w-16'}`} aria-label="Whole number" />
+        <FractionInput n={n} d={d} onNChange={onNChange} onDChange={onDChange} readOnly={readOnly} wide={wide} />
     </div>
 );
 
