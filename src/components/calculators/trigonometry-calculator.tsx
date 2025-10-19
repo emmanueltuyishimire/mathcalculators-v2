@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from 'react';
@@ -9,32 +8,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import { calculate } from '@/lib/trig';
 
-const toRadians = (deg: number) => (deg * Math.PI) / 180;
-const toDegrees = (rad: number) => (rad * 180) / Math.PI;
-
-const directTrigFunctions = {
-  sin: (angle: number, unit: string) => Math.sin(unit === 'deg' ? toRadians(angle) : angle),
-  cos: (angle: number, unit: string) => Math.cos(unit === 'deg' ? toRadians(angle) : angle),
-  tan: (angle: number, unit: string) => Math.tan(unit === 'deg' ? toRadians(angle) : angle),
-  cot: (angle: number, unit: string) => 1 / Math.tan(unit === 'deg' ? toRadians(angle) : angle),
-  sec: (angle: number, unit: string) => 1 / Math.cos(unit === 'deg' ? toRadians(angle) : angle),
-  csc: (angle: number, unit: string) => 1 / Math.sin(unit === 'deg' ? toRadians(angle) : angle),
-};
-
-const inverseTrigFunctions = {
-  asin: (x: number, unit: string) => (unit === 'deg' ? toDegrees(Math.asin(x)) : Math.asin(x)),
-  acos: (x: number, unit: string) => (unit === 'deg' ? toDegrees(Math.acos(x)) : Math.acos(x)),
-  atan: (x: number, unit: string) => (unit === 'deg' ? toDegrees(Math.atan(x)) : Math.atan(x)),
-  acot: (x: number, unit: string) => (unit === 'deg' ? toDegrees(Math.atan(1 / x)) : Math.atan(1 / x)),
-  asec: (x: number, unit: string) => (unit === 'deg' ? toDegrees(Math.acos(1 / x)) : Math.acos(1 / x)),
-  acsc: (x: number, unit: string) => (unit === 'deg' ? toDegrees(Math.asin(1 / x)) : Math.asin(1 / x)),
-};
-
-const allFunctions: Record<string, (val: number, unit: string) => number> = {
-  ...directTrigFunctions,
-  ...inverseTrigFunctions,
-};
+const directTrigFunctions = ["sin", "cos", "tan", "cot", "sec", "csc"];
+const inverseTrigFunctions = ["asin", "acos", "atan", "acot", "asec", "acsc"];
+const hyperbolicFunctions = ["sinh", "cosh", "tanh", "coth", "sech", "csch"];
 
 export default function TrigonometryCalculator() {
   const [funcName, setFuncName] = useState<string>('sin');
@@ -54,16 +32,13 @@ export default function TrigonometryCalculator() {
     }
 
     try {
-      const calculation = allFunctions[funcName];
-      if (!calculation) {
-        throw new Error(`Unknown function: ${funcName}`);
+      const res = calculate(funcName, numValue, unit);
+      
+      if (typeof res === 'string') {
+        throw new Error(res);
       }
-      const res = calculation(numValue, unit);
-
-      if (isNaN(res) || !isFinite(res)) {
-        throw new Error('Invalid input or undefined result for this function.');
-      }
-      setResult(res.toFixed(10));
+      
+      setResult(String(res));
     } catch (e: any) {
       toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
       setResult(null);
@@ -74,7 +49,7 @@ export default function TrigonometryCalculator() {
     <Card className="shadow-lg">
       <CardHeader>
         <CardTitle>Trigonometry Functions</CardTitle>
-        <CardDescription>Calculate direct and inverse trigonometric functions.</CardDescription>
+        <CardDescription>Calculate direct, inverse, and hyperbolic trigonometric functions.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
@@ -84,12 +59,16 @@ export default function TrigonometryCalculator() {
                     <SelectTrigger id="function-select"><SelectValue/></SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectLabel>Direct Functions</SelectLabel>
-                            {Object.keys(directTrigFunctions).map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
+                            <SelectLabel>Trigonometric</SelectLabel>
+                            {directTrigFunctions.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
                         </SelectGroup>
                         <SelectGroup>
-                            <SelectLabel>Inverse Functions</SelectLabel>
-                            {Object.keys(inverseTrigFunctions).map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
+                            <SelectLabel>Inverse</SelectLabel>
+                            {inverseTrigFunctions.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Hyperbolic</SelectLabel>
+                             {hyperbolicFunctions.map(f => <SelectItem key={f} value={f}>{f}</SelectItem>)}
                         </SelectGroup>
                     </SelectContent>
                 </Select>
@@ -100,7 +79,7 @@ export default function TrigonometryCalculator() {
             </div>
         </div>
         <div className="space-y-2">
-            <Label>{isInverse ? 'Output Unit' : 'Angle Unit'}</Label>
+            <Label>{isInverse || hyperbolicFunctions.includes(funcName) ? 'Output Unit' : 'Angle Unit'}</Label>
              <RadioGroup defaultValue="deg" value={unit} onValueChange={setUnit} className="flex gap-4">
                 <div className="flex items-center space-x-2">
                     <RadioGroupItem value="deg" id="r-deg" />
