@@ -1,3 +1,70 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "sphere",
+      "description": "A glass sphere.",
+      "imageUrl": "https://images.unsplash.com/photo-1567113379515-6e85e7168eb1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxiYWxsfGVufDB8fHx8MTc2MDg0OTY3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ball"
+    },
+    {
+      "id": "cone",
+      "description": "An ice cream cone.",
+      "imageUrl": "https://images.unsplash.com/photo-1573068111653-f18bef611c8a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjb25lfGVufDB8fHx8MTc2MDg0OTY3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cone"
+    },
+    {
+      "id": "cube",
+      "description": "A wooden cube.",
+      "imageUrl": "https://images.unsplash.com/photo-1617360547704-3da8b5363369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjdWJlfGVufDB8fHx8MTc2MDg0OTY3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cube"
+    },
+    {
+      "id": "cylinder",
+      "description": "A metal cylinder.",
+      "imageUrl": "https://images.unsplash.com/photo-1620987278429-ab178d6eb547?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjeWxpbmRlcnxlbnwwfHx8fDE3NjA4NDk2Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cylinder"
+    },
+    {
+      "id": "rectangular-tank",
+      "description": "A rectangular tank.",
+      "imageUrl": "https://images.unsplash.com/photo-1541869440787-abe7669a951a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwcmlzbXxlbnwwfHx8fDE3NjA4NDk2Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "prism"
+    },
+    {
+      "id": "capsule",
+      "description": "A medical capsule.",
+      "imageUrl": "https://images.unsplash.com/photo-1565071783280-719b01b29912?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXBzdWxlfGVufDB8fHx8MTc2MDg0OTY3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "capsule"
+    },
+    {
+      "id": "spherical-cap",
+      "description": "The cap of a sphere.",
+      "imageUrl": "https://images.unsplash.com/photo-1645266729222-17cd32e06fd0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjYXB8ZW58MHx8fHwxNzYwNzU1MzExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cap"
+    },
+    {
+      "id": "conical-frustum",
+      "description": "A conical frustum shape.",
+      "imageUrl": "https://images.unsplash.com/photo-1668297386186-137f7ed04950?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjb25pY2FsJTIwZnJ1c3R1bXxlbnwwfHx8fDE3NjA4NDk2Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "conical frustum"
+    },
+    {
+      "id": "ellipsoid",
+      "description": "An ellipsoid shape.",
+      "imageUrl": "https://images.unsplash.com/photo-1617562528589-2bec8963a8e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxlbGxpcHNvaWR8ZW58MHx8fHwxNzYwODQ5Njc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ellipsoid"
+    },
+    {
+      "id": "square-pyramid",
+      "description": "An Egyptian pyramid.",
+      "imageUrl": "https://images.unsplash.com/photo-1683374182571-c0cd2a25367c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzcXVhcmUlMjBweXJhbWlkfGVufDB8fHx8MTc2MDg0OTY3OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "square pyramid"
+    },
+    {
+      "id": "tube",
+      "description": "A metal tube.",
+      "imageUrl": "https://images.unsplash.com/photo-1668889274754-fa7a9a3bc095?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dHViZXxlbnwwfHx8fDE3NjA4NDk2Nzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tube"
+    }
+  ]
 }
