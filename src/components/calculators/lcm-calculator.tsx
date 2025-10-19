@@ -1,0 +1,184 @@
+
+"use client";
+
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+// Helper functions for GCD and LCM using BigInt for large number support
+const gcd = (a: bigint, b: bigint): bigint => {
+  a = a > 0n ? a : -a; // absolute value
+  b = b > 0n ? b : -b; // absolute value
+  while (b) {
+    [a, b] = [b, a % b];
+  }
+  return a;
+};
+
+const lcm = (a: bigint, b: bigint): bigint => {
+    if (a === 0n || b === 0n) return 0n;
+    return (a > 0 ? a : -a) * (b > 0 ? b : -b) / gcd(a, b);
+};
+
+const getPrimeFactorization = (num: bigint): Map<bigint, number> => {
+    const factors = new Map<bigint, number>();
+    if (num < 2n) return factors;
+    
+    let n = num;
+    let divisor = 2n;
+
+    while (n % divisor === 0n) {
+        factors.set(divisor, (factors.get(divisor) || 0) + 1);
+        n /= divisor;
+    }
+    
+    divisor = 3n;
+    while (divisor * divisor <= n) {
+        while (n % divisor === 0n) {
+            factors.set(divisor, (factors.get(divisor) || 0) + 1);
+            n /= divisor;
+        }
+        divisor += 2n;
+    }
+
+    if (n > 1n) {
+        factors.set(n, (factors.get(n) || 0) + 1);
+    }
+    
+    return factors;
+};
+
+interface LcmResult {
+    lcm: string;
+    steps: {
+        allFactors: { num: bigint, factors: Map<bigint, number> }[];
+        maxExponents: Map<bigint, number>;
+        calculation: string;
+    };
+}
+
+export default function LcmCalculator() {
+    const { toast } = useToast();
+    const [input, setInput] = useState('');
+    const [result, setResult] = useState<LcmResult | null>(null);
+
+    const calculate = () => {
+        const numbers = input
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean)
+            .map(BigInt);
+
+        if (numbers.length < 2) {
+            toast({
+                variant: 'destructive',
+                title: 'Invalid Input',
+                description: 'Please provide at least two numbers separated by commas.',
+            });
+            setResult(null);
+            return;
+        }
+        
+        try {
+            // --- Calculation for result ---
+            const finalLcm = numbers.reduce((acc, val) => lcm(acc, val));
+            
+            // --- Calculation for steps ---
+            const allFactors = numbers.map(num => ({
+                num,
+                factors: getPrimeFactorization(num),
+            }));
+
+            const maxExponents = new Map<bigint, number>();
+            allFactors.forEach(({ factors }) => {
+                factors.forEach((exponent, prime) => {
+                    if (!maxExponents.has(prime) || exponent > (maxExponents.get(prime) || 0)) {
+                        maxExponents.set(prime, exponent);
+                    }
+                });
+            });
+
+            let calculationParts: string[] = [];
+            maxExponents.forEach((exponent, prime) => {
+                calculationParts.push(`${prime}^${exponent}`);
+            });
+            const calculationString = calculationParts.join(' × ');
+
+            setResult({
+                lcm: finalLcm.toString(),
+                steps: { allFactors, maxExponents, calculation: calculationString }
+            });
+        } catch (e: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Error',
+                description: 'Please ensure all inputs are valid integers.',
+            });
+             setResult(null);
+        }
+    };
+    
+    const formatFactors = (factors: Map<bigint, number>) => {
+        if (factors.size === 0) return '1';
+        return Array.from(factors.entries())
+            .map(([prime, exponent]) => `${prime}${exponent > 1 ? `^${exponent}` : ''}`)
+            .join(' × ');
+    };
+
+    return (
+        <Card className="shadow-lg">
+            <CardHeader>
+                <CardTitle>Least Common Multiple (LCM) Calculator</CardTitle>
+                <CardDescription>Enter numbers separated by commas to find their LCM.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="space-y-2">
+                    <Label htmlFor="numbers-input">Numbers</Label>
+                    <Textarea
+                        id="numbers-input"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="e.g., 12, 18, 30"
+                        className="font-mono"
+                    />
+                </div>
+                <Button onClick={calculate} className="w-full">Calculate LCM</Button>
+            </CardContent>
+            {result && (
+                <CardFooter className="flex-col items-start gap-4">
+                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <h3 className="font-bold text-lg">LCM Result: <span className="text-primary font-mono">{result.lcm}</span></h3>
+                    </div>
+                     <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger>Show Calculation Steps (Prime Factorization)</AccordionTrigger>
+                            <AccordionContent>
+                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-4">
+                                    <div>
+                                        <p className="font-semibold mb-2">1. Find the prime factorization of each number:</p>
+                                        {result.steps.allFactors.map(({num, factors}) => (
+                                            <p key={String(num)}>{String(num)} = {formatFactors(factors)}</p>
+                                        ))}
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold mb-2">2. Find the highest power of each prime factor:</p>
+                                        <p>{Array.from(result.steps.maxExponents.entries()).map(([p, e]) => `${p}^${e}`).join(', ')}</p>
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold mb-2">3. Multiply them together:</p>
+                                        <p>LCM = {result.steps.calculation}</p>
+                                        <p>= {result.lcm}</p>
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </CardFooter>
+            )}
+        </Card>
+    );
+}
