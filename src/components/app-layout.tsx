@@ -12,6 +12,7 @@ import {
   Menu,
   BarChartHorizontal,
   Table,
+  Home,
 } from 'lucide-react';
 import {
   Sheet,
@@ -31,6 +32,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { AppFooter } from './app-footer';
 
 const navItems = [
+  { href: '/', label: 'Home', icon: Home },
   { href: '/algebra', label: 'Algebra', icon: Calculator },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
@@ -74,7 +76,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                     onClick={() => setOpen(false)}
                     className={cn(
                       "hover:text-foreground",
-                      pathname.startsWith(item.href) ? "text-foreground" : "text-muted-foreground"
+                      pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic') ? "text-foreground" : "text-muted-foreground"
                     )}
                   >
                     {item.label}
@@ -97,7 +99,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <NavigationMenuList>
                     {navItems.map((item) => (
                     <NavigationMenuItem key={item.href}>
-                        <NavigationMenuLink asChild active={pathname.startsWith(item.href) || (item.href === '/algebra' && pathname === '/basic')}>
+                        <NavigationMenuLink asChild active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic')}>
                             <Link href={item.href} className={navigationMenuTriggerStyle()}>
                                 {item.label}
                             </Link>
