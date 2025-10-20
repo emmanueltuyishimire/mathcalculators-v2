@@ -1,7 +1,5 @@
 import type { NextConfig } from 'next';
 
-require('dotenv').config({ path: './.env.local' });
-
 const nextConfig: NextConfig = {
   output: 'export',
   basePath: '/mathcalculators',  // <--- Add this line
