@@ -3,7 +3,6 @@
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Target, Zap } from 'lucide-react';
-import type { Metadata } from 'next';
 
 export default function AboutPage() {
   return (

@@ -253,7 +253,7 @@ export default function ScientificCalculator() {
       case 'toggle-sign': onClick = handleToggleSign; break;
       default: onClick = () => handleButtonClick(label);
     }
-
+    
     const button3dClasses = 'border-b-4 active:border-b-0 active:translate-y-1';
     let variantClasses = '';
     switch(variant) {

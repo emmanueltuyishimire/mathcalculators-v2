@@ -4,30 +4,9 @@ import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Mail, MessageSquare, User, Send, Star, Heart, Handshake } from 'lucide-react';
 
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "name": "Contact Math Calculators",
-  "description": "Contact page for Math Calculators. Reach out for support, feedback, or inquiries.",
-  "url": "https://maths.calculation.site/contact",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://maths.calculation.site/contact"
-  }
-};
-
 export default function ContactPage() {
   return (
     <>
-      <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Contact Us" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">

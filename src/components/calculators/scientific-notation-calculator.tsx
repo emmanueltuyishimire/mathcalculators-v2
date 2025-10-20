@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -35,7 +34,7 @@ const NotationConverter = () => {
         return `${significand.toPrecision(4)} x 10^${engPower}`;
     };
 
-    useEffect(() => {
+    const convert = () => {
         const num = parseScientific(input);
         if (num === null) {
             setResults({ scientific: 'Invalid', eNotation: 'Invalid', engineering: 'Invalid', real: 'Invalid' });
@@ -51,6 +50,10 @@ const NotationConverter = () => {
             engineering: formatEngineering(num),
             real: num.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 20 }),
         });
+    }
+
+    useEffect(() => {
+        convert();
     }, [input]);
 
     return (

@@ -5,121 +5,6 @@ import ScientificCalculator from '@/components/calculators/scientific-calculator
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is a scientific calculator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A scientific calculator is a tool designed to solve complex mathematical problems, including trigonometry, logarithms, exponents, fractions, and statistical calculations. Unlike a basic calculator, it provides advanced functions for students, engineers, and professionals."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I use a scientific calculator online?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "To use a scientific calculator online, simply enter numbers using the keypad, choose the operation or function, use parentheses for complex calculations, and press = to see the result. You can also use memory functions (M+, M-, MR, MC) to store values."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I use a scientific calculator for fractions?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes! Many online and app-based scientific calculators support fractions and mixed numbers. You can enter fractions directly or use the division / key, and the calculator can display the result as a fraction or decimal."
-      }
-    },
-    {
-        "@type": "Question",
-        "name": "Which is better: Casio or TI scientific calculators?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Both Casio and Texas Instruments (TI) are reliable brands. Casio calculators are often simpler and more affordable, while TI calculators like the TI-84 or TI-36X Pro offer advanced functions and graphing capabilities."
-        }
-    },
-    {
-        "@type": "Question",
-        "name": "Do I need to switch between degrees and radians?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, when performing trigonometric calculations, you must select the correct angle mode (Degrees or Radians) depending on your problem. Most online calculators have a toggle for this."
-        }
-    },
-    {
-        "@type": "Question",
-        "name": "Is this online scientific calculator free to use?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Absolutely! Our online scientific calculator is completely free and does not require any downloads. It supports a wide range of mathematical functions."
-        }
-    },
-    {
-        "@type": "Question",
-        "name": "Can I use memory functions on the calculator?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, memory functions (M+, M-, MR, MC) allow you to store, recall, add to, or subtract from a stored value, which is useful for multi-step calculations."
-        }
-    },
-    {
-        "@type": "Question",
-        "name": "Can I use this scientific calculator on mobile devices?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! The calculator is fully responsive, meaning it works seamlessly on mobile phones, tablets, and desktops. You can solve calculations anywhere without downloading an app."
-        }
-    },
-    {
-        "@type": "Question",
-        "name": "What types of calculations can I do with a scientific calculator?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You can perform basic arithmetic, trigonometric functions, logarithms, exponentials, roots, factorials, fractions, and memory-based calculations."
-        }
-    },
-    {
-        "@type": "Question",
-        "name": "Is this scientific calculator safe and accurate?",
-        "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! Our online scientific calculator is accurate, reliable, and safe to use. All calculations happen directly in your browser, so no personal data is stored."
-        }
-    }
-  ]
-};
-
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Scientific Calculator",
-  "operatingSystem": "All",
-  "applicationCategory": "EducationalApplication",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1200"
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "USD"
-  },
-  "description": "A free, full-featured online scientific calculator for solving complex mathematical problems, including trigonometry, logarithms, exponents, and fractions.",
-  "url": "https://maths.calculation.site/scientific",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  },
-  "inLanguage": "en",
-  "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0",
-};
-
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -173,14 +58,6 @@ export default function ScientificPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Scientific Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
@@ -377,7 +254,7 @@ export default function ScientificPage() {
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold">Q6: Is this online scientific calculator free to use?</h3>
-                        <p className="text-muted-foreground">Absolutely! Our online scientific calculator is completely free and does not require any downloads. It supports basic arithmetic, advanced math, trigonometry, logarithms, fractions, and more.</p>
+                        <p className="text-muted-foreground">Absolutely! Our online scientific calculator is completely free and does not require any downloads.</p>
                     </div>
                     <div>
                         <h3 className="text-xl font-semibold">Q7: Can I use memory functions on the calculator?</h3>

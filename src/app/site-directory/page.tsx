@@ -11,14 +11,6 @@ import {
 } from 'lucide-react';
 import React from 'react';
 
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Site Directory - Math Calculators",
-  "description": "A complete list of all pages and calculator tools available on the Math Calculators website.",
-  "url": "https://maths.calculation.site/site-directory"
-};
-
 const sitemapData = [
     {
         category: "Main Pages",
@@ -108,10 +100,6 @@ const sitemapData = [
 export default function SitemapPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Site Directory" />
         <main className="flex-1 p-4 md:p-6 lg:p-12">
