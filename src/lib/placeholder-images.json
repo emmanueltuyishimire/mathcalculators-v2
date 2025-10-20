@@ -1,32 +1,32 @@
 [
   {
-    "id": "heroImage1",
-    "src": "https://picsum.photos/seed/h1/1920/1080",
-    "alt": "Abstract mathematical background with glowing formulas",
+    "id": "heroImage",
+    "src": "/math calculator background image 1.webp",
+    "alt": "Abstract mathematical background with glowing formulas and symbols",
     "hint": "math abstract"
   },
   {
-    "id": "heroImage2",
-    "src": "https://picsum.photos/seed/h2/1920/400",
-    "alt": "An abstract background image with mathematical symbols",
-    "hint": "math symbols"
-  },
-  {
-    "id": "heroImage4",
-    "src": "https://picsum.photos/seed/h4/1920/969",
-    "alt": "Advanced math concepts background",
-    "hint": "math formula"
-  },
-  {
-    "id": "heroImage6",
-    "src": "https://picsum.photos/seed/h6/1920/969",
-    "alt": "Basic algebra and math background",
+    "id": "categoryBasicAlgebra",
+    "src": "/math calculator background image6.webp",
+    "alt": "Background with algebraic equations and mathematical notations",
     "hint": "algebra equations"
   },
   {
-    "id": "heroImage7",
-    "src": "https://picsum.photos/seed/h7/1920/969",
-    "alt": "Geometry and trigonometry background",
+    "id": "categoryGeometry",
+    "src": "/math calculator background image7.webp",
+    "alt": "Background displaying various geometric shapes and trigonometric functions",
     "hint": "geometry shapes"
+  },
+  {
+    "id": "categoryStatistics",
+    "src": "/math calculator background image2.webp",
+    "alt": "Background with statistical charts, graphs, and probability symbols",
+    "hint": "statistics charts"
+  },
+  {
+    "id": "categoryAdvanced",
+    "src": "/math calculators10.webp",
+    "alt": "Background with advanced calculus and matrix notation",
+    "hint": "calculus matrix"
   }
 ]

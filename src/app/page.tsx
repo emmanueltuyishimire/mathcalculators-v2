@@ -11,7 +11,7 @@ import ScientificCalculator from '@/components/calculators/scientific-calculator
 import placeholderImages from '@/lib/placeholder-images.json';
 
 function HeroSection() {
-  const heroImage = placeholderImages.find(p => p.id === 'heroImage1');
+  const heroImage = placeholderImages.find(p => p.id === 'heroImage');
   return (
     <section
       className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
@@ -43,9 +43,9 @@ function HeroSection() {
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
-        image: placeholderImages.find(p => p.id === 'heroImage6')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'heroImage6')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'heroImage6')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryBasicAlgebra')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'categoryBasicAlgebra')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'categoryBasicAlgebra')?.alt,
         tools: [
             { href: '/algebra', label: 'Algebra Calculator', icon: Type },
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
@@ -66,9 +66,9 @@ const calculatorCategories = [
     },
     {
         title: "Geometry & Trigonometry",
-        image: placeholderImages.find(p => p.id === 'heroImage7')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'heroImage7')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'heroImage7')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryGeometry')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'categoryGeometry')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'categoryGeometry')?.alt,
         tools: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
             { href: '/trigonometry', label: 'Trigonometry Calculator', icon: Sigma },
@@ -84,9 +84,9 @@ const calculatorCategories = [
     },
     {
         title: "Statistics & Probability",
-        image: placeholderImages.find(p => p.id === 'heroImage6')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'heroImage6')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'heroImage6')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryStatistics')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'categoryStatistics')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'categoryStatistics')?.alt,
         tools: [
             { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
@@ -102,9 +102,9 @@ const calculatorCategories = [
     },
     {
         title: "Advanced & Specialty",
-        image: placeholderImages.find(p => p.id === 'heroImage4')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'heroImage4')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'heroImage4')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryAdvanced')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'categoryAdvanced')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'categoryAdvanced')?.alt,
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
             { href: '/matrix', label: 'Matrix Calculators', icon: Table },
