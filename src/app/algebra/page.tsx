@@ -1,132 +1,73 @@
 
 "use client";
 
-import { PageHeader } from '@/components/page-header';
-import AlgebraCalculator from '@/components/calculators/algebra-calculator';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
+import React from 'react';
+import BasicCalculator from '@/components/calculators/basic-calculator';
 
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Algebra Calculator",
-  "operatingSystem": "All",
-  "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator to solve linear equations for the variable 'x'.",
-  "url": "https://maths.calculation.site/algebra",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  },
-  "inLanguage": "en",
-  "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0"
-};
+const basicTools = [
+  { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
+  { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
+  { href: '/percentage', label: 'Percentage Calculator', icon: Percent },
+  { href: '/random', label: 'Random Number Generator', icon: Shuffle },
+  { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
+  { href: '/exponent', label: 'Exponent Calculator', icon: Superscript },
+  { href: '/binary', label: 'Binary Calculator', icon: Binary },
+  { href: '/hex', label: 'Hex Calculator', icon: Code },
+  { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
+  { href: '/log', label: 'Log Calculator', icon: Calculator },
+  { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
+  { href: '/root', label: 'Root Calculator', icon: Radical },
+  { href: '/lcm', label: 'Least Common Multiple', icon: Gavel },
+  { href: '/gcf', label: 'Greatest Common Factor', icon: Hand },
+  { href: '/factor', label: 'Factor Calculator', icon: Gavel },
+  { href: '/rounding', 'label': 'Rounding Calculator', icon: CheckCircle },
+  { href: '/matrix', label: 'Matrix Calculator', icon: Table },
+  { href: '/scientific-notation', label: 'Scientific Notation', icon: Type },
+  { href: '/big-number', label: 'Big Number Calculator', icon: InfinityIcon },
+];
 
-const HowToUseGuide = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>How to Use the Algebra Calculator</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 text-muted-foreground">
-            <ol className="list-decimal list-inside space-y-2">
-                <li>
-                    <strong>Enter the Equation:</strong> Type a simple linear equation into the input field (e.g., <code className="font-mono bg-muted p-1 rounded-md">3x - 5 = 16</code>).
-                </li>
-                <li>
-                    <strong>Solve for x:</strong> Click the "Solve for x" button to compute the solution.
-                </li>
-                <li>
-                    <strong>View the Result:</strong> The calculator will display the value of 'x' in the result section below.
-                </li>
-            </ol>
-            <div className="p-4 bg-accent/50 rounded-lg">
-                <h4 className="font-semibold text-accent-foreground">💡 Tip</h4>
-                <p className="text-sm text-muted-foreground mt-2">This calculator is designed for basic linear equations. For more complex problems, ensure your equation is in a simple format.</p>
-            </div>
-        </CardContent>
-    </Card>
-);
-
-const FaqSection = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle>Frequently Asked Questions</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                    <AccordionTrigger>What is a linear equation?</AccordionTrigger>
-                    <AccordionContent>
-                        A linear equation is an equation in which the highest power of the variable is always 1. It is the equation of a straight line. For example, `2x + 3 = 7` is a linear equation.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-2">
-                    <AccordionTrigger>Can this calculator solve quadratic equations?</AccordionTrigger>
-                    <AccordionContent>
-                        No, this calculator is specifically designed for linear equations (like `ax + b = c`). It cannot solve quadratic equations (like `ax² + bx + c = 0`) or other higher-order polynomials.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-3">
-                    <AccordionTrigger>How do I enter fractions in the equation?</AccordionTrigger>
-                    <AccordionContent>
-                        Currently, the calculator has limited support for fractions. For best results, use decimal equivalents. For example, instead of `1/2`, use `0.5`.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-4">
-                    <AccordionTrigger>What does it mean to "solve for x"?</AccordionTrigger>
-                    <AccordionContent>
-                        "Solving for x" means finding the value of the variable 'x' that makes the equation true. The goal is to isolate 'x' on one side of the equation.
-                    </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="item-5">
-                    <AccordionTrigger>Can I use variables other than 'x'?</AccordionTrigger>
-                    <AccordionContent>
-                        This calculator is optimized to solve for the variable 'x'. Using other variables might not produce a correct result.
-                    </AccordionContent>
-                </AccordionItem>
-                 <AccordionItem value="item-6">
-                    <AccordionTrigger>Does the calculator support equations with variables on both sides?</AccordionTrigger>
-                    <AccordionContent>
-                        The current version is best for simple linear equations in the format `ax + b = c`. Support for more complex structures like `ax + b = cx + d` is limited.
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-        </CardContent>
-    </Card>
-);
-
-export default function AlgebraPage() {
+export default function BasicCategoryPage() {
   return (
-    <>
-      <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
-      <div className="flex flex-1 flex-col">
-        <PageHeader title="Algebra" />
-        <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
-            <AlgebraCalculator />
-            <HowToUseGuide />
-              <section className="text-center">
-                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                  <div className="flex flex-wrap justify-center gap-2 mt-4">
-                      <Button asChild variant="outline">
-                          <Link href="/scientific">Scientific Calculator</Link>
-                      </Button>
-                      <Button asChild variant="outline">
-                          <Link href="/basic">Basic Calculators</Link>
-                      </Button>
-                  </div>
-              </section>
-              <FaqSection />
-          </div>
-        </main>
-      </div>
-    </>
+    <div className="flex flex-1 flex-col">
+      <main className="flex-1 p-4 md:p-6 lg:p-8">
+        <div className="mx-auto max-w-4xl space-y-8">
+            <section className="text-center">
+                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                    Basic & Algebra Calculators
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                    A collection of essential calculators for everyday math and science problems.
+                </p>
+            </section>
+
+            <div className="max-w-md mx-auto">
+                <BasicCalculator />
+            </div>
+            
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
+              {basicTools.map((tool, index) => (
+                <React.Fragment key={tool.label}>
+                  <Link href={tool.href} className="group">
+                    <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                      <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                         <div className="rounded-full bg-primary/10 p-3 text-primary">
+                          <tool.icon className="h-6 w-6" />
+                        </div>
+                        <CardTitle>{tool.label}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </React.Fragment>
+              ))}
+            </div>
+        </div>
+      </main>
+    </div>
   );
 }

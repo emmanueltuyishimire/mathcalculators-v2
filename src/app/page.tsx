@@ -42,9 +42,9 @@ const calculatorCategories = [
         title: "Basic & Algebra",
         image: "/math%20calculator%20background%20image6.webp",
         tools: [
+            { href: '/algebra', label: 'Algebra Calculator', icon: Type },
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
             { href: '/scientific', label: 'Scientific Calculator', icon: FlaskConical },
-            { href: '/algebra', label: 'Algebra Calculator', icon: Type },
             { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
             { href: '/percentage', label: 'Percentage Calculator', icon: Percent },
             { href: '/exponent', label: 'Exponent Calculator', icon: Superscript },

@@ -31,7 +31,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { AppFooter } from './app-footer';
 
 const navItems = [
-  { href: '/basic', label: 'Basic', icon: Calculator },
+  { href: '/algebra', label: 'Algebra', icon: Calculator },
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
@@ -98,7 +98,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                 {navItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
-                    <NavigationMenuLink asChild active={pathname.startsWith(item.href)}>
+                    <NavigationMenuLink asChild active={pathname.startsWith(item.href) || (item.href === '/algebra' && pathname === '/basic')}>
                         <Link href={item.href} className={navigationMenuTriggerStyle()}>
                             {item.label}
                         </Link>
