@@ -65,7 +65,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   onClick={() => setOpen(false)}
                 >
                   <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
-                  <span>Math Calculators</span>
+                  <span className="sr-only">Math Calculators</span>
                 </Link>
                 {navItems.map((item) => (
                   <Link
@@ -89,7 +89,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             aria-label="Math Calculators Home"
           >
             <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
-            <span className="sr-only sm:not-sr-only">Math Calculators</span>
+            <span className="sr-only">Math Calculators</span>
           </Link>
         </div>
         
