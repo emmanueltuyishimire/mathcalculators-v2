@@ -40,12 +40,13 @@ const navItems = [
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [open, setOpen] = React.useState(false);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
         <div className="flex items-center md:hidden">
-          <Sheet>
+          <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
@@ -61,6 +62,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link
                   href="/"
                   className="flex items-center gap-2 text-lg font-semibold"
+                  onClick={() => setOpen(false)}
                 >
                   <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
                   <span>Math Calculators</span>
@@ -69,6 +71,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => setOpen(false)}
                     className={cn(
                       "hover:text-foreground",
                       pathname.startsWith(item.href) ? "text-foreground" : "text-muted-foreground"
@@ -95,7 +98,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <NavigationMenuList>
                 {navItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
-                     <NavigationMenuLink asChild active={pathname.startsWith(item.href)}>
+                    <NavigationMenuLink asChild active={pathname.startsWith(item.href)}>
                         <Link href={item.href} className={navigationMenuTriggerStyle()}>
                             {item.label}
                         </Link>

@@ -4,7 +4,7 @@ import { MetadataRoute } from 'next';
 const URL = 'https://maths.calculation.site';
 
 const staticRoutes = [
-  '',
+  '/',
   '/about',
   '/algebra',
   '/basic',
@@ -58,6 +58,7 @@ const staticRoutes = [
   '/statistics/z-score',
   '/terms-of-service',
   '/trigonometry',
+  '/site-directory', // Add sitemap page itself
 ].map(route => ({
   url: `${URL}${route}`,
   lastModified: new Date(),

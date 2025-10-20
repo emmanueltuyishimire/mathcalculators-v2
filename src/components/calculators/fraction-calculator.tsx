@@ -138,7 +138,7 @@ function BasicFractionCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [f1, f2, op]);
 
     return (
         <Card>
@@ -307,7 +307,7 @@ function MixedNumbersCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [m1, m2, op]);
 
      return (
         <Card>
@@ -385,7 +385,7 @@ function SimplifyFractionCalculator() {
      useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [frac]);
 
     return (
         <Card>
@@ -517,7 +517,7 @@ function FractionToDecimal() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [frac]);
 
     return (
         <Card>
@@ -575,7 +575,7 @@ function BigNumberFractionCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [f1, f2, op]);
 
     return (
         <Card>

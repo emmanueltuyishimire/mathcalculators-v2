@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -68,21 +68,18 @@ export default function PythagoreanCalculator() {
                 if (valA <= 0 || valB <= 0) throw new Error("Sides 'a' and 'b' must be positive.");
                 const cSquared = valA**2 + valB**2;
                 valC = Math.sqrt(cSquared);
-                setC(valC.toFixed(4));
                 steps = `c = √(a² + b²) = √(${valA}² + ${valB}²) = √(${valA**2} + ${valB**2}) = √${cSquared.toFixed(4)} = ${valC.toFixed(4)}`;
             } else if (isNaN(valA)) { // Calculate a
                 if (valB <= 0 || valC <= 0) throw new Error("Sides 'b' and 'c' must be positive.");
                 if (valC <= valB) throw new Error("Side 'c' (hypotenuse) must be greater than side 'b'.");
                 const aSquared = valC**2 - valB**2;
                 valA = Math.sqrt(aSquared);
-                setA(valA.toFixed(4));
                 steps = `a = √(c² - b²) = √(${valC}² - ${valB}²) = √(${valC**2} - ${valB**2}) = √${aSquared.toFixed(4)} = ${valA.toFixed(4)}`;
             } else { // Calculate b
                 if (valA <= 0 || valC <= 0) throw new Error("Sides 'a' and 'c' must be positive.");
                 if (valC <= valA) throw new Error("Side 'c' (hypotenuse) must be greater than side 'a'.");
                 const bSquared = valC**2 - valA**2;
                 valB = Math.sqrt(bSquared);
-                setB(valB.toFixed(4));
                 steps = `b = √(c² - a²) = √(${valC}² - ${valA}²) = √(${valC**2} - ${valA**2}) = √${bSquared.toFixed(4)} = ${valB.toFixed(4)}`;
             }
 
@@ -113,10 +110,9 @@ export default function PythagoreanCalculator() {
         }
     };
     
-    useEffect(() => {
+    useState(() => {
         calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    });
     
     const handleClear = () => {
       setA('');
@@ -158,15 +154,18 @@ export default function PythagoreanCalculator() {
                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <h4 className="font-semibold mb-2">Results</h4>
                         <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-mono">
-                            <div><span className="text-muted-foreground">∠α =</span> {result.angleA.deg.toFixed(4)}°</div>
-                            <div><span className="text-muted-foreground">∠β =</span> {result.angleB.deg.toFixed(4)}°</div>
-                            <div><span className="text-muted-foreground"></span> {result.angleA.dms}</div>
-                            <div><span className="text-muted-foreground"></span> {result.angleB.dms}</div>
-                            <div><span className="text-muted-foreground"></span> {result.angleA.rad.toFixed(4)} rad</div>
-                            <div><span className="text-muted-foreground"></span> {result.angleB.rad.toFixed(4)} rad</div>
-                            <div className="col-span-2 mt-2 pt-2 border-t"><span className="text-muted-foreground">Area =</span> {result.area.toFixed(4)}</div>
-                            <div><span className="text-muted-foreground">Perimeter =</span> {result.perimeter.toFixed(4)}</div>
-                            <div><span className="text-muted-foreground">Altitude h =</span> {result.h.toFixed(4)}</div>
+                            <p>Side a: {result.a.toFixed(4)}</p>
+                            <p>Side b: {result.b.toFixed(4)}</p>
+                            <p>Side c: {result.c.toFixed(4)}</p>
+                            <p>∠α = {result.angleA.deg.toFixed(4)}°</p>
+                            <p>∠β = {result.angleB.deg.toFixed(4)}°</p>
+                            <p className="text-muted-foreground">{result.angleA.dms}</p>
+                            <p className="text-muted-foreground">{result.angleB.dms}</p>
+                            <p className="text-muted-foreground">{result.angleA.rad.toFixed(4)} rad</p>
+                            <p className="text-muted-foreground">{result.angleB.rad.toFixed(4)} rad</p>
+                            <div className="col-span-2 mt-2 pt-2 border-t">Area = {result.area.toFixed(4)}</div>
+                            <div>Perimeter = {result.perimeter.toFixed(4)}</div>
+                            <div>Altitude h = {result.h.toFixed(4)}</div>
                         </div>
                     </div>
                      <Accordion type="single" collapsible className="w-full">

@@ -144,7 +144,10 @@ export default function PythagoreanPage() {
                 <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
                 <div className="flex flex-wrap justify-center gap-2 mt-4">
                     <Button asChild variant="outline">
-                        <Link href="/geometry">Geometry Calculators</Link>
+                        <Link href="/right-triangle">Right Triangle Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/distance">Distance Calculator</Link>
                     </Button>
                     <Button asChild variant="outline">
                         <Link href="/slope">Slope Calculator</Link>

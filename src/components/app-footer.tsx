@@ -55,7 +55,7 @@ export function AppFooter() {
                             <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
                             <li><Link href="/terms-of-service" className="text-muted-foreground hover:text-primary">Terms of Service</Link></li>
                             <li><Link href="/disclaimer" className="text-muted-foreground hover:text-primary">Disclaimer</Link></li>
-                            <li><Link href="/sitemap" className="text-muted-foreground hover:text-primary">Sitemap</Link></li>
+                            <li><Link href="/site-directory" className="text-muted-foreground hover:text-primary">Sitemap</Link></li>
                         </ul>
                     </div>
                 </div>

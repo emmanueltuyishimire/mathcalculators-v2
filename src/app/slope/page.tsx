@@ -5,6 +5,8 @@ import SlopeCalculator from '@/components/calculators/slope-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 function HowToUseGuide() {
     return (
@@ -129,6 +131,17 @@ export default function SlopePage() {
             <HowToUseGuide />
             <EducationalContent />
             <FaqSection />
+            <section className="text-center">
+                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    <Button asChild variant="outline">
+                        <Link href="/distance">Distance Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/pythagorean">Pythagorean Theorem Calculator</Link>
+                    </Button>
+                </div>
+            </section>
           </div>
         </main>
       </div>
