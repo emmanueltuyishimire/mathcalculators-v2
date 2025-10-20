@@ -14,7 +14,7 @@ const pageSchema = {
   "name": "Exponent Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator to solve for any variable in an exponential equation (aⁿ = y) and learn about exponent laws.",
+  "description": "Solve for any variable in an exponential equation (aⁿ = y) and learn about exponent laws with our free online exponent calculator.",
   "url": "https://maths.calculation.site/exponent",
   "publisher": {
     "@type": "Organization",
@@ -146,7 +146,7 @@ export default function ExponentPage() {
                       Exponent Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Enter any two values to solve for the third.
+                      A free online calculator to solve for any variable in an exponential equation (aⁿ = y).
                   </p>
               </section>
               

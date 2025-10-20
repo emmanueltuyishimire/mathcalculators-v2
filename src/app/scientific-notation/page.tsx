@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
-            <CardTitle>How to Use the Calculators</CardTitle>
+            <CardTitle>How to Use the Scientific Notation Calculator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
@@ -25,7 +25,7 @@ const HowToUseGuide = () => (
                 </ol>
             </div>
             <div>
-                <h3 className="font-semibold text-foreground text-lg">Scientific Notation Calculator</h3>
+                <h3 className="font-semibold text-foreground text-lg">Scientific Notation Arithmetic Calculator</h3>
                 <p>This tool performs arithmetic operations on two numbers in scientific notation.</p>
                 <ol className="list-decimal list-inside space-y-2 mt-2">
                     <li>
@@ -115,7 +115,7 @@ export default function ScientificNotationPage() {
                     Scientific Notation Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                   Tools for converting numbers to scientific notation and performing arithmetic with them.
+                   Free online calculators for converting numbers to scientific notation and performing arithmetic with them.
                 </p>
             </section>
             

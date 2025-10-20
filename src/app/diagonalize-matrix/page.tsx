@@ -58,10 +58,10 @@ export default function DiagonalizeMatrixPage() {
         <div className="mx-auto max-w-5xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Diagonalize Matrix Calculator – Free Online Tool
+                    Diagonalize Matrix Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    The Diagonalize Matrix Calculator allows you to quickly compute the eigenvalues and eigenvectors of any square matrix and generate its diagonal form online. Ideal for students, teachers, and professionals learning linear algebra, this tool also provides step-by-step explanations to help you understand the diagonalization process.
+                    This Diagonalize Matrix Calculator allows you to quickly compute the eigenvalues and eigenvectors of any square matrix and generate its diagonal form online.
                 </p>
             </section>
             

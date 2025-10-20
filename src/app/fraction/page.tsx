@@ -12,7 +12,7 @@ const pageSchema = {
   "name": "Fraction Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A comprehensive set of free online fraction calculators for arithmetic, simplification, and decimal conversion.",
+  "description": "A comprehensive set of free online fraction calculators for arithmetic (add, subtract, multiply, divide), simplification, and conversion between fractions and decimals.",
   "url": "https://maths.calculation.site/fraction",
   "publisher": {
     "@type": "Organization",
@@ -145,7 +145,7 @@ export default function FractionPage() {
                       Fraction Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Below are multiple fraction calculators capable of addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals. Fields above the solid black line represent the numerator, while fields below represent the denominator.
+                      A free online fraction calculator for all your arithmetic needs, including addition, subtraction, multiplication, and division, plus simplification and decimal conversion.
                   </p>
               </section>
             <FractionCalculators />

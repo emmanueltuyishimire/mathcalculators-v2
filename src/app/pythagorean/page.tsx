@@ -12,7 +12,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
-            <CardTitle>How to Use the Calculator</CardTitle>
+            <CardTitle>How to Use the Pythagorean Theorem Calculator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground">
             <p>This calculator solves for the missing side of a right-angled triangle, and also provides other properties like angles, area, and perimeter.</p>
@@ -122,7 +122,7 @@ export default function PythagoreanPage() {
                     Pythagorean Theorem Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide any two values below to solve the Pythagorean equation: a² + b² = c².
+                    A free online calculator to solve the Pythagorean equation a² + b² = c². Please provide any two values to solve for the third side of a right triangle.
                 </p>
             </section>
             

@@ -89,10 +89,10 @@ export default function CalculatorsPage() {
         />
         <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
           <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
-            All Calculators
+            Math Calculators
           </h1>
           <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
-            Browse our comprehensive collection of calculators, organized by category.
+            Browse our comprehensive collection of free online math calculators, organized by category for easy access.
           </p>
         </div>
       </section>

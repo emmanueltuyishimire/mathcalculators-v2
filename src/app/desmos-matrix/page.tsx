@@ -64,10 +64,10 @@ export default function DesmosMatrixPage() {
         <div className="mx-auto max-w-4xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Desmos Matrix Calculator – Free Online Tool
+                    Desmos Matrix Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Perform matrix operations, visualize transformations, and learn linear algebra interactively.
+                    Perform matrix operations, visualize transformations, and learn linear algebra interactively with this free online matrix calculator.
                 </p>
             </section>
             

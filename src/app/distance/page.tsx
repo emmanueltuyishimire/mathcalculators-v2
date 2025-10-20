@@ -12,7 +12,7 @@ const pageSchema = {
   "name": "Distance Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "Calculate the distance between two points in 2D or 3D space, or between two geographical coordinates (latitude and longitude).",
+  "description": "A free online distance calculator to find the distance between two points in 2D or 3D space, or between two geographical coordinates (latitude and longitude).",
   "url": "https://maths.calculation.site/distance",
   "publisher": {
     "@type": "Organization",
@@ -152,7 +152,7 @@ export default function DistancePage() {
                       Distance Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Find the distance between two points in a 2D plane, 3D space, or between two latitude-longitude coordinates on Earth.
+                      Use our free distance calculator to find the distance between two points in a 2D plane, 3D space, or between two latitude-longitude coordinates on Earth.
                   </p>
               </section>
               

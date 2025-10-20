@@ -15,7 +15,7 @@ const pageSchema = {
   "name": "Ratio Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator for solving ratio proportion problems (A:B = C:D) and scaling ratios up or down.",
+  "description": "A free online ratio calculator for solving ratio proportion problems (A:B = C:D) and scaling ratios up or down.",
   "url": "https://maths.calculation.site/ratio",
   "publisher": {
     "@type": "Organization",
@@ -46,7 +46,7 @@ const aspectRatios = [
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
-            <CardTitle>How to Use the Ratio Calculators</CardTitle>
+            <CardTitle>How to Use the Ratio Calculator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
@@ -194,7 +194,7 @@ export default function RatioPage() {
                               Ratio Calculator
                           </h1>
                           <p className="mt-4 text-lg text-muted-foreground">
-                              Solve for missing values in proportions or scale ratios up and down with ease. Modify the values and click "Calculate" to use.
+                              A free online calculator for solving ratio proportions and scaling ratios up or down with ease.
                           </p>
                       </section>
                       

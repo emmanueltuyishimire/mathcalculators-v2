@@ -14,7 +14,7 @@ const pageSchema = {
   "name": "Least Common Multiple (LCM) Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator to find the least common multiple (LCM) of a set of numbers, with step-by-step solutions.",
+  "description": "Find the least common multiple (LCM) of a set of numbers with our free online LCM calculator, complete with step-by-step solutions.",
   "url": "https://maths.calculation.site/lcm",
   "publisher": {
     "@type": "Organization",
@@ -166,10 +166,10 @@ export default function LcmPage() {
           <div className="mx-auto max-w-2xl space-y-8">
               <section className="text-center">
                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                      Least Common Multiple Calculator
+                      Least Common Multiple (LCM) Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Please provide numbers separated by a comma "," and click the "Calculate" button to find the LCM.
+                      A free online calculator to find the least common multiple (LCM) of a set of numbers, with step-by-step solutions.
                   </p>
               </section>
             <LcmCalculator />

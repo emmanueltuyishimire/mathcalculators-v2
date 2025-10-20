@@ -36,7 +36,7 @@ export default function BasicCategoryPage() {
         <div className="mx-auto max-w-4xl space-y-8">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Basic & Algebra Calculators
+                    Basic Calculators
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
                     A collection of essential calculators for everyday math and science problems.

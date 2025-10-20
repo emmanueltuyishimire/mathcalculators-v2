@@ -13,7 +13,7 @@ const pageSchema = {
   "name": "Greatest Common Factor (GCF) Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator to find the greatest common factor (GCF) of a set of numbers, with step-by-step solutions.",
+  "description": "Find the greatest common factor (GCF) of a set of numbers with our free online GCF calculator, complete with step-by-step solutions using prime factorization.",
   "url": "https://maths.calculation.site/gcf",
   "publisher": {
     "@type": "Organization",
@@ -120,10 +120,10 @@ export default function GcfPage() {
           <div className="mx-auto max-w-2xl space-y-8">
               <section className="text-center">
                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                      Greatest Common Factor Calculator
+                      Greatest Common Factor (GCF) Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Please provide numbers separated by a comma "," and click the "Calculate" button to find the GCF.
+                      A free online calculator to find the greatest common factor (GCF) of a set of numbers, with step-by-step solutions.
                   </p>
               </section>
             <GcfCalculator />

@@ -14,7 +14,7 @@ const pageSchema = {
   "name": "Calculus Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.",
+  "description": "Solve derivatives, integrals, and limits with our free online Calculus Calculator. A helpful tool for students learning the fundamentals of calculus.",
   "url": "https://maths.calculation.site/calculus",
   "publisher": {
     "@type": "Organization",
@@ -109,9 +109,17 @@ export default function CalculusPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
       />
       <div className="flex flex-1 flex-col">
-        <PageHeader title="Calculus" />
+        <PageHeader title="Calculus Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-2xl space-y-8">
+            <section className="text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                    Calculus Calculator
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                    A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.
+                </p>
+            </section>
             <CalculusCalculator />
             <HowToUseGuide />
              <section className="text-center">

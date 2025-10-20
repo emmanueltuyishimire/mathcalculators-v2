@@ -11,57 +11,51 @@ import React from 'react';
 const statisticsTools = [
   {
     href: '/statistics/mean-median-mode',
-    label: 'Mean, Median, Mode',
+    label: 'Mean, Median, Mode Calculator',
     icon: BarChartHorizontal,
     description: 'Calculate mean, median, mode, and range for a dataset.',
   },
   {
     href: '/statistics/standard-deviation',
-    label: 'Standard Deviation',
+    label: 'Standard Deviation Calculator',
     icon: Sigma,
     description: 'Calculate standard deviation, variance, and mean.',
   },
   {
     href: '/statistics/sample-size',
-    label: 'Sample Size',
+    label: 'Sample Size Calculator',
     icon: Percent,
     description: 'Determine the minimum sample size for your study.',
   },
   {
     href: '/statistics/probability',
-    label: 'Probability',
+    label: 'Probability Calculator',
     icon: Percent,
     description: 'Calculate probabilities for various scenarios.',
   },
   {
     href: '/statistics/permutation-combination',
-    label: 'Permutation & Combination',
+    label: 'Permutation & Combination Calculator',
     icon: FunctionSquare,
     description: 'Calculate nPr and nCr for arrangements and selections.',
   },
   {
     href: '/statistics/z-score',
-    label: 'Z-Score',
+    label: 'Z-Score Calculator',
     icon: Sigma,
     description: 'Compute z-scores and find associated probabilities.',
   },
   {
     href: '/statistics/confidence-interval',
-    label: 'Confidence Interval',
+    label: 'Confidence Interval Calculator',
     icon: ShieldCheck,
     description: 'Calculate confidence intervals for a sample mean.',
   },
   {
     href: '/statistics/sequences',
-    label: 'Sequences',
+    label: 'Sequence Calculators',
     icon: Milestone,
     description: 'Calculators for arithmetic, geometric, and Fibonacci sequences.',
-  },
-  {
-    href: '/statistics',
-    label: 'Statistics Calculator',
-    icon: Calculator,
-    description: 'A general-purpose statistical calculator.',
   },
 ];
 
@@ -116,7 +110,7 @@ export default function StatisticsCategoryPage() {
                     Statistics Calculators
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A comprehensive suite of tools for all your statistical analysis needs. From basic descriptive statistics to probability and sample size calculations.
+                    A comprehensive suite of free online statistics calculators for all your statistical analysis needs.
                 </p>
             </section>
 

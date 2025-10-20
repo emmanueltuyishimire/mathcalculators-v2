@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -14,13 +15,13 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const metadata: Metadata = {
   metadataBase: new URL('https://maths.calculation.site'),
   title: {
-    default: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
-    template: '%s – Math Calculators',
+    default: 'Math Calculators | Free Online Tools for Math, Algebra, & Geometry',
+    template: '%s | Math Calculators',
   },
-  description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
+  description: 'Explore a comprehensive suite of free online math calculators for algebra, geometry, statistics, and more. Get instant, accurate results for everything from basic arithmetic to advanced calculus and matrix operations.',
   openGraph: {
-    title: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
-    description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
+    title: 'Math Calculators | Free Online Tools for Math, Algebra, & Geometry',
+    description: 'Explore a comprehensive suite of free online math calculators for algebra, geometry, statistics, and more. Get instant, accurate results for everything from basic arithmetic to advanced calculus and matrix operations.',
     images: [`/math%20calculator%20background%20image%201.webp`],
     url: 'https://maths.calculation.site',
     siteName: 'Math Calculators',
@@ -29,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
-    description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
+    title: 'Math Calculators | Free Online Tools for Math, Algebra, & Geometry',
+    description: 'Explore a comprehensive suite of free online math calculators for algebra, geometry, statistics, and more. Get instant, accurate results for everything from basic arithmetic to advanced calculus and matrix operations.',
     images: [`/math%20calculator%20background%20image%201.webp`],
   },
 };

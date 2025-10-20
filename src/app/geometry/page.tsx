@@ -32,13 +32,13 @@ const geometryTools = [
   },
   {
     href: '/pythagorean',
-    label: 'Pythagorean',
+    label: 'Pythagorean Theorem Calculator',
     icon: Sigma,
     description: 'Solve for sides of a right-angled triangle.',
   },
   {
     href: '/right-triangle',
-    label: 'Right Triangle',
+    label: 'Right Triangle Calculator',
     icon: Triangle,
     description: 'Solve right triangles from any two values.',
   },
@@ -67,7 +67,7 @@ export default function GeometryPage() {
                     Geometry Calculators
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A comprehensive set of geometry calculators for calculating area, volume, surface area and other geometric properties.
+                    A comprehensive set of free online geometry calculators for area, volume, surface area, and other geometric properties.
                 </p>
             </section>
             

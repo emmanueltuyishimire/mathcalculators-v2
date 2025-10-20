@@ -98,7 +98,7 @@ export default function DestinyMatrixPage() {
                       Destiny Matrix Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Discover your personality traits, strengths, and life path through the lens of numerology.
+                      Discover your personality traits, strengths, and life path through the lens of numerology with our free Destiny Matrix Calculator.
                   </p>
               </section>
               

@@ -137,7 +137,7 @@ export default function HexPage() {
                     Hex Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Use the following calculators to perform the addition, subtraction, multiplication, or division of two hexadecimal values, as well as convert hex values to decimal values, and vice versa.
+                    A free online hex calculator for hexadecimal arithmetic and conversions between hex and decimal values.
                 </p>
             </section>
             

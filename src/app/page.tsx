@@ -24,13 +24,13 @@ function HeroSection() {
         />
       <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
         <h1 id="hero-heading" className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
-          Unlock the Power of Numbers
+          Math Calculators
         </h1>
         <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
-          Struggling with complex equations or need a quick calculation? Our free, user-friendly calculators provide instant, accurate answers for everything from basic arithmetic to advanced calculus. Master math with tools designed for students and professionals alike. Start solving now!
+          Your free online resource for a wide range of math calculators. From basic arithmetic to advanced calculus, we provide instant, accurate answers for students and professionals.
         </p>
            <Button asChild variant="secondary" size="lg" className="mt-6">
-            <Link href="/calculators">Explore Calculators</Link>
+            <Link href="/calculators">Explore All Calculators</Link>
           </Button>
       </div>
     </section>

@@ -14,7 +14,7 @@ const pageSchema = {
   "name": "Big Number Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A calculator for performing arithmetic on very large numbers that exceed the capacity of standard calculators.",
+  "description": "Perform arithmetic on very large numbers with our free online Big Number Calculator. Ideal for cryptography, mathematics, and scientific computations involving integers that exceed standard calculator limits.",
   "url": "https://maths.calculation.site/big-number",
   "publisher": {
     "@type": "Organization",
@@ -187,7 +187,7 @@ export default function BigNumberPage() {
                       Big Number Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      A calculator that can compute very large numbers with high precision.
+                      Our Big Number Calculator is a free online tool designed for high-precision arithmetic with very large integers.
                   </p>
               </section>
               

@@ -13,7 +13,7 @@ const pageSchema = {
   "name": "Factor Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A free online calculator to find all factors, factor pairs, and the prime factorization of any integer.",
+  "description": "Find all factors, factor pairs, and the prime factorization of any integer with our free online Factor Calculator.",
   "url": "https://maths.calculation.site/factor",
   "publisher": {
     "@type": "Organization",
@@ -104,7 +104,7 @@ export default function FactorPage() {
                       Factor Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Please provide an integer to calculate its factors and prime factors.
+                      A free online calculator to find the factors, factor pairs, and prime factorization of any integer.
                   </p>
               </section>
             <FactorCalculator />

@@ -126,15 +126,15 @@ export default function TrigonometryPage() {
   return (
     <>
       <div className="flex flex-1 flex-col">
-        <PageHeader title="Trigonometry Platform" />
+        <PageHeader title="Trigonometry Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-4xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Trigonometry Calculator Platform
+                    Trigonometry Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A unified suite of tools for all your trigonometry needs, from basic functions to advanced triangle solving.
+                    A free online trigonometry calculator with a unified suite of tools for all your trigonometry needs, from basic functions to advanced triangle solving.
                 </p>
             </section>
             

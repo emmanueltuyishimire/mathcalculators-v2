@@ -12,7 +12,7 @@ const pageSchema = {
   "name": "Rounding Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "A versatile online calculator for rounding numbers using various methods (half up, half down, ceiling, floor) and to different levels of precision.",
+  "description": "A versatile online rounding calculator for rounding numbers using various methods (half up, half down, ceiling, floor) and to different levels of precision.",
   "url": "https://maths.calculation.site/rounding",
   "publisher": {
     "@type": "Organization",
@@ -169,7 +169,7 @@ export default function RoundingPage() {
                       Rounding Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      A tool for rounding numbers with various methods and levels of precision.
+                      A free online calculator for rounding numbers with various methods and levels of precision.
                   </p>
               </section>
               

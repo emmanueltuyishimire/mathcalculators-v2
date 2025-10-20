@@ -1,3 +1,4 @@
+
 "use client";
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,13 +20,13 @@ const matrixTools = [
   },
   {
     href: '/desmos-matrix',
-    label: 'Desmos Matrix',
+    label: 'Desmos Matrix Calculator',
     icon: Table,
     description: 'A Desmos-style matrix calculator for interactive operations.',
   },
   {
     href: '/diagonalize-matrix',
-    label: 'Diagonalize Matrix',
+    label: 'Diagonalize Matrix Calculator',
     icon: Table,
     description: 'Find eigenvalues, eigenvectors, and diagonalize matrices.',
   },
@@ -41,7 +42,7 @@ export default function MatrixCategoryPage() {
                     Matrix Calculators
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    A collection of powerful tools for all your linear algebra needs.
+                    A collection of powerful matrix calculators for all your linear algebra needs.
                 </p>
             </section>
             

@@ -10,7 +10,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
-            <CardTitle>How to Use the Half-Life Calculators</CardTitle>
+            <CardTitle>How to Use the Half-Life Calculator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
@@ -206,7 +206,7 @@ export default function HalfLifePage() {
                     Half-Life Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                   The following tools can generate any one of the values from the other three in the half-life formula for a substance undergoing decay to decrease by half.
+                   A free online calculator for half-life, mean lifetime, and decay constant problems.
                 </p>
             </section>
           <HalfLifeCalculator />

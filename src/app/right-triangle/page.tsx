@@ -52,7 +52,7 @@ export default function RightTrianglePage() {
                     Right Triangle Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide any 2 values below to calculate the other values of a right triangle. If radians are selected as the angle unit, it can take values such as pi/3, pi/4, etc.
+                    A free online calculator to solve for the missing sides and angles of a right triangle. Please provide any two values to get started.
                 </p>
             </section>
             
@@ -69,7 +69,7 @@ export default function RightTrianglePage() {
                         <Link href="/pythagorean">Pythagorean Theorem Calculator</Link>
                     </Button>
                     <Button asChild variant="outline">
-                        <Link href="/scientific">Trigonometry Calculator</Link>
+                        <Link href="/trigonometry">Trigonometry Calculator</Link>
                     </Button>
                 </div>
             </section>

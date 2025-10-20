@@ -11,10 +11,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Unit Converter",
+  "name": "Unit Converter Calculator",
   "operatingSystem": "All",
   "applicationCategory": "Utilities",
-  "description": "A versatile unit converter for length, mass, temperature, and other common measurements.",
+  "description": "A versatile unit converter for length, mass, temperature, and other common measurements. Free and easy to use for all your conversion needs.",
   "url": "https://maths.calculation.site/converter",
   "publisher": {
     "@type": "Organization",
@@ -110,6 +110,14 @@ export default function ConverterPage() {
         <PageHeader title="Unit Converter" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-2xl space-y-8">
+            <section className="text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                    Unit Converter Calculator
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                    A free and easy-to-use unit converter for length, mass, and temperature.
+                </p>
+            </section>
             <UnitConverter />
             <HowToUseGuide />
               <section className="text-center">

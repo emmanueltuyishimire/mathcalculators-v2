@@ -15,7 +15,7 @@ const pageSchema = {
   "name": "Binary Calculator",
   "operatingSystem": "All",
   "applicationCategory": "EducationalApplication",
-  "description": "Perform binary arithmetic (add, subtract, multiply, divide) and convert between binary and decimal values.",
+  "description": "Perform binary arithmetic (add, subtract, multiply, divide) and convert between binary and decimal values with our free online Binary Calculator.",
   "url": "https://maths.calculation.site/binary",
   "publisher": {
     "@type": "Organization",
@@ -30,7 +30,7 @@ const pageSchema = {
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
-            <CardTitle>How to Use the Binary Calculators</CardTitle>
+            <CardTitle>How to Use the Binary Calculator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground">
             <ol className="list-decimal list-inside space-y-2">
@@ -187,7 +187,7 @@ export default function BinaryPage() {
                       Binary Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Use the following calculators to perform the addition, subtraction, multiplication, or division of two binary values, as well as convert binary values to decimal values, and vice versa.
+                      A free online binary calculator for arithmetic and conversions between binary and decimal values.
                   </p>
               </section>
               

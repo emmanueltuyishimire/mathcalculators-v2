@@ -9,10 +9,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Random Number Generator",
+  "name": "Random Number Generator Calculator",
   "operatingSystem": "All",
   "applicationCategory": "Utilities",
-  "description": "A tool to generate random numbers, including integers and decimals with adjustable precision, range, and count.",
+  "description": "A free online random number generator for integers and decimals with adjustable precision, range, and count.",
   "url": "https://maths.calculation.site/random",
   "publisher": {
     "@type": "Organization",
@@ -27,7 +27,7 @@ const pageSchema = {
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
-            <CardTitle>How to Use the Random Number Generators</CardTitle>
+            <CardTitle>How to Use the Random Number Generator</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 text-muted-foreground">
             <div>
@@ -116,7 +116,7 @@ export default function RandomNumberPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
       />
       <div className="flex flex-1 flex-col">
-        <PageHeader title="Random Number Generator" />
+        <PageHeader title="Random Number Generator Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-2xl space-y-8">
               <section className="text-center">
@@ -124,7 +124,7 @@ export default function RandomNumberPage() {
                       Random Number Generator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                      Generate random integers or decimals with customizable options.
+                      A free online calculator for generating random integers or decimals with customizable options.
                   </p>
               </section>
               <RandomNumberGenerator />

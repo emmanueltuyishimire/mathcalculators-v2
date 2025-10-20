@@ -1,3 +1,4 @@
+
 'use client';
 
 import { PageHeader } from '@/components/page-header';
@@ -64,10 +65,10 @@ export default function ScientificPage() {
           <div className="mx-auto max-w-4xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Scientific Calculator Online – Free & Accurate
+                    Online Scientific Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Your go-to free online scientific calculator for complex math problems. It's fast, accurate, and easy to use.
+                    A free, powerful, and easy-to-use scientific calculator for all your complex math problems.
                 </p>
             </section>
             

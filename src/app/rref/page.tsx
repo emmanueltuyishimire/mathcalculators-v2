@@ -13,13 +13,13 @@ export default function RrefPage() {
         <div className="mx-auto max-w-4xl space-y-12">
             <section className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Augmented Matrix & RREF Calculator – Solve Linear Systems Online
+                    Augmented Matrix & RREF Calculator
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                    Our Augmented Matrix & RREF Calculator is a powerful online tool for solving systems of linear equations quickly and accurately. Whether you are a student learning linear algebra, an engineer, or a math enthusiast, this calculator lets you input augmented matrices, perform row operations, compute RREF, and find solutions with ease.
+                    Our Augmented Matrix & RREF Calculator is a powerful online tool for solving systems of linear equations quickly and accurately.
                 </p>
                 <p className="mt-2 text-lg text-muted-foreground">
-                    It’s free, responsive, and easy to use on both desktop and mobile devices.
+                    For other matrix operations, try our main <Link href="/matrix/calculator" className="text-primary hover:underline">Matrix Calculator</Link>.
                 </p>
             </section>
 
