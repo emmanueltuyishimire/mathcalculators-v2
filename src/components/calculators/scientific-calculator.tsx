@@ -133,7 +133,7 @@ const formatResult = (num: number): string => {
 };
 
 const factorial = (n: number): number => {
-    if (n < 0 || !Number.isInteger(n)) throw new Error("Invalid input for factorial");
+    if (n < 0 || !Number.isInteger(n)) throw new Error("Invalid input");
     if (n > 170) throw new Error("Overflow");
     if (n === 0) return 1;
     let result = 1;
@@ -150,14 +150,16 @@ export default function ScientificCalculator() {
   const [expressionTokens, setExpressionTokens] = useState<Token[]>([]);
   const [currentNumber, setCurrentNumber] = useState('');
   const [isResult, setIsResult] = useState(false);
+  const [lastResult, setLastResult] = useState(0);
   const [angleMode, setAngleMode] = useState<AngleMode>('DEG');
   const [memory, setMemory] = useState(0);
-  const [show2nd, setShow2nd] = useState(false);
   const [errorState, setErrorState] = useState<string | null>(null);
+  const [show2nd, setShow2nd] = useState(false);
   
   useEffect(() => {
     const exprString = expressionTokens.map(t => {
         if (typeof t === 'number') return formatResult(t);
+        if (isFunction(t)) return `${t}(`;
         return t;
     }).join(' ');
 
@@ -205,13 +207,15 @@ export default function ScientificCalculator() {
 
   const handleOperator = (op: string) => {
     if(resetError()) return;
-    setIsResult(false);
+    
     let newTokens = [...expressionTokens];
-
     if (currentNumber !== '') {
       newTokens.push(parseFloat(currentNumber));
       setCurrentNumber('');
+    } else if (isResult) {
+      newTokens = [lastResult];
     }
+    setIsResult(false);
 
     const lastToken = newTokens[newTokens.length - 1];
     
@@ -252,6 +256,7 @@ export default function ScientificCalculator() {
       
       const resultString = formatResult(result);
       setCurrentNumber(resultString);
+      setLastResult(result);
       setExpressionTokens([]);
       setIsResult(true);
     } catch (e: any) {
@@ -275,7 +280,7 @@ export default function ScientificCalculator() {
     setExpressionTokens([]);
     setCurrentNumber('');
     setIsResult(false);
-    // memory is not cleared by AC on most calculators
+    setLastResult(0);
   };
 
   const handleBackspace = () => {
@@ -285,22 +290,23 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1));
+      const newNum = currentNumber.slice(0, -1);
+      setCurrentNumber(newNum === '' ? '0' : newNum);
     } else if (expressionTokens.length > 0) {
       setExpressionTokens(prev => prev.slice(0, -1));
+    } else {
+        setCurrentNumber('0');
     }
   };
 
   const handleToggleSign = () => {
     if(resetError()) return;
     if (isResult) {
-        const value = parseFloat(displayValue);
-        if (!isNaN(value)) {
-            const newValue = formatResult(-value);
-            setCurrentNumber(newValue);
-            setExpressionTokens([]);
-            setIsResult(false);
-        }
+        const value = lastResult;
+        const newValue = formatResult(-value);
+        setCurrentNumber(newValue);
+        setExpressionTokens([]);
+        setIsResult(false);
     } else if (currentNumber !== '') {
         setCurrentNumber(prev => (prev.startsWith('-') ? prev.substring(1) : '-' + prev));
     } else {
@@ -310,23 +316,18 @@ export default function ScientificCalculator() {
   
   const handleMemory = (type: 'M+' | 'M-' | 'MR' | 'MC') => {
     if(resetError()) return;
-    const value = parseFloat(currentNumber || (isResult ? displayValue : '0'));
     
     let newMemory = memory;
     switch (type) {
       case 'M+': 
-        if (isNaN(value)) return;
-        newMemory += value; 
+        newMemory += (parseFloat(currentNumber) || lastResult); 
         break;
       case 'M-': 
-        if (isNaN(value)) return;
-        newMemory -= value; 
+        newMemory -= (parseFloat(currentNumber) || lastResult); 
         break;
       case 'MR':
-        if(isResult) {
-           setExpressionTokens([]);
-           setIsResult(false);
-        }
+        if(isResult) setExpressionTokens([]);
+        setIsResult(false);
         setCurrentNumber(String(memory));
         return;
       case 'MC': newMemory = 0; break;
@@ -337,14 +338,12 @@ export default function ScientificCalculator() {
   const handleUnaryFunction = (fn: (x: number) => number | string, funcName: string) => {
     if(resetError()) return;
     
-    const valueStr = currentNumber || (isResult ? displayValue : '');
+    const valueStr = currentNumber || (isResult ? String(lastResult) : '');
     if (valueStr === '' || valueStr === '-') return;
 
     try {
       let value = parseFloat(valueStr);
-      let result;
-
-      result = fn(value);
+      let result = fn(value);
       
       if (typeof result === 'string' || isNaN(result) || !isFinite(result)) {
         throw new Error(typeof result === 'string' ? result : "Domain Error");
@@ -353,6 +352,7 @@ export default function ScientificCalculator() {
       const formattedResult = formatResult(result);
       setCurrentNumber(formattedResult);
       if(isResult) setExpressionTokens([]);
+      setLastResult(result);
       setIsResult(true);
 
     } catch (e: any) {
@@ -385,11 +385,12 @@ export default function ScientificCalculator() {
     let newTokens = [...expressionTokens];
 
     if(p === '(') {
+      const lastToken = newTokens[newTokens.length - 1];
       if(currentNumber !== '' && currentNumber !== '-') {
           newTokens.push(parseFloat(currentNumber));
           newTokens.push('×');
           setCurrentNumber('');
-      } else if (isRightParen(newTokens[newTokens.length - 1]) || isNumber(newTokens[newTokens.length-1])) {
+      } else if (isNumber(lastToken) || isRightParen(lastToken)) {
           newTokens.push('×');
       }
       newTokens.push('(');
@@ -408,6 +409,7 @@ export default function ScientificCalculator() {
   const handleConstant = (constant: 'π' | 'e' | 'φ') => {
     if(resetError()) return;
     const values = { 'π': Math.PI, 'e': Math.E, 'φ': (1 + Math.sqrt(5)) / 2 };
+    const constantValue = values[constant];
     
     if (isResult) {
       setExpressionTokens([]);
@@ -418,7 +420,7 @@ export default function ScientificCalculator() {
         let newTokens = [...expressionTokens, parseFloat(currentNumber), '×'];
         setExpressionTokens(newTokens);
     }
-    setCurrentNumber(String(values[constant]));
+    setCurrentNumber(String(constantValue));
   };
 
   const handlePercent = () => {
@@ -426,14 +428,13 @@ export default function ScientificCalculator() {
     
     let numCurrent = parseFloat(currentNumber);
     if(isNaN(numCurrent)) return;
-    
+
     if (expressionTokens.length >= 2) {
-      const lastOp = expressionTokens[expressionTokens.length - 1];
+      const lastOp = expressionTokens[expressionTokens.length - 1] as string;
       const prevNumToken = expressionTokens[expressionTokens.length - 2];
 
-      if ((isOperator(lastOp) && (lastOp === '+' || lastOp === '-')) && isNumber(prevNumToken)) {
-        const prevNum = prevNumToken as number;
-        numCurrent = prevNum * (numCurrent / 100);
+      if ((lastOp === '+' || lastOp === '-') && isNumber(prevNumToken)) {
+        numCurrent = prevNumToken * (numCurrent / 100);
       } else {
         numCurrent = numCurrent / 100;
       }
@@ -454,53 +455,52 @@ export default function ScientificCalculator() {
     { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-orange-600 hover:bg-orange-700' },
 
     show2nd ? { label: 'sin⁻¹', onClick: () => handleTrigFunction('asin'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'sin', onClick: () => handleTrigFunction('sin'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'cos⁻¹', onClick: () => handleTrigFunction('acos'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'cos', onClick: () => handleTrigFunction('cos'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'tan⁻¹', onClick: () => handleTrigFunction('atan'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'tan', onClick: () => handleTrigFunction('tan'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'sinh', onClick: () => handleTrigFunction('sinh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '1/x', onClick: () => handleUnaryFunction(x => { if (x===0) throw new Error("Division by zero"); return 1/x }, '1/x'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'cosh', onClick: () => handleTrigFunction('cosh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'tanh', onClick: () => handleTrigFunction('tanh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'π', onClick: () => handleConstant('π'), className: 'bg-yellow-600 hover:bg-yellow-700' },
+
+    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x**3, 'x³'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x**2, 'x²'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, '∛x'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '√x', onClick: () => handleUnaryFunction(x => {if(x<0) throw new Error("Domain Error"); return Math.sqrt(x)}, '√x'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10**x, '10ˣ'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'log', onClick: () => handleUnaryFunction(x=>{if(x<=0) throw new Error("Domain Error"); return Math.log10(x)}, 'log'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'ln', onClick: () => handleUnaryFunction(x=>{if(x<=0) throw new Error("Domain Error"); return Math.log(x)}, 'ln'), className: 'bg-blue-600 hover:bg-blue-700' },
+
     { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '×', onClick: () => handleOperator('×'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-yellow-600 hover:bg-yellow-700' },
+    { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-yellow-600 hover:bg-yellow-700' },
     
-    show2nd ? { label: 'cos⁻¹', onClick: () => handleTrigFunction('acos'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'cos', onClick: () => handleTrigFunction('cos'), className: 'bg-blue-600 hover:bg-blue-700' },
     { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '5', onClick: () => handleDigit('5'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '6', onClick: () => handleDigit('6'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '-', onClick: () => handleOperator('-'), className: 'bg-orange-600 hover:bg-orange-700' },
-
-    show2nd ? { label: 'tan⁻¹', onClick: () => handleTrigFunction('atan'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'tan', onClick: () => handleTrigFunction('tan'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'RAD', onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
+    
     { label: '1', onClick: () => handleDigit('1'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '2', onClick: () => handleDigit('2'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '3', onClick: () => handleDigit('3'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '+', onClick: () => handleOperator('+'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-green-600 hover:bg-green-700' },
 
     { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-blue-800 hover:bg-blue-900', show2nd && 'bg-blue-500') },
     { label: '0', onClick: () => handleDigit('0'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '±', onClick: handleToggleSign, className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '=', onClick: handleEquals, className: 'bg-orange-600 hover:bg-orange-700' },
-    
-    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x**3, 'x³'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x**2, 'x²'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, '∛x'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '√x', onClick: () => handleUnaryFunction(Math.sqrt, '√x'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10**x, '10ˣ'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: 'log', onClick: () => handleUnaryFunction(Math.log10, 'log'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: 'ln', onClick: () => handleUnaryFunction(Math.log, 'ln'), className: 'bg-blue-600 hover:bg-blue-700' },
-    
-    show2nd ? { label: 'sinh', onClick: () => handleTrigFunction('sinh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '1/x', onClick: () => handleUnaryFunction(x => { if (x===0) throw new Error("Division by zero"); return 1/x }, '1/x'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'cosh', onClick: () => handleTrigFunction('cosh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'tanh', onClick: () => handleTrigFunction('tanh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'π', onClick: () => handleConstant('π'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-    { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
-
-    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-green-600 hover:bg-green-700' },
-    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: '=', onClick: handleEquals, className: 'bg-orange-600 hover:bg-orange-700 col-span-2' },
     { label: 'M+', onClick: () => handleMemory('M+'), className: 'bg-green-600 hover:bg-green-700' },
     { label: 'M-', onClick: () => handleMemory('M-'), className: 'bg-green-600 hover:bg-green-700' },
-    { label: 'RAD', onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-green-600 hover:bg-green-700' },
     
   ].filter(Boolean);
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-[24rem] sm:max-w-md mx-auto bg-gray-800 text-white p-2 border-4 border-gray-900 rounded-xl">
+    <Card id="scientific-calculator" className="shadow-lg max-w-sm mx-auto bg-gray-800 text-white p-2 border-4 border-gray-900 rounded-xl">
       <CardContent className="flex flex-col items-center gap-1 p-1">
         <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-900/80 p-2 text-right break-words h-16 flex items-end justify-end shadow-inner">
           <div className="absolute top-1 left-2 text-xs text-green-500/70 flex gap-2">
@@ -515,7 +515,7 @@ export default function ScientificCalculator() {
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
-                className={cn('h-9 text-xs rounded-md', btn.className)}
+                className={cn('h-9 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-2')}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
@@ -526,3 +526,4 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
+
