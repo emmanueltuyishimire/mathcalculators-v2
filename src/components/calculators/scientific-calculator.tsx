@@ -33,7 +33,7 @@ export default function ScientificCalculator() {
       setIsResult(false);
       return;
     }
-    setDisplayValue(prev => (prev === '0' && !['.','('].includes(value) ? value : prev + value));
+    setDisplayValue(prev => (prev === '0' && value !== '.' ? value : prev + value));
   };
 
   const handleOperatorClick = (operator: string) => {
