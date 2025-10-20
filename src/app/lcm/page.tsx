@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import LcmCalculator from '@/components/calculators/lcm-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Least Common Multiple (LCM) Calculator',
-    description: 'A free online calculator to find the least common multiple (LCM) of a set of numbers. Includes step-by-step solutions using prime factorization.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

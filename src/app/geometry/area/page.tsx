@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import AreaCalculator from '@/components/calculators/area-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Area Calculator',
-    description: 'A free online area calculator for finding the area of common 2D shapes, including rectangles, triangles, circles, and more.',
-};
 
 const HowToUseGuide = () => (
     <Card>

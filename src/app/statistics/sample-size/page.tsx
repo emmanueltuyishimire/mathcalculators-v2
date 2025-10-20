@@ -7,14 +7,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
-import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-    title: 'Sample Size & Margin of Error Calculator',
-    description: 'Calculate the minimum sample size for your study or the margin of error for a given sample size. Essential for surveys, experiments, and polls.',
-};
-
 
 const HowToUseGuide = () => (
   <Card>

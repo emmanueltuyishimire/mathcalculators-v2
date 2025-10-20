@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import DestinyMatrixCalculator from '@/components/calculators/destiny-matrix-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Destiny Matrix Calculator',
-    description: 'Discover your personality traits, strengths, and life path with our free Destiny Matrix Calculator. Enter your birth date to get a personalized numerology reading and explore your destiny.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

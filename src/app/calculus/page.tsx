@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import CalculusCalculator from '@/components/calculators/calculus-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-  title: 'Calculus Calculator',
-  description: 'Solve calculus problems including derivatives, integrals, and limits with our powerful online calculator. Supports a wide range of functions.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import RightTriangleCalculator from '@/components/calculators/right-triangle-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { RightTriangleDiagram } from '@/components/right-triangle-diagram';
-
-export const metadata: Metadata = {
-    title: 'Right Triangle Calculator',
-    description: 'A free online calculator to solve for any two values of a right-angled triangle, including sides, angles, area, and perimeter.',
-};
 
 const EducationalContent = () => (
     <Card>

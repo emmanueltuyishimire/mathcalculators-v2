@@ -1,14 +1,9 @@
 
+"use client";
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Square, Waves, Volume, Circle, Triangle, TrendingUp, Move3d, Sigma } from 'lucide-react';
-import type { Metadata } from 'next';
 import React from 'react';
-
-export const metadata: Metadata = {
-  title: 'Geometry Calculators',
-  description: 'A comprehensive set of geometry calculators for calculating area, volume, surface area, slope, distance, and other geometric properties.',
-};
 
 const geometryTools = [
   {

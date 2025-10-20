@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import RandomNumberGenerator from '@/components/calculators/random-number-generator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Random Number Generator',
-    description: 'A powerful tool to generate random numbers, including integers and decimals with adjustable precision. Supports large numbers and multiple generations.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

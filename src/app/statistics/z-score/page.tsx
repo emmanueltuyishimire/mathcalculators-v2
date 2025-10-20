@@ -3,17 +3,11 @@
 
 import { PageHeader } from '@/components/page-header';
 import ZScoreCalculator from '@/components/calculators/z-score-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ZTable } from '@/components/z-table';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-    title: 'Z-Score Calculator',
-    description: 'Calculate z-scores, convert between z-scores and probabilities, and find probabilities between two z-scores.',
-};
 
 const EducationalContent = () => (
     <Card>

@@ -3,17 +3,11 @@
 
 import { PageHeader } from '@/components/page-header';
 import BinaryCalculator from '@/components/calculators/binary-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Binary Calculator',
-    description: 'Perform binary arithmetic, and convert between binary and decimal values with ease. Supports addition, subtraction, multiplication, and division of binary numbers.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

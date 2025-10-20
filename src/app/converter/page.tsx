@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import UnitConverter from '@/components/calculators/unit-converter';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Unit Converter Calculator',
-    description: 'A versatile unit converter for length, mass, temperature, and more. Quickly and accurately convert between different units of measurement.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import DiagonalizeMatrixCalculator from '@/components/calculators/diagonalize-matrix-calculator';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-  title: 'Diagonalize Matrix Calculator',
-  description: 'Use our free Diagonalize Matrix Calculator to compute eigenvalues, eigenvectors, and diagonal matrices online. Step-by-step explanations included for learning linear algebra easily.',
-};
 
 const faqSchema = {
   "@context": "https://schema.org",

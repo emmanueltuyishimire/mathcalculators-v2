@@ -2,17 +2,11 @@
 "use client";
 
 import BigNumberCalculator from '@/components/calculators/big-number-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Big Number Calculator',
-    description: 'A calculator for performing arithmetic on very large numbers. Supports standard integers and E-notation.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

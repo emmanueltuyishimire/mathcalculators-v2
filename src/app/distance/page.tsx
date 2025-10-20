@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import DistanceCalculator from '@/components/calculators/distance-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Distance Calculator',
-    description: 'Calculate the distance between two points in 2D, 3D, or on the Earth\'s surface using latitude and longitude.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

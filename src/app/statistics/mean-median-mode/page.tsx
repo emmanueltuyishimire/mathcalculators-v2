@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import MeanMedianModeCalculator from '@/components/calculators/mean-median-mode-calculator';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-    title: 'Mean, Median, Mode, Range Calculator',
-    description: 'A free online calculator to find the mean, median, mode, and range from a set of numbers. Quick and easy to use for statistical analysis.',
-};
 
 const HowToUseGuide = () => (
     <Card>

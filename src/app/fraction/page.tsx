@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import FractionCalculators from '@/components/calculators/fraction-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-  title: 'Fraction Calculator',
-  description: 'A collection of free fraction calculators for addition, subtraction, multiplication, division, simplification, and conversion between fractions and decimals.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

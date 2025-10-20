@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-  title: 'Algebra Calculator',
-  description: 'Solve linear equations with our easy-to-use algebra calculator. Enter your equation and get the solution for x instantly.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

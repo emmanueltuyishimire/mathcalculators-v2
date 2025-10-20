@@ -4,14 +4,8 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
-import type { Metadata } from 'next';
 import React from 'react';
 import BasicCalculator from '@/components/calculators/basic-calculator';
-
-export const metadata: Metadata = {
-  title: 'Basic Calculators',
-  description: 'A collection of basic calculators for everyday use, including scientific, fraction, percentage, and more.',
-};
 
 const basicTools = [
   { href: '/scientific', label: 'Scientific Calculator', icon: Atom },

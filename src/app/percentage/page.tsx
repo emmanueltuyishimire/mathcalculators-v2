@@ -3,13 +3,7 @@
 
 import { PageHeader } from '@/components/page-header';
 import PercentageCalculator from '@/components/calculators/percentage-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-
-export const metadata: Metadata = {
-    title: 'Percentage Calculator',
-    description: 'A versatile percentage calculator that helps you solve various percentage-based problems with ease. Calculate percentages, find what percentage one number is of another, and more.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

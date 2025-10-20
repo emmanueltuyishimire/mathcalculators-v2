@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import SurfaceAreaCalculator from '@/components/calculators/surface-area-calculator';
-import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-export const metadata: Metadata = {
-    title: 'Surface Area Calculator',
-    description: 'A list of surface area calculators for several common shapes. Please fill in the corresponding fields and click the "Calculate" button.',
-};
 
 const HowToUseGuide = () => (
     <Card>

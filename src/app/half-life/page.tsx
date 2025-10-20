@@ -3,15 +3,9 @@
 
 import HalfLifeCalculator from '@/components/calculators/half-life-calculator';
 import { PageHeader } from '@/components/page-header';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-  title: 'Half-Life Calculator',
-  description: 'Calculate half-life, initial quantity, remaining quantity, or time elapsed. Also convert between half-life, mean lifetime, and decay constant.',
-};
 
 const HowToUseGuide = () => (
     <Card>

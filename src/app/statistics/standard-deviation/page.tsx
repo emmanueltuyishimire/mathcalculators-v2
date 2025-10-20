@@ -7,14 +7,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
-import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-    title: 'Standard Deviation Calculator',
-    description: 'Calculate standard deviation, variance, mean, and more for a set of numbers. Supports both population and sample data. Includes detailed steps and frequency analysis.',
-};
-
 
 const EducationalContent = () => (
   <Card className="bg-muted/50">

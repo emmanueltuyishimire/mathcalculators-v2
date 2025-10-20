@@ -3,15 +3,9 @@
 
 import { PageHeader } from '@/components/page-header';
 import PercentErrorCalculator from '@/components/calculators/percent-error-calculator';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-    title: 'Percent Error Calculator',
-    description: 'Calculate the percent error between an observed (experimental) value and a true (accepted) value. A key tool for scientific accuracy.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

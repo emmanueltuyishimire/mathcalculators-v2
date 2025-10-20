@@ -3,14 +3,7 @@
 
 import { PageHeader } from '@/components/page-header';
 import RrefCalculator from '@/components/calculators/rref-calculator';
-import type { Metadata } from 'next';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-    title: 'RREF Calculator',
-    description: 'An online calculator to solve systems of linear equations using an augmented matrix and computing the Reduced Row Echelon Form (RREF). Includes step-by-step options.',
-};
-
 
 export default function RrefPage() {
   return (

@@ -3,17 +3,11 @@
 
 import { PageHeader } from '@/components/page-header';
 import RatioCalculator from '@/components/calculators/ratio-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Ratio Calculator',
-    description: 'A free online calculator for solving ratio problems (A:B = C:D) and scaling ratios up or down.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

@@ -1,4 +1,5 @@
 
+"use client";
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { PageHeader } from '@/components/page-header';
@@ -8,13 +9,7 @@ import {
     AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, 
     CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle, Home, Info, Mail
 } from 'lucide-react';
-import type { Metadata } from 'next';
 import React from 'react';
-
-export const metadata: Metadata = {
-  title: 'Site Directory',
-  description: 'Explore all the pages and calculators available on Math Calculators. Find the tool you need quickly.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

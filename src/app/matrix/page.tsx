@@ -1,15 +1,9 @@
 
+"use client";
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, Sigma } from 'lucide-react';
-import type { Metadata } from 'next';
 import React from 'react';
-
-export const metadata: Metadata = {
-    title: 'Matrix Calculators – Linear Algebra Tools',
-    description: 'A collection of powerful matrix calculators for all your linear algebra needs, including matrix operations, RREF, Desmos-style calculations, and diagonalization.',
-};
-
 
 const matrixTools = [
   {

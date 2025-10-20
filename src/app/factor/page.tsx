@@ -3,15 +3,9 @@
 
 import { PageHeader } from '@/components/page-header';
 import FactorCalculator from '@/components/calculators/factor-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-
-export const metadata: Metadata = {
-    title: 'Factor Calculator',
-    description: 'A free online calculator to find all factors and the prime factorization of any given integer. Includes explanations and a factor tree example.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

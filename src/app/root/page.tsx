@@ -3,17 +3,11 @@
 
 import { PageHeader } from '@/components/page-header';
 import RootCalculator from '@/components/calculators/root-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Root Calculator',
-    description: 'Calculate square roots, cube roots, and nth roots of any number. Includes examples and explanations on how to estimate roots.',
-};
 
 const HowToUseGuide = () => (
     <Card>

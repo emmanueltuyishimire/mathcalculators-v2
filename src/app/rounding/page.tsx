@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import RoundingCalculator from '@/components/calculators/rounding-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Rounding Calculator',
-    description: 'A versatile online tool for rounding numbers with various methods, including rounding to the nearest integer, decimal place, or fraction.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

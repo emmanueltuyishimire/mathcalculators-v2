@@ -3,15 +3,9 @@
 
 import { PageHeader } from '@/components/page-header';
 import CircleCalculator from '@/components/calculators/circle-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Circle Calculator',
-    description: 'A free online calculator to find the radius, diameter, circumference, and area of a circle from any single known value.',
-};
 
 const HowToUseGuide = () => (
     <Card>

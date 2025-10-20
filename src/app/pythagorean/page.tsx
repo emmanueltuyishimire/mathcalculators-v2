@@ -3,17 +3,11 @@
 
 import { PageHeader } from '@/components/page-header';
 import PythagoreanCalculator from '@/components/calculators/pythagorean-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { PythagoreanDiagram } from '@/components/pythagorean-diagram';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Pythagorean Theorem Calculator',
-    description: 'A free online calculator to solve for any side of a right-angled triangle using the Pythagorean theorem (a² + b² = c²), and compute angles, area, and perimeter.',
-};
 
 const HowToUseGuide = () => (
     <Card>

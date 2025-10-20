@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import HexCalculator from '@/components/calculators/hex-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-
-export const metadata: Metadata = {
-    title: 'Hexadecimal Calculator',
-    description: 'Perform hexadecimal arithmetic (add, subtract, multiply, divide) and convert between hexadecimal and decimal values with ease.',
-};
 
 const HexMultiplicationTable = () => {
     const headers = [...Array(16).keys()].map(i => i.toString(16).toUpperCase());

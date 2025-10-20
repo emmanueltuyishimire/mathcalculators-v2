@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import ExponentCalculator from '@/components/calculators/exponent-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Exponent Calculator',
-    description: 'Solve for the base, exponent, or result in an exponential equation. Learn about exponent laws and rules with examples.',
-};
 
 const pageSchema = {
   "@context": "https://schema.org",

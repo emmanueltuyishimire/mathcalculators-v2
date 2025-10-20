@@ -3,16 +3,10 @@
 
 import { PageHeader } from '@/components/page-header';
 import ConfidenceIntervalCalculator from '@/components/calculators/confidence-interval-calculator';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-    title: 'Confidence Interval Calculator',
-    description: 'Compute the confidence interval or margin of error, assuming the sample mean follows a normal distribution.',
-};
 
 const EducationalContent = () => (
     <Card>

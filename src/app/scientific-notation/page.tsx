@@ -3,14 +3,8 @@
 
 import { PageHeader } from '@/components/page-header';
 import ScientificNotationCalculator from '@/components/calculators/scientific-notation-calculator';
-import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-
-export const metadata: Metadata = {
-    title: 'Scientific Notation Calculator',
-    description: 'A free online calculator and converter for scientific, E, and engineering notation. Perform arithmetic and convert numbers with ease.',
-};
 
 const HowToUseGuide = () => (
     <Card>

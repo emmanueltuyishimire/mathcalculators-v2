@@ -4,15 +4,9 @@
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChartHorizontal, Sigma, Percent, ShieldCheck, FunctionSquare, Milestone, Calculator } from 'lucide-react';
-import type { Metadata } from 'next';
 import StatisticsCalculator from '@/components/calculators/statistics-calculator';
 import { Button } from '@/components/ui/button';
 import React from 'react';
-
-export const metadata: Metadata = {
-    title: 'Statistics Calculators – Tools for Data Analysis',
-    description: 'A comprehensive collection of statistics calculators for mean, standard deviation, sample size, probability, and more. Free and easy-to-use tools for all your statistical needs.',
-};
 
 const statisticsTools = [
   {
