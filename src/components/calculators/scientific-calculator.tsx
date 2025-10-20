@@ -18,7 +18,7 @@ const associativity: { [key: string]: 'left' | 'right' } = {
   '+': 'left', '-': 'left', '×': 'left', '÷': 'left', '^': 'right',
 };
 
-const functions: { [key: string]: (a: number) => number } = {
+const functions: { [key: string]: (...args: number[]) => number } = {
     sin: Math.sin, cos: Math.cos, tan: Math.tan,
     asin: Math.asin, acos: Math.acos, atan: Math.atan,
     sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
@@ -114,18 +114,19 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
 // #endregion
 
 const formatResult = (num: number): string => {
-    if (Math.abs(num) > 1e12 || (Math.abs(num) < 1e-9 && num !== 0)) {
+    if (Math.abs(num) > 1e15 || (Math.abs(num) < 1e-9 && num !== 0)) {
         return num.toExponential(9);
     }
     const str = String(num);
     if (str.length > 15) {
-        return num.toPrecision(15);
+        const rounded = parseFloat(num.toPrecision(15));
+        return String(rounded);
     }
     return str;
 };
 
 const factorial = (n: number): number => {
-    if (n < 0 || !Number.isInteger(n)) throw new Error("Invalid input");
+    if (n < 0 || !Number.isInteger(n)) throw new Error("Invalid input for factorial");
     if (n > 170) throw new Error("Overflow");
     if (n === 0) return 1;
     let result = 1;
@@ -150,8 +151,6 @@ export default function ScientificCalculator() {
   useEffect(() => {
     const exprString = expressionTokens.map(t => {
         if (typeof t === 'number') return formatResult(t);
-        if (t === '×') return '×';
-        if (t === '÷') return '÷';
         return t;
     }).join(' ');
 
@@ -161,7 +160,6 @@ export default function ScientificCalculator() {
   
   const resetError = () => {
     if (errorState) {
-        setErrorState(null);
         handleAllClear();
     }
   };
@@ -169,11 +167,12 @@ export default function ScientificCalculator() {
   const handleDigit = (digit: string) => {
     resetError();
     if (isResult) {
-      setCurrentNumber(digit === '0' ? '0' : digit);
+      setCurrentNumber(digit);
+      setExpressionTokens([]);
       setIsResult(false);
     } else {
       if (currentNumber.length > 15) return;
-      setCurrentNumber(prev => (prev === '0' ? digit : prev + digit));
+      setCurrentNumber(prev => (prev === '0' && digit !== '.' ? digit : prev + digit));
     }
   };
 
@@ -181,6 +180,7 @@ export default function ScientificCalculator() {
     resetError();
     if (isResult) {
       setCurrentNumber('0.');
+      setExpressionTokens([]);
       setIsResult(false);
     } else if (!currentNumber.includes('.')) {
       setCurrentNumber(prev => prev === '' ? '0.' : prev + '.');
@@ -198,7 +198,8 @@ export default function ScientificCalculator() {
     }
 
     const lastToken = newTokens[newTokens.length - 1];
-    // Allow unary minus after an operator or left paren
+    
+    // Handle unary minus
     if (op === '-' && (newTokens.length === 0 || isOperator(lastToken) || isLeftParen(lastToken))) {
         setCurrentNumber('-');
         return;
@@ -206,7 +207,7 @@ export default function ScientificCalculator() {
 
     if (isOperator(lastToken)) {
       newTokens[newTokens.length - 1] = op;
-    } else {
+    } else if (newTokens.length > 0 && !isLeftParen(lastToken)) {
       newTokens.push(op);
     }
     setExpressionTokens(newTokens);
@@ -220,11 +221,10 @@ export default function ScientificCalculator() {
     if (expressionTokens.length === 0 && currentNumber === '') return;
 
     let finalTokens = [...expressionTokens];
-    if (currentNumber !== '') {
+    if (currentNumber !== '' && currentNumber !== '-') {
       finalTokens.push(parseFloat(currentNumber));
     }
     
-    // Auto-close open parentheses
     const openParens = finalTokens.filter(t => t === '(').length;
     const closeParens = finalTokens.filter(t => t === ')').length;
     for (let i = 0; i < openParens - closeParens; i++) {
@@ -254,7 +254,6 @@ export default function ScientificCalculator() {
         return;
     }
     setCurrentNumber('');
-    setIsResult(false);
   };
   
   const handleAllClear = () => {
@@ -263,6 +262,7 @@ export default function ScientificCalculator() {
     setExpressionTokens([]);
     setCurrentNumber('');
     setIsResult(false);
+    setMemory(0);
   };
 
   const handleBackspace = () => {
@@ -272,9 +272,11 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1) || '');
+      setCurrentNumber(prev => prev.slice(0, -1));
     } else if (expressionTokens.length > 0) {
       setExpressionTokens(prev => prev.slice(0, -1));
+    } else {
+        setCurrentNumber('0');
     }
   };
 
@@ -284,11 +286,14 @@ export default function ScientificCalculator() {
         const value = parseFloat(displayValue);
         if (!isNaN(value)) {
             const newValue = formatResult(-value);
-            setDisplayValue(newValue);
             setCurrentNumber(newValue);
+            setExpressionTokens([]);
+            setIsResult(false);
         }
     } else if (currentNumber !== '') {
         setCurrentNumber(prev => (prev.startsWith('-') ? prev.substring(1) : '-' + prev));
+    } else {
+        setCurrentNumber('-');
     }
   };
   
@@ -296,19 +301,22 @@ export default function ScientificCalculator() {
     resetError();
     const value = parseFloat(currentNumber || (isResult ? displayValue : '0'));
     
-    if (type !== 'MC' && type !== 'MR' && isNaN(value)) {
-        toast({ title: 'Memory Error', description: 'No valid number to add to memory.', variant: 'destructive' });
-        return;
-    }
-
     let newMemory = memory;
     switch (type) {
-      case 'M+': newMemory += value; break;
-      case 'M-': newMemory -= value; break;
+      case 'M+': 
+        if (isNaN(value)) return;
+        newMemory += value; 
+        break;
+      case 'M-': 
+        if (isNaN(value)) return;
+        newMemory -= value; 
+        break;
       case 'MR':
-        if(isResult) handleAllClear();
+        if(isResult) {
+           setExpressionTokens([]);
+           setIsResult(false);
+        }
         setCurrentNumber(String(memory));
-        setIsResult(false);
         return;
       case 'MC': newMemory = 0; break;
     }
@@ -318,14 +326,13 @@ export default function ScientificCalculator() {
 
   const handleUnaryFunction = (fn: (x: number) => number, funcName: string) => {
     resetError();
-    let valueStr = currentNumber || (isResult ? displayValue : '');
-    if (valueStr === '') {
+    if (currentNumber === '' || currentNumber === '-') {
         toast({ title: 'Input Required', description: 'Please enter a number first.', variant: 'destructive'});
         return;
     }
 
     try {
-      let value = parseFloat(valueStr);
+      let value = parseFloat(currentNumber);
       let result;
 
       if (['sin', 'cos', 'tan'].includes(funcName) && angleMode === 'DEG') {
@@ -344,11 +351,13 @@ export default function ScientificCalculator() {
 
       const formattedResult = formatResult(result);
       setCurrentNumber(formattedResult);
-      setExpressionTokens([]);
+      if(isResult) setExpressionTokens([]);
       setIsResult(true);
 
     } catch (e: any) {
       setErrorState(`Error: ${e.message}`);
+      setCurrentNumber('');
+      setExpressionTokens([]);
       setIsResult(true);
     }
   };
@@ -359,7 +368,7 @@ export default function ScientificCalculator() {
     let newTokens = [...expressionTokens];
 
     if(p === '(') {
-      if(currentNumber !== '') {
+      if(currentNumber !== '' && currentNumber !== '-') {
           newTokens.push(parseFloat(currentNumber));
           newTokens.push('×');
           setCurrentNumber('');
@@ -367,8 +376,8 @@ export default function ScientificCalculator() {
           newTokens.push('×');
       }
       newTokens.push('(');
-    } else {
-       if(currentNumber !== '') {
+    } else { // p === ')'
+       if(currentNumber !== '' && currentNumber !== '-') {
            newTokens.push(parseFloat(currentNumber));
            setCurrentNumber('');
        }
@@ -381,14 +390,16 @@ export default function ScientificCalculator() {
     resetError();
     const values = { 'π': Math.PI, 'e': Math.E, 'φ': (1 + Math.sqrt(5)) / 2 };
     
-    if (isResult) handleAllClear();
+    if (isResult) {
+      setExpressionTokens([]);
+      setIsResult(false);
+    }
     
     if (currentNumber !== '' && currentNumber !== '0' && currentNumber !== '-') {
         let newTokens = [...expressionTokens, parseFloat(currentNumber), '×'];
         setExpressionTokens(newTokens);
     }
     setCurrentNumber(String(values[constant]));
-    setIsResult(false);
   };
 
   const handlePercent = () => {
@@ -399,72 +410,76 @@ export default function ScientificCalculator() {
     if (expressionTokens.length >= 2) {
       const lastOp = expressionTokens[expressionTokens.length - 1];
       const prevNumToken = expressionTokens[expressionTokens.length - 2];
-      if ((isOperator(lastOp)) && (isNumber(prevNumToken))) {
+
+      if ((isOperator(lastOp) && (lastOp === '+' || lastOp === '-')) && isNumber(prevNumToken)) {
         const prevNum = prevNumToken as number;
-        if (lastOp === '+' || lastOp === '-') {
-          setCurrentNumber(String(prevNum * (numCurrent / 100)));
-          return;
-        }
+        setCurrentNumber(String(prevNum * (numCurrent / 100)));
+        return;
       }
     }
-    // Default behavior for % (e.g., 50 * 10% = 5) or if no operator context
     setCurrentNumber(String(numCurrent / 100));
   };
   // #endregion
 
   const buttonLayout = [
-    { label: '(', onClick: () => handleParenthesis('('), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: ')', onClick: () => handleParenthesis(')'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-purple-600 hover:bg-purple-700' },
-    { label: 'M+', onClick: () => handleMemory('M+'), className: 'bg-purple-600 hover:bg-purple-700' },
-    { label: 'M-', onClick: () => handleMemory('M-'), className: 'bg-purple-600 hover:bg-purple-700' },
-    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-purple-600 hover:bg-purple-700' },
-    { label: 'AC', onClick: handleAllClear, className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: '±', onClick: handleToggleSign, className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: '%', onClick: handlePercent, className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-gray-500 hover:bg-gray-600' },
-    
-    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-gray-600 hover:bg-gray-700', show2nd && 'bg-blue-600 text-white') },
-    show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x ** 3, 'x³'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x ** 2, 'x²'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, 'cbrt'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: '√x', onClick: () => handleUnaryFunction(Math.sqrt, 'sqrt'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: 'AC', onClick: handleAllClear, className: 'bg-red-600 hover:bg-red-700' },
+    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
+    { label: '⌫', onClick: handleBackspace, className: 'bg-red-600 hover:bg-red-700' },
+    { label: '(', onClick: () => handleParenthesis('('), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: ')', onClick: () => handleParenthesis(')'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: '%', onClick: handlePercent, className: 'bg-blue-600 hover:bg-blue-700' },
+
+    show2nd ? { label: 'sin⁻¹', onClick: () => handleUnaryFunction(Math.asin, 'asin'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'sin', onClick: () => handleUnaryFunction(Math.sin, 'sin'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'cos⁻¹', onClick: () => handleUnaryFunction(Math.acos, 'acos'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'cos', onClick: () => handleUnaryFunction(Math.cos, 'cos'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'tan⁻¹', onClick: () => handleUnaryFunction(Math.atan, 'atan'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'tan', onClick: () => handleUnaryFunction(Math.tan, 'tan'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'sinh', onClick: () => handleUnaryFunction(Math.sinh, 'sinh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'eˣ', onClick: () => handleUnaryFunction(Math.exp, 'exp'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'cosh', onClick: () => handleUnaryFunction(Math.cosh, 'cosh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10 ** x, '10^x'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'tanh', onClick: () => handleUnaryFunction(Math.tanh, 'tanh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-blue-600 hover:bg-blue-700' },
+
+    { label: 'x³', onClick: () => handleUnaryFunction((x) => x ** 3, 'x³'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, 'cbrt'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: '√x', onClick: () => handleUnaryFunction(Math.sqrt, 'sqrt'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'log', onClick: () => handleUnaryFunction(Math.log10, 'log'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'ln', onClick: () => handleUnaryFunction(Math.log, 'ln'), className: 'bg-blue-600 hover:bg-blue-700' },
+
     { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '×', onClick: () => handleOperator('×'), className: 'bg-gray-500 hover:bg-gray-600' },
+    { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: '1/x', onClick: () => handleUnaryFunction((x) => 1 / x, '1/x'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-blue-800 hover:bg-blue-900', show2nd && 'bg-blue-500') },
 
-    show2nd ? { label: 'sin⁻¹', onClick: () => handleUnaryFunction(Math.asin, 'asin'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'sin', onClick: () => handleUnaryFunction(Math.sin, 'sin'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'cos⁻¹', onClick: () => handleUnaryFunction(Math.acos, 'acos'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'cos', onClick: () => handleUnaryFunction(Math.cos, 'cos'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'tan⁻¹', onClick: () => handleUnaryFunction(Math.atan, 'atan'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'tan', onClick: () => handleUnaryFunction(Math.tan, 'tan'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: '1/x', onClick: () => handleUnaryFunction((x) => 1 / x, '1/x'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '5', onClick: () => handleDigit('5'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '6', onClick: () => handleDigit('6'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '-', onClick: () => handleOperator('-'), className: 'bg-gray-500 hover:bg-gray-600' },
+    { label: '×', onClick: () => handleOperator('×'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: 'π', onClick: () => handleConstant('π'), className: 'bg-yellow-600 hover:bg-yellow-700' },
+    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-yellow-600 hover:bg-yellow-700' },
 
-    show2nd ? { label: 'sinh', onClick: () => handleUnaryFunction(Math.sinh, 'sinh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'eˣ', onClick: () => handleUnaryFunction(Math.exp, 'exp'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'cosh', onClick: () => handleUnaryFunction(Math.cosh, 'cosh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10 ** x, '10^x'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'tanh', onClick: () => handleUnaryFunction(Math.tanh, 'tanh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'log', onClick: () => handleUnaryFunction(Math.log10, 'log'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '1', onClick: () => handleDigit('1'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '2', onClick: () => handleDigit('2'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '3', onClick: () => handleDigit('3'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '+', onClick: () => handleOperator('+'), className: 'bg-gray-500 hover:bg-gray-600' },
+    { label: '-', onClick: () => handleOperator('-'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-yellow-600 hover:bg-yellow-700' },
+    { label: 'RAD', onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-green-600 hover:bg-green-700' },
 
-    { label: 'ln', onClick: () => handleUnaryFunction(Math.log, 'ln'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: angleMode, onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'π', onClick: () => handleConstant('π'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: '0', onClick: () => handleDigit('0'), className: 'col-span-2 bg-gray-700 hover:bg-gray-800' },
+    { label: '0', onClick: () => handleDigit('0'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '=', onClick: handleEquals, className: 'bg-blue-600 hover:bg-blue-700' },
-
+    { label: '±', onClick: handleToggleSign, className: 'bg-gray-700 hover:bg-gray-800' },
+    { label: '+', onClick: () => handleOperator('+'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: '=', onClick: handleEquals, className: 'bg-orange-600 hover:bg-orange-700' },
+    
+    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: 'M+', onClick: () => handleMemory('M+'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: 'M-', onClick: () => handleMemory('M-'), className: 'bg-green-600 hover:bg-green-700' },
   ].filter(Boolean);
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-[600px] mx-auto bg-gray-800 text-white p-2 border-4 border-gray-900 rounded-xl">
+    <Card id="scientific-calculator" className="shadow-lg max-w-[400px] mx-auto bg-gray-800 text-white p-2 border-4 border-gray-900 rounded-xl">
       <CardContent className="flex flex-col items-center gap-1 p-1">
-        <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-900/80 p-2 text-right text-3xl font-mono text-green-300 break-words h-16 flex items-end justify-end shadow-inner">
+        <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-900/80 p-2 text-right text-2xl font-mono text-green-300 break-words h-16 flex items-end justify-end shadow-inner">
           <div className="absolute top-1 left-2 text-xs text-green-500/70 flex gap-2">
             {angleMode === 'DEG' && <span className="font-bold">DEG</span>}
             {memory !== 0 && <span className="font-bold">M</span>}
@@ -472,12 +487,12 @@ export default function ScientificCalculator() {
           <span>{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-8 gap-1">
+        <div className="w-full grid grid-cols-6 gap-1">
           {buttonLayout.map((btn, i) => (
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
-                className={cn('h-10 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-2')}
+                className={cn('h-9 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-1', btn.label === '=' && 'row-span-2 h-auto')}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
@@ -488,5 +503,3 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
-
-    
