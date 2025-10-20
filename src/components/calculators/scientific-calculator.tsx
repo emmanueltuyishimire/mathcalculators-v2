@@ -205,34 +205,42 @@ export default function ScientificCalculator() {
     }
   };
   
-  const functionButtons1 = [
+  const functionButtons = [
     { label: show2nd ? 'x³' : 'x²', type: 'func_imm', fn: (x: number) => show2nd ? x**3 : x**2 },
     { label: show2nd ? '∛x' : '√x', type: 'func_imm', fn: (x: number) => show2nd ? Math.cbrt(x) : Math.sqrt(x) },
     { label: 'xʸ', type: 'op', value: '^' },
     { label: '10ˣ', type: 'func_imm', fn: (x: number) => 10**x },
     { label: 'log', type: 'func', value: 'log' },
-    { label: 'ln', type: 'func', value: 'ln'},
+    { label: 'ln', type: 'func', value: 'ln' },
+    { label: '(', type: 'char' },
+    { label: ')', type: 'char' },
+    { label: '1/x', type: 'func_imm', fn: (x:number) => 1/x },
+    { label: '%', type: 'op' },
+    { label: 'n!', type: 'func_imm', fn: (x:number) => factorial(x) },
+    { label: 'C', type: 'clear' },
   ];
   
   const trigButtons = [
-    { label: show2nd ? 'sin⁻¹' : 'sin', type: 'func', value: show2nd ? 'asin' : 'sin' },
-    { label: show2nd ? 'cos⁻¹' : 'cos', type: 'func', value: show2nd ? 'acos' : 'cos' },
-    { label: show2nd ? 'tan⁻¹' : 'tan', type: 'func', value: show2nd ? 'atan' : 'tan' },
+    { label: 'sin', type: 'func', second: 'sin⁻¹', secondValue: 'asin' },
+    { label: 'cos', type: 'func', second: 'cos⁻¹', secondValue: 'acos' },
+    { label: 'tan', type: 'func', second: 'tan⁻¹', secondValue: 'atan' },
   ];
   
+  const hyperbolicButtons = [
+    { label: 'sinh', type: 'func' },
+    { label: 'cosh', type: 'func' },
+    { label: 'tanh', type: 'func' },
+  ];
+
   const constantButtons = [
-     { label: '(', type: 'char' },
-     { label: ')', type: 'char' },
      { label: 'π', type: 'char' },
      { label: 'e', type: 'char' },
-  ]
-  
-  const basicButtons = [
-    '7', '8', '9',
-    '4', '5', '6',
-    '1', '2', '3',
+     { label: 'φ', type: 'char' }
   ];
   
+  const memoryButtons = ['MC', 'M+', 'M-', 'MR'];
+
+  const basicButtons = [ '7', '8', '9', '4', '5', '6', '1', '2', '3'];
   const operatorButtons = ['÷', '×', '-', '+'];
 
   const renderButton = (
@@ -241,35 +249,48 @@ export default function ScientificCalculator() {
       className: string = "",
       ariaLabel?: string
     ) => (
-    <Button key={label} size="sm" className={cn('h-10 text-base', className)} onClick={onClick} aria-label={ariaLabel || label}>{label}</Button>
+    <Button key={label} size="sm" className={cn('h-9 text-base', className)} onClick={onClick} aria-label={ariaLabel || label}>{label}</Button>
   );
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-sm mx-auto bg-gray-800 text-white p-2 border-4 border-gray-700 rounded-2xl">
+    <Card id="scientific-calculator" className="shadow-lg max-w-md mx-auto bg-gray-800 text-white p-2 border-4 border-gray-700 rounded-2xl">
       <CardContent className="flex flex-col items-center gap-2 p-0">
         <div className="w-full mb-2 rounded-lg border-2 border-gray-900 bg-gray-900/80 p-2 text-right text-4xl font-mono text-green-300 break-all h-20 flex items-end justify-end shadow-inner">
           <span>{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-5 gap-1">
+        <div className="w-full grid grid-cols-6 gap-1">
+          {/* First Row */}
           {renderButton('2nd', () => setShow2nd(!show2nd), show2nd ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-gray-600 hover:bg-gray-700')}
-          {constantButtons.map(btn => renderButton(btn.label, () => handleButtonClick(btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+          {constantButtons.map(btn => renderButton(btn.label, () => handleButtonClick(btn.value || btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+          {renderButton('⌫', handleBackspace, 'bg-red-600 hover:bg-red-700 text-white col-span-2')}
 
-          {functionButtons1.map(btn => renderButton(btn.label, () => btn.type === 'func' ? handleFunctionClick(btn.value || btn.label) : btn.type === 'func_imm' ? applyImmediateFunction(btn.fn, btn.label) : handleOperatorClick(btn.value || btn.label), 'bg-gray-600 hover:bg-gray-700'))}
-          {trigButtons.map(btn => renderButton(btn.label, () => handleFunctionClick(btn.value), 'bg-gray-600 hover:bg-gray-700'))}
-          
+          {/* Second Row */}
+          {functionButtons.slice(0, 6).map(btn => renderButton(btn.label, () => btn.type === 'func' ? handleFunctionClick(btn.value || btn.label) : btn.type === 'func_imm' ? applyImmediateFunction(btn.fn, btn.label) : handleOperatorClick(btn.value || btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+
+          {/* Third Row */}
+          {functionButtons.slice(6).map(btn => renderButton(btn.label, () => btn.type === 'func' ? handleFunctionClick(btn.value || btn.label) : btn.type === 'func_imm' ? applyImmediateFunction(btn.fn, btn.label) : btn.type === 'op' ? handleOperatorClick(btn.label) : handleButtonClick(btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+          {renderButton('AC', handleAllClear, 'bg-red-600 hover:bg-red-700 text-white')}
+
+          {/* Trig and Memory */}
+          {trigButtons.map(btn => renderButton(show2nd ? btn.second : btn.label, () => handleFunctionClick(show2nd ? btn.secondValue : btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+          {memoryButtons.map(label => renderButton(label, () => handleMemory(label as 'M+' | 'M-' | 'MR' | 'MC'), 'bg-purple-600 hover:bg-purple-700'))}
+          {hyperbolicButtons.map(btn => renderButton(btn.label, () => handleFunctionClick(btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+
+          {/* Number Pad and Operators */}
           <div className="col-span-3 grid grid-cols-3 gap-1">
             {basicButtons.map(label => renderButton(label, () => handleButtonClick(label), 'bg-gray-700 hover:bg-gray-600'))}
-            {renderButton('±', handleToggleSign, 'bg-gray-700 hover:bg-gray-600')}
-            {renderButton('0', () => handleButtonClick('0'), 'bg-gray-700 hover:bg-gray-600 col-span-1')}
+            {renderButton('0', () => handleButtonClick('0'), 'col-span-2 bg-gray-700 hover:bg-gray-600')}
             {renderButton('.', () => handleButtonClick('.'), 'bg-gray-700 hover:bg-gray-600')}
           </div>
-
-          <div className="col-span-2 grid grid-cols-2 gap-1">
-            {renderButton('C', handleClear, 'bg-red-600 hover:bg-red-700 text-white')}
-            {renderButton('⌫', handleBackspace, 'bg-red-600 hover:bg-red-700 text-white')}
+          
+          <div className="col-span-3 grid grid-cols-2 gap-1">
+             <Button className="col-span-2 bg-gray-600 hover:bg-gray-700 h-9 text-base" onClick={() => setIsRadians(!isRadians)}>
+                {isRadians ? 'RAD' : 'DEG'}
+            </Button>
+            {renderButton('±', handleToggleSign, 'bg-gray-700 hover:bg-gray-600')}
+            {renderButton('=', handleEquals, 'bg-blue-600 hover:bg-blue-700 text-white')}
             {operatorButtons.map(op => renderButton(op, () => handleOperatorClick(op), 'bg-orange-500 hover:bg-orange-600 text-white'))}
-            {renderButton('=', handleEquals, 'bg-blue-600 hover:bg-blue-700 text-white col-span-2')}
           </div>
         </div>
       </CardContent>
