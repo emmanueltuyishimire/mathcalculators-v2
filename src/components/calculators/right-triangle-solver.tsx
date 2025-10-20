@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from 'react';
@@ -9,7 +8,6 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { solveRightTriangle } from '@/lib/trig';
 import { RightTriangleDiagram } from '@/components/right-triangle-diagram';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface Result {
   a: number; b: number; c: number;
@@ -36,7 +34,9 @@ export default function RightTriangleSolver() {
             const solution = solveRightTriangle(knownValues);
             setResult(solution);
         } catch (e: any) {
-            toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
+            if (Object.values(values).some(v => v)) {
+                toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
+            }
             setResult(null);
         }
     }

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -27,7 +26,9 @@ export default function BasicTrigCalculator() {
   const calculateTrig = () => {
     const numValue = parseFloat(inputValue);
     if (isNaN(numValue)) {
-      toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid number.' });
+      if (inputValue) {
+        toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid number.' });
+      }
       setResult(null);
       return;
     }
@@ -85,7 +86,7 @@ export default function BasicTrigCalculator() {
             </div>
         </div>
         <div className="space-y-2">
-            <Label>{isInverse || hyperbolicFunctions.includes(funcName) ? 'Output Unit' : 'Angle Unit'}</Label>
+            <Label>{isInverse ? 'Output Unit' : 'Angle Unit'}</Label>
              <RadioGroup defaultValue="deg" value={unit} onValueChange={setUnit} className="flex gap-4">
                 <div className="flex items-center space-x-2">
                     <RadioGroupItem value="deg" id="r-deg" />

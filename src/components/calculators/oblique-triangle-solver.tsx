@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from 'react';
@@ -31,7 +30,9 @@ export default function ObliqueTriangleSolver() {
             const solution = solveObliqueTriangle(knownValues);
             setResult(solution);
         } catch (e: any) {
-            toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
+            if (Object.values(values).some(v => v)) { // only show toast if there's input
+                toast({ variant: 'destructive', title: 'Calculation Error', description: e.message });
+            }
             setResult(null);
         }
     }
