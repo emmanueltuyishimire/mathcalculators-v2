@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -39,7 +38,7 @@ export function AppFooter() {
                         <ul className="space-y-2 text-sm">
                             <li><a href="https://health.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Health & Fitness Calculator</a></li>
                             <li><a href="https://finance.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Financial Calculators</a></li>
-                            <li><a href="https://calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Blog</a></li>
+                            <li><a href="https://calculation.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Blog</a></li>
                         </ul>
                     </div>
                     <div>
