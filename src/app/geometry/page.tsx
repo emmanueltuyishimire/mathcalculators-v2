@@ -92,9 +92,6 @@ export default function GeometryPage() {
                         </CardContent>
                       </Card>
                     </Link>
-                    {(index + 1) % 6 === 0 && (
-                      <div className="h-40 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm my-4 sm:col-span-2 lg:col-span-3">[Ad Placeholder]</div>
-                    )}
                  </React.Fragment>
               ))}
             </div>

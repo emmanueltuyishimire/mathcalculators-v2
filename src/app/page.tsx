@@ -146,9 +146,6 @@ export default function Home() {
                             ))}
                         </div>
                     </div>
-                    {(catIndex + 1) % 2 === 0 && (
-                      <div className="my-8 h-48 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">[Ad Placeholder]</div>
-                    )}
                  </React.Fragment>
             ))}
         </section>

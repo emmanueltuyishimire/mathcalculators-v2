@@ -128,8 +128,6 @@ export default function StatisticsCategoryPage() {
             
             <HowToUseGuide />
 
-            <div className="my-8 h-40 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">[Ad Placeholder]</div>
-
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {statisticsTools.map((tool, index) => (
                 <React.Fragment key={tool.href}>
@@ -146,9 +144,6 @@ export default function StatisticsCategoryPage() {
                       </CardContent>
                     </Card>
                   </Link>
-                  {(index + 1) % 6 === 0 && index < statisticsTools.length - 1 && (
-                    <div className="h-40 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm my-4 sm:col-span-2 lg:col-span-3">[Ad Placeholder]</div>
-                  )}
                 </React.Fragment>
               ))}
             </div>

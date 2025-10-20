@@ -123,9 +123,6 @@ export default function CalculatorsPage() {
                   ))}
                 </div>
               </div>
-              {(catIndex + 1) % 2 === 0 && (
-                <div className="h-48 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm my-8">[Ad Placeholder]</div>
-              )}
             </React.Fragment>
           ))}
         </section>
