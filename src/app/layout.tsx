@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { FirebaseClientProvider } from '@/firebase';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
@@ -44,18 +45,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
       <head>
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5VPXQ1TJ3X"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-5VPXQ1TJ3X');
-            `,
-          }}
-        />
         {/* Google AdSense Auto Ads */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" crossOrigin="anonymous"></script>
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
@@ -73,6 +62,19 @@ export default function RootLayout({
             <Toaster />
           </ThemeProvider>
         </FirebaseClientProvider>
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-5VPXQ1TJ3X"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5VPXQ1TJ3X');
+          `}
+        </Script>
       </body>
     </html>
   );
