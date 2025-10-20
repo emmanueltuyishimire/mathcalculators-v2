@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -31,12 +31,12 @@ const associativity: { [key: string]: 'left' | 'right' } = {
 };
 
 const functions: { [key: string]: (a: number) => number } = {
-    'sin': Math.sin, 'cos': Math.cos, 'tan': Math.tan,
-    'asin': Math.asin, 'acos': Math.acos, 'atan': Math.atan,
-    'sinh': Math.sinh, 'cosh': Math.cosh, 'tanh': Math.tanh,
-    'asinh': Math.asinh, 'acosh': Math.acosh, 'atanh': Math.atanh,
-    'log': Math.log10, 'ln': Math.log,
-    'sqrt': Math.sqrt, 'cbrt': Math.cbrt,
+    sin: Math.sin, cos: Math.cos, tan: Math.tan,
+    asin: Math.asin, acos: Math.acos, atan: Math.atan,
+    sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
+    asinh: Math.asinh, acosh: Math.acosh, atanh: Math.atanh,
+    log: Math.log10, ln: Math.log,
+    sqrt: Math.sqrt, cbrt: Math.cbrt,
 };
 
 const isOperator = (token: Token): token is string => typeof token === 'string' && ['+', '-', '×', '÷', '^'].includes(token);
@@ -91,7 +91,7 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
         if (isNumber(token)) {
             stack.push(token);
         } else if (isOperator(token)) {
-            if (stack.length < 2) throw new Error("Invalid expression");
+            if (stack.length < 2) throw new Error("Syntax error");
             const b = stack.pop()!;
             const a = stack.pop()!;
             switch (token) {
@@ -112,7 +112,7 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
             stack.push(result);
         }
     });
-    if (stack.length !== 1) throw new Error("Invalid expression");
+    if (stack.length !== 1) throw new Error("Syntax error");
     return stack[0];
 };
 
@@ -254,7 +254,7 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1));
+      setCurrentNumber(prev => prev.slice(0, -1) || '0');
     } else if (expressionTokens.length > 0) {
       setExpressionTokens(prev => prev.slice(0, -1));
     }
@@ -277,7 +277,7 @@ export default function ScientificCalculator() {
   const handleMemory = (type: 'M+' | 'M-' | 'MR' | 'MC') => {
     resetError();
     const value = parseFloat(currentNumber || (isResult ? displayValue : '0'));
-    if (isNaN(value)) return;
+    if (isNaN(value) && type !== 'MC' && type !== 'MR') return;
 
     let newMemory = memory;
     switch (type) {
@@ -348,7 +348,7 @@ export default function ScientificCalculator() {
            newTokens.push(parseFloat(currentNumber));
            setCurrentNumber('');
        }
-       if (isLeftParen(newTokens[newTokens.length-1])) {
+       if (newTokens.length > 0 && isLeftParen(newTokens[newTokens.length-1])) {
            // Handle empty parens `()`
            newTokens.push(0);
        }
@@ -452,9 +452,9 @@ export default function ScientificCalculator() {
   // #endregion
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-md mx-auto bg-gray-900 text-white p-2 border-4 border-gray-700 rounded-2xl">
+    <Card id="scientific-calculator" className="shadow-lg max-w-sm mx-auto bg-gray-900 text-white p-2 border-4 border-gray-700 rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
-        <div className="relative w-full mb-1 rounded-lg border-2 border-gray-950 bg-gray-950/80 p-2 text-right text-3xl font-mono text-green-300 break-words h-20 flex items-end justify-end shadow-inner">
+        <div className="relative w-full mb-1 rounded-lg border-2 border-gray-950 bg-gray-950/80 p-2 text-right text-2xl font-mono text-green-300 break-words h-16 flex items-end justify-end shadow-inner">
           <div className="absolute top-1 left-2 text-xs text-green-500/70 flex gap-2">
             {angleMode === 'DEG' && <span className="font-bold">DEG</span>}
             {memory !== 0 && <span className="font-bold">M</span>}
@@ -467,7 +467,7 @@ export default function ScientificCalculator() {
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
-                className={cn('h-12 text-base rounded-md', btn.className, btn.label === '0' && 'col-span-2')} 
+                className={cn('h-10 text-sm rounded-md', btn.className, btn.label === '0' && 'col-span-2')} 
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
@@ -479,7 +479,7 @@ export default function ScientificCalculator() {
             <Button 
                 key={`${btn.label}-${i+30}`} 
                 size="sm" 
-                className={cn('h-10 text-xs rounded-md', btn.className)} 
+                className={cn('h-9 text-xs rounded-md', btn.className)} 
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
