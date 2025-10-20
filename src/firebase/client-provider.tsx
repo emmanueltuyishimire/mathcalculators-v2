@@ -1,24 +1,37 @@
 'use client';
 
-import React, { useMemo, type ReactNode } from 'react';
+import React, { useMemo, type ReactNode, useState, useEffect } from 'react';
 import { FirebaseProvider } from '@/firebase/provider';
-import { initializeFirebase } from '@/firebase';
+import { initializeFirebase, getSdks } from '@/firebase';
+import { FirebaseApp } from 'firebase/app';
+import { Auth } from 'firebase/auth';
+import { Firestore } from 'firebase/firestore';
 
 interface FirebaseClientProviderProps {
   children: ReactNode;
 }
 
+interface FirebaseServices {
+  firebaseApp: FirebaseApp;
+  auth: Auth;
+  firestore: Firestore;
+}
+
 export function FirebaseClientProvider({ children }: FirebaseClientProviderProps) {
-  const firebaseServices = useMemo(() => {
-    // Only initialize Firebase on the client side
+  const [firebaseServices, setFirebaseServices] = useState<FirebaseServices | null>(null);
+
+  useEffect(() => {
+    // This effect runs only on the client, after the component has mounted.
+    // This is the correct place to initialize client-side libraries.
     if (typeof window !== 'undefined') {
-      return initializeFirebase();
+      const services = initializeFirebase();
+      setFirebaseServices(services);
     }
-    return null;
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []); // Empty dependency array ensures this runs only once.
 
   if (!firebaseServices) {
-    // Render a loading state or null on the server
+    // While Firebase is initializing (or on the server), we can render a loading state or just the children.
+    // Rendering children ensures the app structure is present, avoiding layout shifts.
     return <>{children}</>;
   }
 
