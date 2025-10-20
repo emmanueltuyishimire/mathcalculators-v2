@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
 import React from 'react';
+import ScientificCalculator from '@/components/calculators/scientific-calculator';
 
 function HeroSection() {
   return (
@@ -115,6 +116,13 @@ export default function Home() {
       <HeroSection />
 
       <main className="flex-1 p-4 md:p-6 lg:p-12">
+        <section id="quick-calculator" className="mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Quick Scientific Calculator</h2>
+            <div className="max-w-md mx-auto">
+              <ScientificCalculator />
+            </div>
+        </section>
+
         <section id="tools" className="space-y-16">
             {calculatorCategories.map((category, catIndex) => (
                  <React.Fragment key={category.title}>
