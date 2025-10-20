@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
 import type { Metadata } from 'next';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Basic Calculators',
