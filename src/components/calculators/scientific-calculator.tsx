@@ -209,9 +209,7 @@ export default function ScientificCalculator() {
     { label: show2nd ? 'x³' : 'x²', type: 'func_imm', fn: (x: number) => show2nd ? x**3 : x**2 },
     { label: show2nd ? '∛x' : '√x', type: 'func_imm', fn: (x: number) => show2nd ? Math.cbrt(x) : Math.sqrt(x) },
     { label: 'xʸ', type: 'op', value: '^' },
-    { label: show2nd ? 'y√x' : '10ˣ', type: 'func', value: 'x^(1/' },
-    { label: '1/x', type: 'func_imm', fn: (x: number) => 1/x },
-    { label: show2nd ? '2ˣ' : 'eˣ', type: 'func_imm', fn: (x: number) => show2nd ? 2**x : Math.exp(x) },
+    { label: '10ˣ', type: 'func_imm', fn: (x: number) => 10**x },
     { label: 'log', type: 'func', value: 'log' },
     { label: 'ln', type: 'func', value: 'ln'},
   ];
@@ -220,94 +218,60 @@ export default function ScientificCalculator() {
     { label: show2nd ? 'sin⁻¹' : 'sin', type: 'func', value: show2nd ? 'asin' : 'sin' },
     { label: show2nd ? 'cos⁻¹' : 'cos', type: 'func', value: show2nd ? 'acos' : 'cos' },
     { label: show2nd ? 'tan⁻¹' : 'tan', type: 'func', value: show2nd ? 'atan' : 'tan' },
-    { label: show2nd ? 'sinh⁻¹' : 'sinh', type: 'func', value: show2nd ? 'asinh' : 'sinh' },
-    { label: show2nd ? 'cosh⁻¹' : 'cosh', type: 'func', value: show2nd ? 'acosh' : 'cosh' },
-    { label: show2nd ? 'tanh⁻¹' : 'tanh', type: 'func', value: show2nd ? 'atanh' : 'tanh' },
   ];
-
+  
+  const constantButtons = [
+     { label: '(', type: 'char' },
+     { label: ')', type: 'char' },
+     { label: 'π', type: 'char' },
+     { label: 'e', type: 'char' },
+  ]
+  
   const basicButtons = [
     '7', '8', '9',
     '4', '5', '6',
     '1', '2', '3',
-    '0', '.', '±',
   ];
   
   const operatorButtons = ['÷', '×', '-', '+'];
-  
-  const renderButton = (btnConfig: any, variant: "default" | "secondary" | "destructive" | "outline" | "ghost" | "link" | "accent" | null | undefined = 'outline', className: string = "") => {
-    const isString = typeof btnConfig === 'string';
-    const label = isString ? btnConfig : btnConfig.label;
-    const type = isString ? 'char' : btnConfig.type;
-    
-    let onClick;
-    switch (type) {
-      case 'op': onClick = () => handleOperatorClick(isString ? btnConfig : btnConfig.value || label); break;
-      case 'char': onClick = () => handleButtonClick(label); break;
-      case 'func': onClick = () => handleFunctionClick(isString ? btnConfig : btnConfig.value || label); break;
-      case 'func_imm': onClick = () => applyImmediateFunction(btnConfig.fn, btnConfig.label); break;
-      case 'mem': onClick = () => handleMemory(label); break;
-      case 'clear': onClick = handleClear; break;
-      case 'all-clear': onClick = handleAllClear; break;
-      case 'backspace': onClick = handleBackspace; break;
-      case 'equals': onClick = handleEquals; break;
-      case 'toggle-sign': onClick = handleToggleSign; break;
-      default: onClick = () => handleButtonClick(label);
-    }
-    
-    return <Button key={label} variant={variant} size="sm" className={cn('text-sm h-10', className)} onClick={onClick} aria-label={label}>{label}</Button>;
-  }
+
+  const renderButton = (
+      label: string, 
+      onClick: () => void,
+      className: string = "",
+      ariaLabel?: string
+    ) => (
+    <Button key={label} size="sm" className={cn('h-10 text-base', className)} onClick={onClick} aria-label={ariaLabel || label}>{label}</Button>
+  );
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-md mx-auto bg-card text-card-foreground p-2 border-4 border-muted rounded-2xl">
-      <CardContent className="flex flex-col items-center gap-1 p-0">
-        <Input 
-            readOnly 
-            value={displayValue} 
-            className="w-full mb-1 rounded-lg border-2 border-input bg-muted p-2 text-right text-3xl font-mono text-foreground break-all h-16 flex items-end justify-end shadow-inner" 
-            aria-label="Calculator display"
-            />
-        
-        <div className="w-full grid grid-cols-7 gap-1">
-            <Button variant="secondary" className="h-8 text-xs" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant={show2nd ? 'default' : 'secondary'} className={cn("h-8 text-xs")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
-            {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-8 text-xs'))}
-            <Button variant="destructive" className="h-8 text-xs" onClick={handleBackspace} aria-label="Backspace">⌫</Button>
-        </div>
-
-        <div className="w-full grid grid-cols-7 gap-1">
-            {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-            {renderButton({ label: '(', type: 'char'}, 'secondary', 'h-8 text-xs')}
-            {renderButton({ label: ')', type: 'char'}, 'secondary', 'h-8 text-xs')}
-            {renderButton({ label: 'n!', type: 'func_imm', fn: (x:number) => x, funcName: '!'}, 'secondary', 'h-8 text-xs')}
+    <Card id="scientific-calculator" className="shadow-lg max-w-sm mx-auto bg-gray-800 text-white p-2 border-4 border-gray-700 rounded-2xl">
+      <CardContent className="flex flex-col items-center gap-2 p-0">
+        <div className="w-full mb-2 rounded-lg border-2 border-gray-900 bg-gray-900/80 p-2 text-right text-4xl font-mono text-green-300 break-all h-20 flex items-end justify-end shadow-inner">
+          <span>{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-7 gap-1">
-            {functionButtons1.slice(4, 8).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-             {trigButtons.slice(0, 3).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-        </div>
+        <div className="w-full grid grid-cols-5 gap-1">
+          {renderButton('2nd', () => setShow2nd(!show2nd), show2nd ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-gray-600 hover:bg-gray-700')}
+          {constantButtons.map(btn => renderButton(btn.label, () => handleButtonClick(btn.label), 'bg-gray-600 hover:bg-gray-700'))}
 
-        <div className="grid grid-cols-5 gap-1 w-full">
-            <div className="col-span-3 grid grid-cols-3 gap-1">
-                {basicButtons.map(b => {
-                    if (b === '±') return renderButton({ label: '±', type: 'toggle-sign' }, 'outline');
-                    return renderButton(b, 'outline');
-                })}
-            </div>
-            <div className="col-span-1 grid grid-cols-1 gap-1">
-                {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
-            </div>
-             <div className="col-span-1 grid grid-cols-1 gap-1">
-                <Button variant="destructive" className="h-full text-lg" onClick={handleAllClear} aria-label="All Clear">AC</Button>
-                {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
-            </div>
-        </div>
-         <div className="w-full grid grid-cols-7 gap-1 mt-1">
-            {trigButtons.slice(3, 6).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-            {['sec', 'csc', 'cot'].map(op => renderButton({ label: op, type: 'func', value: op }, 'secondary', 'h-8 text-xs'))}
-            {renderButton({ label: 'π', type: 'char' }, 'secondary', 'h-8 text-xs')}
-        </div>
+          {functionButtons1.map(btn => renderButton(btn.label, () => btn.type === 'func' ? handleFunctionClick(btn.value || btn.label) : btn.type === 'func_imm' ? applyImmediateFunction(btn.fn, btn.label) : handleOperatorClick(btn.value || btn.label), 'bg-gray-600 hover:bg-gray-700'))}
+          {trigButtons.map(btn => renderButton(btn.label, () => handleFunctionClick(btn.value), 'bg-gray-600 hover:bg-gray-700'))}
+          
+          <div className="col-span-3 grid grid-cols-3 gap-1">
+            {basicButtons.map(label => renderButton(label, () => handleButtonClick(label), 'bg-gray-700 hover:bg-gray-600'))}
+            {renderButton('±', handleToggleSign, 'bg-gray-700 hover:bg-gray-600')}
+            {renderButton('0', () => handleButtonClick('0'), 'bg-gray-700 hover:bg-gray-600 col-span-1')}
+            {renderButton('.', () => handleButtonClick('.'), 'bg-gray-700 hover:bg-gray-600')}
+          </div>
 
-
+          <div className="col-span-2 grid grid-cols-2 gap-1">
+            {renderButton('C', handleClear, 'bg-red-600 hover:bg-red-700 text-white')}
+            {renderButton('⌫', handleBackspace, 'bg-red-600 hover:bg-red-700 text-white')}
+            {operatorButtons.map(op => renderButton(op, () => handleOperatorClick(op), 'bg-orange-500 hover:bg-orange-600 text-white'))}
+            {renderButton('=', handleEquals, 'bg-blue-600 hover:bg-blue-700 text-white col-span-2')}
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
