@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -121,11 +122,11 @@ export default function BigNumberCalculator() {
 
     return (
         <Card className="shadow-lg">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Big Number Calculator</CardTitle>
                 <CardDescription>Performs arithmetic on very large integers.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                  <div className="space-y-2">
                     <Label htmlFor="x-val">X =</Label>
                     <Input id="x-val" value={x} onChange={e => setX(e.target.value)} placeholder="e.g., 23E18 or a large integer" />
@@ -135,24 +136,24 @@ export default function BigNumberCalculator() {
                     <Input id="y-val" value={y} onChange={e => setY(e.target.value)} placeholder="e.g., 3.5e19 or a large integer" />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                    <Button onClick={() => calculate('add')}>X + Y</Button>
-                    <Button onClick={() => calculate('subtract')}>X – Y</Button>
-                    <Button onClick={() => calculate('multiply')}>X × Y</Button>
-                    <Button onClick={() => calculate('divide')}>X / Y</Button>
-                    <Button onClick={() => calculate('power')}>X^Y</Button>
-                    <Button onClick={() => calculate('sqrt')}>√X</Button>
-                    <Button onClick={() => calculate('sq')}>X²</Button>
-                    <Button onClick={() => calculate('factorial')}>X!</Button>
-                    <Button onClick={() => calculate('mod')}>X MOD Y</Button>
-                    <Button onClick={() => calculate('gcd')}>GCD</Button>
-                    <Button onClick={() => calculate('lcm')}>LCM</Button>
+                    <Button size="sm" onClick={() => calculate('add')}>X + Y</Button>
+                    <Button size="sm" onClick={() => calculate('subtract')}>X – Y</Button>
+                    <Button size="sm" onClick={() => calculate('multiply')}>X × Y</Button>
+                    <Button size="sm" onClick={() => calculate('divide')}>X / Y</Button>
+                    <Button size="sm" onClick={() => calculate('power')}>X^Y</Button>
+                    <Button size="sm" onClick={() => calculate('sqrt')}>√X</Button>
+                    <Button size="sm" onClick={() => calculate('sq')}>X²</Button>
+                    <Button size="sm" onClick={() => calculate('factorial')}>X!</Button>
+                    <Button size="sm" onClick={() => calculate('mod')}>X MOD Y</Button>
+                    <Button size="sm" onClick={() => calculate('gcd')}>GCD</Button>
+                    <Button size="sm" onClick={() => calculate('lcm')}>LCM</Button>
                 </div>
             </CardContent>
             {result && (
-                <CardFooter>
+                <CardFooter className="p-4">
                      <div className="w-full space-y-2">
                         <Label>Result</Label>
-                        <Textarea readOnly value={result} className="bg-muted font-mono h-32" />
+                        <Textarea readOnly value={result} className="bg-muted font-mono h-24" />
                     </div>
                 </CardFooter>
             )}

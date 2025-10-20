@@ -90,19 +90,19 @@ export default function CircleCalculator() {
     return (
         <Card className="shadow-lg">
             <CardContent className="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <Label htmlFor="radius">Radius (r)</Label>
                     <Input id="radius" name="radius" type="number" value={values.radius} onChange={handleInputChange} />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <Label htmlFor="diameter">Diameter (d)</Label>
                     <Input id="diameter" name="diameter" type="number" value={values.diameter} onChange={handleInputChange} />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <Label htmlFor="circumference">Circumference (C)</Label>
                     <Input id="circumference" name="circumference" type="number" value={values.circumference} onChange={handleInputChange} />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-1">
                     <Label htmlFor="area">Area (A)</Label>
                     <Input id="area" name="area" type="number" value={values.area} onChange={handleInputChange} />
                 </div>

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -153,16 +154,16 @@ const ScientificCalculator = () => {
       default: onClick = () => handleButtonClick(label);
     }
     
-    return <Button key={label} variant={variant || 'outline'} className="h-12 text-base" onClick={onClick}>{label}</Button>;
+    return <Button key={label} variant={variant || 'outline'} size="sm" className="h-10 text-base" onClick={onClick}>{label}</Button>;
   }
 
   return (
-    <Card className="shadow-lg max-w-md mx-auto">
+    <Card className="shadow-lg max-w-sm mx-auto">
         <CardContent className="p-2">
             <Input 
                 readOnly 
                 value={displayValue} 
-                className="mb-2 h-16 text-right text-4xl font-mono bg-muted" 
+                className="mb-2 h-14 text-right text-3xl font-mono bg-muted" 
                 aria-label="Calculator display"
             />
             <div className="grid grid-cols-5 gap-2">

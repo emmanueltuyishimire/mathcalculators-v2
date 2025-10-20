@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -54,36 +55,37 @@ const NotationConverter = () => {
 
     useEffect(() => {
         convert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [input]);
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Scientific Notation Converter</CardTitle>
                 <CardDescription>Enter a number in any format to see its different notations.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4">
                 <Input
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     placeholder="e.g., 3.5x10^-12"
-                    className="font-mono text-center text-lg"
+                    className="font-mono text-center"
                 />
             </CardContent>
-            <CardFooter className="flex flex-col items-start gap-4">
-                <div className="w-full space-y-2">
+            <CardFooter className="flex flex-col items-start gap-3 p-4">
+                <div className="w-full space-y-1">
                     <Label>Scientific Notation</Label>
                     <Input readOnly value={results.scientific} className="bg-muted font-mono" />
                 </div>
-                 <div className="w-full space-y-2">
+                 <div className="w-full space-y-1">
                     <Label>E-Notation</Label>
                     <Input readOnly value={results.eNotation} className="bg-muted font-mono" />
                 </div>
-                 <div className="w-full space-y-2">
+                 <div className="w-full space-y-1">
                     <Label>Engineering Notation</Label>
                     <Input readOnly value={results.engineering} className="bg-muted font-mono" />
                 </div>
-                 <div className="w-full space-y-2">
+                 <div className="w-full space-y-1">
                     <Label>Real Number</Label>
                     <Input readOnly value={results.real} className="bg-muted font-mono" />
                 </div>
@@ -134,11 +136,11 @@ const ArithmeticCalculator = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Scientific Notation Calculator</CardTitle>
                 <CardDescription>Perform arithmetic operations on numbers in scientific notation.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                  <div className="space-y-2">
                     <Label>Value X</Label>
                     <div className="flex items-center gap-2">
@@ -159,18 +161,18 @@ const ArithmeticCalculator = () => {
                     <Label>Precision (Decimal Places)</Label>
                     <Input value={precision} onChange={e => setPrecision(e.target.value)} type="number" min="0" />
                 </div>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                    <Button onClick={() => calculate('add')}>X + Y</Button>
-                    <Button onClick={() => calculate('subtract')}>X – Y</Button>
-                    <Button onClick={() => calculate('multiply')}>X × Y</Button>
-                    <Button onClick={() => calculate('divide')}>X / Y</Button>
-                    <Button onClick={() => calculate('power')}>X^Y</Button>
-                    <Button onClick={() => calculate('sqrt')}>√X</Button>
-                    <Button onClick={() => calculate('sq')}>X²</Button>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    <Button size="sm" onClick={() => calculate('add')}>X + Y</Button>
+                    <Button size="sm" onClick={() => calculate('subtract')}>X – Y</Button>
+                    <Button size="sm" onClick={() => calculate('multiply')}>X × Y</Button>
+                    <Button size="sm" onClick={() => calculate('divide')}>X / Y</Button>
+                    <Button size="sm" onClick={() => calculate('power')}>X^Y</Button>
+                    <Button size="sm" onClick={() => calculate('sqrt')}>√X</Button>
+                    <Button size="sm" onClick={() => calculate('sq')}>X²</Button>
                 </div>
             </CardContent>
             {result && (
-                <CardFooter>
+                <CardFooter className="p-4">
                      <div className="w-full space-y-2">
                         <Label>Result</Label>
                         <Input readOnly value={result} className="bg-muted font-mono" />
@@ -183,7 +185,7 @@ const ArithmeticCalculator = () => {
 
 export default function ScientificNotationCalculator() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       <NotationConverter />
       <ArithmeticCalculator />
     </div>

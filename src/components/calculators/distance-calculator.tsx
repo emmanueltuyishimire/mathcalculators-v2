@@ -83,13 +83,13 @@ const TwoDCalculator = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>2D Distance Calculator</CardTitle>
                 <CardDescription>Find the distance between two points on a 2D plane.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <fieldset className="border p-4 rounded-md">
+                    <fieldset className="border p-3 rounded-md">
                         <legend className="text-sm font-medium px-1">Point 1</legend>
                         <div className="flex gap-2">
                            <div className="space-y-1">
@@ -102,7 +102,7 @@ const TwoDCalculator = () => {
                            </div>
                         </div>
                     </fieldset>
-                     <fieldset className="border p-4 rounded-md">
+                     <fieldset className="border p-3 rounded-md">
                         <legend className="text-sm font-medium px-1">Point 2</legend>
                         <div className="flex gap-2">
                            <div className="space-y-1">
@@ -116,35 +116,28 @@ const TwoDCalculator = () => {
                         </div>
                     </fieldset>
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result !== null && (
-                <CardFooter className="flex-col items-start gap-4">
-                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
+                <CardFooter className="flex-col items-start gap-4 p-4">
+                    <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
                         <h4 className="font-semibold">Distance Result</h4>
-                        <p className="font-mono text-lg"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
+                        <p className="font-mono text-base"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
                         <div>
-                            <h5 className="font-medium text-sm mt-2">Steps:</h5>
+                            <h5 className="font-medium text-xs mt-2">Steps:</h5>
                             <div className="font-mono text-xs space-y-1 bg-background/50 p-2 rounded-md">
                                 <p>d = √(({p2.x}) - ({p1.x}))² + (({p2.y}) - ({p1.y}))²</p>
                                 <p>d = √({result.deltaX})² + ({result.deltaY})²</p>
-                                <p>d = √({Math.pow(result.deltaX, 2).toFixed(4)} + {Math.pow(result.deltaY, 2).toFixed(4)})</p>
-                                <p>d = √{Math.pow(result.distance, 2).toFixed(4)}</p>
-                                <p>d = {result.distance.toFixed(4)}</p>
+                                <p>d = √{result.distance.toFixed(4)}</p>
                             </div>
                         </div>
                     </div>
-                     <div className="w-full p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md space-y-3">
+                     <div className="w-full p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md space-y-2">
                         <h4 className="font-semibold">Line Properties</h4>
-                        <p className="font-mono text-sm"><b>ΔX = </b> {p2.x} - {p1.x} = {result.deltaX}</p>
-                        <p className="font-mono text-sm"><b>ΔY = </b> {p2.y} - {p1.y} = {result.deltaY}</p>
-                        <p className="font-mono text-sm"><b>Slope (m) = </b> ΔY/ΔX = {result.deltaY.toFixed(4)}/{result.deltaX.toFixed(4)} = {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
-                        <p className="font-mono text-sm"><b>Angle (θ) = </b> {typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</p>
+                        <p className="font-mono text-xs"><b>Slope (m):</b> {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
+                        <p className="font-mono text-xs"><b>Angle (θ):</b> {typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</p>
                         <Separator className="my-2 bg-blue-200 dark:bg-blue-800" />
-                        <h5 className="font-medium text-sm">Equation of the line:</h5>
-                        <p className="font-mono text-sm">{result.equation}</p>
-                        <p className="font-mono text-sm"><b>Y-Intercept (b): </b>{typeof result.yIntercept === 'number' ? result.yIntercept.toFixed(4) : result.yIntercept}</p>
-                        <p className="font-mono text-sm"><b>X-Intercept: </b>{typeof result.xIntercept === 'number' ? result.xIntercept.toFixed(4) : result.xIntercept}</p>
+                        <h5 className="font-medium text-xs">Equation:</h5>
+                        <p className="font-mono text-xs">{result.equation}</p>
                     </div>
                 </CardFooter>
             )}
@@ -200,13 +193,13 @@ const ThreeDCalculator = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>3D Distance Calculator</CardTitle>
                 <CardDescription>Find the distance between two points in 3D space.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <fieldset className="border p-4 rounded-md">
+                    <fieldset className="border p-3 rounded-md">
                         <legend className="text-sm font-medium px-1">Point 1</legend>
                         <div className="flex gap-2">
                            <Input aria-label="X1" type="number" value={p1.x} onChange={e => setP1({ ...p1, x: e.target.value })} placeholder="X1" />
@@ -214,7 +207,7 @@ const ThreeDCalculator = () => {
                            <Input aria-label="Z1" type="number" value={p1.z} onChange={e => setP1({ ...p1, z: e.target.value })} placeholder="Z1" />
                         </div>
                     </fieldset>
-                     <fieldset className="border p-4 rounded-md">
+                     <fieldset className="border p-3 rounded-md">
                         <legend className="text-sm font-medium px-1">Point 2</legend>
                         <div className="flex gap-2">
                            <Input aria-label="X2" type="number" value={p2.x} onChange={e => setP2({ ...p2, x: e.target.value })} placeholder="X2" />
@@ -223,21 +216,17 @@ const ThreeDCalculator = () => {
                         </div>
                     </fieldset>
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result !== null && (
-                <CardFooter>
-                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
+                <CardFooter className="p-4">
+                    <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
                         <h4 className="font-semibold">Distance Result</h4>
-                        <p className="font-mono text-lg"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
+                        <p className="font-mono text-base"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
                         <div>
-                            <h5 className="font-medium text-sm mt-2">Steps:</h5>
+                            <h5 className="font-medium text-xs mt-2">Steps:</h5>
                             <div className="font-mono text-xs space-y-1 bg-background/50 p-2 rounded-md">
-                                <p>d = √(({p2.x}) - ({p1.x}))² + (({p2.y}) - ({p1.y}))² + (({p2.z}) - ({p1.z}))²</p>
                                 <p>d = √({result.deltaX})² + ({result.deltaY})² + ({result.deltaZ})²</p>
-                                <p>d = √({Math.pow(result.deltaX, 2).toFixed(4)} + {Math.pow(result.deltaY, 2).toFixed(4)} + {Math.pow(result.deltaZ, 2).toFixed(4)})</p>
-                                <p>d = √{Math.pow(result.distance, 2).toFixed(4)}</p>
-                                <p>d = {result.distance.toFixed(4)}</p>
+                                <p>d = √{result.distance.toFixed(4)}</p>
                             </div>
                         </div>
                     </div>
@@ -296,20 +285,20 @@ const LatLongCalculator = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Latitude & Longitude Distance</CardTitle>
                 <CardDescription>Find the great-circle distance between two points on Earth.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <fieldset className="border p-4 rounded-md">
+                    <fieldset className="border p-3 rounded-md">
                         <legend className="text-sm font-medium px-1">Point 1</legend>
                         <div className="flex gap-2">
                             <Input aria-label="Latitude 1" type="number" value={p1.lat} onChange={e => setP1({ ...p1, lat: e.target.value })} placeholder="Latitude 1" />
                             <Input aria-label="Longitude 1" type="number" value={p1.lon} onChange={e => setP1({ ...p1, lon: e.target.value })} placeholder="Longitude 1" />
                         </div>
                     </fieldset>
-                     <fieldset className="border p-4 rounded-md">
+                     <fieldset className="border p-3 rounded-md">
                         <legend className="text-sm font-medium px-1">Point 2</legend>
                         <div className="flex gap-2">
                            <Input aria-label="Latitude 2" type="number" value={p2.lat} onChange={e => setP2({ ...p2, lat: e.target.value })} placeholder="Latitude 2" />
@@ -317,13 +306,12 @@ const LatLongCalculator = () => {
                         </div>
                     </fieldset>
                 </div>
-                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {distance && (
-                <CardFooter>
-                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
-                        <p className="font-mono text-sm">The distance between [{p1.lat}, {p1.lon}] and [{p2.lat}, {p2.lon}] is:</p>
-                        <p className="font-mono text-lg mt-2"><b>{distance.km.toFixed(1)} km</b> or <b>{distance.miles.toFixed(1)} miles</b></p>
+                <CardFooter className="p-4">
+                    <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                        <p className="font-mono text-xs">The distance between [{p1.lat}, {p1.lon}] and [{p2.lat}, {p2.lon}] is:</p>
+                        <p className="font-mono text-base mt-2"><b>{distance.km.toFixed(1)} km</b> or <b>{distance.miles.toFixed(1)} miles</b></p>
                     </div>
                 </CardFooter>
             )}
@@ -333,7 +321,7 @@ const LatLongCalculator = () => {
 
 export default function DistanceCalculator() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4">
             <TwoDCalculator />
             <ThreeDCalculator />
             <LatLongCalculator />

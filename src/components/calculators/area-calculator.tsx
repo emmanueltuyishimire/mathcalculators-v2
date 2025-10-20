@@ -75,10 +75,10 @@ const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculat
 
     return (
         <Card className="overflow-hidden">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>{shape} Area Calculator</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4">
                 <div className="space-y-4">
                     <div className="space-y-2">
                         <Label htmlFor={`${shape}-unit`}>Unit</Label>
@@ -165,7 +165,7 @@ const calculators: AreaCalculatorProps[] = [
 
 export default function AreaCalculator() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4">
             {calculators.map(calc => (
                 <CalculatorCard key={calc.shape} {...calc} />
             ))}

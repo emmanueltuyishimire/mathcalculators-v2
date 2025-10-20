@@ -96,14 +96,15 @@ export default function FactorCalculator() {
     
     useEffect(() => {
         calculate();
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [input]);
 
     return (
         <Card className="shadow-lg">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Factor an Integer</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="number-input">Integer</Label>
                     <Input
@@ -118,20 +119,20 @@ export default function FactorCalculator() {
                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result && (
-                <CardFooter className="flex-col items-start gap-4">
-                     <div className="w-full p-4 bg-muted rounded-lg space-y-2">
+                <CardFooter className="flex-col items-start gap-3 p-4">
+                     <div className="w-full p-3 bg-muted rounded-lg space-y-2">
                         <h3 className="font-semibold">Factors:</h3>
                         <p className="text-sm">
                             {result.allFactors.join(', ')}
                         </p>
                     </div>
-                     <div className="w-full p-4 bg-muted rounded-lg space-y-2">
+                     <div className="w-full p-3 bg-muted rounded-lg space-y-2">
                         <h3 className="font-semibold">Factor Pairs:</h3>
                         <p className="text-sm">
                             {result.factorPairs.map(pair => `(${pair.join(', ')})`).join(' ')}
                         </p>
                     </div>
-                     <div className="w-full p-4 bg-muted rounded-lg space-y-2">
+                     <div className="w-full p-3 bg-muted rounded-lg space-y-2">
                         <h3 className="font-semibold">Prime Factors:</h3>
                          <p className="font-mono text-primary">
                             {input} = {result.primeFactors.join(' × ')}

@@ -50,7 +50,7 @@ const ThreeFieldCalculator = () => {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [part, whole, percent]);
+    }, []);
     
     const handleClear = () => {
         setPart('');
@@ -60,12 +60,12 @@ const ThreeFieldCalculator = () => {
 
     return (
         <Card className="w-full">
-            <CardHeader>
+            <CardHeader className="p-4">
                  <CardTitle>Percentage Calculator</CardTitle>
                  <CardDescription>Provide any two values below to find the third.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex flex-wrap items-center gap-2 text-lg">
+            <CardContent className="space-y-4 p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-base">
                     <Input className="flex-1 min-w-[60px]" type="number" placeholder="Percentage" value={percent} onChange={e => setPercent(e.target.value)} aria-label="Percentage" />
                      <span className="font-semibold">% of</span>
                     <Input className="flex-1 min-w-[60px]" type="number" placeholder="Whole" value={whole} onChange={e => setWhole(e.target.value)} aria-label="Whole value" />
@@ -109,21 +109,20 @@ const CommonPhrasesCalculator = () => {
 
     return (
         <Card className="w-full">
-            <CardHeader>
+            <CardHeader className="p-4">
                  <CardTitle>Percentage in Common Phrases</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-4">
                 {/* Calculator 1 */}
                 <div className="space-y-2">
                      <div className="flex flex-wrap items-center gap-2">
                         <span>What is</span>
-                        <Input className="w-24" type="number" value={val1.p} onChange={e => setVal1({...val1, p: e.target.value})} aria-label="Percentage for what is phrase" />
+                        <Input className="w-20" type="number" value={val1.p} onChange={e => setVal1({...val1, p: e.target.value})} aria-label="Percentage for what is phrase" />
                         <span>% of</span>
                         <Input className="w-24" type="number" value={val1.w} onChange={e => setVal1({...val1, w: e.target.value})} aria-label="Whole for what is phrase" />
                         <span>?</span>
                     </div>
                      <div className="flex items-center gap-2">
-                        <Button size="sm" onClick={calc1}>Calculate</Button>
                         <Input readOnly value={val1.r} className="bg-muted w-28" aria-label="Result for what is phrase" />
                     </div>
                 </div>
@@ -139,7 +138,6 @@ const CommonPhrasesCalculator = () => {
                         <span>?</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button size="sm" onClick={calc2}>Calculate</Button>
                         <Input readOnly value={val2.r} className="bg-muted w-28" aria-label="Result for is what percent phrase" />
                     </div>
                 </div>
@@ -151,11 +149,10 @@ const CommonPhrasesCalculator = () => {
                     <div className="flex flex-wrap items-center gap-2">
                         <Input className="w-24" type="number" value={val3.part} onChange={e => setVal3({...val3, part: e.target.value})} aria-label="Part for is percent of what phrase" />
                         <span>is</span>
-                        <Input className="w-24" type="number" value={val3.p} onChange={e => setVal3({...val3, p: e.target.value})} aria-label="Percentage for is percent of what phrase" />
+                        <Input className="w-20" type="number" value={val3.p} onChange={e => setVal3({...val3, p: e.target.value})} aria-label="Percentage for is percent of what phrase" />
                         <span>% of what?</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Button size="sm" onClick={calc3}>Calculate</Button>
                         <Input readOnly value={val3.r} className="bg-muted w-28" aria-label="Result for is percent of what phrase" />
                     </div>
                 </div>
@@ -193,16 +190,15 @@ const PercentageDifferenceCalculator = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Percentage Difference Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="flex flex-wrap items-center gap-2">
                     <Input className="flex-1 min-w-[80px]" type="number" value={val1} onChange={e => setVal1(e.target.value)} aria-label="Value 1"/>
                     <span className="font-semibold">and</span>
                     <Input className="flex-1 min-w-[80px]" type="number" value={val2} onChange={e => setVal2(e.target.value)} aria-label="Value 2"/>
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate Difference</Button>
                 {result && (
                     <Input readOnly value={`${result}%`} className="bg-muted text-center font-semibold" aria-label="Percentage difference result" />
                 )}
@@ -242,14 +238,14 @@ const PercentageChangeCalculator = () => {
     useEffect(() => {
         calculate('increase');
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initial, change]);
+    }, []);
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Percentage Change Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="flex flex-wrap items-center gap-2">
                     <Input className="flex-1 min-w-[80px]" type="number" value={initial} onChange={e => setInitial(e.target.value)} aria-label="Initial value"/>
                     <span className="font-semibold">by</span>
@@ -268,7 +264,7 @@ const PercentageChangeCalculator = () => {
 
 export default function PercentageCalculator() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4">
             <ThreeFieldCalculator />
             <CommonPhrasesCalculator />
             <PercentageDifferenceCalculator />

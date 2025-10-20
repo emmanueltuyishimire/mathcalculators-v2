@@ -100,11 +100,11 @@ export default function UnitConverter() {
   
   return (
     <Card className="shadow-lg">
-      <CardHeader>
+      <CardHeader className="p-4">
         <CardTitle>Unit Converter</CardTitle>
         <CardDescription>Convert between different units of measurement.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4 p-4">
         <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
             <Select value={category} onValueChange={(val) => setCategory(val as UnitCategory)}>
@@ -132,7 +132,7 @@ export default function UnitConverter() {
             </div>
             
             <div className="pt-8">
-                <Button variant="ghost" size="icon" onClick={handleSwap} aria-label="Swap units"><ArrowRightLeft className="size-5"/></Button>
+                <Button variant="ghost" size="icon" onClick={handleSwap} aria-label="Swap units"><ArrowRightLeft className="size-4"/></Button>
             </div>
 
             <div className="w-full space-y-2">

@@ -1,15 +1,19 @@
 
-"use client";
-
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+'use client';
+import { PageHeader } from '@/components/page-header';
+import SlopeCalculator from '@/components/calculators/slope-calculator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Separator } from '@/components/ui/separator';
+
 
 interface TwoPointResult {
     slope: number | 'undefined';
@@ -121,15 +125,13 @@ const TwoPointsCalculator = () => {
       </CardContent>
       {result && (
         <CardFooter className="p-0 mt-4">
-          <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-3">
-             <p className="font-mono text-sm"><b>Slope (m)</b> = (y₂-y₁)/(x₂-x₁) = {result.deltaY.toFixed(4)}/{result.deltaX.toFixed(4)} = <b>{typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</b></p>
-            <p className="font-mono text-sm"><b>Angle (θ)</b> = arctan(m) = <b>{typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</b> or <b>{typeof result.angleRad === 'number' ? result.angleRad.toFixed(4) : result.angleRad} rad</b></p>
-            <p className="font-mono text-sm"><b>Distance (d)</b> = √((x₂-x₁)² + (y₂-y₁)²)= <b>{result.distance.toFixed(4)}</b></p>
+          <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
+             <p className="font-mono text-xs"><b>Slope (m):</b> {typeof result.slope === 'number' ? result.slope.toFixed(4) : result.slope}</p>
+            <p className="font-mono text-xs"><b>Angle (θ):</b> {typeof result.angleDeg === 'number' ? `${result.angleDeg.toFixed(4)}°` : result.angleDeg}</p>
+            <p className="font-mono text-xs"><b>Distance (d):</b> {result.distance.toFixed(4)}</p>
             <Separator className="my-2 bg-green-200 dark:bg-green-800" />
-            <h4 className="font-semibold">Line Equation</h4>
-            <p className="font-mono text-sm"><b>Full Equation:</b> {result.equation}</p>
-            <p className="font-mono text-sm"><b>Y-Intercept (b):</b> {typeof result.yIntercept === 'number' ? result.yIntercept.toFixed(4) : result.yIntercept}</p>
-            <p className="font-mono text-sm"><b>X-Intercept:</b> {typeof result.xIntercept === 'number' ? result.xIntercept.toFixed(4) : result.xIntercept}</p>
+            <h4 className="font-semibold text-sm">Line Equation</h4>
+            <p className="font-mono text-xs">{result.equation}</p>
           </div>
         </CardFooter>
       )}
@@ -259,7 +261,7 @@ const OnePointSlopeCalculator = () => {
         <Button onClick={calculate} className="w-full">Calculate Point</Button>
       </CardContent>
        {result && (
-        <CardFooter className="p-0 mt-4 flex-col">
+        <CardFooter className="p-0 mt-4 flex-col gap-4">
           <ResultBlock 
             title="Result (Positive Direction)"
             data={result.positive}
@@ -281,34 +283,29 @@ const OnePointSlopeCalculator = () => {
 };
 
 const ResultBlock = ({ title, data, equation, yIntercept, xIntercept }: { title: string, data: OnePointResultData, equation: string, yIntercept: number | string, xIntercept: number | string }) => (
-    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2 mt-4">
+    <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
         <h4 className="font-bold">{title}</h4>
-        <p className="font-mono text-sm"><b>Second Point (x₂, y₂):</b> ({data.x2.toFixed(4)}, {data.y2.toFixed(4)})</p>
-        <p className="font-mono text-sm"><b>Change in X (ΔX):</b> {data.deltaX.toFixed(4)}</p>
-        <p className="font-mono text-sm"><b>Change in Y (ΔY):</b> {data.deltaY.toFixed(4)}</p>
-         <Separator className="my-2 bg-green-200 dark:bg-green-800" />
-        <h4 className="font-semibold">Line Properties</h4>
-        <p className="font-mono text-sm"><b>Equation:</b> {equation}</p>
-        <p className="font-mono text-sm"><b>Y-Intercept:</b> {typeof yIntercept === 'number' ? yIntercept.toFixed(4) : yIntercept}</p>
-        <p className="font-mono text-sm"><b>X-Intercept:</b> {typeof xIntercept === 'number' ? xIntercept.toFixed(4) : xIntercept}</p>
+        <p className="font-mono text-xs"><b>Second Point (x₂, y₂):</b> ({data.x2.toFixed(4)}, {data.y2.toFixed(4)})</p>
+        <Separator className="my-2 bg-green-200 dark:bg-green-800" />
+        <h4 className="font-semibold text-sm">Line Properties</h4>
+        <p className="font-mono text-xs"><b>Equation:</b> {equation}</p>
     </div>
 );
-
 
 export default function SlopeCalculator() {
 
   return (
     <Card className="shadow-lg">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         <Tabs defaultValue="two-points" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="two-points">2 Points</TabsTrigger>
                 <TabsTrigger value="one-point-slope">1 Point & Slope</TabsTrigger>
             </TabsList>
-            <TabsContent value="two-points" className="mt-6">
+            <TabsContent value="two-points" className="mt-4">
                 <TwoPointsCalculator />
             </TabsContent>
-            <TabsContent value="one-point-slope" className="mt-6">
+            <TabsContent value="one-point-slope" className="mt-4">
                 <OnePointSlopeCalculator />
             </TabsContent>
         </Tabs>

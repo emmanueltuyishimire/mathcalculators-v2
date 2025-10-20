@@ -158,22 +158,22 @@ function BasicFractionCalculator() {
                         </SelectContent>
                     </Select>
                     <FractionInput n={f2.n} d={f2.d} onNChange={v => setF2({...f2, n: v})} onDChange={v => setF2({...f2, d: v})} />
-                    <Button onClick={calculate}>=</Button>
+                    <Button size="sm" onClick={calculate}>=</Button>
                     <div className="flex items-center gap-2">
                         {result ? <FractionInput n={String(result.n)} d={String(result.d)} readOnly /> : <FractionInput n="?" d="?" readOnly />}
                     </div>
                 </div>
             </CardContent>
              {result && (
-                <CardFooter className="flex-col items-start gap-4">
-                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                <CardFooter className="flex-col items-start gap-3 p-4">
+                    <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <p>Result in decimals: <b>{result.decimal}</b></p>
                     </div>
                      <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                <div className="p-3 bg-muted rounded-md font-mono text-xs break-words space-y-1">
                                     <p>{result.steps.step1}</p>
                                     {result.steps.step2 && <p>{result.steps.step2}</p>}
                                     {result.steps.step3 && <p>{result.steps.step3}</p>}
@@ -315,26 +315,26 @@ function MixedNumbersCalculator() {
 
      return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle className="text-xl">Mixed Numbers Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-wrap items-center justify-center gap-2">
+            <CardContent className="flex flex-wrap items-center justify-center gap-2 p-4">
                 <MixedNumberInput w={m1.w} n={m1.n} d={m1.d} onWChange={v=>setM1({...m1,w:v})} onNChange={v=>setM1({...m1,n:v})} onDChange={v=>setM1({...m1,d:v})}/>
                 <Select value={op} onValueChange={setOp}><SelectTrigger className="w-[60px]" aria-label="Select mixed number operation"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="+">+</SelectItem><SelectItem value="-">-</SelectItem><SelectItem value="×">×</SelectItem><SelectItem value="÷">÷</SelectItem></SelectContent></Select>
                 <MixedNumberInput w={m2.w} n={m2.n} d={m2.d} onWChange={v=>setM2({...m2,w:v})} onNChange={v=>setM2({...m2,n:v})} onDChange={v=>setM2({...m2,d:v})}/>
-                <Button onClick={calculate}>=</Button>
+                <Button size="sm" onClick={calculate}>=</Button>
                 {result ? <MixedNumberInput w={String(result.w)} n={String(result.n)} d={String(result.d)} readOnly /> : <MixedNumberInput w="?" n="?" d="?" readOnly />}
             </CardContent>
              {result && (
-                <CardFooter className="flex-col items-start gap-4">
-                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                <CardFooter className="flex-col items-start gap-3 p-4">
+                     <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <p>Result in decimals: <b>{result.decimal}</b></p>
                     </div>
                      <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                <div className="p-3 bg-muted rounded-md font-mono text-xs break-words space-y-1">
                                    {result.steps.map((step, i) => <p key={i}>{step}</p>)}
                                 </div>
                             </AccordionContent>
@@ -342,7 +342,7 @@ function MixedNumbersCalculator() {
                          <AccordionItem value="item-2">
                             <AccordionTrigger>Show Further Explanation</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md text-sm break-words space-y-2">
+                                <div className="p-3 bg-muted rounded-md text-xs break-words space-y-1">
                                    {result.explanation.map((exp, i) => <p key={i}>{exp}</p>)}
                                 </div>
                             </AccordionContent>
@@ -394,10 +394,10 @@ function SimplifyFractionCalculator() {
 
     return (
         <Card>
-            <CardHeader><CardTitle className="text-xl">Simplify Fractions Calculator</CardTitle></CardHeader>
-            <CardContent className="flex items-center justify-center gap-2">
+            <CardHeader className="p-4"><CardTitle className="text-xl">Simplify Fractions Calculator</CardTitle></CardHeader>
+            <CardContent className="flex items-center justify-center gap-2 p-4">
                 <FractionInput n={frac.n} d={frac.d} onNChange={v=>setFrac({...frac, n:v})} onDChange={v=>setFrac({...frac, d:v})} />
-                <Button onClick={calculate}>=</Button>
+                <Button size="sm" onClick={calculate}>=</Button>
                 {result ? <FractionInput n={String(result.n)} d={String(result.d)} readOnly /> : <FractionInput n="?" d="?" readOnly />}
             </CardContent>
         </Card>
@@ -463,10 +463,10 @@ function DecimalToFraction() {
     
     return (
         <Card>
-            <CardHeader><CardTitle className="text-xl">Decimal to Fraction</CardTitle></CardHeader>
-            <CardContent className="flex items-center justify-center gap-2">
+            <CardHeader className="p-4"><CardTitle className="text-xl">Decimal to Fraction</CardTitle></CardHeader>
+            <CardContent className="flex items-center justify-center gap-2 p-4">
                 <Input value={dec} onChange={e => setDec(e.target.value)} type="number" className="w-24" />
-                <Button onClick={calculate}>=</Button>
+                <Button size="sm" onClick={calculate}>=</Button>
                 {result ? (
                     <div className="flex items-center gap-2">
                         <FractionInput n={String(result.n)} d={String(result.d)} readOnly />
@@ -480,12 +480,12 @@ function DecimalToFraction() {
                 ) : <FractionInput n="?" d="?" readOnly />}
             </CardContent>
             {result && (
-                <CardFooter>
+                <CardFooter className="p-4">
                     <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                <div className="p-3 bg-muted rounded-md font-mono text-xs break-words space-y-1">
                                    {result.steps.map((step, i) => <p key={i}>{step}</p>)}
                                 </div>
                             </AccordionContent>
@@ -528,10 +528,10 @@ function FractionToDecimal() {
 
     return (
         <Card>
-            <CardHeader><CardTitle className="text-xl">Fraction to Decimal</CardTitle></CardHeader>
-            <CardContent className="flex items-center justify-center gap-2">
+            <CardHeader className="p-4"><CardTitle className="text-xl">Fraction to Decimal</CardTitle></CardHeader>
+            <CardContent className="flex items-center justify-center gap-2 p-4">
                 <FractionInput n={frac.n} d={frac.d} onNChange={v=>setFrac({...frac,n:v})} onDChange={v=>setFrac({...frac,d:v})} />
-                <Button onClick={calculate}>=</Button>
+                <Button size="sm" onClick={calculate}>=</Button>
                 {result ? <Input value={result} readOnly className="w-24" /> : <Input value="?" readOnly className="w-24" />}
             </CardContent>
         </Card>
@@ -587,11 +587,11 @@ function BigNumberFractionCalculator() {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle className="text-xl">Big Number Fraction Calculator</CardTitle>
                 <CardDescription>Uses BigInt for large number calculations.</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-wrap items-center justify-center gap-2">
+            <CardContent className="flex flex-wrap items-center justify-center gap-2 p-4">
                 <FractionInput n={f1.n} d={f1.d} onNChange={v=>setF1({...f1,n:v})} onDChange={v=>setF1({...f1,d:v})} wide />
                 <Select value={op} onValueChange={setOp}>
                   <SelectTrigger className="w-[60px]" aria-label="Select big number operation"><SelectValue /></SelectTrigger>
@@ -603,10 +603,10 @@ function BigNumberFractionCalculator() {
                   </SelectContent>
                 </Select>
                 <FractionInput n={f2.n} d={f2.d} onNChange={v=>setF2({...f2,n:v})} onDChange={v=>setF2({...f2,d:v})} wide/>
-                <Button onClick={calculate}>=</Button>
+                <Button size="sm" onClick={calculate}>=</Button>
             </CardContent>
             {result && (
-                 <CardContent className="flex flex-col items-center justify-center gap-4">
+                 <CardContent className="flex flex-col items-center justify-center gap-2 p-4 pt-0">
                     <FractionInput n={String(result.n)} d={String(result.d)} readOnly wide />
                     {result.w !== 0n && result.rem !== 0n && (
                         <>
@@ -623,16 +623,16 @@ function BigNumberFractionCalculator() {
 // --- Reusable UI Components ---
 
 const FractionInput = ({ n, d, onNChange, onDChange, readOnly, wide }: { n: string, d: string, onNChange?: (v: string) => void, onDChange?: (v: string) => void, readOnly?: boolean, wide?: boolean }) => (
-    <div className={`grid gap-1 ${wide ? 'w-48' : 'w-20'}`}>
+    <div className={`grid gap-1 ${wide ? 'w-40' : 'w-20'}`}>
         <Input type="text" value={n} onChange={e => onNChange?.(e.target.value)} readOnly={readOnly} className="h-8 text-center" aria-label="Numerator" />
-        <div className="h-[2px] bg-foreground" />
+        <div className="h-[1px] bg-foreground" />
         <Input type="text" value={d} onChange={e => onDChange?.(e.target.value)} readOnly={readOnly} className="h-8 text-center" aria-label="Denominator" />
     </div>
 );
 
 const MixedNumberInput = ({ w, n, d, onWChange, onNChange, onDChange, readOnly, wide }: { w:string, n:string, d:string, onWChange?: (v:string)=>void, onNChange?: (v:string)=>void, onDChange?: (v:string)=>void, readOnly?:boolean, wide?: boolean}) => (
     <div className="flex items-center gap-1">
-        <Input type="text" value={w} onChange={e => onWChange?.(e.target.value)} readOnly={readOnly} className={`h-12 text-center text-2xl ${wide ? 'w-48' : 'w-16'}`} aria-label="Whole number" />
+        <Input type="text" value={w} onChange={e => onWChange?.(e.target.value)} readOnly={readOnly} className={`h-10 text-center text-xl ${wide ? 'w-40' : 'w-16'}`} aria-label="Whole number" />
         <FractionInput n={n} d={d} onNChange={onNChange} onDChange={onDChange} readOnly={readOnly} wide={wide} />
     </div>
 );
@@ -640,7 +640,7 @@ const MixedNumberInput = ({ w, n, d, onWChange, onNChange, onDChange, readOnly, 
 
 export default function FractionCalculators() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4">
             <BasicFractionCalculator />
             <MixedNumbersCalculator />
             <SimplifyFractionCalculator />

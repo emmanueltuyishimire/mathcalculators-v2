@@ -141,11 +141,11 @@ export default function GcfCalculator() {
 
     return (
         <Card className="shadow-lg">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>GCF Calculator</CardTitle>
                 <CardDescription>Enter numbers to find their Greatest Common Factor.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="numbers-input">Numbers</Label>
                     <Input
@@ -159,15 +159,15 @@ export default function GcfCalculator() {
                 <Button onClick={calculate} className="w-full">Calculate GCF</Button>
             </CardContent>
             {result && (
-                <CardFooter className="flex-col items-start gap-4">
-                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                <CardFooter className="flex-col items-start gap-3 p-4">
+                     <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <p className="font-bold">GCF({input}) = <span className="text-primary font-mono">{result.gcf}</span></p>
                     </div>
                      <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Show Prime Factorization Steps</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-2">
+                                <div className="p-3 bg-muted rounded-md font-mono text-xs break-words space-y-2">
                                     <p className="font-semibold mb-2">Prime factorization of each number:</p>
                                     {result.steps.map(({num, factors}, index) => (
                                         <p key={`${String(num)}-${index}`}>{String(num)} = {formatFactors(factors)}</p>

@@ -38,11 +38,11 @@ export default function AlgebraCalculator() {
 
   return (
     <Card className="shadow-lg">
-      <CardHeader>
+      <CardHeader className="p-4">
         <CardTitle>Equation Solver</CardTitle>
         <CardDescription>Enter a linear equation to solve for 'x'.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-4">
         <div className="space-y-2">
           <Label htmlFor="equation">Equation</Label>
           <Input
@@ -51,7 +51,7 @@ export default function AlgebraCalculator() {
             onChange={(e) => setEquation(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSolve()}
             placeholder="e.g., 3x - 5 = 16"
-            className="text-lg font-mono"
+            className="text-base font-mono"
           />
         </div>
         <Button onClick={handleSolve} disabled={isLoading || !equation} className="w-full bg-accent hover:bg-accent/90">
@@ -59,8 +59,8 @@ export default function AlgebraCalculator() {
         </Button>
       </CardContent>
       {result && (
-        <CardFooter>
-          <div className="mt-4 w-full rounded-lg border border-green-500/50 bg-green-50 p-4 text-green-800 dark:bg-green-950 dark:text-green-300">
+        <CardFooter className="p-4">
+          <div className="w-full rounded-lg border border-green-500/50 bg-green-50 p-3 text-green-800 dark:bg-green-950 dark:text-green-300">
             <h4 className="font-semibold">Result</h4>
             <p className="font-mono transition-opacity duration-300">{result}</p>
           </div>

@@ -69,7 +69,7 @@ export default function ExponentCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [useE]);
+    }, [useE, base, exponent, result]);
     
     const handleClear = () => {
       setBase('');
@@ -90,12 +90,12 @@ export default function ExponentCalculator() {
 
     return (
         <Card className="shadow-lg">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>aⁿ = y</CardTitle>
                 <CardDescription>Enter any two values to find the third.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="flex items-end gap-2 text-2xl font-semibold">
+            <CardContent className="space-y-4 p-4">
+                <div className="flex items-end gap-2 text-xl font-semibold">
                     <div className="flex-1 space-y-1">
                         <Label htmlFor="base">Base (a)</Label>
                         <Input id="base" type="number" value={useE ? 'e' : base} onChange={e => setBase(e.target.value)} disabled={useE} />
@@ -121,12 +121,12 @@ export default function ExponentCalculator() {
                 </div>
             </CardContent>
             {steps && (
-                <CardFooter>
+                <CardFooter className="p-4">
                      <Accordion type="single" collapsible className="w-full">
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words">
+                                <div className="p-3 bg-muted rounded-md font-mono text-sm break-words">
                                     {steps}
                                 </div>
                             </AccordionContent>

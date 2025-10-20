@@ -106,10 +106,10 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
 
     return (
         <Card className="overflow-hidden">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>{shape} Volume Calculator</CardTitle>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                  <div className="flex justify-center items-center">
                     <VolumeDiagram shape={shape} />
                 </div>
@@ -138,7 +138,6 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                             />
                         </div>
                     ))}
-                    <Button onClick={handleCalculate} className="w-full">Calculate</Button>
                     {volume && (
                         <div className="pt-2">
                             <Label>Volume</Label>
@@ -230,7 +229,7 @@ const calculators: VolumeCalculatorProps[] = [
 
 export default function VolumeCalculator() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4">
             {calculators.map(calc => (
                 <CalculatorCard key={calc.shape} {...calc} />
             ))}

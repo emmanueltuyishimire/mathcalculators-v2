@@ -179,11 +179,11 @@ export default function LcmCalculator() {
 
     return (
         <Card className="shadow-lg">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>LCM & GCD Calculator</CardTitle>
                 <CardDescription>Enter numbers separated by commas to find their LCM and GCD.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="numbers-input">Numbers</Label>
                     <Input
@@ -197,8 +197,8 @@ export default function LcmCalculator() {
                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result && (
-                <CardFooter className="flex-col items-start gap-4">
-                     <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
+                <CardFooter className="flex-col items-start gap-3 p-4">
+                     <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md">
                         <p className="font-bold">LCM({input}) = <span className="text-primary font-mono">{result.lcm}</span></p>
                         <p className="font-bold mt-1">GCD({input}) = <span className="text-primary font-mono">{result.gcd}</span></p>
                     </div>
@@ -206,7 +206,7 @@ export default function LcmCalculator() {
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                             <AccordionContent>
-                                <div className="p-4 bg-muted rounded-md font-mono text-sm break-words space-y-4">
+                                <div className="p-3 bg-muted rounded-md font-mono text-xs break-words space-y-2">
                                     <div>
                                         <p className="font-semibold mb-2">Prime factorization of the numbers:</p>
                                         {result.steps.allFactors.map(({num, factors}, index) => (

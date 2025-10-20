@@ -20,9 +20,9 @@ interface Stats {
 }
 
 const StatDisplay = ({ label, value }: { label: string; value: string | number }) => (
-    <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
+    <div className="flex justify-between items-center p-2 bg-muted rounded-md">
         <span className="text-sm font-medium text-muted-foreground">{label}</span>
-        <span className="text-base font-mono font-semibold">{typeof value === 'number' ? value.toFixed(4) : value}</span>
+        <span className="text-sm font-mono font-semibold">{typeof value === 'number' ? value.toFixed(4) : value}</span>
     </div>
 );
 
@@ -85,10 +85,10 @@ export default function MeanMedianModeCalculator() {
   useEffect(() => {
     calculate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
         <Card className="shadow-lg">
             <CardContent className="pt-6 space-y-4">
                 <div className="space-y-2">
@@ -98,7 +98,7 @@ export default function MeanMedianModeCalculator() {
                         value={data}
                         onChange={(e) => setData(e.target.value)}
                         placeholder="e.g., 8, 12, 12, 15, 17, 22, 23, 30"
-                        className="h-24 font-mono text-base"
+                        className="h-20 font-mono"
                         aria-label="Enter numbers separated by commas"
                     />
                 </div>
@@ -108,13 +108,10 @@ export default function MeanMedianModeCalculator() {
 
         {stats && (
             <Card>
-                <CardHeader>
+                <CardHeader className="p-4">
                     <CardTitle>Results</CardTitle>
-                    <CardDescription>
-                        Statistical analysis of your dataset.
-                    </CardDescription>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-2 p-4 pt-0">
                     <StatDisplay label="Mean (Average)" value={stats.mean} />
                     <StatDisplay label="Median" value={stats.median} />
                     <StatDisplay label="Mode" value={stats.mode} />
@@ -125,7 +122,7 @@ export default function MeanMedianModeCalculator() {
                     <StatDisplay label="Smallest" value={stats.smallest} />
                      <div className="md:col-span-2 space-y-1 pt-2">
                         <Label className="text-sm font-medium text-muted-foreground">Sorted Data</Label>
-                        <p className="text-sm font-mono p-3 bg-muted rounded-lg">{stats.sortedData}</p>
+                        <p className="text-xs font-mono p-2 bg-muted rounded-md">{stats.sortedData}</p>
                      </div>
                 </CardContent>
             </Card>

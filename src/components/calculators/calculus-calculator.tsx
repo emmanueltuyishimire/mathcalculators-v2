@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -65,7 +66,7 @@ function CalculatorTab({
       </Button>
       {result && (
         <CardFooter className="p-0">
-          <div className="mt-4 w-full rounded-lg border border-green-500/50 bg-green-50 p-4 text-green-800 dark:bg-green-950 dark:text-green-300">
+          <div className="mt-4 w-full rounded-lg border border-green-500/50 bg-green-50 p-3 text-green-800 dark:bg-green-950 dark:text-green-300">
             <p className="font-mono transition-opacity duration-300"><span className="font-semibold">{resultPrefix}:</span> {result}</p>
           </div>
         </CardFooter>
@@ -77,14 +78,14 @@ function CalculatorTab({
 export default function CalculusCalculator() {
   return (
     <Card className="shadow-lg">
-      <CardContent className="p-6">
+      <CardContent className="p-4">
         <Tabs defaultValue="derivative">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="derivative">Derivative</TabsTrigger>
             <TabsTrigger value="integral">Integral</TabsTrigger>
             <TabsTrigger value="limit">Limit</TabsTrigger>
           </TabsList>
-          <TabsContent value="derivative" className="mt-6">
+          <TabsContent value="derivative" className="mt-4">
             <CalculatorTab
               title="Derivative"
               description="Find the derivative of a function with respect to x."
@@ -95,7 +96,7 @@ export default function CalculusCalculator() {
               mockResult="3x^2 + 2"
             />
           </TabsContent>
-          <TabsContent value="integral" className="mt-6">
+          <TabsContent value="integral" className="mt-4">
              <CalculatorTab
               title="Integral"
               description="Find the indefinite integral of a function with respect to x."
@@ -106,7 +107,7 @@ export default function CalculusCalculator() {
               mockResult="x^3 + C"
             />
           </TabsContent>
-          <TabsContent value="limit" className="mt-6">
+          <TabsContent value="limit" className="mt-4">
              <CalculatorTab
               title="Limit"
               description="Find the limit of a function as x approaches a value."

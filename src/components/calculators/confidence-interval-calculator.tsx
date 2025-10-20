@@ -71,15 +71,15 @@ export default function ConfidenceIntervalCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [confidence]);
+    }, [confidence, sampleSize, sampleMean, stdDev]);
 
     return (
         <Card className="shadow-lg">
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle>Compute Confidence Interval</CardTitle>
                 <CardDescription>Enter your sample data to calculate the confidence interval.</CardDescription>
             </CardHeader>
-            <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="sample-size">Sample Size (n)</Label>
                     <Input id="sample-size" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} min="1" />
@@ -101,13 +101,10 @@ export default function ConfidenceIntervalCalculator() {
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="sm:col-span-2">
-                    <Button onClick={calculate} className="w-full">Calculate</Button>
-                </div>
             </CardContent>
             {result !== null && (
-                <CardFooter>
-                    <div className="w-full p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
+                <CardFooter className="p-4">
+                    <div className="w-full p-3 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-md space-y-2">
                         <h3 className="font-bold text-lg">Results:</h3>
                         <p className="font-mono"><strong>Margin of Error:</strong> {result.marginOfError.toFixed(4)}</p>
                         <p className="font-mono"><strong>Confidence Interval:</strong> [{result.lowerBound.toFixed(4)}, {result.upperBound.toFixed(4)}]</p>

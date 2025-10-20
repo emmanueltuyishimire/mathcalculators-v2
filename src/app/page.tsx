@@ -14,7 +14,7 @@ function HeroSection() {
   const heroImage = placeholderImages.find(p => p.id === 'heroImage');
   return (
     <section
-      className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
+      className="relative w-full h-[50vh] min-h-[350px] bg-cover bg-center"
       aria-labelledby="hero-heading"
     >
        <Image
@@ -25,11 +25,11 @@ function HeroSection() {
         priority
         className="object-cover"
         />
-      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center p-4">
-        <h1 id="hero-heading" className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
+      <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
+        <h1 id="hero-heading" className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
           Math Calculators
         </h1>
-        <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
+        <p className="mx-auto max-w-[700px] text-gray-200 md:text-lg mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
           Your free online resource for a wide range of math calculators. From basic arithmetic to advanced calculus, we provide instant, accurate answers for students and professionals.
         </p>
            <Button asChild variant="secondary" size="lg" className="mt-6">
@@ -118,19 +118,19 @@ export default function Home() {
     <>
       <HeroSection />
 
-      <main className="flex-1 p-4 md:p-6 lg:p-12">
-        <section id="quick-calculator" className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Quick Scientific Calculator</h2>
+      <main className="flex-1 p-4 md:p-6 lg:p-8">
+        <section id="quick-calculator" className="mb-12">
+            <h2 className="text-3xl font-bold text-center mb-6">Quick Scientific Calculator</h2>
             <div className="max-w-md mx-auto">
               <ScientificCalculator />
             </div>
         </section>
 
-        <section id="tools" className="space-y-16">
+        <section id="tools" className="space-y-12">
             {calculatorCategories.map((category, catIndex) => (
                  <React.Fragment key={category.title}>
                     <div>
-                        <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg" role="presentation">
+                        <div className="relative h-40 w-full rounded-xl overflow-hidden mb-6 shadow-lg" role="presentation">
                             {category.image && (
                                 <Image
                                     src={category.image.src}
@@ -142,18 +142,18 @@ export default function Home() {
                                 />
                             )}
                              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                                <h2 className="text-3xl md:text-4xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
+                                <h2 className="text-3xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
                             </div>
                         </div>
                         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                             {category.tools.map((tool) => (
                                 <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
                                 <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                                    <CardHeader className="flex flex-col items-center text-center p-4">
-                                    <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                                        <tool.icon className="h-6 w-6" aria-hidden="true" />
+                                    <CardHeader className="flex flex-col items-center text-center p-3">
+                                    <div className="mb-2 rounded-full bg-primary/10 p-2 text-primary">
+                                        <tool.icon className="h-5 w-5" aria-hidden="true" />
                                     </div>
-                                    <CardTitle className="text-base">{tool.label}</CardTitle>
+                                    <CardTitle className="text-sm">{tool.label}</CardTitle>
                                     </CardHeader>
                                 </Card>
                                 </Link>

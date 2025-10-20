@@ -54,8 +54,8 @@ export default function BasicCalculator() {
 
   return (
     <Card className="shadow-lg">
-      <CardContent className="flex flex-col items-center gap-4 p-6">
-        <div className="w-full rounded-lg border bg-muted p-4 text-right text-3xl font-mono text-foreground transition-all duration-300">
+      <CardContent className="flex flex-col items-center gap-2 p-4">
+        <div className="w-full rounded-lg border bg-muted p-3 text-right text-2xl font-mono text-foreground transition-all duration-300">
           {displayValue}
         </div>
         <div className="grid w-full grid-cols-4 gap-2">
@@ -67,7 +67,7 @@ export default function BasicCalculator() {
               <Button
                 key={btn}
                 variant={isOperator ? 'secondary' : isEquals ? 'default' : 'outline'}
-                className={`text-lg h-16 ${isEquals ? 'bg-primary hover:bg-primary/90' : isOperator ? 'bg-accent text-accent-foreground hover:bg-accent/90' : ''}`}
+                className={`text-lg h-14 ${isEquals ? 'bg-primary hover:bg-primary/90' : isOperator ? 'bg-accent text-accent-foreground hover:bg-accent/90' : ''}`}
                 onClick={() => {
                   if (isEquals) handleEquals();
                   else if (isOperator) handleOperatorClick(btn);

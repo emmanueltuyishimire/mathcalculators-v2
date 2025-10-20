@@ -63,11 +63,11 @@ const BinaryArithmeticCalculator = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle className="text-xl">Binary Calculation</CardTitle>
                 <CardDescription>Add, Subtract, Multiply, or Divide</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="grid grid-cols-1 gap-2 items-center justify-items-center">
                     <Input value={val1} onChange={e => setVal1(e.target.value)} className="font-mono text-center"/>
                     <div className="flex items-center gap-2">
@@ -132,10 +132,10 @@ const BinToDecConverter = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle className="text-xl">Binary to Decimal</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="binary-input">Binary Value</Label>
                     <Input id="binary-input" value={binary} onChange={e => setBinary(e.target.value)} className="font-mono" />
@@ -183,10 +183,10 @@ const DecToBinConverter = () => {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="p-4">
                 <CardTitle className="text-xl">Decimal to Binary</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 p-4">
                  <div className="space-y-2">
                     <Label htmlFor="decimal-input">Decimal Value</Label>
                     <Input id="decimal-input" value={decimal} onChange={e => setDecimal(e.target.value)} className="font-mono" type="number" />
@@ -205,7 +205,7 @@ const DecToBinConverter = () => {
 
 export default function BinaryCalculator() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4">
             <BinaryArithmeticCalculator />
             <BinToDecConverter />
             <DecToBinConverter />
