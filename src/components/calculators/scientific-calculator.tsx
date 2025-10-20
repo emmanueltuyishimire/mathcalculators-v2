@@ -254,45 +254,31 @@ export default function ScientificCalculator() {
       default: onClick = () => handleButtonClick(label);
     }
     
-    const button3dClasses = 'border-b-2 active:border-b-0 active:translate-y-px';
-    let variantClasses = '';
-    switch(variant) {
-      case 'default': variantClasses = `bg-primary text-primary-foreground hover:bg-primary/90 border-primary/70`; break;
-      case 'secondary': variantClasses = `bg-gray-600 text-white hover:bg-gray-500 border-gray-900`; break;
-      case 'destructive': variantClasses = `bg-red-500 text-white hover:bg-red-600 border-red-900`; break;
-      case 'accent': variantClasses = 'bg-blue-500 text-white hover:bg-blue-600 border-blue-900'; break;
-      case 'outline': 
-        variantClasses = 'bg-gray-200 text-black border-gray-400 hover:bg-gray-300';
-        break;
-      default: variantClasses = 'bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 border-gray-400 dark:border-gray-800';
-    }
-
-
-    return <Button key={label} variant={null} size="sm" className={cn('text-sm h-10 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick} aria-label={label}>{label}</Button>;
+    return <Button key={label} variant={variant} size="sm" className={cn('text-sm h-10', className)} onClick={onClick} aria-label={label}>{label}</Button>;
   }
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-md mx-auto bg-gray-700 text-white p-2 border-4 border-black rounded-2xl">
+    <Card id="scientific-calculator" className="shadow-lg max-w-md mx-auto bg-card text-card-foreground p-2 border-4 border-muted rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
         <Input 
             readOnly 
             value={displayValue} 
-            className="w-full mb-1 rounded-lg border-2 border-black bg-sky-200 p-2 text-right text-3xl font-mono text-black break-all h-16 flex items-end justify-end shadow-inner" 
+            className="w-full mb-1 rounded-lg border-2 border-input bg-muted p-2 text-right text-3xl font-mono text-foreground break-all h-16 flex items-end justify-end shadow-inner" 
             aria-label="Calculator display"
             />
         
         <div className="w-full grid grid-cols-7 gap-1">
-            <Button variant={null} className="h-8 text-xs bg-gray-400 border-b-2 border-gray-500 active:border-b-0 active:translate-y-px" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
-            <Button variant={null} className={cn("h-8 text-xs border-b-2 active:border-b-0 active:translate-y-px", show2nd ? "bg-blue-500 text-white border-blue-700" : "bg-gray-400 border-gray-500")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
+            <Button variant="secondary" className="h-8 text-xs" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
+            <Button variant={show2nd ? 'default' : 'secondary'} className={cn("h-8 text-xs")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
             {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-8 text-xs'))}
-            <Button variant={null} className="h-8 text-xs transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-2 border-red-700 active:border-b-0 active:translate-y-px" onClick={handleBackspace} aria-label="Backspace">⌫</Button>
+            <Button variant="destructive" className="h-8 text-xs" onClick={handleBackspace} aria-label="Backspace">⌫</Button>
         </div>
 
         <div className="w-full grid grid-cols-7 gap-1">
             {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-2 border-gray-600 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick('(')} aria-label="Open parenthesis">(</Button>
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-2 border-gray-600 active:border-b-0 active:translate-y-px" onClick={() => handleButtonClick(')')} aria-label="Close parenthesis">)</Button>
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-2 border-gray-600 active:border-b-0 active:translate-y-px" onClick={() => applyImmediateFunction(x => x, '!')} aria-label="Factorial">n!</Button>
+            {renderButton({ label: '(', type: 'char'}, 'secondary', 'h-8 text-xs')}
+            {renderButton({ label: ')', type: 'char'}, 'secondary', 'h-8 text-xs')}
+            {renderButton({ label: 'n!', type: 'func_imm', fn: (x:number) => x, funcName: '!'}, 'secondary', 'h-8 text-xs')}
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
@@ -311,7 +297,7 @@ export default function ScientificCalculator() {
                 {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
             </div>
              <div className="col-span-1 grid grid-cols-1 gap-1">
-                <Button variant={null} className="h-full text-lg transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-2 border-red-700 active:border-b-0 active:translate-y-px" onClick={handleAllClear} aria-label="All Clear">AC</Button>
+                <Button variant="destructive" className="h-full text-lg" onClick={handleAllClear} aria-label="All Clear">AC</Button>
                 {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
             </div>
         </div>
