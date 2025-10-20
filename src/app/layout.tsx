@@ -10,6 +10,8 @@ import { FirebaseClientProvider } from '@/firebase';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://maths.calculation.site'),
   title: {
@@ -20,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
     description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
-    images: ['/math%20calculator%20background%20image%201.webp'],
+    images: [`${basePath}/math%20calculator%20background%20image%201.webp`],
     url: 'https://maths.calculation.site',
     siteName: 'Math Calculators',
     locale: 'en_US',
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Math Calculators - Free Online Tools for Math, Geometry, Statistics',
     description: 'A comprehensive web application featuring a wide range of free online calculators for mathematics, from basic arithmetic and algebra to advanced calculus, statistics, and matrix operations.',
-    images: ['/math%20calculator%20background%20image%201.webp'],
+    images: [`${basePath}/math%20calculator%20background%20image%201.webp`],
   },
 };
 
@@ -45,7 +47,7 @@ export default function RootLayout({
         {/* Google AdSense Auto Ads */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" crossOrigin="anonymous"></script>
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
-        <link rel="icon" href="favicon.ico" sizes="any" />
+        <link rel="icon" href={`${basePath}/favicon.ico`} sizes="any" />
       </head>
       <body className={cn(inter.variable, "font-body antialiased")} suppressHydrationWarning>
         <FirebaseClientProvider>
