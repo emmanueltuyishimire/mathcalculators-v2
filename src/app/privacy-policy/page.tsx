@@ -1,11 +1,6 @@
+"use client";
 
 import { PageHeader } from '@/components/page-header';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description: 'Our privacy policy outlines how we handle data, use cookies, and work with third-party services like Google AdSense.',
-};
 
 export default function PrivacyPolicyPage() {
   return (

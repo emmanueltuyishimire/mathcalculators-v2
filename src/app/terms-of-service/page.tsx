@@ -1,11 +1,6 @@
+"use client";
 
 import { PageHeader } from '@/components/page-header';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Terms of Service',
-  description: 'Read the Terms of Service for using the Math Calculators website and its calculator tools.',
-};
 
 export default function TermsOfServicePage() {
   return (

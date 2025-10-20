@@ -1,34 +1,13 @@
+"use client";
 
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Target, Zap } from 'lucide-react';
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'About Us',
-  description: 'Learn more about Math Calculators, our mission, and our commitment to providing free, high-quality mathematical calculators for everyone.',
-};
-
-const pageSchema = {
-  "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "name": "About Math Calculators",
-  "description": "Learn about the mission and vision of Math Calculators, a free online resource for mathematical calculators.",
-  "url": "https://maths.calculation.site/about",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Math Calculators",
-    "url": "https://maths.calculation.site"
-  }
-};
-
 export default function AboutPage() {
   return (
     <>
-       <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
-      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="About Math Calculators" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
