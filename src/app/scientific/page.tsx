@@ -4,7 +4,6 @@ import { PageHeader } from '@/components/page-header';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useEffect } from 'react';
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -171,19 +170,6 @@ const HowToUseGuide = () => (
 
 
 export default function ScientificPage() {
-
-   useEffect(() => {
-    // Set the title and description dynamically on the client side
-    document.title = 'Scientific Calculator - Free Online Tool | Math Calculators';
-    
-    let descriptionMeta = document.querySelector('meta[name="description"]');
-    if (!descriptionMeta) {
-      descriptionMeta = document.createElement('meta');
-      descriptionMeta.setAttribute('name', 'description');
-      document.head.appendChild(descriptionMeta);
-    }
-    descriptionMeta.setAttribute('content', 'Use our free online scientific calculator to solve math problems. Supports fractions, trig, logs, exponents, and more. Casio & TI features included.');
-  }, []);
 
   return (
     <>

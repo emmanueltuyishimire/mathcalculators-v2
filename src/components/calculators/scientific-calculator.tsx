@@ -27,22 +27,6 @@ export default function ScientificCalculator() {
   const [show2nd, setShow2nd] = useState(false);
   const { toast } = useToast();
 
-   useEffect(() => {
-    // This is a client component, so we can safely run this effect
-    // to perform an initial calculation for the default expression.
-    if (displayValue === '0') {
-      setDisplayValue('log_2(8)');
-      // Note: handleEquals will be called in the next render cycle due to state update
-    }
-  }, []);
-
-  useEffect(() => {
-    if (displayValue === 'log_2(8)' && !isResult) {
-      handleEquals();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayValue]);
-
   const handleButtonClick = (value: string) => {
     if (isResult) {
       setDisplayValue(value);
