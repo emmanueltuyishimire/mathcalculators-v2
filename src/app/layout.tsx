@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { FirebaseClientProvider } from '@/firebase';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 

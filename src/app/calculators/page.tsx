@@ -109,7 +109,7 @@ export default function CalculatorsPage() {
                       <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
                         <CardHeader className="flex flex-col items-center text-center p-4">
                           <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                            <tool.icon className="h-6 w-6" />
+                            <tool.icon className="h-6 w-6" aria-hidden="true" />
                           </div>
                           <CardTitle className="text-base">{tool.label}</CardTitle>
                         </CardHeader>

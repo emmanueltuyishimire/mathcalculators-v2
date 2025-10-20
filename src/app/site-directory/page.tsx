@@ -117,7 +117,7 @@ export default function SitemapPage() {
               {sitemapData.map((category) => (
                 <div key={category.category}>
                     <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                        <category.icon className="h-6 w-6 text-primary" />
+                        <category.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                         {category.category}
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -126,7 +126,7 @@ export default function SitemapPage() {
                            <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
                              <CardHeader className="flex flex-row items-center gap-3 space-y-0 p-4">
                                <div className="rounded-full bg-primary/10 p-2 text-primary">
-                                 <item.icon className="h-5 w-5" />
+                                 <item.icon className="h-5 w-5" aria-hidden="true" />
                                </div>
                                <CardTitle className="text-base">{item.label}</CardTitle>
                              </CardHeader>

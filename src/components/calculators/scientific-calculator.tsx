@@ -268,28 +268,31 @@ export default function ScientificCalculator() {
     }
 
 
-    return <Button key={label} variant={null} className={cn('text-lg h-12 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick}>{label}</Button>;
+    return <Button key={label} variant={null} className={cn('text-lg h-12 transition-transform transform', button3dClasses, variantClasses, className)} onClick={onClick} aria-label={label}>{label}</Button>;
   }
 
   return (
     <Card id="scientific-calculator" className="shadow-xl max-w-md mx-auto bg-gray-700 text-white p-2 border-4 border-black rounded-2xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
-        <div className="w-full mb-1 rounded-lg border-2 border-black bg-sky-200 p-2 text-right text-3xl font-mono text-black break-all h-20 flex items-end justify-end shadow-inner">
-          {displayValue}
-        </div>
+        <Input 
+            readOnly 
+            value={displayValue} 
+            className="w-full mb-1 rounded-lg border-2 border-black bg-sky-200 p-2 text-right text-3xl font-mono text-black break-all h-20 flex items-end justify-end shadow-inner" 
+            aria-label="Calculator display"
+            />
         
         <div className="w-full grid grid-cols-7 gap-1">
             <Button variant={null} className="h-8 text-xs bg-gray-400 border-b-4 border-gray-500 active:border-b-0 active:translate-y-1" onClick={() => setIsRadians(!isRadians)}>{isRadians ? 'RAD' : 'DEG'}</Button>
             <Button variant={null} className={cn("h-8 text-xs border-b-4 active:border-b-0 active:translate-y-1", show2nd ? "bg-blue-500 text-white border-blue-700" : "bg-gray-400 border-gray-500")} onClick={() => setShow2nd(!show2nd)}>2nd</Button>
             {['MC', 'MR', 'M+', 'M-'].map(mem => renderButton({ label: mem, type: 'mem' }, 'secondary', 'h-8 text-xs'))}
-            <Button variant={null} className="h-8 text-xs transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleBackspace}>⌫</Button>
+            <Button variant={null} className="h-8 text-xs transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleBackspace} aria-label="Backspace">⌫</Button>
         </div>
 
         <div className="w-full grid grid-cols-7 gap-1">
             {functionButtons1.slice(0, 4).map(btn => renderButton(btn, 'secondary', 'h-8 text-xs'))}
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')}>(</Button>
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')}>)</Button>
-            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')}>n!</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick('(')} aria-label="Open parenthesis">(</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => handleButtonClick(')')} aria-label="Close parenthesis">)</Button>
+            <Button variant={null} className="h-8 text-xs bg-gray-500 text-white border-b-4 border-gray-600 active:border-b-0 active:translate-y-1" onClick={() => applyImmediateFunction(x => x, '!')} aria-label="Factorial">n!</Button>
         </div>
         
         <div className="w-full grid grid-cols-7 gap-1">
@@ -308,7 +311,7 @@ export default function ScientificCalculator() {
                 {operatorButtons.map(op => renderButton({ label: op, value: op, type: 'op' }, 'accent'))}
             </div>
              <div className="col-span-1 grid grid-cols-1 gap-1">
-                <Button variant={null} className="h-full text-lg transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleAllClear}>AC</Button>
+                <Button variant={null} className="h-full text-lg transition-transform transform bg-red-500 text-white hover:bg-red-600 border-b-4 border-red-700 active:border-b-0 active:translate-y-1" onClick={handleAllClear} aria-label="All Clear">AC</Button>
                 {renderButton({ label: '=', type: 'equals' }, 'default', 'h-full')}
             </div>
         </div>
