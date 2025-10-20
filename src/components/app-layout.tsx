@@ -45,13 +45,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
-        <div className="flex items-center md:hidden">
+        <div className="flex items-center">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
                 size="icon"
-                className="shrink-0"
+                className="shrink-0 md:hidden"
                 aria-label="Toggle navigation menu"
               >
                 <Menu className="h-5 w-5" />
@@ -83,33 +83,31 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               </nav>
             </SheetContent>
           </Sheet>
+           <Link
+            href="/"
+            className="flex items-center gap-2 text-lg font-semibold"
+            aria-label="Math Calculators Home"
+          >
+            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
+            <span className="sr-only sm:not-sr-only">Math Calculators</span>
+          </Link>
         </div>
         
-        <Link
-          href="/"
-          className="flex items-center gap-2 text-lg font-semibold"
-          aria-label="Math Calculators Home"
-        >
-          <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
-          <span className="sr-only sm:not-sr-only">Math Calculators</span>
-        </Link>
-        
-        <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList>
-                {navItems.map((item) => (
-                <NavigationMenuItem key={item.href}>
-                    <NavigationMenuLink asChild active={pathname.startsWith(item.href) || (item.href === '/algebra' && pathname === '/basic')}>
-                        <Link href={item.href} className={navigationMenuTriggerStyle()}>
-                            {item.label}
-                        </Link>
-                    </NavigationMenuLink>
-                </NavigationMenuItem>
-                ))}
-            </NavigationMenuList>
-        </NavigationMenu>
-        
-        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 justify-end">
-             <ThemeToggle />
+        <div className="flex w-full items-center justify-end gap-4">
+             <NavigationMenu className="hidden md:flex">
+                <NavigationMenuList>
+                    {navItems.map((item) => (
+                    <NavigationMenuItem key={item.href}>
+                        <NavigationMenuLink asChild active={pathname.startsWith(item.href) || (item.href === '/algebra' && pathname === '/basic')}>
+                            <Link href={item.href} className={navigationMenuTriggerStyle()}>
+                                {item.label}
+                            </Link>
+                        </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    ))}
+                </NavigationMenuList>
+            </NavigationMenu>
+            <ThemeToggle />
         </div>
       </header>
       <div className="flex flex-1 flex-col">{children}</div>
