@@ -254,9 +254,15 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1) || '0');
+      setCurrentNumber(prev => prev.slice(0, -1));
     } else if (expressionTokens.length > 0) {
-      setExpressionTokens(prev => prev.slice(0, -1));
+      const lastToken = expressionTokens[expressionTokens.length - 1];
+      if (typeof lastToken === 'string' && lastToken.length > 1) {
+        // e.g. function name
+        setExpressionTokens(prev => prev.slice(0, -1));
+      } else {
+        setExpressionTokens(prev => prev.slice(0, -1));
+      }
     }
   };
 
@@ -301,10 +307,8 @@ export default function ScientificCalculator() {
         value = parseFloat(currentNumber);
       } else if (isResult) {
         value = parseFloat(displayValue);
-      } else if (expressionTokens.length > 0 && isNumber(expressionTokens[expressionTokens.length-1])) {
-        value = expressionTokens.pop() as number;
       } else {
-          throw new Error("No number to apply function to.");
+        throw new Error("No number to apply function to.");
       }
 
       if (['sin', 'cos', 'tan'].includes(funcName) && angleMode === 'DEG') {
@@ -361,8 +365,13 @@ export default function ScientificCalculator() {
     resetError();
     const values = { 'π': Math.PI, 'e': Math.E, 'φ': (1 + Math.sqrt(5)) / 2 };
     
+    if (isResult) handleAllClear();
+    
     if (currentNumber !== '' && currentNumber !== '0' && currentNumber !== '-') {
-        handleOperator('×');
+        let newTokens = [...expressionTokens];
+        newTokens.push(parseFloat(currentNumber));
+        newTokens.push('×');
+        setExpressionTokens(newTokens);
     }
     setCurrentNumber(String(values[constant]));
     setIsResult(false);
@@ -452,9 +461,9 @@ export default function ScientificCalculator() {
   // #endregion
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-sm mx-auto bg-gray-900 text-white p-2 border-4 border-gray-700 rounded-2xl">
+    <Card id="scientific-calculator" className="shadow-lg max-w-xs mx-auto bg-gray-800 text-white p-1 border-2 border-gray-900 rounded-xl">
       <CardContent className="flex flex-col items-center gap-1 p-0">
-        <div className="relative w-full mb-1 rounded-lg border-2 border-gray-950 bg-gray-950/80 p-2 text-right text-2xl font-mono text-green-300 break-words h-16 flex items-end justify-end shadow-inner">
+        <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-950/80 p-2 text-right text-xl font-mono text-green-300 break-words h-14 flex items-end justify-end shadow-inner">
           <div className="absolute top-1 left-2 text-xs text-green-500/70 flex gap-2">
             {angleMode === 'DEG' && <span className="font-bold">DEG</span>}
             {memory !== 0 && <span className="font-bold">M</span>}
@@ -467,7 +476,7 @@ export default function ScientificCalculator() {
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
-                className={cn('h-10 text-sm rounded-md', btn.className, btn.label === '0' && 'col-span-2')} 
+                className={cn('h-9 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-2')} 
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
@@ -479,7 +488,7 @@ export default function ScientificCalculator() {
             <Button 
                 key={`${btn.label}-${i+30}`} 
                 size="sm" 
-                className={cn('h-9 text-xs rounded-md', btn.className)} 
+                className={cn('h-8 text-xs rounded-md', btn.className)} 
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
@@ -490,3 +499,5 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
+
+    
