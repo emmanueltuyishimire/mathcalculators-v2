@@ -64,7 +64,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   className="flex items-center gap-2 text-lg font-semibold"
                   onClick={() => setOpen(false)}
                 >
-                  <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
+                  <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} priority />
                   <span>Math Calculators</span>
                 </Link>
                 {navItems.map((item) => (
@@ -88,7 +88,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             className="flex items-center gap-2 text-lg font-semibold"
             aria-label="Math Calculators Home"
           >
-            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
+            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} priority />
             <span className="sr-only sm:not-sr-only">Math Calculators</span>
           </Link>
         </div>
