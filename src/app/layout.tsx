@@ -62,13 +62,12 @@ export default function RootLayout({
           </ThemeProvider>
         </FirebaseClientProvider>
 
-        {/* Google AdSense Auto Ads using next/script */}
-        <Script
+        {/* Google AdSense Auto Ads - Standard script tag to avoid conflicts */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
 
         {/* Google tag (gtag.js) */}
         <Script
