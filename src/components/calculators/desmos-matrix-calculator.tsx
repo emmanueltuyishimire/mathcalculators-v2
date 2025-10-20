@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -189,7 +190,7 @@ const MatrixView = ({
   };
 
   const addCol = () => {
-    if (matrix[0]?.length >= 8) return;
+    if ((matrix[0]?.length || 0) >= 8) return;
     const newMatrix = matrix.map(row => [...row, 0]);
     updateMatrix(id, newMatrix);
   };
@@ -201,7 +202,7 @@ const MatrixView = ({
   };
 
   const removeCol = () => {
-     if (matrix[0]?.length > 1) {
+     if ((matrix[0]?.length || 0) > 1) {
       const newMatrix = matrix.map(row => row.slice(0, -1));
       updateMatrix(id, newMatrix);
     }
@@ -231,7 +232,7 @@ const MatrixView = ({
         <div className="flex items-center">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8"><FunctionSquare className="h-4 w-4" /></Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8" aria-label={`Matrix ${name} functions`}><FunctionSquare className="h-4 w-4" /></Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => handleUnaryOperation('transpose')}>Transpose</DropdownMenuItem>
@@ -240,14 +241,14 @@ const MatrixView = ({
                 <OperationDialog matrix={matrixObj} onNewMatrix={onNewMatrix} operation="scalar" />
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => removeMatrix(id)}>
+            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => removeMatrix(id)} aria-label={`Remove matrix ${name}`}>
               <X className="h-4 w-4" />
             </Button>
         </div>
       </CardHeader>
       <CardContent className="p-2 pt-0 flex-1">
         <div className="flex gap-2">
-            <div className="grid flex-1 gap-1" style={{ gridTemplateColumns: `repeat(${matrix[0]?.length || 1}, 1fr)` }}>
+            <div className="grid flex-1 gap-1" style={{ gridTemplateColumns: `repeat(${matrix[0]?.length || 1}, minmax(0, 1fr))` }}>
               {matrix.map((row, r) =>
                 row.map((cell, c) => (
                   <Input
@@ -256,18 +257,19 @@ const MatrixView = ({
                     value={cell}
                     onChange={(e) => handleCellChange(r, c, e.target.value)}
                     className="h-9 text-center"
+                    aria-label={`Matrix ${name}, row ${r+1}, column ${c+1}`}
                   />
                 ))
               )}
             </div>
             <div className="flex flex-col gap-1">
-                <Button variant="outline" size="icon" className="h-9 w-9" onClick={addCol}><Columns className="h-4 w-4" /></Button>
-                <Button variant="outline" size="icon" className="h-9 w-9" onClick={removeCol}><Columns className="h-4 w-4 opacity-50" /></Button>
+                <Button variant="outline" size="icon" className="h-9 w-9" onClick={addCol} aria-label="Add column"><Columns className="h-4 w-4" /></Button>
+                <Button variant="outline" size="icon" className="h-9 w-9" onClick={removeCol} aria-label="Remove column"><Columns className="h-4 w-4 opacity-50" /></Button>
             </div>
         </div>
          <div className="flex gap-1 mt-1">
-            <Button variant="outline" size="icon" className="h-9 w-9" onClick={addRow}><Rows className="h-4 w-4" /></Button>
-            <Button variant="outline" size="icon" className="h-9 w-9" onClick={removeRow}><Rows className="h-4 w-4 opacity-50" /></Button>
+            <Button variant="outline" size="icon" className="h-9 w-9" onClick={addRow} aria-label="Add row"><Rows className="h-4 w-4" /></Button>
+            <Button variant="outline" size="icon" className="h-9 w-9" onClick={removeRow} aria-label="Remove row"><Rows className="h-4 w-4 opacity-50" /></Button>
         </div>
       </CardContent>
        <CardFooter className="p-2 flex-wrap gap-1">
@@ -287,11 +289,15 @@ const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], o
     const { toast } = useToast();
 
     useEffect(() => {
-        if (!matrices.some(m => m.name === inputA)) {
-            setInputA(matrices[0]?.name || 'A');
+        if (matrices.length > 0 && !matrices.some(m => m.name === inputA)) {
+            setInputA(matrices[0].name);
         }
-        if (!matrices.some(m => m.name === inputB)) {
-            setInputB(matrices[0]?.name || 'A');
+        if (matrices.length > 0 && !matrices.some(m => m.name === inputB)) {
+            setInputB(matrices[0].name);
+        }
+        if (matrices.length === 0) {
+            setInputA('A');
+            setInputB('A');
         }
     }, [matrices, inputA, inputB]);
 
@@ -335,28 +341,28 @@ const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], o
             <CardHeader><CardTitle>Operations</CardTitle></CardHeader>
             <CardContent className="flex flex-wrap items-center gap-2">
                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild><Button variant="outline">{inputA}</Button></DropdownMenuTrigger>
+                    <DropdownMenuTrigger asChild><Button variant="outline" disabled={matrices.length === 0}>{inputA}</Button></DropdownMenuTrigger>
                     <DropdownMenuContent>
                         {matrices.map(m => <DropdownMenuItem key={m.id} onSelect={() => setInputA(m.name)}>{m.name}</DropdownMenuItem>)}
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <Button variant="ghost" size="icon" onClick={() => handleOperation('add')}>+</Button>
-                <Button variant="ghost" size="icon" onClick={() => handleOperation('subtract')}>-</Button>
-                <Button variant="ghost" size="icon" onClick={() => handleOperation('multiply')}>×</Button>
+                <Button variant="ghost" size="icon" onClick={() => handleOperation('add')} aria-label="Add matrices">+</Button>
+                <Button variant="ghost" size="icon" onClick={() => handleOperation('subtract')} aria-label="Subtract matrices">-</Button>
+                <Button variant="ghost" size="icon" onClick={() => handleOperation('multiply')} aria-label="Multiply matrices">×</Button>
 
                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild><Button variant="outline">{inputB}</Button></DropdownMenuTrigger>
+                    <DropdownMenuTrigger asChild><Button variant="outline" disabled={matrices.length === 0}>{inputB}</Button></DropdownMenuTrigger>
                     <DropdownMenuContent>
                         {matrices.map(m => <DropdownMenuItem key={m.id} onSelect={() => setInputB(m.name)}>{m.name}</DropdownMenuItem>)}
                     </DropdownMenuContent>
                 </DropdownMenu>
                 
-                 <Button onClick={() => handleOperation('add')}>{inputA}+{inputB}</Button>
-                 <Button onClick={() => handleOperation('subtract')}>{inputA}-{inputB}</Button>
-                 <Button onClick={() => handleOperation('multiply')}>{inputA}×{inputB}</Button>
+                 <Button onClick={() => handleOperation('add')} disabled={matrices.length === 0}>{inputA}+{inputB}</Button>
+                 <Button onClick={() => handleOperation('subtract')} disabled={matrices.length === 0}>{inputA}-{inputB}</Button>
+                 <Button onClick={() => handleOperation('multiply')} disabled={matrices.length === 0}>{inputA}×{inputB}</Button>
 
-                 <Button variant="outline" onClick={() => { const temp = inputA; setInputA(inputB); setInputB(temp); }}>
+                 <Button variant="outline" onClick={() => { const temp = inputA; setInputA(inputB); setInputB(temp); }} disabled={matrices.length === 0}>
                     <Replace className="h-4 w-4" />
                  </Button>
 
@@ -439,7 +445,7 @@ export default function DesmosMatrixCalculator() {
     
     const { matrix } = matrixToFill;
     const rows = matrix.length;
-    const cols = matrix[0]?.length || 0;
+    const cols = (matrix[0]?.length || 0);
 
     let newMatrix: Matrix;
     if (value === 'identity') {

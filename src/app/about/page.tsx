@@ -60,6 +60,8 @@ export default function AboutPage() {
                     </p>
                 </CardContent>
             </Card>
+
+            <div className="my-6 h-24 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">[Ad Placeholder]</div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                  <Card>

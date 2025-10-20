@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, Sigma } from 'lucide-react';
 import type { Metadata } from 'next';
+import React from 'react';
 
 export const metadata: Metadata = {
     title: 'Matrix Calculators – Linear Algebra Tools',
@@ -52,20 +53,25 @@ export default function MatrixCategoryPage() {
             </section>
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {matrixTools.map((tool) => (
-                <Link href={tool.href} key={tool.href} className="group">
-                  <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                       <div className="rounded-full bg-primary/10 p-3 text-primary">
-                        <tool.icon className="h-6 w-6" />
-                      </div>
-                      <CardTitle>{tool.label}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{tool.description}</p>
-                    </CardContent>
-                  </Card>
-                </Link>
+              {matrixTools.map((tool, index) => (
+                 <React.Fragment key={tool.href}>
+                    <Link href={tool.href} className="group">
+                      <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                        <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                           <div className="rounded-full bg-primary/10 p-3 text-primary">
+                            <tool.icon className="h-6 w-6" />
+                          </div>
+                          <CardTitle>{tool.label}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{tool.description}</p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                     {(index + 1) % 6 === 0 && (
+                      <div className="h-40 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm my-4 sm:col-span-2 lg:col-span-3">[Ad Placeholder]</div>
+                    )}
+                </React.Fragment>
               ))}
             </div>
         </div>

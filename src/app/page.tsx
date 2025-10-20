@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
+import React from 'react';
 
 function HeroSection() {
   return (
@@ -115,35 +116,40 @@ export default function Home() {
 
       <main className="flex-1 p-4 md:p-6 lg:p-12">
         <section id="tools" className="space-y-16">
-            {calculatorCategories.map(category => (
-                <div key={category.title}>
-                    <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg" role="presentation">
-                        <Image
-                            src={category.image}
-                            alt={`${category.title} category background`}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                            <h2 className="text-3xl md:text-4xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
+            {calculatorCategories.map((category, catIndex) => (
+                 <React.Fragment key={category.title}>
+                    <div>
+                        <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg" role="presentation">
+                            <Image
+                                src={category.image}
+                                alt={`${category.title} category background`}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                                <h2 className="text-3xl md:text-4xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                            {category.tools.map((tool) => (
+                                <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
+                                <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                                    <CardHeader className="flex flex-col items-center text-center p-4">
+                                    <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
+                                        <tool.icon className="h-6 w-6" aria-hidden="true" />
+                                    </div>
+                                    <CardTitle className="text-base">{tool.label}</CardTitle>
+                                    </CardHeader>
+                                </Card>
+                                </Link>
+                            ))}
                         </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                        {category.tools.map((tool) => (
-                            <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
-                            <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                                <CardHeader className="flex flex-col items-center text-center p-4">
-                                <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                                    <tool.icon className="h-6 w-6" aria-hidden="true" />
-                                </div>
-                                <CardTitle className="text-base">{tool.label}</CardTitle>
-                                </CardHeader>
-                            </Card>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                    {(catIndex + 1) % 2 === 0 && (
+                      <div className="my-8 h-48 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm">[Ad Placeholder]</div>
+                    )}
+                 </React.Fragment>
             ))}
         </section>
       </main>

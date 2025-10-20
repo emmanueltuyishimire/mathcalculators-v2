@@ -46,20 +46,25 @@ export default function BasicCategoryPage() {
             </section>
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {basicTools.map((tool) => (
-                <Link href={tool.href} key={tool.label} className="group">
-                  <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                    <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                       <div className="rounded-full bg-primary/10 p-3 text-primary">
-                        <tool.icon className="h-6 w-6" />
-                      </div>
-                      <CardTitle>{tool.label}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
-                    </CardContent>
-                  </Card>
-                </Link>
+              {basicTools.map((tool, index) => (
+                <React.Fragment key={tool.label}>
+                  <Link href={tool.href} className="group">
+                    <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                      <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                         <div className="rounded-full bg-primary/10 p-3 text-primary">
+                          <tool.icon className="h-6 w-6" />
+                        </div>
+                        <CardTitle>{tool.label}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                   {(index + 1) % 6 === 0 && (
+                    <div className="h-40 bg-muted/50 flex items-center justify-center text-muted-foreground text-sm my-4 sm:col-span-2 lg:col-span-3">[Ad Placeholder]</div>
+                  )}
+                </React.Fragment>
               ))}
             </div>
         </div>
