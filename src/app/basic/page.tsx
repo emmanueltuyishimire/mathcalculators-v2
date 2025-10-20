@@ -1,9 +1,12 @@
 
+"use client";
+
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import React from 'react';
+import BasicCalculator from '@/components/calculators/basic-calculator';
 
 export const metadata: Metadata = {
   title: 'Basic Calculators',
@@ -45,8 +48,12 @@ export default function BasicCategoryPage() {
                     A collection of essential calculators for everyday math and science problems.
                 </p>
             </section>
+
+            <div className="max-w-md mx-auto">
+                <BasicCalculator />
+            </div>
             
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
               {basicTools.map((tool, index) => (
                 <React.Fragment key={tool.label}>
                   <Link href={tool.href} className="group">
