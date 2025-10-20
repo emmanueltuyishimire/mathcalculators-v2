@@ -87,7 +87,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         
         <Link
           href="/"
-          className="flex items-center gap-2 text-lg font-semibold mr-4"
+          className="flex items-center gap-2 text-lg font-semibold"
           aria-label="Math Calculators Home"
         >
           <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
