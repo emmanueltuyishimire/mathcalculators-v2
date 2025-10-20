@@ -51,9 +51,9 @@ const HowToUseGuide = () => (
                     <strong>View the Result:</strong> The answer will appear in the result section below the button.
                 </li>
             </ol>
-             <div className="p-4 bg-accent/50 rounded-lg">
-                <h4 className="font-semibold text-accent-foreground">💡 Note on Syntax</h4>
-                <p className="text-sm text-muted-foreground mt-2">Use standard mathematical notation. For example, use <code className="font-mono bg-muted p-1 rounded-md">^</code> for exponents (e.g., <code className="font-mono bg-muted p-1 rounded-md">x^2</code> for x squared).</p>
+             <div className="p-4 bg-muted rounded-lg">
+                <h4 className="font-semibold text-foreground">💡 Note on Syntax</h4>
+                <p className="text-sm text-muted-foreground mt-2">Use standard mathematical notation. For example, use <code className="font-mono bg-background p-1 rounded-md">^</code> for exponents (e.g., <code className="font-mono bg-background p-1 rounded-md">x^2</code> for x squared).</p>
             </div>
         </CardContent>
     </Card>

@@ -28,8 +28,8 @@ const HowToUseGuide = () => (
                     <span className="font-semibold text-foreground">Calculate Surface Area:</span> Click the "Calculate" button. The result will be displayed in the corresponding square unit (e.g., m², ft², in²).
                 </li>
             </ol>
-             <div className="p-4 bg-accent/50 rounded-lg">
-                <h4 className="font-semibold text-accent-foreground">💡 Tip</h4>
+             <div className="p-4 bg-muted rounded-lg">
+                <h4 className="font-semibold text-foreground">💡 Tip</h4>
                 <p className="text-sm text-muted-foreground mt-2">For the Spherical Cap, you only need to provide two of the three dimensions (Base Radius, Ball Radius, or Height). The calculator will compute the third value for you.</p>
             </div>
         </CardContent>
@@ -52,7 +52,7 @@ const EducationalContent = () => (
                 <div className="space-y-2">
                     <h4 className="font-semibold text-foreground">Sphere</h4>
                     <p>The surface area (SA) of a sphere is calculated with the formula <code className="font-mono bg-background p-1 rounded-md">SA = 4πr²</code>, where 'r' is the radius.</p>
-                    <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                    <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: The Studious Truffle Eater</h5>
                         <p className="text-sm mt-2">Xael, a meticulous student of confectionery, wants to calculate the total surface area of a chocolate truffle to understand its texture distribution. Given a truffle with a radius of 0.4 inches, the calculation is:</p>
                         <p className="font-mono text-sm mt-2">SA = 4 × π × (0.4)² ≈ 2.011 in²</p>
@@ -66,7 +66,7 @@ const EducationalContent = () => (
                         <li>Lateral SA = πr√(r² + h²)</li>
                         <li>Total SA = πr(r + √(r² + h²))</li>
                     </ul>
-                    <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                    <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: The DIY Rice Hat</h5>
                         <p className="text-sm mt-2">Athena is crafting a traditional conical rice hat for a cultural festival. She needs to know the amount of material required for the lateral surface. With a planned radius of 1.2 feet and a height of 0.6 feet, she calculates:</p>
                         <p className="font-mono text-sm mt-2">Lateral SA = π × 1.2 × √(1.2² + 0.6²) ≈ 5.05 ft²</p>
@@ -75,7 +75,7 @@ const EducationalContent = () => (
                  <div className="space-y-2">
                     <h4 className="font-semibold text-foreground">Cube</h4>
                     <p>A cube has six identical square faces. Its surface area is found with: <code className="font-mono bg-background p-1 rounded-md">SA = 6a²</code>, where 'a' is the length of one edge.</p>
-                    <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                    <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: The Custom Rubik's Cube</h5>
                         <p className="text-sm mt-2">Anne is designing a custom Rubik's Cube with all-black faces for her minimalist brother. The customization fee is based on the total surface area. For a cube with a 3-inch edge:</p>
                         <p className="font-mono text-sm mt-2">SA = 6 × (3)² = 54 in²</p>
@@ -89,7 +89,7 @@ const EducationalContent = () => (
                         <li>Lateral SA = 2πrh</li>
                         <li>Total SA = 2πr(r + h)</li>
                     </ul>
-                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: The Fish Tank Bath</h5>
                         <p className="text-sm mt-2">Jeremy, an eccentric bather, wants to know if his cylindrical fish tank loses heat faster than a standard bathtub. To find out, he calculates the surface area of his tank, which has a height of 5 feet and a radius of 3 feet:</p>
                         <p className="font-mono text-sm mt-2">Total SA = 2π × 3(3 + 5) ≈ 150.796 ft²</p>
@@ -98,7 +98,7 @@ const EducationalContent = () => (
                 <div className="space-y-2">
                     <h4 className="font-semibold text-foreground">Rectangular Tank</h4>
                     <p>The surface area is the sum of the areas of its six rectangular faces: <code className="font-mono bg-background p-1 rounded-md">SA = 2(lw + lh + wh)</code>.</p>
-                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: The Surprise Gift Box</h5>
                         <p className="text-sm mt-2">A sister is wrapping a surprise gift for her brother in a rectangular box measuring 2 ft by 3 ft by 4 ft. To buy the right amount of wrapping paper, she calculates the surface area:</p>
                         <p className="font-mono text-sm mt-2">SA = 2 × (2×3 + 2×4 + 3×4) = 2 × (6 + 8 + 12) = 52 ft²</p>
@@ -107,7 +107,7 @@ const EducationalContent = () => (
                  <div className="space-y-2">
                     <h4 className="font-semibold text-foreground">Capsule</h4>
                     <p>A capsule's surface area consists of a cylinder's lateral area and the area of a sphere (formed by the two hemispherical ends): <code className="font-mono bg-background p-1 rounded-md">SA = 4πr² + 2πrh</code>.</p>
-                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: The Placebo Pill</h5>
                         <p className="text-sm mt-2">A pharmaceutical designer is creating a new placebo pill and needs to calculate the surface area for a sugar coating. For a capsule with a radius of 0.1 inches and a cylindrical height of 0.4 inches:</p>
                         <p className="font-mono text-sm mt-2">SA = 4π(0.1)² + 2π(0.1)(0.4) ≈ 0.377 in²</p>
@@ -121,7 +121,7 @@ const EducationalContent = () => (
                         <li>Cap SA = 2πRh</li>
                         <li>Total SA = π(r² + 2Rh)</li>
                     </ul>
-                     <div className="p-4 border-l-4 border-primary/50 bg-muted/50 rounded-r-lg">
+                     <div className="p-4 border-l-4 border-primary/50 bg-muted rounded-r-lg">
                         <h5 className="font-semibold">Example: A Piece of the Globe</h5>
                         <p className="text-sm mt-2">Jennifer takes a segment of her brother's globe to have as her own. To find the surface area of her hollow piece (the cap itself, without the base), from a globe with radius (R) of 0.9 feet and a cap height (h) of 0.6 feet, she calculates:</p>
                         <p className="font-mono text-sm mt-2">Cap SA = 2π × 0.9 × 0.6 ≈ 3.393 ft²</p>

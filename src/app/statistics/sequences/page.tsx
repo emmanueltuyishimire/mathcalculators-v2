@@ -52,8 +52,8 @@ const HowToUse = () => (
                 <p className="text-muted-foreground">The calculator will show the nth Fibonacci number and the sequence up to that term.</p>
             </div>
             
-            <div className="p-4 bg-accent/10 rounded-lg">
-                <h4 className="font-semibold text-accent-foreground">💡 Tips for Users</h4>
+            <div className="p-4 bg-muted rounded-lg">
+                <h4 className="font-semibold text-foreground">💡 Tips for Users</h4>
                 <ul className="list-disc list-inside text-sm text-muted-foreground mt-2">
                     <li>Use <b>Arithmetic</b> when the difference between terms is constant.</li>
                     <li>Use <b>Geometric</b> when each term is multiplied by the same number.</li>
@@ -158,8 +158,8 @@ const SequenceEducationalContent = () => (
         </div>
       </div>
       
-      <div className="space-y-4 p-4 bg-primary/10 rounded-lg">
-        <h3 className="text-xl font-semibold text-primary-foreground">🌟 Learning Tips</h3>
+      <div className="space-y-4 p-4 bg-muted rounded-lg">
+        <h3 className="text-xl font-semibold text-foreground">🌟 Learning Tips</h3>
         <ul className="list-disc list-inside text-sm text-muted-foreground">
             <li>Try changing one input (like the common difference or ratio) and observe how the sequence changes.</li>
             <li>Compare arithmetic vs geometric results for the same first term — you’ll see how exponential growth quickly overtakes linear growth.</li>

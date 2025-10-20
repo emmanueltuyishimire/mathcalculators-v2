@@ -68,8 +68,8 @@ const HowToUseGuide = () => (
                     <strong>View the Result:</strong> The result will appear in the text area at the bottom. You can copy it from there.
                 </li>
             </ol>
-            <div className="p-4 bg-accent/50 rounded-lg">
-                <h4 className="font-semibold text-accent-foreground">💡 Note on Decimals</h4>
+            <div className="p-4 bg-muted rounded-lg">
+                <h4 className="font-semibold text-foreground">💡 Note on Decimals</h4>
                 <p className="text-sm text-muted-foreground mt-2">This calculator is optimized for large integer arithmetic. It will parse the integer part of decimal inputs but will not perform high-precision decimal calculations.</p>
             </div>
         </CardContent>
