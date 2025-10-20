@@ -45,8 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
       <head>
-        {/* Google AdSense Auto Ads */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811" crossOrigin="anonymous"></script>
+        {/* Google AdSense Meta */}
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
@@ -62,6 +61,15 @@ export default function RootLayout({
             <Toaster />
           </ThemeProvider>
         </FirebaseClientProvider>
+
+        {/* Google AdSense Auto Ads using next/script */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-5VPXQ1TJ3X"
