@@ -9,12 +9,11 @@ import { cn } from '@/lib/utils';
 
 // #region Helper Functions & Types
 type AngleMode = 'RAD' | 'DEG';
-type Operator = '+' | '-' | '×' | '÷' | '^';
 type Token = string | number;
 
 const factorial = (n: number): number => {
-  if (n < 0 || n % 1 !== 0) return NaN;
-  if (n > 170) return Infinity; // Standard limit for IEEE 754 double precision
+  if (n < 0 || n % 1 !== 0) throw new Error("Invalid input");
+  if (n > 170) throw new Error("Overflow"); 
   if (n === 0) return 1;
   let result = 1;
   for (let i = 2; i <= n; i++) {
@@ -24,19 +23,11 @@ const factorial = (n: number): number => {
 };
 
 const precedence: { [key: string]: number } = {
-  '+': 1,
-  '-': 1,
-  '×': 2,
-  '÷': 2,
-  '^': 3,
+  '+': 1, '-': 1, '×': 2, '÷': 2, '^': 3,
 };
 
 const associativity: { [key: string]: 'left' | 'right' } = {
-    '^': 'right',
-    '+': 'left',
-    '-': 'left',
-    '×': 'left',
-    '÷': 'left',
+    '^': 'right', '+': 'left', '-': 'left', '×': 'left', '÷': 'left',
 };
 
 const functions: { [key: string]: (a: number) => number } = {
@@ -45,19 +36,18 @@ const functions: { [key: string]: (a: number) => number } = {
     'sinh': Math.sinh, 'cosh': Math.cosh, 'tanh': Math.tanh,
     'asinh': Math.asinh, 'acosh': Math.acosh, 'atanh': Math.atanh,
     'log': Math.log10, 'ln': Math.log,
+    'sqrt': Math.sqrt, 'cbrt': Math.cbrt,
 };
 
-const isOperator = (token: Token): token is Operator => typeof token === 'string' && ['+', '-', '×', '÷', '^'].includes(token);
+const isOperator = (token: Token): token is string => typeof token === 'string' && ['+', '-', '×', '÷', '^'].includes(token);
 const isFunction = (token: Token): boolean => typeof token === 'string' && !!functions[token];
 const isNumber = (token: Token): token is number => typeof token === 'number';
 const isLeftParen = (token: Token): boolean => token === '(';
 const isRightParen = (token: Token): boolean => token === ')';
 
-// Shunting-yard algorithm
 const shuntingYard = (tokens: Token[]): Token[] => {
     const outputQueue: Token[] = [];
     const operatorStack: string[] = [];
-
     tokens.forEach(token => {
         if (isNumber(token)) {
             outputQueue.push(token);
@@ -95,7 +85,6 @@ const shuntingYard = (tokens: Token[]): Token[] => {
     return outputQueue;
 };
 
-// RPN evaluator
 const evaluateRPN = (rpnQueue: Token[]): number => {
     const stack: number[] = [];
     rpnQueue.forEach(token => {
@@ -118,25 +107,24 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
         } else if (isFunction(token)) {
             if (stack.length < 1) throw new Error("Invalid function call");
             const a = stack.pop()!;
-            const result = functions[token](a);
+            const result = functions[token as keyof typeof functions](a);
             if (isNaN(result)) throw new Error("Domain error");
             stack.push(result);
         }
     });
-    if (stack.length !== 1) throw new Error("Invalid expression format");
+    if (stack.length !== 1) throw new Error("Invalid expression");
     return stack[0];
 };
 
 const formatResult = (num: number): string => {
-  if (Math.abs(num) > 1e15 || (Math.abs(num) < 1e-15 && num !== 0)) {
-    return num.toExponential(10);
+  if (Math.abs(num) > 1e12 || (Math.abs(num) < 1e-9 && num !== 0)) {
+    return num.toExponential(9);
   }
-  return num.toPrecision(15).replace(/\.?0+$/, '');
+  return num.toPrecision(15).replace(/\.?0+$/, '').replace(/(\.\d*?[1-9])0+$/, '$1');
 };
 // #endregion
 
 export default function ScientificCalculator() {
-  // State Management
   const [displayValue, setDisplayValue] = useState('0');
   const [expressionTokens, setExpressionTokens] = useState<Token[]>([]);
   const [currentNumber, setCurrentNumber] = useState('');
@@ -147,7 +135,6 @@ export default function ScientificCalculator() {
   const [errorState, setErrorState] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Update display based on state
   useEffect(() => {
     if (errorState) {
       setDisplayValue(errorState);
@@ -168,28 +155,29 @@ export default function ScientificCalculator() {
   const handleDigit = (digit: string) => {
     resetError();
     if (isResult) {
-      setExpressionTokens([]);
-      setCurrentNumber(digit);
+      handleAllClear();
+      setCurrentNumber(digit === '0' ? '0' : digit);
       setIsResult(false);
       return;
     }
-    setCurrentNumber(prev => (prev === '0' ? digit : prev + digit));
+    if (currentNumber.length > 15) return;
+    setCurrentNumber(prev => (prev === '0' && digit !== '.' ? digit : prev + digit));
   };
   
   const handleDecimal = () => {
     resetError();
     if (isResult) {
-      setExpressionTokens([]);
-      setCurrentNumber('0.');
-      setIsResult(false);
-      return;
+        handleAllClear();
+        setCurrentNumber('0.');
+        setIsResult(false);
+        return;
     }
     if (!currentNumber.includes('.')) {
       setCurrentNumber(prev => (prev === '' ? '0.' : prev + '.'));
     }
   };
 
-  const handleOperator = (op: Operator) => {
+  const handleOperator = (op: string) => {
     resetError();
     setIsResult(false);
     
@@ -200,7 +188,7 @@ export default function ScientificCalculator() {
     }
 
     const lastToken = newTokens[newTokens.length - 1];
-    if (isOperator(lastToken) && op !== '-') {
+    if (isOperator(lastToken) && op !== '-' && !isLeftParen(newTokens[newTokens.length-2])) {
         newTokens[newTokens.length - 1] = op;
     } else {
         newTokens.push(op);
@@ -233,7 +221,7 @@ export default function ScientificCalculator() {
       setIsResult(true);
 
     } catch (e: any) {
-      setErrorState(e.message || "Error");
+      setErrorState(`Error: ${e.message}`);
       setExpressionTokens([]);
       setCurrentNumber('');
       setIsResult(true);
@@ -255,7 +243,7 @@ export default function ScientificCalculator() {
     setDisplayValue('0');
     setExpressionTokens([]);
     setCurrentNumber('');
-    setMemory(0);
+    // Not clearing memory on AC as per typical calculator behavior
     setIsResult(false);
   };
 
@@ -266,14 +254,9 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.length > 1 ? prev.slice(0, -1) : '');
+      setCurrentNumber(prev => prev.slice(0, -1));
     } else if (expressionTokens.length > 0) {
-      const newTokens = [...expressionTokens];
-      const lastToken = newTokens.pop();
-      setExpressionTokens(newTokens);
-      if (typeof lastToken === 'number') {
-        setCurrentNumber(String(lastToken));
-      }
+      setExpressionTokens(prev => prev.slice(0, -1));
     }
   };
 
@@ -294,7 +277,8 @@ export default function ScientificCalculator() {
   const handleMemory = (type: 'M+' | 'M-' | 'MR' | 'MC') => {
     resetError();
     const value = parseFloat(currentNumber || (isResult ? displayValue : '0'));
-    
+    if (isNaN(value)) return;
+
     let newMemory = memory;
     switch (type) {
       case 'M+': newMemory += value; break;
@@ -312,16 +296,17 @@ export default function ScientificCalculator() {
   const handleUnaryFunction = (fn: (x: number) => number, funcName: string) => {
     resetError();
     try {
-      let value = parseFloat(currentNumber);
-      if (isNaN(value)) {
-        if (isResult) {
-            value = parseFloat(displayValue);
-        } else {
-            throw new Error("No number to apply function to.");
-        }
+      let value: number;
+      if (currentNumber !== '') {
+        value = parseFloat(currentNumber);
+      } else if (isResult) {
+        value = parseFloat(displayValue);
+      } else if (expressionTokens.length > 0 && isNumber(expressionTokens[expressionTokens.length-1])) {
+        value = expressionTokens.pop() as number;
+      } else {
+          throw new Error("No number to apply function to.");
       }
-      
-      // Handle trig functions with angle mode
+
       if (['sin', 'cos', 'tan'].includes(funcName) && angleMode === 'DEG') {
         value = value * (Math.PI / 180);
       }
@@ -332,20 +317,14 @@ export default function ScientificCalculator() {
         result = result * (180 / Math.PI);
       }
 
-      if (isNaN(result)) {
-        if (funcName === 'n!') throw new Error("Error: Invalid input");
-        throw new Error("Error: Domain");
-      }
-      if (!isFinite(result)) {
-          throw new Error("Error: Overflow");
-      }
+      if (isNaN(result)) throw new Error("Domain");
+      if (!isFinite(result)) throw new Error("Overflow");
 
-      const resultStr = formatResult(result);
-      setCurrentNumber(resultStr);
+      setCurrentNumber(formatResult(result));
       setIsResult(true);
       setExpressionTokens([]);
     } catch (e: any) {
-      setErrorState(e.message || "Error");
+      setErrorState(`Error: ${e.message}`);
       setIsResult(true);
     }
   };
@@ -364,13 +343,13 @@ export default function ScientificCalculator() {
           newTokens.push('×');
       }
       newTokens.push('(');
-    } else { // ')'
+    } else {
        if(currentNumber !== '') {
            newTokens.push(parseFloat(currentNumber));
            setCurrentNumber('');
        }
        if (isLeftParen(newTokens[newTokens.length-1])) {
-           // Handle empty parens like `()` or `5*()`
+           // Handle empty parens `()`
            newTokens.push(0);
        }
        newTokens.push(')');
@@ -380,11 +359,8 @@ export default function ScientificCalculator() {
   
   const handleConstant = (constant: 'π' | 'e' | 'φ') => {
     resetError();
-    const values = {
-      'π': Math.PI,
-      'e': Math.E,
-      'φ': (1 + Math.sqrt(5)) / 2,
-    };
+    const values = { 'π': Math.PI, 'e': Math.E, 'φ': (1 + Math.sqrt(5)) / 2 };
+    
     if (currentNumber !== '' && currentNumber !== '0' && currentNumber !== '-') {
         handleOperator('×');
     }
@@ -396,26 +372,19 @@ export default function ScientificCalculator() {
     resetError();
     const numCurrent = parseFloat(currentNumber);
     if (isNaN(numCurrent)) return;
-    
-    // Find last operator and number
-    let lastNumberIndex = -1;
-    let lastOperatorIndex = -1;
-    for (let i = expressionTokens.length - 1; i >= 0; i--) {
-        if (isNumber(expressionTokens[i]) && lastNumberIndex === -1) {
-            lastNumberIndex = i;
+
+    if (expressionTokens.length >= 2) {
+      const op = expressionTokens[expressionTokens.length - 1];
+      const prevNum = expressionTokens[expressionTokens.length - 2];
+      if (isOperator(op) && isNumber(prevNum)) {
+        if (op === '+' || op === '-') {
+            setCurrentNumber(String(prevNum * (numCurrent / 100)));
+            return;
         }
-        if (isOperator(expressionTokens[i]) && lastOperatorIndex === -1) {
-            lastOperatorIndex = i;
-        }
+      }
     }
-    
-    if (lastOperatorIndex > lastNumberIndex && (expressionTokens[lastOperatorIndex] === '+' || expressionTokens[lastOperatorIndex] === '-')) {
-        const baseValue = expressionTokens[lastNumberIndex] as number;
-        setCurrentNumber(String(baseValue * (numCurrent / 100)));
-    } else {
-        setCurrentNumber(String(numCurrent / 100));
-    }
-  }
+    setCurrentNumber(String(numCurrent / 100));
+  };
   // #endregion
 
   // #region Button Layout
@@ -423,8 +392,8 @@ export default function ScientificCalculator() {
     { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-gray-600 hover:bg-gray-700', show2nd && 'bg-blue-600 hover:bg-blue-700 text-white')},
     { label: 'π', onClick: () => handleConstant('π'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: 'e', onClick: () => handleConstant('e'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
-    { label: '⌫', onClick: handleBackspace, className: 'bg-red-600 hover:bg-red-700' },
+    { label: 'C', onClick: handleClearEntry, className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: '⌫', onClick: handleBackspace, className: 'bg-orange-600 hover:bg-orange-700' },
     
     show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x ** 3, 'x³'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x ** 2, 'x²'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '1/x', onClick: () => handleUnaryFunction((x) => 1 / x, '1/x'), className: 'bg-gray-600 hover:bg-gray-700' },
@@ -432,28 +401,28 @@ export default function ScientificCalculator() {
     { label: ')', onClick: () => handleParenthesis(')'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-gray-600 hover:bg-gray-700' },
     
-    show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, '∛x'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: '√x', onClick: () => handleUnaryFunction(Math.sqrt, '√x'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, 'cbrt'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: '√x', onClick: () => handleUnaryFunction(Math.sqrt, 'sqrt'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-orange-500 hover:bg-orange-600' },
+    { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-gray-500 hover:bg-gray-600' },
 
     { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '5', onClick: () => handleDigit('5'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '6', onClick: () => handleDigit('6'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '×', onClick: () => handleOperator('×'), className: 'bg-orange-500 hover:bg-orange-600' },
+    { label: '×', onClick: () => handleOperator('×'), className: 'bg-gray-500 hover:bg-gray-600' },
 
     { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10 ** x, '10ˣ'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '1', onClick: () => handleDigit('1'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '2', onClick: () => handleDigit('2'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '3', onClick: () => handleDigit('3'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '-', onClick: () => handleOperator('-'), className: 'bg-orange-500 hover:bg-orange-600' },
+    { label: '-', onClick: () => handleOperator('-'), className: 'bg-gray-500 hover:bg-gray-600' },
 
     { label: 'log', onClick: () => handleUnaryFunction(Math.log10, 'log'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '0', onClick: () => handleDigit('0'), className: 'col-span-2 bg-gray-700 hover:bg-gray-800' },
     { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '+', onClick: () => handleOperator('+'), className: 'bg-orange-500 hover:bg-orange-600' },
+    { label: '+', onClick: () => handleOperator('+'), className: 'bg-gray-500 hover:bg-gray-600' },
     
     // Bottom row for second functions
     { label: 'ln', onClick: () => handleUnaryFunction(Math.log, 'ln'), className: 'bg-gray-600 hover:bg-gray-700' },
@@ -463,7 +432,7 @@ export default function ScientificCalculator() {
     { label: angleMode, onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-gray-600 hover:bg-gray-700' },
     
     // Memory and other functions
-    { label: 'AC', onClick: handleAllClear, className: 'bg-red-600 hover:bg-red-700' },
+    { label: 'AC', onClick: handleAllClear, className: 'bg-orange-600 hover:bg-orange-700' },
     { label: '±', onClick: handleToggleSign, className: 'bg-gray-600 hover:bg-gray-700'},
     { label: '%', onClick: handlePercent, className: 'bg-gray-600 hover:bg-gray-700' },
     { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-gray-600 hover:bg-gray-700' },
@@ -477,15 +446,9 @@ export default function ScientificCalculator() {
     show2nd ? { label: 'tanh⁻¹', onClick: () => handleUnaryFunction(Math.atanh, 'atanh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'tanh', onClick: () => handleUnaryFunction(Math.tanh, 'tanh'), className: 'bg-gray-600 hover:bg-gray-700' },
   ].filter(Boolean);
 
-const mainPadLayout = [
-    '2nd', 'π', 'e', 'C', '⌫',
-    show2nd ? 'x³' : 'x²', '1/x', '(', ')', 'n!',
-    show2nd ? '∛x' : '√x', '7', '8', '9', '÷',
-    'xʸ', '4', '5', '6', '×',
-    '10ˣ', '1', '2', '3', '-',
-    'log', '0', '.', '=', '+'
-];
-
+  const mainPadLayout = buttonLayout.slice(0, 30);
+  const secondaryPadLayout = buttonLayout.slice(30);
+  
   // #endregion
 
   return (
@@ -500,24 +463,24 @@ const mainPadLayout = [
         </div>
         
         <div className="w-full grid grid-cols-5 gap-1">
-          {buttonLayout.slice(0, 30).map((btn, i) => (
+          {mainPadLayout.map((btn, i) => (
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
                 className={cn('h-12 text-base rounded-md', btn.className, btn.label === '0' && 'col-span-2')} 
-                onClick={btn.onClick}
+                onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
             </Button>
           ))}
         </div>
          <div className="w-full grid grid-cols-5 gap-1 mt-1">
-           {buttonLayout.slice(30).map((btn, i) => (
+           {secondaryPadLayout.map((btn, i) => (
             <Button 
-                key={`${btn.label}-${i}`} 
+                key={`${btn.label}-${i+30}`} 
                 size="sm" 
                 className={cn('h-10 text-xs rounded-md', btn.className)} 
-                onClick={btn.onClick}
+                onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
             </Button>
