@@ -7,8 +7,12 @@ import { getFirestore } from 'firebase/firestore'
 
 // IMPORTANT: DO NOT MODIFY THIS FUNCTION
 export function initializeFirebase() {
+  const firebaseConfig = getFirebaseConfig();
+  if (!firebaseConfig) {
+    return null;
+  }
+
   if (!getApps().length) {
-    const firebaseConfig = getFirebaseConfig();
     const firebaseApp = initializeApp(firebaseConfig);
     return getSdks(firebaseApp);
   }

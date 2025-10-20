@@ -25,7 +25,9 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
     // This is the correct place to initialize client-side libraries.
     if (typeof window !== 'undefined') {
       const services = initializeFirebase();
-      setFirebaseServices(services);
+      if (services) {
+        setFirebaseServices(services);
+      }
     }
   }, []); // Empty dependency array ensures this runs only once.
 
