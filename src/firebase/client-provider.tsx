@@ -32,8 +32,8 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
   }, []); // Empty dependency array ensures this runs only once.
 
   if (!firebaseServices) {
-    // While Firebase is initializing (or on the server), we can render a loading state or just the children.
-    // Rendering children ensures the app structure is present, avoiding layout shifts.
+    // While Firebase is initializing (or if config is missing), we render children without the provider.
+    // This prevents the app from crashing and allows it to load.
     return <>{children}</>;
   }
 
