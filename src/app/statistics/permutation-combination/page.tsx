@@ -1,4 +1,5 @@
 
+"use client";
 
 import { PageHeader } from '@/components/page-header';
 import PermutationCombinationCalculator from '@/components/calculators/permutation-combination-calculator';

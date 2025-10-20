@@ -1,4 +1,5 @@
 
+"use client";
 
 import { PageHeader } from '@/components/page-header';
 import ConfidenceIntervalCalculator from '@/components/calculators/confidence-interval-calculator';

@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import FractionCalculators from '@/components/calculators/fraction-calculator';
 import type { Metadata } from 'next';

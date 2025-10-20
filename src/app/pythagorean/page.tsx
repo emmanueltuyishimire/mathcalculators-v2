@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import PythagoreanCalculator from '@/components/calculators/pythagorean-calculator';
 import type { Metadata } from 'next';

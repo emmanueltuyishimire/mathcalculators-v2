@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import RandomNumberGenerator from '@/components/calculators/random-number-generator';
 import type { Metadata } from 'next';

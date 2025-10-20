@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import RightTriangleCalculator from '@/components/calculators/right-triangle-calculator';
 import type { Metadata } from 'next';

@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import RatioCalculator from '@/components/calculators/ratio-calculator';
 import type { Metadata } from 'next';

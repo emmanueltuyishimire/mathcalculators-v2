@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import DesmosMatrixCalculator from '@/components/calculators/desmos-matrix-calculator';
 import type { Metadata } from 'next';

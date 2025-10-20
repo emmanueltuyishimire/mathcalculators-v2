@@ -1,4 +1,3 @@
-
 'use client';
 import { PageHeader } from '@/components/page-header';
 import SlopeCalculator from '@/components/calculators/slope-calculator';

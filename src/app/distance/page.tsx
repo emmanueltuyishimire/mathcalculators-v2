@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import DistanceCalculator from '@/components/calculators/distance-calculator';
 import type { Metadata } from 'next';

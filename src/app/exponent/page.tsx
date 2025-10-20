@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import ExponentCalculator from '@/components/calculators/exponent-calculator';
 import type { Metadata } from 'next';

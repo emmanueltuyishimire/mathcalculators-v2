@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import FactorCalculator from '@/components/calculators/factor-calculator';
 import type { Metadata } from 'next';

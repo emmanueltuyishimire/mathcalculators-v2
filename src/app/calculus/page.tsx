@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import CalculusCalculator from '@/components/calculators/calculus-calculator';
 import type { Metadata } from 'next';

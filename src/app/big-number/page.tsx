@@ -1,4 +1,6 @@
 
+"use client";
+
 import BigNumberCalculator from '@/components/calculators/big-number-calculator';
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';

@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import VolumeCalculator from '@/components/calculators/volume-calculator';
 import type { Metadata } from 'next';

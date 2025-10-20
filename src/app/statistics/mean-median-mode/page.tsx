@@ -1,4 +1,5 @@
 
+"use client";
 
 import { PageHeader } from '@/components/page-header';
 import MeanMedianModeCalculator from '@/components/calculators/mean-median-mode-calculator';

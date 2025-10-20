@@ -1,4 +1,6 @@
 
+"use client";
+
 import HalfLifeCalculator from '@/components/calculators/half-life-calculator';
 import { PageHeader } from '@/components/page-header';
 import type { Metadata } from 'next';

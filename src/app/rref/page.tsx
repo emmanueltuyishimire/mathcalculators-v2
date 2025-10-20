@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import RrefCalculator from '@/components/calculators/rref-calculator';
 import type { Metadata } from 'next';

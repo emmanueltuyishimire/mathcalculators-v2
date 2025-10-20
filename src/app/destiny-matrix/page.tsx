@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import DestinyMatrixCalculator from '@/components/calculators/destiny-matrix-calculator';
 import type { Metadata } from 'next';

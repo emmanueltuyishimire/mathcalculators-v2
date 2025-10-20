@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import GcfCalculator from '@/components/calculators/gcf-calculator';
 import type { Metadata } from 'next';

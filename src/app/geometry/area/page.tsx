@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import AreaCalculator from '@/components/calculators/area-calculator';
 import type { Metadata } from 'next';

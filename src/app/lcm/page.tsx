@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import LcmCalculator from '@/components/calculators/lcm-calculator';
 import type { Metadata } from 'next';

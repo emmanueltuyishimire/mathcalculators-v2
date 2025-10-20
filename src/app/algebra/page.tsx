@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
 import type { Metadata } from 'next';

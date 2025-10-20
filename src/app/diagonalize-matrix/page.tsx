@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import DiagonalizeMatrixCalculator from '@/components/calculators/diagonalize-matrix-calculator';
 import type { Metadata } from 'next';

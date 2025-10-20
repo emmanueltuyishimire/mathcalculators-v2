@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import PercentErrorCalculator from '@/components/calculators/percent-error-calculator';
 import type { Metadata } from 'next';

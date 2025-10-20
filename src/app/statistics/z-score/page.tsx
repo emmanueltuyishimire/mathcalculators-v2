@@ -1,4 +1,5 @@
 
+"use client";
 
 import { PageHeader } from '@/components/page-header';
 import ZScoreCalculator from '@/components/calculators/z-score-calculator';

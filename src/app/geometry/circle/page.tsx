@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import CircleCalculator from '@/components/calculators/circle-calculator';
 import type { Metadata } from 'next';

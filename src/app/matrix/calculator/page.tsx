@@ -1,4 +1,6 @@
 
+"use client";
+
 import Link from 'next/link';
 import MatrixCalculator from '@/components/calculators/matrix-calculator';
 import type { Metadata } from 'next';

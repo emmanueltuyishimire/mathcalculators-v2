@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import ScientificNotationCalculator from '@/components/calculators/scientific-notation-calculator';
 import type { Metadata } from 'next';

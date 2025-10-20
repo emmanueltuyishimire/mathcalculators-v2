@@ -1,4 +1,6 @@
 
+"use client";
+
 import { PageHeader } from '@/components/page-header';
 import UnitConverter from '@/components/calculators/unit-converter';
 import type { Metadata } from 'next';
