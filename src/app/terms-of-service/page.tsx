@@ -10,7 +10,7 @@ export default function TermsOfServicePage() {
         <div className="mx-auto max-w-4xl space-y-8 prose dark:prose-invert">
           <h1>Terms of Service for Math Calculators</h1>
 
-          <p><strong>Last Updated: 2024-07-26</strong></p>
+          <p><strong>Last Updated: 2025-10-20</strong></p>
 
           <h2>1. Acceptance of Terms</h2>
           <p>

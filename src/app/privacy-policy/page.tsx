@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
         <div className="mx-auto max-w-4xl space-y-8 prose dark:prose-invert">
           <h1>Privacy Policy for Math Calculators</h1>
 
-          <p><strong>Last Updated: 2024-07-26</strong></p>
+          <p><strong>Last Updated: 2025-10-20</strong></p>
 
           <p>
             Welcome to Math Calculators (maths.calculation.site). We are committed to protecting your privacy and ensuring you have a positive experience on our website. This Privacy Policy applies to Math Calculators and governs our data collection, processing, and usage practices.
