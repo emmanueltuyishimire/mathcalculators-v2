@@ -11,23 +11,11 @@ import { cn } from '@/lib/utils';
 type AngleMode = 'RAD' | 'DEG';
 type Token = string | number;
 
-const factorial = (n: number): number => {
-  if (n < 0 || n % 1 !== 0) throw new Error("Invalid input");
-  if (n > 170) throw new Error("Overflow"); 
-  if (n === 0) return 1;
-  let result = 1;
-  for (let i = 2; i <= n; i++) {
-    result *= i;
-  }
-  return result;
-};
-
 const precedence: { [key: string]: number } = {
   '+': 1, '-': 1, '×': 2, '÷': 2, '^': 3,
 };
-
 const associativity: { [key: string]: 'left' | 'right' } = {
-    '^': 'right', '+': 'left', '-': 'left', '×': 'left', '÷': 'left',
+  '+': 'left', '-': 'left', '×': 'left', '÷': 'left', '^': 'right',
 };
 
 const functions: { [key: string]: (a: number) => number } = {
@@ -44,10 +32,13 @@ const isFunction = (token: Token): boolean => typeof token === 'string' && !!fun
 const isNumber = (token: Token): token is number => typeof token === 'number';
 const isLeftParen = (token: Token): boolean => token === '(';
 const isRightParen = (token: Token): boolean => token === ')';
+// #endregion
 
+// #region Shunting-Yard and RPN Evaluation
 const shuntingYard = (tokens: Token[]): Token[] => {
     const outputQueue: Token[] = [];
     const operatorStack: string[] = [];
+
     tokens.forEach(token => {
         if (isNumber(token)) {
             outputQueue.push(token);
@@ -56,9 +47,11 @@ const shuntingYard = (tokens: Token[]): Token[] => {
         } else if (isOperator(token)) {
             while (
                 operatorStack.length > 0 &&
-                isOperator(operatorStack[operatorStack.length - 1]) &&
-                ((associativity[token] === 'left' && precedence[token] <= precedence[operatorStack[operatorStack.length - 1]]) ||
-                 (associativity[token] === 'right' && precedence[token] < precedence[operatorStack[operatorStack.length - 1]]))
+                operatorStack[operatorStack.length - 1] !== '(' &&
+                (
+                    precedence[operatorStack[operatorStack.length - 1]] > precedence[token] ||
+                    (precedence[operatorStack[operatorStack.length - 1]] === precedence[token] && associativity[token] === 'left')
+                )
             ) {
                 outputQueue.push(operatorStack.pop()!);
             }
@@ -82,6 +75,7 @@ const shuntingYard = (tokens: Token[]): Token[] => {
         if (op === '(') throw new Error("Mismatched parentheses");
         outputQueue.push(op);
     }
+
     return outputQueue;
 };
 
@@ -91,7 +85,7 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
         if (isNumber(token)) {
             stack.push(token);
         } else if (isOperator(token)) {
-            if (stack.length < 2) throw new Error("Syntax error");
+            if (stack.length < 2) throw new Error("Syntax Error");
             const b = stack.pop()!;
             const a = stack.pop()!;
             switch (token) {
@@ -105,24 +99,42 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
                 case '^': stack.push(Math.pow(a, b)); break;
             }
         } else if (isFunction(token)) {
-            if (stack.length < 1) throw new Error("Invalid function call");
+            if (stack.length < 1) throw new Error("Syntax Error");
             const a = stack.pop()!;
-            const result = functions[token as keyof typeof functions](a);
-            if (isNaN(result)) throw new Error("Domain error");
+            const func = functions[token as keyof typeof functions];
+            if (!func) throw new Error(`Unknown function: ${token}`);
+            const result = func(a);
+            if (isNaN(result)) throw new Error("Domain Error");
             stack.push(result);
         }
     });
-    if (stack.length !== 1) throw new Error("Syntax error");
+    if (stack.length !== 1) throw new Error("Syntax Error");
     return stack[0];
 };
+// #endregion
 
 const formatResult = (num: number): string => {
-  if (Math.abs(num) > 1e12 || (Math.abs(num) < 1e-9 && num !== 0)) {
-    return num.toExponential(9);
-  }
-  return num.toPrecision(15).replace(/\.?0+$/, '').replace(/(\.\d*?[1-9])0+$/, '$1');
+    if (Math.abs(num) > 1e12 || (Math.abs(num) < 1e-9 && num !== 0)) {
+        return num.toExponential(9);
+    }
+    const str = String(num);
+    if (str.length > 15) {
+        return num.toPrecision(15);
+    }
+    return str;
 };
-// #endregion
+
+const factorial = (n: number): number => {
+    if (n < 0 || !Number.isInteger(n)) throw new Error("Invalid input");
+    if (n > 170) throw new Error("Overflow");
+    if (n === 0) return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+        result *= i;
+    }
+    return result;
+};
+
 
 export default function ScientificCalculator() {
   const [displayValue, setDisplayValue] = useState('0');
@@ -134,14 +146,17 @@ export default function ScientificCalculator() {
   const [show2nd, setShow2nd] = useState(false);
   const [errorState, setErrorState] = useState<string | null>(null);
   const { toast } = useToast();
-
+  
   useEffect(() => {
-    if (errorState) {
-      setDisplayValue(errorState);
-      return;
-    }
-    const exprString = expressionTokens.map(t => (typeof t === 'number') ? formatResult(t) : t).join(' ');
-    setDisplayValue(`${exprString} ${currentNumber}`.trim() || '0');
+    const exprString = expressionTokens.map(t => {
+        if (typeof t === 'number') return formatResult(t);
+        if (t === '×') return '×';
+        if (t === '÷') return '÷';
+        return t;
+    }).join(' ');
+
+    const fullDisplay = `${exprString} ${currentNumber}`.trim();
+    setDisplayValue(errorState || (fullDisplay || '0'));
   }, [expressionTokens, currentNumber, errorState]);
   
   const resetError = () => {
@@ -149,57 +164,58 @@ export default function ScientificCalculator() {
         setErrorState(null);
         handleAllClear();
     }
-  }
+  };
 
-  // #region Key Handlers
   const handleDigit = (digit: string) => {
     resetError();
     if (isResult) {
-      handleAllClear();
       setCurrentNumber(digit === '0' ? '0' : digit);
       setIsResult(false);
-      return;
+    } else {
+      if (currentNumber.length > 15) return;
+      setCurrentNumber(prev => (prev === '0' ? digit : prev + digit));
     }
-    if (currentNumber.length > 15) return;
-    setCurrentNumber(prev => (prev === '0' && digit !== '.' ? digit : prev + digit));
   };
-  
+
   const handleDecimal = () => {
     resetError();
     if (isResult) {
-        handleAllClear();
-        setCurrentNumber('0.');
-        setIsResult(false);
-        return;
-    }
-    if (!currentNumber.includes('.')) {
-      setCurrentNumber(prev => (prev === '' ? '0.' : prev + '.'));
+      setCurrentNumber('0.');
+      setIsResult(false);
+    } else if (!currentNumber.includes('.')) {
+      setCurrentNumber(prev => prev === '' ? '0.' : prev + '.');
     }
   };
 
   const handleOperator = (op: string) => {
     resetError();
     setIsResult(false);
-    
     let newTokens = [...expressionTokens];
+
     if (currentNumber !== '') {
       newTokens.push(parseFloat(currentNumber));
       setCurrentNumber('');
     }
 
     const lastToken = newTokens[newTokens.length - 1];
-    if (isOperator(lastToken) && op !== '-' && !isLeftParen(newTokens[newTokens.length-2])) {
-        newTokens[newTokens.length - 1] = op;
+    // Allow unary minus after an operator or left paren
+    if (op === '-' && (newTokens.length === 0 || isOperator(lastToken) || isLeftParen(lastToken))) {
+        setCurrentNumber('-');
+        return;
+    }
+
+    if (isOperator(lastToken)) {
+      newTokens[newTokens.length - 1] = op;
     } else {
-        newTokens.push(op);
+      newTokens.push(op);
     }
     setExpressionTokens(newTokens);
   };
-  
+
   const handleEquals = () => {
     if (errorState) {
-        handleAllClear();
-        return;
+      handleAllClear();
+      return;
     }
     if (expressionTokens.length === 0 && currentNumber === '') return;
 
@@ -208,18 +224,22 @@ export default function ScientificCalculator() {
       finalTokens.push(parseFloat(currentNumber));
     }
     
+    // Auto-close open parentheses
+    const openParens = finalTokens.filter(t => t === '(').length;
+    const closeParens = finalTokens.filter(t => t === ')').length;
+    for (let i = 0; i < openParens - closeParens; i++) {
+        finalTokens.push(')');
+    }
+
     try {
       const rpn = shuntingYard(finalTokens);
       const result = evaluateRPN(rpn);
-      
-      if (isNaN(result) || !isFinite(result)) throw new Error("Invalid result");
       
       const resultString = formatResult(result);
       setDisplayValue(resultString);
       setCurrentNumber(resultString);
       setExpressionTokens([]);
       setIsResult(true);
-
     } catch (e: any) {
       setErrorState(`Error: ${e.message}`);
       setExpressionTokens([]);
@@ -227,7 +247,7 @@ export default function ScientificCalculator() {
       setIsResult(true);
     }
   };
-
+  
   const handleClearEntry = () => {
     if(errorState) {
         handleAllClear();
@@ -235,7 +255,6 @@ export default function ScientificCalculator() {
     }
     setCurrentNumber('');
     setIsResult(false);
-    setDisplayValue(expressionTokens.join(' ') || '0');
   };
   
   const handleAllClear = () => {
@@ -243,7 +262,6 @@ export default function ScientificCalculator() {
     setDisplayValue('0');
     setExpressionTokens([]);
     setCurrentNumber('');
-    // Not clearing memory on AC as per typical calculator behavior
     setIsResult(false);
   };
 
@@ -254,85 +272,87 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1));
+      setCurrentNumber(prev => prev.slice(0, -1) || '');
     } else if (expressionTokens.length > 0) {
-      const lastToken = expressionTokens[expressionTokens.length - 1];
-      if (typeof lastToken === 'string' && lastToken.length > 1) {
-        // e.g. function name
-        setExpressionTokens(prev => prev.slice(0, -1));
-      } else {
-        setExpressionTokens(prev => prev.slice(0, -1));
-      }
+      setExpressionTokens(prev => prev.slice(0, -1));
     }
   };
 
   const handleToggleSign = () => {
     resetError();
-    if (currentNumber !== '') {
-        setCurrentNumber(prev => (prev.startsWith('-') ? prev.substring(1) : '-' + prev));
-    } else if (isResult) {
-        const currentVal = parseFloat(displayValue);
-        if (!isNaN(currentVal)) {
-            const newVal = String(-currentVal);
-            setDisplayValue(newVal);
-            setCurrentNumber(newVal);
+    if (isResult) {
+        const value = parseFloat(displayValue);
+        if (!isNaN(value)) {
+            const newValue = formatResult(-value);
+            setDisplayValue(newValue);
+            setCurrentNumber(newValue);
         }
+    } else if (currentNumber !== '') {
+        setCurrentNumber(prev => (prev.startsWith('-') ? prev.substring(1) : '-' + prev));
     }
   };
   
   const handleMemory = (type: 'M+' | 'M-' | 'MR' | 'MC') => {
     resetError();
     const value = parseFloat(currentNumber || (isResult ? displayValue : '0'));
-    if (isNaN(value) && type !== 'MC' && type !== 'MR') return;
+    
+    if (type !== 'MC' && type !== 'MR' && isNaN(value)) {
+        toast({ title: 'Memory Error', description: 'No valid number to add to memory.', variant: 'destructive' });
+        return;
+    }
 
     let newMemory = memory;
     switch (type) {
       case 'M+': newMemory += value; break;
       case 'M-': newMemory -= value; break;
       case 'MR':
+        if(isResult) handleAllClear();
         setCurrentNumber(String(memory));
         setIsResult(false);
         return;
       case 'MC': newMemory = 0; break;
     }
     setMemory(newMemory);
-    toast({ title: 'Memory Updated', description: `Memory is now ${newMemory}`});
+    toast({ title: 'Memory Updated', description: `Memory is now ${newMemory}` });
   };
 
   const handleUnaryFunction = (fn: (x: number) => number, funcName: string) => {
     resetError();
+    let valueStr = currentNumber || (isResult ? displayValue : '');
+    if (valueStr === '') {
+        toast({ title: 'Input Required', description: 'Please enter a number first.', variant: 'destructive'});
+        return;
+    }
+
     try {
-      let value: number;
-      if (currentNumber !== '') {
-        value = parseFloat(currentNumber);
-      } else if (isResult) {
-        value = parseFloat(displayValue);
-      } else {
-        throw new Error("No number to apply function to.");
-      }
+      let value = parseFloat(valueStr);
+      let result;
 
       if (['sin', 'cos', 'tan'].includes(funcName) && angleMode === 'DEG') {
         value = value * (Math.PI / 180);
       }
-
-      let result = fn(value);
+      
+      result = fn(value);
       
       if (['asin', 'acos', 'atan'].includes(funcName) && angleMode === 'DEG') {
         result = result * (180 / Math.PI);
       }
 
-      if (isNaN(result)) throw new Error("Domain");
-      if (!isFinite(result)) throw new Error("Overflow");
+      if (isNaN(result) || !isFinite(result)) {
+        throw new Error("Domain Error");
+      }
 
-      setCurrentNumber(formatResult(result));
-      setIsResult(true);
+      const formattedResult = formatResult(result);
+      setCurrentNumber(formattedResult);
       setExpressionTokens([]);
+      setIsResult(true);
+
     } catch (e: any) {
       setErrorState(`Error: ${e.message}`);
       setIsResult(true);
     }
   };
-  
+
   const handleParenthesis = (p: '(' | ')') => {
     resetError();
     setIsResult(false);
@@ -352,10 +372,6 @@ export default function ScientificCalculator() {
            newTokens.push(parseFloat(currentNumber));
            setCurrentNumber('');
        }
-       if (newTokens.length > 0 && isLeftParen(newTokens[newTokens.length-1])) {
-           // Handle empty parens `()`
-           newTokens.push(0);
-       }
        newTokens.push(')');
     }
     setExpressionTokens(newTokens);
@@ -368,9 +384,7 @@ export default function ScientificCalculator() {
     if (isResult) handleAllClear();
     
     if (currentNumber !== '' && currentNumber !== '0' && currentNumber !== '-') {
-        let newTokens = [...expressionTokens];
-        newTokens.push(parseFloat(currentNumber));
-        newTokens.push('×');
+        let newTokens = [...expressionTokens, parseFloat(currentNumber), '×'];
         setExpressionTokens(newTokens);
     }
     setCurrentNumber(String(values[constant]));
@@ -380,25 +394,25 @@ export default function ScientificCalculator() {
   const handlePercent = () => {
     resetError();
     const numCurrent = parseFloat(currentNumber);
-    if (isNaN(numCurrent)) return;
-
+    if(isNaN(numCurrent)) return;
+  
     if (expressionTokens.length >= 2) {
-      const op = expressionTokens[expressionTokens.length - 1];
+      const lastOp = expressionTokens[expressionTokens.length - 1];
       const prevNumToken = expressionTokens[expressionTokens.length - 2];
-      if (isOperator(op) && isNumber(prevNumToken)) {
-          const prevNum = prevNumToken as number;
-        if (op === '+' || op === '-') {
-            setCurrentNumber(String(prevNum * (numCurrent / 100)));
-            return;
+      if ((isOperator(lastOp)) && (isNumber(prevNumToken))) {
+        const prevNum = prevNumToken as number;
+        if (lastOp === '+' || lastOp === '-') {
+          setCurrentNumber(String(prevNum * (numCurrent / 100)));
+          return;
         }
       }
     }
+    // Default behavior for % (e.g., 50 * 10% = 5) or if no operator context
     setCurrentNumber(String(numCurrent / 100));
   };
   // #endregion
 
   const buttonLayout = [
-    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-gray-600 hover:bg-gray-700', show2nd && 'bg-blue-600 hover:bg-blue-700 text-white')},
     { label: '(', onClick: () => handleParenthesis('('), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: ')', onClick: () => handleParenthesis(')'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-purple-600 hover:bg-purple-700' },
@@ -406,48 +420,50 @@ export default function ScientificCalculator() {
     { label: 'M-', onClick: () => handleMemory('M-'), className: 'bg-purple-600 hover:bg-purple-700' },
     { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-purple-600 hover:bg-purple-700' },
     { label: 'AC', onClick: handleAllClear, className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: '±', onClick: handleToggleSign, className: 'bg-gray-600 hover:bg-gray-700'},
+    { label: '±', onClick: handleToggleSign, className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: '%', onClick: handlePercent, className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-gray-500 hover:bg-gray-600' },
     
+    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-gray-600 hover:bg-gray-700', show2nd && 'bg-blue-600 text-white') },
     show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x ** 3, 'x³'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x ** 2, 'x²'), className: 'bg-gray-600 hover:bg-gray-700' },
     show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, 'cbrt'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: '√x', onClick: () => handleUnaryFunction(Math.sqrt, 'sqrt'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: '1/x', onClick: () => handleUnaryFunction((x) => 1 / x, '1/x'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '×', onClick: () => handleOperator('×'), className: 'bg-gray-500 hover:bg-gray-600' },
 
-    show2nd ? { label: 'sinh⁻¹', onClick: () => handleUnaryFunction(Math.asinh, 'asinh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'sinh', onClick: () => handleUnaryFunction(Math.sinh, 'sinh'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'cosh⁻¹', onClick: () => handleUnaryFunction(Math.acosh, 'acosh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'cosh', onClick: () => handleUnaryFunction(Math.cosh, 'cosh'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'tanh⁻¹', onClick: () => handleUnaryFunction(Math.atanh, 'atanh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'tanh', onClick: () => handleUnaryFunction(Math.tanh, 'tanh'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: 'sin⁻¹', onClick: () => handleUnaryFunction(Math.asin, 'asin'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'sin', onClick: () => handleUnaryFunction(Math.sin, 'sin'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: 'cos⁻¹', onClick: () => handleUnaryFunction(Math.acos, 'acos'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'cos', onClick: () => handleUnaryFunction(Math.cos, 'cos'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: 'tan⁻¹', onClick: () => handleUnaryFunction(Math.atan, 'atan'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'tan', onClick: () => handleUnaryFunction(Math.tan, 'tan'), className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: '1/x', onClick: () => handleUnaryFunction((x) => 1 / x, '1/x'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '5', onClick: () => handleDigit('5'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '6', onClick: () => handleDigit('6'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '-', onClick: () => handleOperator('-'), className: 'bg-gray-500 hover:bg-gray-600' },
 
-    show2nd ? { label: 'sin⁻¹', onClick: () => handleUnaryFunction(Math.asin, 'asin'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'sin', onClick: () => handleUnaryFunction(Math.sin, 'sin'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'cos⁻¹', onClick: () => handleUnaryFunction(Math.acos, 'acos'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'cos', onClick: () => handleUnaryFunction(Math.cos, 'cos'), className: 'bg-gray-600 hover:bg-gray-700' },
-    show2nd ? { label: 'tan⁻¹', onClick: () => handleUnaryFunction(Math.atan, 'atan'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'tan', onClick: () => handleUnaryFunction(Math.tan, 'tan'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'π', onClick: () => handleConstant('π'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: 'sinh', onClick: () => handleUnaryFunction(Math.sinh, 'sinh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'eˣ', onClick: () => handleUnaryFunction(Math.exp, 'exp'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: 'cosh', onClick: () => handleUnaryFunction(Math.cosh, 'cosh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10 ** x, '10^x'), className: 'bg-gray-600 hover:bg-gray-700' },
+    show2nd ? { label: 'tanh', onClick: () => handleUnaryFunction(Math.tanh, 'tanh'), className: 'bg-gray-600 hover:bg-gray-700' } : { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: 'log', onClick: () => handleUnaryFunction(Math.log10, 'log'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '1', onClick: () => handleDigit('1'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '2', onClick: () => handleDigit('2'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '3', onClick: () => handleDigit('3'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '+', onClick: () => handleOperator('+'), className: 'bg-gray-500 hover:bg-gray-600' },
 
-    { label: angleMode, onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'log', onClick: () => handleUnaryFunction(Math.log10, 'log'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: 'ln', onClick: () => handleUnaryFunction(Math.log, 'ln'), className: 'bg-gray-600 hover:bg-gray-700' },
-    { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: angleMode, onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: 'π', onClick: () => handleConstant('π'), className: 'bg-gray-600 hover:bg-gray-700' },
+    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-gray-600 hover:bg-gray-700' },
     { label: '0', onClick: () => handleDigit('0'), className: 'col-span-2 bg-gray-700 hover:bg-gray-800' },
     { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '=', onClick: handleEquals, className: 'bg-blue-600 hover:bg-blue-700' },
+
   ].filter(Boolean);
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-lg mx-auto bg-gray-800 text-white p-2 border-2 border-gray-900 rounded-xl">
-      <CardContent className="flex flex-col items-center gap-1 p-0">
+    <Card id="scientific-calculator" className="shadow-lg max-w-[600px] mx-auto bg-gray-800 text-white p-2 border-4 border-gray-900 rounded-xl">
+      <CardContent className="flex flex-col items-center gap-1 p-1">
         <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-900/80 p-2 text-right text-3xl font-mono text-green-300 break-words h-16 flex items-end justify-end shadow-inner">
           <div className="absolute top-1 left-2 text-xs text-green-500/70 flex gap-2">
             {angleMode === 'DEG' && <span className="font-bold">DEG</span>}
@@ -456,12 +472,12 @@ export default function ScientificCalculator() {
           <span>{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-10 gap-1">
+        <div className="w-full grid grid-cols-8 gap-1">
           {buttonLayout.map((btn, i) => (
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
-                className={cn('h-9 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-2')} 
+                className={cn('h-10 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-2')}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
