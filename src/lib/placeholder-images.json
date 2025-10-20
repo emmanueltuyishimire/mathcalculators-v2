@@ -1,0 +1,32 @@
+[
+  {
+    "id": "heroImage1",
+    "src": "https://picsum.photos/seed/h1/1920/1080",
+    "alt": "Abstract mathematical background with glowing formulas",
+    "hint": "math abstract"
+  },
+  {
+    "id": "heroImage2",
+    "src": "https://picsum.photos/seed/h2/1920/400",
+    "alt": "An abstract background image with mathematical symbols",
+    "hint": "math symbols"
+  },
+  {
+    "id": "heroImage4",
+    "src": "https://picsum.photos/seed/h4/1920/969",
+    "alt": "Advanced math concepts background",
+    "hint": "math formula"
+  },
+  {
+    "id": "heroImage6",
+    "src": "https://picsum.photos/seed/h6/1920/969",
+    "alt": "Basic algebra and math background",
+    "hint": "algebra equations"
+  },
+  {
+    "id": "heroImage7",
+    "src": "https://picsum.photos/seed/h7/1920/969",
+    "alt": "Geometry and trigonometry background",
+    "hint": "geometry shapes"
+  }
+]

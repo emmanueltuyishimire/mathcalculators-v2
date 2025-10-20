@@ -8,16 +8,19 @@ import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
 import React from 'react';
 import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import placeholderImages from '@/lib/placeholder-images.json';
 
 function HeroSection() {
+  const heroImage = placeholderImages.find(p => p.id === 'heroImage1');
   return (
     <section
       className="relative w-full h-[60vh] min-h-[400px] bg-cover bg-center"
       aria-labelledby="hero-heading"
     >
        <Image
-        src="/math%20calculator%20background%20image%201.webp"
-        alt="Abstract mathematical background with glowing formulas"
+        src={heroImage?.src || ''}
+        alt={heroImage?.alt || 'Abstract mathematical background'}
+        data-ai-hint={heroImage?.hint}
         fill
         priority
         className="object-cover"
@@ -40,7 +43,9 @@ function HeroSection() {
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
-        image: "/math%20calculator%20background%20image6.webp",
+        image: placeholderImages.find(p => p.id === 'heroImage6')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'heroImage6')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'heroImage6')?.alt,
         tools: [
             { href: '/algebra', label: 'Algebra Calculator', icon: Type },
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
@@ -61,7 +66,9 @@ const calculatorCategories = [
     },
     {
         title: "Geometry & Trigonometry",
-        image: "/math%20calculator%20background%20image7.webp",
+        image: placeholderImages.find(p => p.id === 'heroImage7')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'heroImage7')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'heroImage7')?.alt,
         tools: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
             { href: '/trigonometry', label: 'Trigonometry Calculator', icon: Sigma },
@@ -77,7 +84,9 @@ const calculatorCategories = [
     },
     {
         title: "Statistics & Probability",
-        image: "/math%20calculator%20background%20image6.webp",
+        image: placeholderImages.find(p => p.id === 'heroImage6')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'heroImage6')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'heroImage6')?.alt,
         tools: [
             { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
@@ -93,7 +102,9 @@ const calculatorCategories = [
     },
     {
         title: "Advanced & Specialty",
-        image: "/math%20calculator%20background%20image4.webp",
+        image: placeholderImages.find(p => p.id === 'heroImage4')?.src || '',
+        imageHint: placeholderImages.find(p => p.id === 'heroImage4')?.hint,
+        imageAlt: placeholderImages.find(p => p.id === 'heroImage4')?.alt,
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
             { href: '/matrix', label: 'Matrix Calculators', icon: Table },
@@ -130,7 +141,8 @@ export default function Home() {
                         <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg" role="presentation">
                             <Image
                                 src={category.image}
-                                alt={`${category.title} category background`}
+                                alt={category.imageAlt || `${category.title} category background`}
+                                data-ai-hint={category.imageHint}
                                 fill
                                 className="object-cover"
                                 sizes="(max-width: 768px) 100vw, 50vw"

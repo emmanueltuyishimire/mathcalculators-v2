@@ -45,6 +45,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         {/* Google AdSense Meta */}
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -62,13 +65,6 @@ export default function RootLayout({
           </ThemeProvider>
         </FirebaseClientProvider>
 
-        {/* Google AdSense Auto Ads - Standard script tag to avoid conflicts */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
-          crossOrigin="anonymous"
-        ></script>
-
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-5VPXQ1TJ3X"
@@ -82,6 +78,12 @@ export default function RootLayout({
             gtag('config', 'G-5VPXQ1TJ3X');
           `}
         </Script>
+        {/* Google AdSense Auto Ads - Standard script tag to avoid conflicts */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          crossOrigin="anonymous"
+        ></script>
       </body>
     </html>
   );

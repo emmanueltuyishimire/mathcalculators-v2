@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
 import React from 'react';
+import placeholderImages from '@/lib/placeholder-images.json';
 
 const calculatorCategories = [
     {
@@ -75,14 +76,16 @@ const calculatorCategories = [
 ];
 
 export default function CalculatorsPage() {
+  const heroImage = placeholderImages.find(p => p.id === 'heroImage2');
   return (
     <div className="flex flex-1 flex-col">
       <section
         className="relative w-full h-64 bg-cover bg-center"
       >
         <Image
-            src="/math%20calculator%20background%20image2.webp"
-            alt="An abstract background image with mathematical symbols"
+            src={heroImage?.src || ''}
+            alt={heroImage?.alt || 'An abstract background image with mathematical symbols'}
+            data-ai-hint={heroImage?.hint}
             fill
             priority
             className="object-cover"

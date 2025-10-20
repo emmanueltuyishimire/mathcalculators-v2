@@ -45,7 +45,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button
@@ -64,7 +64,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   className="flex items-center gap-2 text-lg font-semibold"
                   onClick={() => setOpen(false)}
                 >
-                  <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} priority />
+                  <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
                   <span>Math Calculators</span>
                 </Link>
                 {navItems.map((item) => (
@@ -88,7 +88,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             className="flex items-center gap-2 text-lg font-semibold"
             aria-label="Math Calculators Home"
           >
-            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} priority />
+            <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
             <span className="sr-only sm:not-sr-only">Math Calculators</span>
           </Link>
         </div>

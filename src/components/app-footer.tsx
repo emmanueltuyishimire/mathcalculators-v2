@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -17,7 +18,7 @@ export function AppFooter() {
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
                     <div className="space-y-4 col-span-2 md:col-span-1">
                         <Link href="/" className="flex items-center gap-2 text-lg font-semibold" aria-label="Go to homepage">
-                            <Image src="/logo.png" alt="Math Calculators Logo" width={56} height={56} />
+                            <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} />
                             <span>Math Calculators</span>
                         </Link>
                         <p className="text-sm text-muted-foreground">
