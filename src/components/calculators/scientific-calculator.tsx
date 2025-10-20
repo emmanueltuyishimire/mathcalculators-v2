@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
 // #region Helper Functions & Types
@@ -76,7 +75,7 @@ const shuntingYard = (tokens: Token[]): Token[] => {
     return outputQueue;
 };
 
-const evaluateRPN = (rpnQueue: Token[], angleMode: AngleMode): number => {
+const evaluateRPN = (rpnQueue: Token[]): number => {
     const stack: number[] = [];
     rpnQueue.forEach(token => {
         if (isNumber(token)) {
@@ -101,17 +100,7 @@ const evaluateRPN = (rpnQueue: Token[], angleMode: AngleMode): number => {
             const func = trigFunctions[token as keyof typeof trigFunctions];
             if (!func) throw new Error(`Unknown function: ${token}`);
             
-            const isInverse = token.startsWith('a') && !token.startsWith('asinh');
-
-            if (!isInverse && !token.includes('h')) { // Regular trig
-                if (angleMode === 'DEG') a = a * (Math.PI / 180);
-            }
-            
             let result = func(a);
-
-            if (isInverse) {
-                if (angleMode === 'DEG') result = result * (180 / Math.PI);
-            }
             
             if (isNaN(result)) throw new Error("Domain Error");
             stack.push(result);
@@ -290,8 +279,7 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      const newNum = currentNumber.slice(0, -1);
-      setCurrentNumber(newNum === '' ? '0' : newNum);
+      setCurrentNumber(prev => prev.slice(0, -1) || '0');
     } else if (expressionTokens.length > 0) {
       setExpressionTokens(prev => prev.slice(0, -1));
     } else {
@@ -364,19 +352,27 @@ export default function ScientificCalculator() {
   };
   
   const handleTrigFunction = (funcName: string) => {
-    if(resetError()) return;
-    setIsResult(false);
-    let newTokens = [...expressionTokens];
+    const isInverse = funcName.startsWith('a') && !funcName.startsWith('asinh');
+    const isHyperbolic = ['sinh', 'cosh', 'tanh'].includes(funcName);
 
-    if(currentNumber !== '' && currentNumber !== '-') {
-      newTokens.push(parseFloat(currentNumber));
-      newTokens.push('×');
-      setCurrentNumber('');
-    } else if (isRightParen(newTokens[newTokens.length - 1]) || isNumber(newTokens[newTokens.length-1])) {
-        newTokens.push('×');
-    }
-    newTokens.push(funcName, '(');
-    setExpressionTokens(newTokens);
+    const trigExecutor = (val: number) => {
+      const func = trigFunctions[funcName];
+      if (!func) throw new Error(`Unknown function ${funcName}`);
+
+      if (isInverse) {
+        let result = func(val);
+        if (angleMode === 'DEG') result = result * 180 / Math.PI;
+        return result;
+      } else {
+        let angle = val;
+        if (!isHyperbolic && angleMode === 'DEG') {
+          angle = angle * Math.PI / 180;
+        }
+        return func(angle);
+      }
+    };
+    
+    handleUnaryFunction(trigExecutor, funcName);
   };
 
   const handleParenthesis = (p: '(' | ')') => {
@@ -399,7 +395,9 @@ export default function ScientificCalculator() {
            newTokens.push(parseFloat(currentNumber));
            setCurrentNumber('');
        }
-       if (expressionTokens.filter(t => t === '(').length > expressionTokens.filter(t => t === ')').length) {
+       const openParens = newTokens.filter(t => t === '(').length;
+       const closeParens = newTokens.filter(t => t === ')').length;
+       if (openParens > closeParens) {
             newTokens.push(')');
        }
     }
@@ -454,49 +452,47 @@ export default function ScientificCalculator() {
     { label: '%', onClick: handlePercent, className: 'bg-blue-600 hover:bg-blue-700' },
     { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-orange-600 hover:bg-orange-700' },
 
-    show2nd ? { label: 'sin⁻¹', onClick: () => handleTrigFunction('asin'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'sin', onClick: () => handleTrigFunction('sin'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'cos⁻¹', onClick: () => handleTrigFunction('acos'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'cos', onClick: () => handleTrigFunction('cos'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'tan⁻¹', onClick: () => handleTrigFunction('atan'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'tan', onClick: () => handleTrigFunction('tan'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'sinh', onClick: () => handleTrigFunction('sinh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '1/x', onClick: () => handleUnaryFunction(x => { if (x===0) throw new Error("Division by zero"); return 1/x }, '1/x'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'cosh', onClick: () => handleTrigFunction('cosh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'tanh', onClick: () => handleTrigFunction('tanh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'π', onClick: () => handleConstant('π'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-
-    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-blue-600 hover:bg-blue-700' },
     show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x**3, 'x³'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x**2, 'x²'), className: 'bg-blue-600 hover:bg-blue-700' },
     show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, '∛x'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '√x', onClick: () => handleUnaryFunction(x => {if(x<0) throw new Error("Domain Error"); return Math.sqrt(x)}, '√x'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-blue-600 hover:bg-blue-700' },
     { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10**x, '10ˣ'), className: 'bg-blue-600 hover:bg-blue-700' },
     { label: 'log', onClick: () => handleUnaryFunction(x=>{if(x<=0) throw new Error("Domain Error"); return Math.log10(x)}, 'log'), className: 'bg-blue-600 hover:bg-blue-700' },
     { label: 'ln', onClick: () => handleUnaryFunction(x=>{if(x<=0) throw new Error("Domain Error"); return Math.log(x)}, 'ln'), className: 'bg-blue-600 hover:bg-blue-700' },
-
-    { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '×', onClick: () => handleOperator('×'), className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-    { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-yellow-600 hover:bg-yellow-700' },
     
-    { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
+    show2nd ? { label: 'sin⁻¹', onClick: () => handleTrigFunction('asin'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'sin', onClick: () => handleTrigFunction('sin'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'cos⁻¹', onClick: () => handleTrigFunction('acos'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'cos', onClick: () => handleTrigFunction('cos'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'tan⁻¹', onClick: () => handleTrigFunction('atan'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'tan', onClick: () => handleTrigFunction('tan'), className: 'bg-blue-600 hover:bg-blue-700' },
+    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-yellow-600 hover:bg-yellow-700' },
+    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
+    { label: '±', onClick: handleToggleSign, className: 'bg-gray-700 hover:bg-gray-800' },
+    
+    show2nd ? { label: 'sinh', onClick: () => handleTrigFunction('sinh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
+    show2nd ? { label: 'cosh', onClick: () => handleTrigFunction('cosh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
+    show2nd ? { label: 'tanh', onClick: () => handleTrigFunction('tanh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
+    { label: '×', onClick: () => handleOperator('×'), className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-green-600 hover:bg-green-700' },
+    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-green-600 hover:bg-green-700' },
+
+    { label: '1/x', onClick: () => handleUnaryFunction(x => { if (x===0) throw new Error("Division by zero"); return 1/x }, '1/x'), className: 'bg-blue-600 hover:bg-blue-700' },
+    show2nd ? { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-yellow-600 hover:bg-yellow-700' } : { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '5', onClick: () => handleDigit('5'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '6', onClick: () => handleDigit('6'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '-', onClick: () => handleOperator('-'), className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'RAD', onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-green-600 hover:bg-green-700' },
-    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
+    { label: 'M+', onClick: () => handleMemory('M+'), className: 'bg-green-600 hover:bg-green-700' },
     
+    { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-blue-600 hover:bg-blue-700' },
     { label: '1', onClick: () => handleDigit('1'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '2', onClick: () => handleDigit('2'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '3', onClick: () => handleDigit('3'), className: 'bg-gray-700 hover:bg-gray-800' },
     { label: '+', onClick: () => handleOperator('+'), className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-green-600 hover:bg-green-700' },
-    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-green-600 hover:bg-green-700' },
-
-    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-blue-800 hover:bg-blue-900', show2nd && 'bg-blue-500') },
-    { label: '0', onClick: () => handleDigit('0'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '±', onClick: handleToggleSign, className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '=', onClick: handleEquals, className: 'bg-orange-600 hover:bg-orange-700 col-span-2' },
-    { label: 'M+', onClick: () => handleMemory('M+'), className: 'bg-green-600 hover:bg-green-700' },
     { label: 'M-', onClick: () => handleMemory('M-'), className: 'bg-green-600 hover:bg-green-700' },
     
+    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-blue-800 hover:bg-blue-900', show2nd && 'bg-blue-500') },
+    { label: 'π', onClick: () => handleConstant('π'), className: 'bg-yellow-600 hover:bg-yellow-700' },
+    { label: '0', onClick: () => handleDigit('0'), className: 'bg-gray-700 hover:bg-gray-800' },
+    { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
+    { label: '=', onClick: handleEquals, className: 'bg-orange-600 hover:bg-orange-700' },
+    { label: 'RAD', onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-green-600 hover:bg-green-700' },
   ].filter(Boolean);
 
   return (
