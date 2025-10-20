@@ -1,3 +1,4 @@
+
 // This function will be called on the client side, where process.env is available.
 export const getFirebaseConfig = () => {
     if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
