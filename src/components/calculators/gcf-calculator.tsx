@@ -11,8 +11,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 // Helper functions for GCD and Prime Factorization using BigInt
 const gcd = (a: bigint, b: bigint): bigint => {
-  a = a > 0n ? a : -a;
-  b = b > 0n ? b : -b;
+  a = a > 0n ? a : -a; // absolute value
+  b = b > 0n ? b : -b; // absolute value
   while (b) {
     [a, b] = [b, a % b];
   }
@@ -21,12 +21,13 @@ const gcd = (a: bigint, b: bigint): bigint => {
 
 const getPrimeFactorization = (num: bigint): Map<bigint, number> => {
     const factors = new Map<bigint, number>();
-    if (num < 2n) {
-        if (num > 0) factors.set(num, 1);
+    let n_abs = num > 0n ? num : -num;
+    if (n_abs < 2n) {
+        if (n_abs > 0) factors.set(n_abs, 1);
         return factors;
     }
     
-    let n = num;
+    let n = n_abs;
     while (n % 2n === 0n) {
         factors.set(2n, (factors.get(2n) || 0) + 1);
         n /= 2n;
@@ -69,7 +70,7 @@ export default function GcfCalculator() {
             .map(s => {
                 try {
                     const num = BigInt(s);
-                    return num >= 0n ? num : -num; // Use absolute values
+                    return num;
                 } catch {
                     return NaN;
                 }
@@ -79,7 +80,7 @@ export default function GcfCalculator() {
              toast({
                 variant: 'destructive',
                 title: 'Invalid Input',
-                description: 'Please ensure all inputs are valid non-zero integers.',
+                description: 'Please ensure all inputs are valid integers.',
             });
             setResult(null);
             return;
@@ -88,11 +89,13 @@ export default function GcfCalculator() {
         const bigIntNumbers = numbers.filter(n => typeof n === 'bigint') as bigint[];
 
         if (bigIntNumbers.length < 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide at least two numbers separated by commas.',
-            });
+            if(input.trim()) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please provide at least two numbers separated by commas.',
+                });
+            }
             setResult(null);
             return;
         }
@@ -122,7 +125,7 @@ export default function GcfCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [input]);
 
     const formatFactors = (factors: Map<bigint, number>) => {
         if (factors.size === 0) return '1';

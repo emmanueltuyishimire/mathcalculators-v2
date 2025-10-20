@@ -69,7 +69,7 @@ export default function ExponentCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [useE]);
     
     const handleClear = () => {
       setBase('');

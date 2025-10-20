@@ -20,15 +20,18 @@ const gcd = (a: bigint, b: bigint): bigint => {
 };
 
 const lcm = (a: bigint, b: bigint): bigint => {
-    if (a === 0n || b === 0n) return 0n;
-    return (a > 0 ? a : -a) * (b > 0 ? b : -b) / gcd(a, b);
+    const absA = a > 0n ? a : -a;
+    const absB = b > 0n ? b : -b;
+    if (absA === 0n || absB === 0n) return 0n;
+    return (absA * absB) / gcd(absA, absB);
 };
 
 const getPrimeFactorization = (num: bigint): Map<bigint, number> => {
     const factors = new Map<bigint, number>();
-    if (num < 2n) return factors;
+    let n_abs = num > 0n ? num : -num;
+    if (n_abs < 2n) return factors;
     
-    let n = num;
+    let n = n_abs;
     let divisor = 2n;
 
     while (n % divisor === 0n) {
@@ -98,11 +101,13 @@ export default function LcmCalculator() {
         const bigIntNumbers = numbers as bigint[];
 
         if (bigIntNumbers.length < 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide at least two numbers separated by commas.',
-            });
+             if(input.trim()) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please provide at least two numbers separated by commas.',
+                });
+            }
             setResult(null);
             return;
         }
@@ -141,7 +146,7 @@ export default function LcmCalculator() {
                 gcd: finalGcd.toString(),
                 steps: { 
                     allFactors, 
-                    lcmCalculationFactors: lcmCalculationFactorsArray.join(' × '),
+                    lcmCalculationFactors: lcmCalculationFactorsArray.length > 0 ? lcmCalculationFactorsArray.join(' × ') : '1',
                     calculation: `LCM(${bigIntNumbers.join(', ')})`
                 }
             });
@@ -158,7 +163,7 @@ export default function LcmCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [input]);
 
     const formatFactors = (factors: Map<bigint, number>) => {
         if (factors.size === 0) return '1';

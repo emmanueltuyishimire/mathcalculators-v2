@@ -14,6 +14,10 @@ function SquareRootCalculator() {
     const [result, setResult] = useState('');
 
     const calculate = () => {
+        if (!value) {
+            setResult('');
+            return;
+        }
         const num = parseFloat(value);
         if (isNaN(num)) {
             if (value) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid number.' });
@@ -58,6 +62,10 @@ function CubeRootCalculator() {
     const [result, setResult] = useState('');
 
     const calculate = () => {
+        if (!value) {
+            setResult('');
+            return;
+        }
         const num = parseFloat(value);
         if (isNaN(num)) {
             if (value) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a valid number.' });
@@ -98,6 +106,10 @@ function GeneralRootCalculator() {
     const [result, setResult] = useState('');
 
     const calculate = () => {
+        if (!root || !number) {
+            setResult('');
+            return;
+        }
         const n = parseFloat(root);
         const num = parseFloat(number);
         

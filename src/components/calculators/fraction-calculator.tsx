@@ -43,18 +43,20 @@ function BasicFractionCalculator() {
                 return;
             }
 
-            const n1 = BigInt(f1.n);
+            let n1 = BigInt(f1.n);
             let d1 = BigInt(f1.d);
-            const n2 = BigInt(f2.n);
+            let n2 = BigInt(f2.n);
             let d2 = BigInt(f2.d);
 
             if (d1 === 0n || d2 === 0n) throw new Error("Denominator cannot be zero.");
             
             if (d1 < 0n) {
                 d1 = -d1;
+                n1 = -n1;
             }
             if (d2 < 0n) {
                 d2 = -d2;
+                n2 = -n2;
             }
 
 
@@ -132,6 +134,7 @@ function BasicFractionCalculator() {
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
+            setResult(null);
         }
     };
     
@@ -209,8 +212,8 @@ function MixedNumbersCalculator() {
                 return;
             }
 
-            const w1 = BigInt(m1.w || '0'), n1 = BigInt(m1.n), d1 = BigInt(m1.d);
-            const w2 = BigInt(m2.w || '0'), n2 = BigInt(m2.n), d2 = BigInt(m2.d);
+            let w1 = BigInt(m1.w || '0'), n1 = BigInt(m1.n), d1 = BigInt(m1.d);
+            let w2 = BigInt(m2.w || '0'), n2 = BigInt(m2.n), d2 = BigInt(m2.d);
             if (d1 === 0n || d2 === 0n) throw new Error("Denominator cannot be zero.");
 
             const sign1 = w1 < 0n || m1.w.startsWith('-') ? -1n : 1n;
@@ -301,6 +304,7 @@ function MixedNumbersCalculator() {
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
+            setResult(null);
         }
     };
     
@@ -363,7 +367,7 @@ function SimplifyFractionCalculator() {
                 setResult(null);
                 return;
             }
-            const n = BigInt(frac.n);
+            let n = BigInt(frac.n);
             let d = BigInt(frac.d);
             if (d === 0n) throw new Error("Denominator cannot be zero.");
 
@@ -379,6 +383,7 @@ function SimplifyFractionCalculator() {
             setResult({ n: finalN / common, d: finalD / common });
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
+            setResult(null);
         }
     };
     
@@ -447,6 +452,7 @@ function DecimalToFraction() {
         setResult({ n: finalN, d: finalD, w, rem, steps });
       } catch (e: any) {
          toast({ variant: 'destructive', title: 'Error', description: 'Could not convert decimal.' });
+         setResult(null);
       }
     };
     
@@ -511,6 +517,7 @@ function FractionToDecimal() {
         setResult((n / d).toFixed(6));
       } catch (e: any) {
         toast({ variant: 'destructive', title: 'Error', description: e.message });
+        setResult('');
       }
     };
     
@@ -569,6 +576,7 @@ function BigNumberFractionCalculator() {
             setResult({ n: finalN, d: finalD, w: finalW, rem: finalRem });
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: 'Could not calculate. Ensure inputs are valid integers.' });
+            setResult(null);
         }
     };
     

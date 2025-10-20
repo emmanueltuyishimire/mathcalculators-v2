@@ -73,9 +73,13 @@ const TwoDCalculator = () => {
     };
 
     useEffect(() => {
-        calculate();
+        if(p1.x && p1.y && p2.x && p2.y) {
+            calculate();
+        } else {
+            setResult(null);
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [p1, p2]);
 
     return (
         <Card>
@@ -186,9 +190,13 @@ const ThreeDCalculator = () => {
     };
 
     useEffect(() => {
-        calculate();
+        if (p1.x && p1.y && p1.z && p2.x && p2.y && p2.z) {
+            calculate();
+        } else {
+            setResult(null);
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [p1, p2]);
 
     return (
         <Card>
@@ -278,9 +286,13 @@ const LatLongCalculator = () => {
     };
 
     useEffect(() => {
-        calculate();
+        if (p1.lat && p1.lon && p2.lat && p2.lon) {
+            calculate();
+        } else {
+            setDistance(null);
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [p1, p2]);
 
     return (
         <Card>

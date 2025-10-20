@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/page-header';
 import LogCalculator from '@/components/calculators/log-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -21,20 +22,19 @@ const LogEquationCalculator = () => {
     const [result, setResult] = useState('');
     
     const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
-        const newValues = { base, number, result };
+        let newValues = { base, number, result };
         newValues[field] = value;
         
         const emptyFields = Object.keys(newValues).filter(key => newValues[key as keyof typeof newValues] === '');
         
-        if (field === 'base') setBase(value);
-        if (field === 'number') setNumber(value);
-        if (field === 'result') setResult(value);
-
-        if (emptyFields.length !== 1) {
-            setBase(field === 'base' ? value : '');
-            setNumber(field === 'number' ? value : '');
-            setResult(field === 'result' ? value : '');
+        if(emptyFields.length !== 1) {
+            newValues = { base: '', number: '', result: '' };
+            newValues[field] = value;
         }
+
+        setBase(newValues.base);
+        setNumber(newValues.number);
+        setResult(newValues.result);
     }
 
 
@@ -46,11 +46,13 @@ const LogEquationCalculator = () => {
         const knownValues = [!isNaN(baseVal), !isNaN(numberVal), !isNaN(resultVal)].filter(Boolean).length;
 
         if (knownValues !== 2) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please provide exactly two values to solve for the third.',
-            });
+            if (base || number || result) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Input',
+                    description: 'Please provide exactly two values to solve for the third.',
+                });
+            }
             return;
         }
 
@@ -62,6 +64,8 @@ const LogEquationCalculator = () => {
                 setNumber(Math.pow(baseVal, resultVal).toString());
             } else { // Calculate base (b)
                 if(numberVal < 0 && resultVal % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
+                if(numberVal === 1 && resultVal !== 0) throw new Error("If number is 1, result must be 0.");
+                if(numberVal !== 1 && resultVal === 0) throw new Error("If result is 0, number must be 1.");
                 setBase(Math.pow(numberVal, 1 / resultVal).toString());
             }
         } catch (e: any) {

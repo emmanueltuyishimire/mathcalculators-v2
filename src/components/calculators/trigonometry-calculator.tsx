@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -86,7 +87,7 @@ export default function BasicTrigCalculator() {
             </div>
         </div>
         <div className="space-y-2">
-            <Label>{isInverse ? 'Output Unit' : 'Angle Unit'}</Label>
+            <Label>{isInverse || hyperbolicFunctions.includes(funcName) ? 'Output Unit' : 'Angle Unit'}</Label>
              <RadioGroup defaultValue="deg" value={unit} onValueChange={setUnit} className="flex gap-4">
                 <div className="flex items-center space-x-2">
                     <RadioGroupItem value="deg" id="r-deg" />

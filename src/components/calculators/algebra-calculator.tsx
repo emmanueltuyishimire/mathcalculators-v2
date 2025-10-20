@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -29,9 +29,12 @@ export default function AlgebraCalculator() {
   };
   
   // Initial calculation on mount
-  useState(() => {
-    handleSolve();
-  });
+  useEffect(() => {
+    if (equation) {
+        handleSolve();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Card className="shadow-lg">
