@@ -6,6 +6,12 @@
     "hint": "math abstract"
   },
   {
+    "id": "heroImage2",
+    "src": "/math calculator background image2.webp",
+    "alt": "An abstract background image with mathematical symbols",
+    "hint": "math abstract"
+  },
+  {
     "id": "categoryBasicAlgebra",
     "src": "/math calculator background image6.webp",
     "alt": "Background with algebraic equations and mathematical notations",
