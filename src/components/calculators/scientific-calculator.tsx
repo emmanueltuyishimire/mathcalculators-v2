@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 // #region Helper Functions & Types
 type Token = string | number;
@@ -17,12 +18,6 @@ const associativity: { [key: string]: 'left' | 'right' } = {
   '+': 'left', '-': 'left', '×': 'left', '÷': 'left', '^': 'right',
 };
 
-const trigFunctions: { [key: string]: (...args: number[]) => number } = {
-    sin: Math.sin, cos: Math.cos, tan: Math.tan,
-    asin: Math.asin, acos: Math.acos, atan: Math.atan,
-    sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
-};
-
 const isOperator = (token: Token): token is string => typeof token === 'string' && ['+', '-', '×', '÷', '^'].includes(token);
 const isFunction = (token: Token): token is string => typeof token === 'string' && !!trigFunctions[token];
 const isNumber = (token: Token): token is number => typeof token === 'number';
@@ -30,7 +25,7 @@ const isLeftParen = (token: Token): token is string => token === '(';
 const isRightParen = (token: Token): token is string => token === ')';
 // #endregion
 
-// #region Shunting-Yard and RPN Evaluation
+// #region RPN Evaluation
 const shuntingYard = (tokens: Token[]): Token[] => {
     const outputQueue: Token[] = [];
     const operatorStack: string[] = [];
@@ -75,7 +70,14 @@ const shuntingYard = (tokens: Token[]): Token[] => {
     return outputQueue;
 };
 
-const evaluateRPN = (rpnQueue: Token[]): number => {
+const trigFunctions: { [key: string]: (...args: number[]) => number } = {
+    sin: Math.sin, cos: Math.cos, tan: Math.tan,
+    asin: Math.asin, acos: Math.acos, atan: Math.atan,
+    sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
+};
+
+
+const evaluateRPN = (rpnQueue: Token[], angleMode: AngleMode): number => {
     const stack: number[] = [];
     rpnQueue.forEach(token => {
         if (isNumber(token)) {
@@ -95,18 +97,31 @@ const evaluateRPN = (rpnQueue: Token[]): number => {
                 case '^': stack.push(Math.pow(a, b)); break;
             }
         } else if (isFunction(token)) {
-            if (stack.length < 1) throw new Error("Syntax Error");
+             if (stack.length < 1) throw new Error("Syntax Error for function");
             let a = stack.pop()!;
             const func = trigFunctions[token as keyof typeof trigFunctions];
             if (!func) throw new Error(`Unknown function: ${token}`);
             
-            let result = func(a);
+            const isInverse = token.startsWith('a') && !token.startsWith('asinh');
+
+            let result;
+            if (isInverse) {
+                result = func(a);
+                if (angleMode === 'DEG') result = result * 180 / Math.PI;
+            } else {
+                let angle = a;
+                const isHyperbolic = ['sinh', 'cosh', 'tanh'].includes(token);
+                if (!isHyperbolic && angleMode === 'DEG') {
+                  angle = angle * Math.PI / 180;
+                }
+                result = func(angle);
+            }
             
             if (isNaN(result)) throw new Error("Domain Error");
             stack.push(result);
         }
     });
-    if (stack.length !== 1) throw new Error("Syntax Error");
+    if (stack.length !== 1) throw new Error("Syntax Error at evaluation end");
     return stack[0];
 };
 
@@ -132,7 +147,6 @@ const factorial = (n: number): number => {
     return result;
 };
 // #endregion
-
 
 export default function ScientificCalculator() {
   const [displayValue, setDisplayValue] = useState('0');
@@ -268,6 +282,7 @@ export default function ScientificCalculator() {
     setErrorState(null);
     setExpressionTokens([]);
     setCurrentNumber('');
+    setDisplayValue('0');
     setIsResult(false);
     setLastResult(0);
   };
@@ -279,11 +294,15 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1) || '0');
+      setCurrentNumber(prev => prev.slice(0, -1));
     } else if (expressionTokens.length > 0) {
-      setExpressionTokens(prev => prev.slice(0, -1));
-    } else {
-        setCurrentNumber('0');
+      const lastToken = expressionTokens[expressionTokens.length - 1];
+      if (isNumber(lastToken)) {
+        setCurrentNumber(String(lastToken).slice(0,-1));
+        setExpressionTokens(prev => prev.slice(0, -1));
+      } else {
+        setExpressionTokens(prev => prev.slice(0, -1));
+      }
     }
   };
 
@@ -306,12 +325,13 @@ export default function ScientificCalculator() {
     if(resetError()) return;
     
     let newMemory = memory;
+    const value = parseFloat(currentNumber) || (isResult ? lastResult : 0);
     switch (type) {
       case 'M+': 
-        newMemory += (parseFloat(currentNumber) || lastResult); 
+        newMemory += value; 
         break;
       case 'M-': 
-        newMemory -= (parseFloat(currentNumber) || lastResult); 
+        newMemory -= value; 
         break;
       case 'MR':
         if(isResult) setExpressionTokens([]);
@@ -323,7 +343,7 @@ export default function ScientificCalculator() {
     setMemory(newMemory);
   };
 
-  const handleUnaryFunction = (fn: (x: number) => number | string, funcName: string) => {
+  const handleUnaryFunction = (fn: (x: number) => number, funcName: string) => {
     if(resetError()) return;
     
     const valueStr = currentNumber || (isResult ? String(lastResult) : '');
@@ -333,8 +353,8 @@ export default function ScientificCalculator() {
       let value = parseFloat(valueStr);
       let result = fn(value);
       
-      if (typeof result === 'string' || isNaN(result) || !isFinite(result)) {
-        throw new Error(typeof result === 'string' ? result : "Domain Error");
+      if (isNaN(result) || !isFinite(result)) {
+        throw new Error("Domain Error");
       }
 
       const formattedResult = formatResult(result);
@@ -350,31 +370,24 @@ export default function ScientificCalculator() {
       setIsResult(true);
     }
   };
-  
-  const handleTrigFunction = (funcName: string) => {
-    const isInverse = funcName.startsWith('a') && !funcName.startsWith('asinh');
-    const isHyperbolic = ['sinh', 'cosh', 'tanh'].includes(funcName);
 
-    const trigExecutor = (val: number) => {
+  const handleTrigFunction = (funcName: string) => {
+    handleUnaryFunction((val) => {
+      const isInverse = funcName.startsWith('a');
       const func = trigFunctions[funcName];
-      if (!func) throw new Error(`Unknown function ${funcName}`);
+      if (!func) throw new Error("Unknown function");
 
       if (isInverse) {
         let result = func(val);
-        if (angleMode === 'DEG') result = result * 180 / Math.PI;
-        return result;
-      } else {
-        let angle = val;
-        if (!isHyperbolic && angleMode === 'DEG') {
-          angle = angle * Math.PI / 180;
-        }
-        return func(angle);
+        return angleMode === 'DEG' ? result * 180 / Math.PI : result;
       }
-    };
-    
-    handleUnaryFunction(trigExecutor, funcName);
-  };
+      
+      const angleInRads = angleMode === 'DEG' ? val * Math.PI / 180 : val;
+      return func(angleInRads);
 
+    }, funcName);
+  }
+  
   const handleParenthesis = (p: '(' | ')') => {
     if(resetError()) return;
     setIsResult(false);
@@ -442,76 +455,67 @@ export default function ScientificCalculator() {
     
     setCurrentNumber(formatResult(numCurrent));
   };
-  // #endregion
 
   const buttonLayout = [
-    { label: 'AC', onClick: handleAllClear, className: 'bg-red-600 hover:bg-red-700' },
-    { label: '⌫', onClick: handleBackspace, className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: '(', onClick: () => handleParenthesis('('), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: ')', onClick: () => handleParenthesis(')'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: '%', onClick: handlePercent, className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: '÷', onClick: () => handleOperator('÷'), className: 'bg-orange-600 hover:bg-orange-700' },
-
-    show2nd ? { label: 'x³', onClick: () => handleUnaryFunction((x) => x**3, 'x³'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'x²', onClick: () => handleUnaryFunction((x) => x**2, 'x²'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: '∛x', onClick: () => handleUnaryFunction(Math.cbrt, '∛x'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '√x', onClick: () => handleUnaryFunction(x => {if(x<0) throw new Error("Domain Error"); return Math.sqrt(x)}, '√x'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: 'xʸ', onClick: () => handleOperator('^'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: '10ˣ', onClick: () => handleUnaryFunction((x) => 10**x, '10ˣ'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: 'log', onClick: () => handleUnaryFunction(x=>{if(x<=0) throw new Error("Domain Error"); return Math.log10(x)}, 'log'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: 'ln', onClick: () => handleUnaryFunction(x=>{if(x<=0) throw new Error("Domain Error"); return Math.log(x)}, 'ln'), className: 'bg-blue-600 hover:bg-blue-700' },
-    
-    show2nd ? { label: 'sin⁻¹', onClick: () => handleTrigFunction('asin'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'sin', onClick: () => handleTrigFunction('sin'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'cos⁻¹', onClick: () => handleTrigFunction('acos'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'cos', onClick: () => handleTrigFunction('cos'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'tan⁻¹', onClick: () => handleTrigFunction('atan'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: 'tan', onClick: () => handleTrigFunction('tan'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: 'e', onClick: () => handleConstant('e'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-    { label: 'C', onClick: handleClearEntry, className: 'bg-red-600 hover:bg-red-700' },
-    { label: '±', onClick: handleToggleSign, className: 'bg-gray-700 hover:bg-gray-800' },
-    
-    show2nd ? { label: 'sinh', onClick: () => handleTrigFunction('sinh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '7', onClick: () => handleDigit('7'), className: 'bg-gray-700 hover:bg-gray-800' },
-    show2nd ? { label: 'cosh', onClick: () => handleTrigFunction('cosh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '8', onClick: () => handleDigit('8'), className: 'bg-gray-700 hover:bg-gray-800' },
-    show2nd ? { label: 'tanh', onClick: () => handleTrigFunction('tanh'), className: 'bg-blue-600 hover:bg-blue-700' } : { label: '9', onClick: () => handleDigit('9'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '×', onClick: () => handleOperator('×'), className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'MC', onClick: () => handleMemory('MC'), className: 'bg-green-600 hover:bg-green-700' },
-    { label: 'MR', onClick: () => handleMemory('MR'), className: 'bg-green-600 hover:bg-green-700' },
-
-    { label: '1/x', onClick: () => handleUnaryFunction(x => { if (x===0) throw new Error("Division by zero"); return 1/x }, '1/x'), className: 'bg-blue-600 hover:bg-blue-700' },
-    show2nd ? { label: 'φ', onClick: () => handleConstant('φ'), className: 'bg-yellow-600 hover:bg-yellow-700' } : { label: '4', onClick: () => handleDigit('4'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '5', onClick: () => handleDigit('5'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '6', onClick: () => handleDigit('6'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '-', onClick: () => handleOperator('-'), className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'M+', onClick: () => handleMemory('M+'), className: 'bg-green-600 hover:bg-green-700' },
-    
-    { label: 'n!', onClick: () => handleUnaryFunction(factorial, 'n!'), className: 'bg-blue-600 hover:bg-blue-700' },
-    { label: '1', onClick: () => handleDigit('1'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '2', onClick: () => handleDigit('2'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '3', onClick: () => handleDigit('3'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '+', onClick: () => handleOperator('+'), className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'M-', onClick: () => handleMemory('M-'), className: 'bg-green-600 hover:bg-green-700' },
-    
-    { label: '2nd', onClick: () => setShow2nd(!show2nd), className: cn('bg-blue-800 hover:bg-blue-900', show2nd && 'bg-blue-500') },
-    { label: 'π', onClick: () => handleConstant('π'), className: 'bg-yellow-600 hover:bg-yellow-700' },
-    { label: '0', onClick: () => handleDigit('0'), className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '.', onClick: handleDecimal, className: 'bg-gray-700 hover:bg-gray-800' },
-    { label: '=', onClick: handleEquals, className: 'bg-orange-600 hover:bg-orange-700' },
-    { label: 'RAD', onClick: () => setAngleMode(m => m === 'RAD' ? 'DEG' : 'RAD'), className: 'bg-green-600 hover:bg-green-700' },
-  ].filter(Boolean);
+    { label: "2nd", onClick: () => setShow2nd(!show2nd), className: cn("bg-gray-600 border-gray-700", show2nd && "bg-blue-500 border-blue-600") },
+    { label: "π", onClick: () => handleConstant('π'), className: "bg-gray-600 border-gray-700" },
+    { label: "e", onClick: () => handleConstant('e'), className: "bg-gray-600 border-gray-700" },
+    { label: "C", onClick: handleClearEntry, className: "bg-orange-600 border-orange-700" },
+    { label: "⌫", onClick: handleBackspace, className: "bg-orange-600 border-orange-700" },
+    { label: "x²", onClick: () => handleUnaryFunction((x) => x**2, 'x²'), className: "bg-gray-600 border-gray-700" },
+    { label: "1/x", onClick: () => handleUnaryFunction(x => {if(x===0) throw new Error("Div by Zero"); return 1/x}, '1/x'), className: "bg-gray-600 border-gray-700" },
+    { label: "|x|", onClick: () => handleUnaryFunction(Math.abs, '|x|'), className: "bg-gray-600 border-gray-700" },
+    { label: "exp", onClick: () => handleDigit('E'), className: "bg-gray-600 border-gray-700" },
+    { label: "mod", onClick: () => handleOperator('%'), className: "bg-gray-600 border-gray-700" },
+    { label: "√x", onClick: () => handleUnaryFunction(x => {if(x<0) throw new Error("Domain"); return Math.sqrt(x)}, '√x'), className: "bg-gray-600 border-gray-700" },
+    { label: "(", onClick: () => handleParenthesis('('), className: "bg-gray-600 border-gray-700" },
+    { label: ")", onClick: () => handleParenthesis(')'), className: "bg-gray-600 border-gray-700" },
+    { label: "n!", onClick: () => handleUnaryFunction(factorial, 'n!'), className: "bg-gray-600 border-gray-700" },
+    { label: "÷", onClick: () => handleOperator('÷'), className: "bg-orange-500 border-orange-600" },
+    { label: "xʸ", onClick: () => handleOperator('^'), className: "bg-gray-600 border-gray-700" },
+    { label: "7", onClick: () => handleDigit('7') },
+    { label: "8", onClick: () => handleDigit('8') },
+    { label: "9", onClick: () => handleDigit('9') },
+    { label: "×", onClick: () => handleOperator('×'), className: "bg-orange-500 border-orange-600" },
+    { label: "10ˣ", onClick: () => handleUnaryFunction(x => 10**x, '10ˣ'), className: "bg-gray-600 border-gray-700" },
+    { label: "4", onClick: () => handleDigit('4') },
+    { label: "5", onClick: () => handleDigit('5') },
+    { label: "6", onClick: () => handleDigit('6') },
+    { label: "-", onClick: () => handleOperator('-'), className: "bg-orange-500 border-orange-600" },
+    { label: "log", onClick: () => handleUnaryFunction(x => {if(x<=0) throw new Error("Domain"); return Math.log10(x)}, 'log'), className: "bg-gray-600 border-gray-700" },
+    { label: "1", onClick: () => handleDigit('1') },
+    { label: "2", onClick: () => handleDigit('2') },
+    { label: "3", onClick: () => handleDigit('3') },
+    { label: "+", onClick: () => handleOperator('+'), className: "bg-orange-500 border-orange-600" },
+    { label: "ln", onClick: () => handleUnaryFunction(x => {if(x<=0) throw new Error("Domain"); return Math.log(x)}, 'ln'), className: "bg-gray-600 border-gray-700" },
+    { label: "±", onClick: handleToggleSign },
+    { label: "0", onClick: () => handleDigit('0') },
+    { label: ".", onClick: handleDecimal },
+    { label: "=", onClick: handleEquals, className: "bg-blue-600 border-blue-700 hover:bg-blue-700" },
+  ];
 
   return (
-    <Card id="scientific-calculator" className="shadow-lg max-w-sm mx-auto bg-gray-800 text-white p-2 border-4 border-gray-900 rounded-xl">
-      <CardContent className="flex flex-col items-center gap-1 p-1">
+    <Card id="scientific-calculator" className="shadow-2xl max-w-sm mx-auto bg-gray-800 text-white p-2 border-t-2 border-l-2 border-gray-900 rounded-xl">
+      <CardContent className="flex flex-col items-center gap-2 p-1">
         <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-900/80 p-2 text-right break-words h-16 flex items-end justify-end shadow-inner">
-          <div className="absolute top-1 left-2 text-xs text-green-500/70 flex gap-2">
+          <div className="absolute top-1 left-2 text-xs text-green-400/70 flex gap-2">
             {angleMode === 'DEG' && <span className="font-bold">DEG</span>}
             {memory !== 0 && <span className="font-bold">M</span>}
           </div>
           <span className="text-2xl font-mono text-green-300">{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-6 gap-1">
+        <div className="w-full grid grid-cols-5 gap-2">
           {buttonLayout.map((btn, i) => (
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
-                className={cn('h-9 text-xs rounded-md', btn.className, btn.label === '0' && 'col-span-2')}
+                className={cn(
+                    'h-9 text-xs rounded-md relative transition-all duration-100 ease-in-out',
+                    'border-b-4 active:border-b-0 active:translate-y-1',
+                    'bg-gray-700 border-gray-800 hover:bg-gray-600',
+                    btn.className
+                )}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
             >
               {btn.label}
@@ -522,4 +526,3 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
-
