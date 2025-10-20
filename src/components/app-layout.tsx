@@ -68,6 +68,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   aria-label="Math Calculators Home"
                 >
                   <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
+                   <span>Math Calculators</span>
                 </Link>
                 {navItems.map((item) => (
                   <Link
@@ -91,6 +92,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             aria-label="Math Calculators Home"
           >
             <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
+            <span>Math Calculators</span>
           </Link>
         </div>
         
