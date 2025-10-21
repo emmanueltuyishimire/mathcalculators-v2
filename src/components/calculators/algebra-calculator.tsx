@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 type AngleMode = 'DEG' | 'RAD';
 
 export default function AlgebraCalculator() {
-  const [display, setDisplay] = useState('d/dx(x^3)');
+  const [display, setDisplay] = useState('d/dx(x^3+2x)');
   const { toast } = useToast();
   const [angleMode, setAngleMode] = useState<AngleMode>('DEG');
   const [lastAns, setLastAns] = useState('');
@@ -68,6 +68,10 @@ export default function AlgebraCalculator() {
         setDisplay(prev => prev + '!');
         return;
     }
+    if (key === ',') {
+      setDisplay(prev => prev + key);
+      return;
+    }
 
 
     setDisplay(prev => prev + key);
@@ -81,20 +85,17 @@ export default function AlgebraCalculator() {
     
     // Mocked symbolic functions
     const mockSymbolic: {[key: string]: string} = {
-        'expand((x+2)*(x+3))': 'x^2 + 5x + 6',
+        'expand((x+2)*(x+3))': 'x^2+5x+6',
         'factor(x^2+5x+6)': '(x+2)*(x+3)',
-        'd/dx(x^3)': '3x^2',
-        'd/dx(x^2+2x)': '2x+2',
-        'd/dx(sin(x))': 'cos(x)',
-        '∫dx(3x^2)': 'x^3 + C',
-        '∫dx(cos(x))': 'sin(x) + C',
-        'lim((x^2-1)/(x-1),x->1)': '2',
+        'd/dx(x^3+2x)': '3x^2+2',
+        '∫dx(x)': '1/2x^2+C',
         'lim(sin(x)/x,x->0)': '1',
         'subs(x^2+3x,x=4)': '28',
-        'sqrt(16)': '4',
-        '4!': '24',
+        'simplify(x^2+3x+2)': 'x^2+3x+2',
         'simplify(2x+3x)': '5x',
-        'simplify((x^2-4)/(x-2))': 'x+2'
+        'simplify((x^2-4)/(x-2))': 'x+2',
+        '4!': '24',
+        'sqrt(16)': '4'
     }
 
     if (mockSymbolic[expression]) {
@@ -109,7 +110,7 @@ export default function AlgebraCalculator() {
     const solveMatch = expression.match(/solve\((.*)=(.+),([a-z])\)/);
     if (solveMatch) {
         // Example: solve(x^2-4=0,x)
-        if(solveMatch[1] === 'x^2-4' && solveMatch[2] === '0') {
+        if(solveMatch[1] === 'x^2-4' && solveMatch[2] === '0' && solveMatch[3] === 'x') {
             resultStr = 'x = ±2';
             setDisplay(resultStr);
             setLastAns(resultStr);
@@ -155,7 +156,7 @@ export default function AlgebraCalculator() {
     ['7', '8', '9', '÷', 'x²', 'x³', 'xʸ', '√x'],
     ['4', '5', '6', '×', 'nCr', 'nPr', 'x!', 'mod'],
     ['1', '2', '3', '−', 'A', 'B', 'C', 'D'],
-    ['0', '.', '±', '+', 'ANS', 'STO', 'RCL', 'EXP'],
+    ['0', '.', ',', '+', 'ANS', 'STO', 'RCL', 'EXP'],
     ['AC', 'DEL', 'GRAPH', '↑', '↓', '←', '►', 'DEG/RAD'],
   ];
 
@@ -167,7 +168,7 @@ export default function AlgebraCalculator() {
     'DEG/RAD': 'bg-green-600'
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'EXP', 'y', 'z', '±', 'A', 'B', 'C', 'D'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'EXP', '±', 'y', 'z', 'A', 'B', 'C', 'D'];
 
 
   return (
