@@ -3,9 +3,10 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
+import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon, HelpCircle } from 'lucide-react';
 import React from 'react';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
+import { Button } from '@/components/ui/button';
 
 const basicTools = [
   { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
@@ -45,6 +46,14 @@ export default function BasicCategoryPage() {
 
             <div className="max-w-2xl mx-auto">
                 <AlgebraCalculator />
+                <div className="text-center mt-4">
+                    <Button asChild variant="outline">
+                        <Link href="/algebra/guide">
+                            <HelpCircle className="mr-2 h-4 w-4" />
+                            How to Use the Algebra Calculator
+                        </Link>
+                    </Button>
+                </div>
             </div>
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
