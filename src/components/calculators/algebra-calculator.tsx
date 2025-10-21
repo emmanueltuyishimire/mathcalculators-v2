@@ -13,10 +13,12 @@ export default function AlgebraCalculator() {
   const [display, setDisplay] = useState('d/dx(x^3)');
   const { toast } = useToast();
   const [angleMode, setAngleMode] = useState<AngleMode>('DEG');
+  const [lastAns, setLastAns] = useState('');
 
   const handleKeyClick = (key: string) => {
     if (key === 'AC') {
       setDisplay('');
+      setLastAns('');
       return;
     }
     if (key === 'DEL') {
@@ -27,9 +29,17 @@ export default function AlgebraCalculator() {
       evaluate();
       return;
     }
+    if (key === 'ANS') {
+        if (lastAns) {
+            setDisplay(prev => prev + lastAns);
+        } else {
+            toast({ title: 'No previous answer to recall.' });
+        }
+        return;
+    }
     // For functions, append function name with parenthesis
-    if (['SOLVE', 'EXPAND', 'FACTOR', 'SIMP', 'SUBS', 'd/dx', '∫dx', 'lim', 'sqrt'].includes(key)) {
-       setDisplay(`${key}(`);
+    if (['SOLVE', 'EXPAND', 'FACTOR', 'SUBS', 'd/dx', '∫dx', 'lim', 'sqrt'].includes(key)) {
+       setDisplay(prev => `${prev}${key}(`);
        return;
     }
      if (key === 'DEG/RAD') {
@@ -50,7 +60,7 @@ export default function AlgebraCalculator() {
         return;
     }
     if (key === '√x') {
-        setDisplay('sqrt(');
+        setDisplay(prev => prev + 'sqrt(');
         return;
     }
     if (key === 'x!') {
@@ -66,6 +76,7 @@ export default function AlgebraCalculator() {
     // This is a mock evaluation for demonstration purposes.
     // A real implementation would require a full computer algebra system (CAS).
     const expression = display.toLowerCase().replace(/\s/g, '');
+    let resultStr = '';
     
     // Mocked symbolic functions
     const mockSymbolic: {[key: string]: string} = {
@@ -84,7 +95,9 @@ export default function AlgebraCalculator() {
     }
 
     if (mockSymbolic[expression]) {
-        setDisplay(mockSymbolic[expression]);
+        resultStr = mockSymbolic[expression];
+        setDisplay(resultStr);
+        setLastAns(resultStr);
         toast({title: "Symbolic Evaluation", description: "This is a mocked result."});
         return;
     }
@@ -94,21 +107,25 @@ export default function AlgebraCalculator() {
     if (solveMatch) {
         // Example: solve(x^2-4=0,x)
         if(solveMatch[1] === 'x^2-4' && solveMatch[2] === '0') {
-            setDisplay('x = ±2');
+            resultStr = 'x = ±2';
+            setDisplay(resultStr);
+            setLastAns(resultStr);
             toast({title: "Equation Solved", description: "This is a mocked solver result."});
             return;
         }
         // Basic linear solver: ax+b=c
         const eq = solveMatch[1];
-        const result = parseFloat(solveMatch[2]);
+        const resultVal = parseFloat(solveMatch[2]);
         const variable = solveMatch[3];
         const xMatch = eq.match(new RegExp(`(-?\\d*\\.?\\d*)${variable}`));
         const bMatch = eq.match(/[+\-]\s*(\d+\.?\d*)/);
-        if (xMatch && bMatch && !isNaN(result)) {
+        if (xMatch && bMatch && !isNaN(resultVal)) {
             const a = xMatch[1] ? parseFloat(xMatch[1]) : 1;
             const b = parseFloat(bMatch[0].replace(/\s/g, ''));
-            const x = (result - b) / a;
-            setDisplay(`${variable} = ${x}`);
+            const x = (resultVal - b) / a;
+            resultStr = `${variable} = ${x}`;
+            setDisplay(resultStr);
+            setLastAns(resultStr);
             toast({title: "Equation Solved", description: "This is a mocked linear solver."});
             return;
         }
@@ -119,7 +136,9 @@ export default function AlgebraCalculator() {
       const numericExpression = expression.replace(/\^/g, '**').replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
       // Using new Function for safer eval
       const result = new Function('return ' + numericExpression)();
-      setDisplay(String(result));
+      resultStr = String(result);
+      setDisplay(resultStr);
+      setLastAns(resultStr);
     } catch (e) {
       toast({ variant: 'destructive', title: 'Error', description: 'Could not evaluate expression.' });
     }
@@ -133,19 +152,19 @@ export default function AlgebraCalculator() {
     ['7', '8', '9', '÷', 'x²', 'x³', 'xʸ', '√x'],
     ['4', '5', '6', '×', 'nCr', 'nPr', 'x!', 'mod'],
     ['1', '2', '3', '−', 'A', 'B', 'C', 'D'],
-    ['0', '.', ',', '+', 'ANS', 'STO', 'RCL', 'EXP'],
+    ['0', '.', '±', '+', 'ANS', 'STO', 'RCL', 'EXP'],
     ['AC', 'DEL', 'GRAPH', '↑', '↓', '←', '►', 'DEG/RAD'],
   ];
 
   const colorMap: { [key: string]: string } = {
     'ON': 'bg-red-600', 'AC': 'bg-red-600', 'DEL': 'bg-red-600',
     'SHIFT': 'bg-yellow-500 text-black', 'ALPHA': 'bg-purple-500',
-    '÷': 'bg-gray-500', '×': 'bg-gray-500', '−': 'bg-gray-500', '+': 'bg-gray-500', '=': 'bg-blue-600',
+    '÷': 'bg-gray-500', '×': 'bg-gray-500', '−': 'bg-gray-500', '+': 'bg-gray-500', '=': 'bg-blue-600', '±': 'bg-gray-500',
     'SOLVE': 'bg-blue-500', 'EXPAND': 'bg-blue-500', 'FACTOR': 'bg-blue-500', 'SIMP': 'bg-blue-500', 'd/dx': 'bg-indigo-500', '∫dx': 'bg-indigo-500', 'lim': 'bg-indigo-500',
     'DEG/RAD': 'bg-green-600'
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'SIMP', 'ANS', 'EXP'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'SIMP', 'EXP', 'A', 'B', 'C', 'D', 'y', 'z', '±'];
 
 
   return (
