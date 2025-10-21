@@ -320,23 +320,20 @@ export default function ScientificCalculator() {
     }
   };
   
-  const handleMemory = (type: 'M+' | 'M-' | 'MR' | 'MC') => {
+  const handleMemory = (type: 'M+' | 'M-' | 'MR' | 'MC' | 'MS') => {
     if(resetError()) return;
     
     let newMemory = memory;
     const value = parseFloat(currentNumber) || (isResult ? lastResult : 0);
     switch (type) {
-      case 'M+': 
-        newMemory += value; 
-        break;
-      case 'M-': 
-        newMemory -= value; 
-        break;
+      case 'M+': newMemory += value; break;
+      case 'M-': newMemory -= value; break;
       case 'MR':
         if(isResult) setExpressionTokens([]);
         setIsResult(false);
         setCurrentNumber(String(memory));
         return;
+      case 'MS': newMemory = value; break;
       case 'MC': newMemory = 0; break;
     }
     setMemory(newMemory);
@@ -371,11 +368,9 @@ export default function ScientificCalculator() {
   };
 
   const handleTrigFunction = (funcName: string) => {
-    const valueStr = currentNumber || (isResult ? String(lastResult) : '');
-    if (valueStr === '' || valueStr === '-') {
-      handleFunctionCall(funcName);
-    } else {
-        handleUnaryFunction((val) => {
+    if(resetError()) return;
+    const valueStr = currentNumber || (isResult ? String(lastResult) : '0');
+     handleUnaryFunction((val) => {
           const isInverse = funcName.startsWith('a');
           const func = trigFunctions[funcName as keyof typeof trigFunctions];
           if (!func) throw new Error("Unknown function");
@@ -388,7 +383,6 @@ export default function ScientificCalculator() {
           const angleInRads = angleMode === 'DEG' ? val * Math.PI / 180 : val;
           return func(angleInRads);
         }, funcName);
-    }
   }
 
   const handleFunctionCall = (func: string) => {
@@ -474,30 +468,43 @@ export default function ScientificCalculator() {
     
     setCurrentNumber(formatResult(numCurrent));
   };
+  
+  const handleAns = () => {
+    if(resetError()) return;
+    if (isResult) {
+      setExpressionTokens([]);
+      setIsResult(false);
+    }
+    setCurrentNumber(String(lastResult));
+  };
+  
+  const handleExp = () => {
+    if(resetError()) return;
+    if (currentNumber.includes('E')) return;
+    setCurrentNumber(prev => (prev || '0') + 'E');
+  };
 
   const buttonRows = [
     [
       { label: "2nd", onClick: () => setShow2nd(!show2nd), color: "blue", active: show2nd },
       { label: "(", onClick: () => handleParenthesis('('), color: "gray-dark" },
       { label: ")", onClick: () => handleParenthesis(')'), color: "gray-dark" },
-      { label: "%", onClick: handlePercent, color: "gray-dark" },
-      { label: "AC", onClick: handleAllClear, color: "red" },
-      { label: "DEL", onClick: handleBackspace, color: "red" },
+      { label: "M+", onClick: () => handleMemory('M+'), color: "green" },
+      { label: "MC", onClick: () => handleMemory('MC'), color: "green" },
     ],
     [
       { label: show2nd ? "x³" : "x²", onClick: () => handleUnaryFunction(x => show2nd ? x**3 : x**2, show2nd ? "x³" : "x²"), color: "blue" },
       { label: "1/x", onClick: () => handleUnaryFunction(x => 1/x, "1/x"), color: "blue" },
-      { label: show2nd ? "y√x" : "√x", onClick: () => show2nd ? handleOperator('^') : handleUnaryFunction(x => Math.sqrt(x), '√x'), color: "blue" },
+      { label: show2nd ? "∛x" : "√x", onClick: () => handleUnaryFunction(x => show2nd ? Math.cbrt(x) : Math.sqrt(x), show2nd ? "∛x" : "√x"), color: "blue" },
       { label: "xʸ", onClick: () => handleOperator('^'), color: "blue" },
       { label: "n!", onClick: () => handleUnaryFunction(factorial, 'n!'), color: "blue" },
-      { label: "÷", onClick: () => handleOperator('÷'), color: "orange" },
     ],
     [
       { label: show2nd ? "sin⁻¹" : "sin", onClick: () => handleTrigFunction(show2nd ? 'asin' : 'sin'), color: "blue" },
       { label: "7", onClick: () => handleDigit('7'), color: "gray" },
       { label: "8", onClick: () => handleDigit('8'), color: "gray" },
       { label: "9", onClick: () => handleDigit('9'), color: "gray" },
-      { label: "×", onClick: () => handleOperator('×'), color: "orange" },
+      { label: "÷", onClick: () => handleOperator('÷'), color: "orange" },
     ],
     [
       { label: show2nd ? "cos⁻¹" : "cos", onClick: () => handleTrigFunction(show2nd ? 'acos' : 'cos'), color: "blue" },
@@ -514,8 +521,7 @@ export default function ScientificCalculator() {
       { label: "+", onClick: () => handleOperator('+'), color: "orange" },
     ],
     [
-      { label: "log", onClick: () => handleUnaryFunction(x => Math.log10(x), 'log'), color: "blue" },
-      { label: "ln", onClick: () => handleUnaryFunction(x => Math.log(x), 'ln'), color: "blue" },
+      { label: "log", onClick: () => handleFunctionCall('log'), color: "blue" },
       { label: "0", onClick: () => handleDigit('0'), color: "gray" },
       { label: ".", onClick: handleDecimal, color: "gray" },
       { label: "±", onClick: handleToggleSign, color: "gray" },
@@ -523,11 +529,17 @@ export default function ScientificCalculator() {
     ],
     [
       { label: "RAD", onClick: () => setAngleMode(p => p === 'DEG' ? 'RAD' : 'DEG'), color: "green", active: angleMode === 'RAD' },
-      { label: "M+", onClick: () => handleMemory('M+'), color: "green" },
-      { label: "M-", onClick: () => handleMemory('M-'), color: "green" },
-      { label: "MR", onClick: () => handleMemory('MR'), color: "green" },
-      { label: "MC", onClick: () => handleMemory('MC'), color: "green" },
+      { label: "AC", onClick: handleAllClear, color: "red" },
+      { label: "C", onClick: handleClearEntry, color: "red" },
+      { label: "⌫", onClick: handleBackspace, color: "red" },
+       { label: "ANS", onClick: handleAns, color: "yellow" },
+    ],
+     [
+      { label: "EXP", onClick: handleExp, color: "yellow" },
+      { label: "Rnd", onClick: () => setCurrentNumber(Math.random().toString()), color: "yellow" },
       { label: "π", onClick: () => handleConstant('π'), color: "yellow" },
+      { label: "e", onClick: () => handleConstant('e'), color: "yellow" },
+      { label: "φ", onClick: () => handleConstant('φ'), color: "yellow" },
     ]
   ];
 
@@ -552,7 +564,7 @@ export default function ScientificCalculator() {
           <span className="text-2xl font-mono text-green-300">{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-6 gap-1">
+        <div className="w-full grid grid-cols-5 gap-1">
           {buttonRows.flat().map((btn, i) => (
             <Button 
                 key={`${btn.label}-${i}`} 
@@ -563,7 +575,7 @@ export default function ScientificCalculator() {
                     'text-white',
                     colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
                     btn.active && 'ring-2 ring-cyan-400 ring-inset',
-                    btn.className
+                    (btn.label === '=' || btn.label === '0') && 'col-span-2'
                 )}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
                 disabled={(btn as any).disabled}
