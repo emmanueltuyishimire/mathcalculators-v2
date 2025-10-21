@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon } from 'lucide-react';
 import React from 'react';
-import BasicCalculator from '@/components/calculators/basic-calculator';
+import AlgebraCalculator from '@/components/calculators/algebra-calculator';
 
 const basicTools = [
   { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
@@ -43,8 +43,8 @@ export default function BasicCategoryPage() {
                 </p>
             </section>
 
-            <div className="max-w-md mx-auto">
-                <BasicCalculator />
+            <div className="max-w-2xl mx-auto">
+                <AlgebraCalculator />
             </div>
             
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
