@@ -347,9 +347,11 @@ const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], o
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <Button variant="ghost" size="icon" onClick={() => handleOperation('add')} aria-label="Add matrices">+</Button>
-                <Button variant="ghost" size="icon" onClick={() => handleOperation('subtract')} aria-label="Subtract matrices">-</Button>
-                <Button variant="ghost" size="icon" onClick={() => handleOperation('multiply')} aria-label="Multiply matrices">×</Button>
+                <div className="flex items-center gap-1">
+                  <Button variant="ghost" size="sm" onClick={() => handleOperation('add')} aria-label="Add matrices">+</Button>
+                  <Button variant="ghost" size="sm" onClick={() => handleOperation('subtract')} aria-label="Subtract matrices">-</Button>
+                  <Button variant="ghost" size="sm" onClick={() => handleOperation('multiply')} aria-label="Multiply matrices">×</Button>
+                </div>
 
                  <DropdownMenu>
                     <DropdownMenuTrigger asChild><Button variant="outline" disabled={matrices.length === 0}>{inputB}</Button></DropdownMenuTrigger>
@@ -358,13 +360,9 @@ const OperationPanel = ({ matrices, onNewMatrix }: { matrices: MatrixObject[], o
                     </DropdownMenuContent>
                 </DropdownMenu>
                 
-                 <Button onClick={() => handleOperation('add')} disabled={matrices.length === 0}>{inputA}+{inputB}</Button>
-                 <Button onClick={() => handleOperation('subtract')} disabled={matrices.length === 0}>{inputA}-{inputB}</Button>
-                 <Button onClick={() => handleOperation('multiply')} disabled={matrices.length === 0}>{inputA}×{inputB}</Button>
-
-                 <Button variant="outline" onClick={() => { const temp = inputA; setInputA(inputB); setInputB(temp); }} disabled={matrices.length === 0}>
+                <Button variant="outline" onClick={() => { const temp = inputA; setInputA(inputB); setInputB(temp); }} disabled={matrices.length === 0} aria-label="Swap A and B">
                     <Replace className="h-4 w-4" />
-                 </Button>
+                </Button>
 
             </CardContent>
         </Card>

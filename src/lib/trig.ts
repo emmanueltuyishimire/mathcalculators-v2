@@ -22,7 +22,7 @@ const inverseTrigFunctions: { [key: string]: (val: number) => number } = {
   asin: (val) => Math.asin(val),
   acos: (val) => Math.acos(val),
   atan: (val) => Math.atan(val),
-  acot: (val) => Math.atan(1 / val),
+  acot: (val) => Math.PI / 2 - Math.atan(val),
   asec: (val) => Math.acos(1 / val),
   acsc: (val) => Math.asin(1 / val),
 };
@@ -93,7 +93,7 @@ export function solveRightTriangle({ a = null, b = null, c = null, A = null, B =
         if (resA !== null && resB !== null && resAngleA === null) resAngleA = Math.atan(resA / resB);
     }
     
-    if ([resA, resB, resC, resAngleA, resAngleB].some(v => v === null)) {
+    if ([resA, resB, resC, resAngleA, resAngleB].some(v => v === null || isNaN(v!))) {
       throw new Error("Could not solve with the given inputs.");
     }
 
@@ -161,7 +161,7 @@ export function solveObliqueTriangle({ a = null, b = null, c = null, A = null, B
         throw new Error("SSA case is ambiguous and not yet supported. Please provide another angle or side.");
     }
 
-    if ([resA, resB, resC, resAngleA, resAngleB, resAngleC].some(v => v === null || isNaN(v))) {
+    if ([resA, resB, resC, resAngleA, resAngleB, resAngleC].some(v => v === null || isNaN(v!))) {
         throw new Error("Could not solve the triangle with the given inputs.");
     }
     
