@@ -41,7 +41,7 @@ export default function AlgebraCalculator() {
     // Mocked symbolic functions
     const mockSymbolic: {[key: string]: string} = {
         'expand((x+2)*(x+3))': 'x^2 + 5x + 6',
-        'factor(x^2+5x+6)': '(x+2)(x+3)',
+        'factor(x^2+5x+6)': '(x+2)*(x+3)',
         'd/dx(x^3)': '3x^2',
         'd/dx(x^2+2x)': '2x+2',
         '∫dx(3x^2)': 'x^3 + C',
@@ -93,7 +93,7 @@ export default function AlgebraCalculator() {
     ['4', '5', '6', '×', 'nCr', 'nPr', 'x!', 'mod'],
     ['1', '2', '3', '−', 'A', 'B', 'C', 'D'],
     ['0', '.', '±', '+', 'ANS', 'STO', 'RCL', 'EXP'],
-    ['AC', 'DEL', 'GRAPH', '↑', '↓', '←', '→'],
+    ['AC', 'DEL', 'GRAPH', '↑', '↓', '←', '►'],
   ];
 
   const colorMap: { [key: string]: string } = {
@@ -103,7 +103,7 @@ export default function AlgebraCalculator() {
     'SOLVE': 'bg-blue-500', 'EXPAND': 'bg-blue-500', 'FACTOR': 'bg-blue-500', 'SIMP': 'bg-blue-500',
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '→', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'A', 'B', 'C', 'D', 'x', 'y', 'z'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'A', 'B', 'C', 'D', 'x', 'y', 'z'];
 
 
   return (
@@ -113,9 +113,9 @@ export default function AlgebraCalculator() {
           {display}
         </div>
         <div className="grid grid-cols-8 gap-1">
-          {buttonLayout.flat().map((key) => (
+          {buttonLayout.flat().map((key, index) => (
             <Button
-              key={key}
+              key={`${key}-${index}`}
               onClick={() => handleKeyClick(key)}
               disabled={disabledKeys.includes(key)}
               className={cn(
