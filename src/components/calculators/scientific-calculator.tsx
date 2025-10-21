@@ -19,7 +19,7 @@ const associativity: { [key: string]: 'left' | 'right' } = {
 };
 
 const isOperator = (token: Token): token is string => typeof token === 'string' && ['+', '-', '×', '÷', '^', '%'].includes(token);
-const isFunction = (token: Token): token is string => typeof token === 'string' && !!trigFunctions[token];
+const isFunction = (token: Token): token is string => typeof token === 'string' && !!trigFunctions[token as keyof typeof trigFunctions];
 const isNumber = (token: Token): token is number => typeof token === 'number';
 const isLeftParen = (token: Token): token is string => token === '(';
 const isRightParen = (token: Token): token is string => token === ')';
@@ -295,14 +295,12 @@ export default function ScientificCalculator() {
       return;
     }
     if (currentNumber.length > 0) {
-      setCurrentNumber(prev => prev.slice(0, -1));
+      setCurrentNumber(prev => prev.slice(0, -1) || (expressionTokens.length > 0 ? '' : '0'));
     } else if (expressionTokens.length > 0) {
       const lastToken = expressionTokens[expressionTokens.length - 1];
+       setExpressionTokens(prev => prev.slice(0, -1));
       if (isNumber(lastToken)) {
-        setCurrentNumber(String(lastToken).slice(0,-1));
-        setExpressionTokens(prev => prev.slice(0, -1));
-      } else {
-        setExpressionTokens(prev => prev.slice(0, -1));
+        setCurrentNumber(String(lastToken));
       }
     }
   };
@@ -373,21 +371,41 @@ export default function ScientificCalculator() {
   };
 
   const handleTrigFunction = (funcName: string) => {
-    handleUnaryFunction((val) => {
-      const isInverse = funcName.startsWith('a');
-      const func = trigFunctions[funcName as keyof typeof trigFunctions];
-      if (!func) throw new Error("Unknown function");
+    const valueStr = currentNumber || (isResult ? String(lastResult) : '');
+    if (valueStr === '' || valueStr === '-') {
+      handleFunctionCall(funcName);
+    } else {
+        handleUnaryFunction((val) => {
+          const isInverse = funcName.startsWith('a');
+          const func = trigFunctions[funcName as keyof typeof trigFunctions];
+          if (!func) throw new Error("Unknown function");
 
-      if (isInverse) {
-        let result = func(val);
-        return angleMode === 'DEG' ? result * 180 / Math.PI : result;
-      }
-      
-      const angleInRads = angleMode === 'DEG' ? val * Math.PI / 180 : val;
-      return func(angleInRads);
-
-    }, funcName);
+          if (isInverse) {
+            let result = func(val);
+            return angleMode === 'DEG' ? result * 180 / Math.PI : result;
+          }
+          
+          const angleInRads = angleMode === 'DEG' ? val * Math.PI / 180 : val;
+          return func(angleInRads);
+        }, funcName);
+    }
   }
+
+  const handleFunctionCall = (func: string) => {
+    if(resetError()) return;
+    setIsResult(false);
+    let newTokens = [...expressionTokens];
+
+    if(currentNumber !== '' && currentNumber !== '-') {
+        newTokens.push(parseFloat(currentNumber));
+        newTokens.push('×');
+        setCurrentNumber('');
+    }
+    
+    newTokens.push(func);
+    newTokens.push('(');
+    setExpressionTokens(newTokens);
+  };
   
   const handleParenthesis = (p: '(' | ')') => {
     if(resetError()) return;
@@ -457,70 +475,76 @@ export default function ScientificCalculator() {
     setCurrentNumber(formatResult(numCurrent));
   };
 
-  const buttonLayout = [
-    { label: "2nd", onClick: () => setShow2nd(!show2nd), color: "blue", active: show2nd },
-    { label: show2nd ? "x³" : "x²", onClick: () => handleUnaryFunction(x => show2nd ? x**3 : x**2, show2nd ? "x³" : "x²"), color: "blue" },
-    { label: show2nd ? "∛x" : "√x", onClick: () => handleUnaryFunction(x => {if(x<0 && !show2nd) throw new Error("Domain"); return show2nd ? Math.cbrt(x) : Math.sqrt(x)}, show2nd ? "∛x" : "√x"), color: "blue" },
-    { label: "xʸ", onClick: () => handleOperator('^'), color: "blue" },
-    { label: "10ˣ", onClick: () => handleUnaryFunction(x => 10**x, '10ˣ'), color: "blue" },
-    { label: "log", onClick: () => handleUnaryFunction(x => {if(x<=0) throw new Error("Domain"); return Math.log10(x)}, 'log'), color: "blue" },
-    { label: "ln", onClick: () => handleUnaryFunction(x => {if(x<=0) throw new Error("Domain"); return Math.log(x)}, 'ln'), color: "blue" },
-    { label: "(", onClick: () => handleParenthesis('('), color: "gray-dark" },
-    { label: ")", onClick: () => handleParenthesis(')'), color: "gray-dark" },
-    { label: "n!", onClick: () => handleUnaryFunction(factorial, 'n!'), color: "blue" },
-    
-    { label: show2nd ? "sin⁻¹" : "sin", onClick: () => handleTrigFunction(show2nd ? 'asin' : 'sin'), color: "blue" },
-    { label: show2nd ? "cos⁻¹" : "cos", onClick: () => handleTrigFunction(show2nd ? 'acos' : 'cos'), color: "blue" },
-    { label: show2nd ? "tan⁻¹" : "tan", onClick: () => handleTrigFunction(show2nd ? 'atan' : 'tan'), color: "blue" },
-    { label: "e", onClick: () => handleConstant('e'), color: "yellow" },
-    { label: "AC", onClick: handleAllClear, color: "red" },
-    { label: "C", onClick: handleClearEntry, color: "red" },
-    { label: "⌫", onClick: handleBackspace, color: "red" },
-    { label: "÷", onClick: () => handleOperator('÷'), color: "orange" },
-
-    { label: show2nd ? "sinh" : "π", onClick: () => show2nd ? handleTrigFunction('sinh') : handleConstant('π'), color: show2nd ? "blue" : "yellow" },
-    { label: show2nd ? "cosh" : "7", onClick: () => show2nd ? handleTrigFunction('cosh') : handleDigit('7'), color: show2nd ? "blue" : "gray" },
-    { label: show2nd ? "tanh" : "8", onClick: () => show2nd ? handleTrigFunction('tanh') : handleDigit('8'), color: show2nd ? "blue" : "gray" },
-    { label: show2nd ? "φ" : "9", onClick: () => show2nd ? handleConstant('φ') : handleDigit('9'), color: show2nd ? "yellow" : "gray" },
-    { label: "×", onClick: () => handleOperator('×'), color: "orange" },
-    
-    { label: "1/x", onClick: () => handleUnaryFunction(x => {if(x===0) throw new Error("Div by Zero"); return 1/x}, '1/x'), color: "blue" },
-    { label: "4", onClick: () => handleDigit('4'), color: "gray" },
-    { label: "5", onClick: () => handleDigit('5'), color: "gray" },
-    { label: "6", onClick: () => handleDigit('6'), color: "gray" },
-    { label: "-", onClick: () => handleOperator('-'), color: "orange" },
-    
-    { label: "RAD", onClick: () => setAngleMode(p => p === 'DEG' ? 'RAD' : 'DEG'), color: "green", active: angleMode === 'RAD' },
-    { label: "1", onClick: () => handleDigit('1'), color: "gray" },
-    { label: "2", onClick: () => handleDigit('2'), color: "gray" },
-    { label: "3", onClick: () => handleDigit('3'), color: "gray" },
-    { label: "+", onClick: () => handleOperator('+'), color: "orange" },
-    
-    { label: "M+", onClick: () => handleMemory('M+'), color: "green" },
-    { label: "M-", onClick: () => handleMemory('M-'), color: "green" },
-    { label: "MR", onClick: () => handleMemory('MR'), color: "green" },
-    { label: "MC", onClick: () => handleMemory('MC'), color: "green" },
-    { label: "%", onClick: handlePercent, color: "gray-dark" },
-    { label: "0", onClick: () => handleDigit('0'), color: "gray", className: "col-span-2" },
-    { label: ".", onClick: handleDecimal, color: "gray" },
-    { label: "±", onClick: handleToggleSign, color: "gray" },
-    { label: "=", onClick: handleEquals, color: "orange" },
+  const buttonRows = [
+    [
+      { label: "2nd", onClick: () => setShow2nd(!show2nd), color: "blue", active: show2nd },
+      { label: "(", onClick: () => handleParenthesis('('), color: "gray-dark" },
+      { label: ")", onClick: () => handleParenthesis(')'), color: "gray-dark" },
+      { label: "%", onClick: handlePercent, color: "gray-dark" },
+      { label: "AC", onClick: handleAllClear, color: "red" },
+      { label: "DEL", onClick: handleBackspace, color: "red" },
+    ],
+    [
+      { label: show2nd ? "x³" : "x²", onClick: () => handleUnaryFunction(x => show2nd ? x**3 : x**2, show2nd ? "x³" : "x²"), color: "blue" },
+      { label: "1/x", onClick: () => handleUnaryFunction(x => 1/x, "1/x"), color: "blue" },
+      { label: show2nd ? "y√x" : "√x", onClick: () => show2nd ? handleOperator('^') : handleUnaryFunction(x => Math.sqrt(x), '√x'), color: "blue" },
+      { label: "xʸ", onClick: () => handleOperator('^'), color: "blue" },
+      { label: "n!", onClick: () => handleUnaryFunction(factorial, 'n!'), color: "blue" },
+      { label: "÷", onClick: () => handleOperator('÷'), color: "orange" },
+    ],
+    [
+      { label: show2nd ? "sin⁻¹" : "sin", onClick: () => handleTrigFunction(show2nd ? 'asin' : 'sin'), color: "blue" },
+      { label: "7", onClick: () => handleDigit('7'), color: "gray" },
+      { label: "8", onClick: () => handleDigit('8'), color: "gray" },
+      { label: "9", onClick: () => handleDigit('9'), color: "gray" },
+      { label: "×", onClick: () => handleOperator('×'), color: "orange" },
+    ],
+    [
+      { label: show2nd ? "cos⁻¹" : "cos", onClick: () => handleTrigFunction(show2nd ? 'acos' : 'cos'), color: "blue" },
+      { label: "4", onClick: () => handleDigit('4'), color: "gray" },
+      { label: "5", onClick: () => handleDigit('5'), color: "gray" },
+      { label: "6", onClick: () => handleDigit('6'), color: "gray" },
+      { label: "-", onClick: () => handleOperator('-'), color: "orange" },
+    ],
+    [
+      { label: show2nd ? "tan⁻¹" : "tan", onClick: () => handleTrigFunction(show2nd ? 'atan' : 'tan'), color: "blue" },
+      { label: "1", onClick: () => handleDigit('1'), color: "gray" },
+      { label: "2", onClick: () => handleDigit('2'), color: "gray" },
+      { label: "3", onClick: () => handleDigit('3'), color: "gray" },
+      { label: "+", onClick: () => handleOperator('+'), color: "orange" },
+    ],
+    [
+      { label: "log", onClick: () => handleUnaryFunction(x => Math.log10(x), 'log'), color: "blue" },
+      { label: "ln", onClick: () => handleUnaryFunction(x => Math.log(x), 'ln'), color: "blue" },
+      { label: "0", onClick: () => handleDigit('0'), color: "gray" },
+      { label: ".", onClick: handleDecimal, color: "gray" },
+      { label: "±", onClick: handleToggleSign, color: "gray" },
+      { label: "=", onClick: handleEquals, color: "orange" },
+    ],
+    [
+      { label: "RAD", onClick: () => setAngleMode(p => p === 'DEG' ? 'RAD' : 'DEG'), color: "green", active: angleMode === 'RAD' },
+      { label: "M+", onClick: () => handleMemory('M+'), color: "green" },
+      { label: "M-", onClick: () => handleMemory('M-'), color: "green" },
+      { label: "MR", onClick: () => handleMemory('MR'), color: "green" },
+      { label: "MC", onClick: () => handleMemory('MC'), color: "green" },
+      { label: "π", onClick: () => handleConstant('π'), color: "yellow" },
+    ]
   ];
 
   const colorVariants: {[key: string]: string} = {
-    blue: "bg-blue-600 border-blue-700 hover:bg-blue-700",
-    gray: "bg-gray-500 border-gray-600 hover:bg-gray-600",
-    "gray-dark": "bg-gray-600 border-gray-700 hover:bg-gray-700",
-    orange: "bg-orange-500 border-orange-600 hover:bg-orange-600",
-    red: "bg-red-600 border-red-700 hover:bg-red-700",
-    green: "bg-green-600 border-green-700 hover:bg-green-700",
-    yellow: "bg-yellow-500 border-yellow-600 hover:bg-yellow-600",
+    blue: "bg-blue-600 border-blue-800 hover:bg-blue-700",
+    gray: "bg-gray-600 border-gray-800 hover:bg-gray-700",
+    "gray-dark": "bg-gray-700 border-gray-900 hover:bg-gray-800",
+    orange: "bg-orange-500 border-orange-700 hover:bg-orange-600",
+    red: "bg-red-600 border-red-800 hover:bg-red-700",
+    green: "bg-green-600 border-green-800 hover:bg-green-700",
+    yellow: "bg-yellow-500 border-yellow-700 hover:bg-yellow-600",
   }
 
   return (
     <Card id="scientific-calculator" className="shadow-2xl max-w-sm mx-auto bg-gray-800 text-white p-2 border-t-2 border-l-2 border-gray-900 rounded-xl">
       <CardContent className="flex flex-col items-center gap-2 p-1">
-        <div className="relative w-full mb-1 rounded-md border-2 border-gray-950 bg-gray-900/80 p-2 text-right break-words h-16 flex items-end justify-end shadow-inner">
+        <div className="relative w-full mb-1 rounded-md border-b-4 border-gray-950 bg-gray-900/80 p-2 text-right break-words h-16 flex items-end justify-end shadow-inner">
           <div className="absolute top-1 left-2 text-xs text-green-400/70 flex gap-2">
             {angleMode === 'DEG' && <span className="font-bold">DEG</span>}
             {memory !== 0 && <span className="font-bold">M</span>}
@@ -528,20 +552,21 @@ export default function ScientificCalculator() {
           <span className="text-2xl font-mono text-green-300">{displayValue}</span>
         </div>
         
-        <div className="w-full grid grid-cols-10 gap-1">
-          {buttonLayout.map((btn, i) => (
+        <div className="w-full grid grid-cols-6 gap-1">
+          {buttonRows.flat().map((btn, i) => (
             <Button 
                 key={`${btn.label}-${i}`} 
                 size="sm" 
                 className={cn(
                     'h-9 text-xs rounded-md relative transition-all duration-100 ease-in-out',
                     'border-b-4 active:border-b-0 active:translate-y-1',
-                    'bg-gray-700 border-gray-800 hover:bg-gray-600 text-white',
-                    colorVariants[btn.color],
-                    btn.active && 'ring-2 ring-cyan-400',
+                    'text-white',
+                    colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
+                    btn.active && 'ring-2 ring-cyan-400 ring-inset',
                     btn.className
                 )}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
+                disabled={(btn as any).disabled}
             >
               {btn.label}
             </Button>
