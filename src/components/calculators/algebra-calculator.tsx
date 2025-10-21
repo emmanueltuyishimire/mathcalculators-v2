@@ -27,8 +27,8 @@ export default function AlgebraCalculator() {
       evaluate();
       return;
     }
-    // For mocked functions, just append the function name
-    if (['SOLVE', 'EXPAND', 'FACTOR', 'SIMP', 'SUBS', 'd/dx', '∫dx', 'lim'].includes(key)) {
+    // For functions, append function name with parenthesis
+    if (['SOLVE', 'EXPAND', 'FACTOR', 'SIMP', 'SUBS', 'd/dx', '∫dx', 'lim', 'sqrt'].includes(key)) {
        setDisplay(`${key}(`);
        return;
     }
@@ -37,6 +37,27 @@ export default function AlgebraCalculator() {
       toast({ title: `Mode changed to ${angleMode === 'DEG' ? 'Radians' : 'Degrees'}`});
       return;
     }
+    if (key === 'x²') {
+        setDisplay(prev => prev + '^2');
+        return;
+    }
+    if (key === 'x³') {
+        setDisplay(prev => prev + '^3');
+        return;
+    }
+    if (key === 'xʸ') {
+        setDisplay(prev => prev + '^');
+        return;
+    }
+    if (key === '√x') {
+        setDisplay('sqrt(');
+        return;
+    }
+    if (key === 'x!') {
+        setDisplay(prev => prev + '!');
+        return;
+    }
+
 
     setDisplay(prev => prev + key);
   };
@@ -52,9 +73,14 @@ export default function AlgebraCalculator() {
         'factor(x^2+5x+6)': '(x+2)*(x+3)',
         'd/dx(x^3)': '3x^2',
         'd/dx(x^2+2x)': '2x+2',
+        'd/dx(sin(x))': 'cos(x)',
         '∫dx(3x^2)': 'x^3 + C',
+        '∫dx(cos(x))': 'sin(x) + C',
+        'lim((x^2-1)/(x-1),x->1)': '2',
         'lim(sin(x)/x,x->0)': '1',
         'subs(x^2+3x,x=4)': '28',
+        'sqrt(16)': '4',
+        '4!': '24'
     }
 
     if (mockSymbolic[expression]) {
@@ -115,11 +141,11 @@ export default function AlgebraCalculator() {
     'ON': 'bg-red-600', 'AC': 'bg-red-600', 'DEL': 'bg-red-600',
     'SHIFT': 'bg-yellow-500 text-black', 'ALPHA': 'bg-purple-500',
     '÷': 'bg-gray-500', '×': 'bg-gray-500', '−': 'bg-gray-500', '+': 'bg-gray-500', '=': 'bg-blue-600',
-    'SOLVE': 'bg-blue-500', 'EXPAND': 'bg-blue-500', 'FACTOR': 'bg-blue-500', 'SIMP': 'bg-blue-500',
+    'SOLVE': 'bg-blue-500', 'EXPAND': 'bg-blue-500', 'FACTOR': 'bg-blue-500', 'SIMP': 'bg-blue-500', 'd/dx': 'bg-indigo-500', '∫dx': 'bg-indigo-500', 'lim': 'bg-indigo-500',
     'DEG/RAD': 'bg-green-600'
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'SIMP', 'ANS', 'EXP', 'x²', 'x³', 'xʸ', '√x', 'x!'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'SIMP', 'ANS', 'EXP'];
 
 
   return (
