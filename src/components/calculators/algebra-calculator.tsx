@@ -7,9 +7,12 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
+type AngleMode = 'DEG' | 'RAD';
+
 export default function AlgebraCalculator() {
   const [display, setDisplay] = useState('d/dx(x^3)');
   const { toast } = useToast();
+  const [angleMode, setAngleMode] = useState<AngleMode>('DEG');
 
   const handleKeyClick = (key: string) => {
     if (key === 'AC') {
@@ -28,6 +31,11 @@ export default function AlgebraCalculator() {
     if (['SOLVE', 'EXPAND', 'FACTOR', 'SIMP', 'SUBS', 'd/dx', '∫dx', 'lim'].includes(key)) {
        setDisplay(`${key}(`);
        return;
+    }
+     if (key === 'DEG/RAD') {
+      setAngleMode(prev => prev === 'DEG' ? 'RAD' : 'DEG');
+      toast({ title: `Mode changed to ${angleMode === 'DEG' ? 'Radians' : 'Degrees'}`});
+      return;
     }
 
     setDisplay(prev => prev + key);
@@ -92,8 +100,8 @@ export default function AlgebraCalculator() {
     ['7', '8', '9', '÷', 'x²', 'x³', 'xʸ', '√x'],
     ['4', '5', '6', '×', 'nCr', 'nPr', 'x!', 'mod'],
     ['1', '2', '3', '−', 'A', 'B', 'C', 'D'],
-    ['0', '.', '±', '+', 'ANS', 'STO', 'RCL', 'EXP'],
-    ['AC', 'DEL', 'GRAPH', '↑', '↓', '←', '►'],
+    ['0', '.', ',', '+', 'ANS', 'STO', 'RCL', 'EXP'],
+    ['AC', 'DEL', 'GRAPH', '↑', '↓', '←', '►', 'DEG/RAD'],
   ];
 
   const colorMap: { [key: string]: string } = {
@@ -101,6 +109,7 @@ export default function AlgebraCalculator() {
     'SHIFT': 'bg-yellow-500 text-black', 'ALPHA': 'bg-purple-500',
     '÷': 'bg-gray-500', '×': 'bg-gray-500', '−': 'bg-gray-500', '+': 'bg-gray-500', '=': 'bg-blue-600',
     'SOLVE': 'bg-blue-500', 'EXPAND': 'bg-blue-500', 'FACTOR': 'bg-blue-500', 'SIMP': 'bg-blue-500',
+    'DEG/RAD': 'bg-green-600'
   };
 
   const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'A', 'B', 'C', 'D', 'x', 'y', 'z'];
@@ -109,7 +118,8 @@ export default function AlgebraCalculator() {
   return (
     <Card className="shadow-lg p-2 bg-gray-800 border border-gray-700">
       <CardContent className="p-1">
-        <div className="w-full h-16 bg-gray-900 rounded-md mb-2 p-2 text-right text-2xl font-mono text-white flex items-center justify-end">
+        <div className="w-full h-16 bg-gray-900 rounded-md mb-2 p-2 text-right text-2xl font-mono text-white flex items-center justify-end relative">
+          <span className="absolute top-1 left-2 text-xs font-bold text-green-400">{angleMode}</span>
           {display}
         </div>
         <div className="grid grid-cols-8 gap-1">
