@@ -44,7 +44,7 @@ export default function AlgebraCalculator() {
   const evaluate = () => {
     // This is a mock evaluation for demonstration purposes.
     // A real implementation would require a full computer algebra system (CAS).
-    const expression = display.toLowerCase();
+    const expression = display.toLowerCase().replace(/\s/g, '');
     
     // Mocked symbolic functions
     const mockSymbolic: {[key: string]: string} = {
@@ -64,26 +64,33 @@ export default function AlgebraCalculator() {
     }
 
     // Mocked equation solver
-    const solveMatch = expression.match(/solve\((.*)=(.*)\)/);
+    const solveMatch = expression.match(/solve\((.*)=(.+),([a-z])\)/);
     if (solveMatch) {
-      // Basic linear solver: ax+b=c
-      const eq = solveMatch[1];
-      const result = parseFloat(solveMatch[2]);
-      const xMatch = eq.match(/(-?\d*\.?\d*)x/);
-      const bMatch = eq.match(/[+\-]\s*(\d+\.?\d*)/);
-      if (xMatch && bMatch && !isNaN(result)) {
-        const a = xMatch[1] ? parseFloat(xMatch[1]) : 1;
-        const b = parseFloat(bMatch[0].replace(/\s/g, ''));
-        const x = (result - b) / a;
-        setDisplay(`x = ${x}`);
-        toast({title: "Equation Solved", description: "This is a mocked linear solver."});
-        return;
-      }
+        // Example: solve(x^2-4=0,x)
+        if(solveMatch[1] === 'x^2-4' && solveMatch[2] === '0') {
+            setDisplay('x = ±2');
+            toast({title: "Equation Solved", description: "This is a mocked solver result."});
+            return;
+        }
+        // Basic linear solver: ax+b=c
+        const eq = solveMatch[1];
+        const result = parseFloat(solveMatch[2]);
+        const variable = solveMatch[3];
+        const xMatch = eq.match(new RegExp(`(-?\\d*\\.?\\d*)${variable}`));
+        const bMatch = eq.match(/[+\-]\s*(\d+\.?\d*)/);
+        if (xMatch && bMatch && !isNaN(result)) {
+            const a = xMatch[1] ? parseFloat(xMatch[1]) : 1;
+            const b = parseFloat(bMatch[0].replace(/\s/g, ''));
+            const x = (result - b) / a;
+            setDisplay(`${variable} = ${x}`);
+            toast({title: "Equation Solved", description: "This is a mocked linear solver."});
+            return;
+        }
     }
 
     try {
       // Fallback to numeric evaluation for simple arithmetic
-      const numericExpression = expression.replace(/\^/g, '**');
+      const numericExpression = expression.replace(/\^/g, '**').replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
       // Using new Function for safer eval
       const result = new Function('return ' + numericExpression)();
       setDisplay(String(result));
@@ -112,13 +119,13 @@ export default function AlgebraCalculator() {
     'DEG/RAD': 'bg-green-600'
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'A', 'B', 'C', 'D', 'x', 'y', 'z'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'SIMP', 'ANS', 'EXP', 'x²', 'x³', 'xʸ', '√x', 'x!'];
 
 
   return (
     <Card className="shadow-lg p-2 bg-gray-800 border border-gray-700">
       <CardContent className="p-1">
-        <div className="w-full h-16 bg-gray-900 rounded-md mb-2 p-2 text-right text-2xl font-mono text-white flex items-center justify-end relative">
+        <div className="w-full h-16 bg-gray-900 rounded-md mb-2 p-2 text-right text-2xl font-mono text-white flex items-center justify-end relative overflow-x-auto">
           <span className="absolute top-1 left-2 text-xs font-bold text-green-400">{angleMode}</span>
           {display}
         </div>
