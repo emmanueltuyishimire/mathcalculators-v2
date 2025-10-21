@@ -38,8 +38,9 @@ export default function AlgebraCalculator() {
         return;
     }
     // For functions, append function name with parenthesis
-    if (['SOLVE', 'EXPAND', 'FACTOR', 'SUBS', 'd/dx', '∫dx', 'lim', 'sqrt'].includes(key)) {
-       setDisplay(prev => `${prev}${key}(`);
+    if (['SOLVE', 'EXPAND', 'FACTOR', 'SUBS', 'd/dx', '∫dx', 'lim', 'sqrt', 'SIMP'].includes(key)) {
+       const funcName = key === 'SIMP' ? 'simplify' : key;
+       setDisplay(prev => `${prev}${funcName}(`);
        return;
     }
      if (key === 'DEG/RAD') {
@@ -91,7 +92,9 @@ export default function AlgebraCalculator() {
         'lim(sin(x)/x,x->0)': '1',
         'subs(x^2+3x,x=4)': '28',
         'sqrt(16)': '4',
-        '4!': '24'
+        '4!': '24',
+        'simplify(2x+3x)': '5x',
+        'simplify((x^2-4)/(x-2))': 'x+2'
     }
 
     if (mockSymbolic[expression]) {
@@ -164,7 +167,7 @@ export default function AlgebraCalculator() {
     'DEG/RAD': 'bg-green-600'
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'SIMP', 'EXP', 'A', 'B', 'C', 'D', 'y', 'z', '±'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'EXP', 'y', 'z', '±', 'A', 'B', 'C', 'D'];
 
 
   return (
