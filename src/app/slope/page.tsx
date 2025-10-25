@@ -7,6 +7,8 @@ import { Separator } from '@/components/ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { RightTriangleDiagram } from '@/components/right-triangle-diagram';
+
 
 function HowToUseGuide() {
     return (

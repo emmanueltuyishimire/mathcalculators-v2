@@ -69,6 +69,7 @@ const calculatorCategories = [
             { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
             { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
             { href: '/destiny-matrix', label: 'Destiny Matrix Calculator', icon: Star },
+            { href: '/unit-converter', label: 'Unit Converter', icon: Replace },
         ]
     }
 ];
@@ -104,7 +105,7 @@ export default function CalculatorsPage() {
             <React.Fragment key={category.title}>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">{category.title}</h2>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {category.tools.map((tool) => (
                     <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label}`}>
                       <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">

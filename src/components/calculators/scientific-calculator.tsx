@@ -511,35 +511,35 @@ export default function ScientificCalculator() {
       { label: "4", onClick: () => handleDigit('4'), color: "gray" },
       { label: "5", onClick: () => handleDigit('5'), color: "gray" },
       { label: "6", onClick: () => handleDigit('6'), color: "gray" },
-      { label: "-", onClick: () => handleOperator('-'), color: "orange" },
+      { label: "+", onClick: () => handleOperator('+'), color: "orange" },
     ],
     [
       { label: show2nd ? "tan⁻¹" : "tan", onClick: () => handleTrigFunction(show2nd ? 'atan' : 'tan'), color: "blue" },
       { label: "1", onClick: () => handleDigit('1'), color: "gray" },
       { label: "2", onClick: () => handleDigit('2'), color: "gray" },
       { label: "3", onClick: () => handleDigit('3'), color: "gray" },
-      { label: "+", onClick: () => handleOperator('+'), color: "orange" },
+      { label: "-", onClick: () => handleOperator('-'), color: "orange" },
     ],
     [
       { label: "log", onClick: () => handleFunctionCall('log'), color: "blue" },
-      { label: "0", onClick: () => handleDigit('0'), color: "gray" },
+      { label: "0", onClick: () => handleDigit('0'), color: "gray", className: "col-span-2" },
       { label: ".", onClick: handleDecimal, color: "gray" },
       { label: "±", onClick: handleToggleSign, color: "gray" },
-      { label: "=", onClick: handleEquals, color: "orange" },
+      { label: "×", onClick: () => handleOperator('×'), color: "orange" },
     ],
     [
       { label: "RAD", onClick: () => setAngleMode(p => p === 'DEG' ? 'RAD' : 'DEG'), color: "green", active: angleMode === 'RAD' },
       { label: "AC", onClick: handleAllClear, color: "red" },
       { label: "C", onClick: handleClearEntry, color: "red" },
       { label: "⌫", onClick: handleBackspace, color: "red" },
-       { label: "ANS", onClick: handleAns, color: "yellow" },
+      { label: "ANS", onClick: handleAns, color: "yellow" },
     ],
      [
       { label: "EXP", onClick: handleExp, color: "yellow" },
       { label: "Rnd", onClick: () => setCurrentNumber(Math.random().toString()), color: "yellow" },
       { label: "π", onClick: () => handleConstant('π'), color: "yellow" },
       { label: "e", onClick: () => handleConstant('e'), color: "yellow" },
-      { label: "φ", onClick: () => handleConstant('φ'), color: "yellow" },
+      { label: "=", onClick: handleEquals, color: "orange", className: "col-span-1" },
     ]
   ];
 
@@ -575,7 +575,7 @@ export default function ScientificCalculator() {
                     'text-white',
                     colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
                     btn.active && 'ring-2 ring-cyan-400 ring-inset',
-                    (btn.label === '=' || btn.label === '0') && 'col-span-2'
+                    btn.className
                 )}
                 onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
                 disabled={(btn as any).disabled}

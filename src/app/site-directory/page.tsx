@@ -54,7 +54,6 @@ const sitemapData = [
         icon: Square,
         items: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
-            { href: '/trigonometry', label: 'Trigonometry Calculator', icon: Sigma },
             { href: '/pythagorean', label: 'Pythagorean Theorem Calculator', icon: Sigma },
             { href: '/right-triangle', label: 'Right Triangle Calculator', icon: Triangle },
             { href: '/slope', label: 'Slope Calculator', icon: TrendingUp },
@@ -92,6 +91,7 @@ const sitemapData = [
             { href: '/diagonalize-matrix', label: 'Diagonalize Matrix Calculator', icon: Table },
             { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
             { href: '/destiny-matrix', label: 'Destiny Matrix Calculator', icon: Star },
+            { href: '/unit-converter', label: 'Unit Converter', icon: Replace },
         ]
     }
 ];

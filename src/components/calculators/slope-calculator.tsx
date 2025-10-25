@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { RightTriangleDiagram } from '../right-triangle-diagram';
 
 
 interface TwoPointResult {
@@ -229,6 +230,9 @@ const OnePointSlopeCalculator = () => {
         <CardTitle>If 1 Point and Slope are Known</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 p-0">
+        <div className="flex justify-center">
+            <RightTriangleDiagram />
+        </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="x1_single">X1</Label>
