@@ -1,17 +1,9 @@
-
 "use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 export function AppFooter() {
-    const [year, setYear] = useState<number | null>(null);
-
-    useEffect(() => {
-        setYear(new Date().getFullYear());
-    }, []);
-
     return (
         <footer className="border-t bg-background">
             <div className="container mx-auto py-8 px-4 md:px-6">
@@ -62,7 +54,7 @@ export function AppFooter() {
             </div>
             <div className="border-t py-4">
                 <div className="container mx-auto text-center text-xs text-muted-foreground">
-                    © {year || '2024'}{' '}
+                    © 2024{' '}
                     <a
                         href="https://calculation.site"
                         target="_blank"
