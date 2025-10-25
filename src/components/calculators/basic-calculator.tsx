@@ -5,87 +5,155 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import { Percent, Divide, X, Minus, Plus, Equal, Eraser } from 'lucide-react';
 
 export default function BasicCalculator() {
   const [displayValue, setDisplayValue] = useState('0');
-  const [isResult, setIsResult] = useState(false);
+  const [firstOperand, setFirstOperand] = useState<number | null>(null);
+  const [operator, setOperator] = useState<string | null>(null);
+  const [waitingForSecondOperand, setWaitingForSecondOperand] = useState(false);
   const { toast } = useToast();
 
-  const handleButtonClick = (value: string) => {
-    if (isResult) {
-      setDisplayValue(value);
-      setIsResult(false);
+  const handleDigitClick = (digit: string) => {
+    if (waitingForSecondOperand) {
+      setDisplayValue(digit);
+      setWaitingForSecondOperand(false);
+    } else {
+      setDisplayValue(displayValue === '0' ? digit : displayValue + digit);
+    }
+  };
+
+  const handleDecimalClick = () => {
+    if (waitingForSecondOperand) {
+        setDisplayValue('0.');
+        setWaitingForSecondOperand(false);
+        return;
+    }
+    if (!displayValue.includes('.')) {
+      setDisplayValue(displayValue + '.');
+    }
+  };
+
+  const handleOperatorClick = (nextOperator: string) => {
+    const inputValue = parseFloat(displayValue);
+
+    if (operator && waitingForSecondOperand) {
+      setOperator(nextOperator);
       return;
     }
-    setDisplayValue(prev => (prev === '0' && value !== '.' ? value : prev + value));
-  };
 
-  const handleOperatorClick = (operator: string) => {
-    setIsResult(false);
-    setDisplayValue(prev => `${prev.trim()} ${operator} `);
-  };
+    if (firstOperand === null) {
+      setFirstOperand(inputValue);
+    } else if (operator) {
+      const result = performCalculation();
+      setDisplayValue(String(result));
+      setFirstOperand(result);
+    }
 
-  const handleClear = () => {
-    setDisplayValue('0');
-    setIsResult(false);
+    setWaitingForSecondOperand(true);
+    setOperator(nextOperator);
   };
+  
+  const performCalculation = () => {
+      if (firstOperand === null || operator === null) return parseFloat(displayValue);
+      
+      const secondOperand = parseFloat(displayValue);
+      let result = 0;
+      switch (operator) {
+          case '+': result = firstOperand + secondOperand; break;
+          case '-': result = firstOperand - secondOperand; break;
+          case '×': result = firstOperand * secondOperand; break;
+          case '÷':
+              if (secondOperand === 0) {
+                  toast({ variant: 'destructive', title: "Error", description: "Cannot divide by zero."});
+                  return 0;
+              }
+              result = firstOperand / secondOperand;
+              break;
+      }
+      return result;
+  }
 
   const handleEquals = () => {
-    try {
-      const expression = displayValue.replace(/×/g, '*').replace(/÷/g, '/').trim();
-      if (/[+\-*/]$/.test(expression)) {
-        throw new Error("Invalid expression");
-      }
-      // Using new Function for safer eval
-      const result = new Function('return ' + expression)();
-      setDisplayValue(String(result));
-      setIsResult(true);
-    } catch (error) {
-      setDisplayValue('Error');
-      setIsResult(true);
-      toast({
-          variant: "destructive",
-          title: "Invalid Expression",
-          description: "Please check your calculation.",
-      });
-    }
+    if (!operator) return;
+    const result = performCalculation();
+    setDisplayValue(String(result));
+    setFirstOperand(null);
+    setOperator(null);
+    setWaitingForSecondOperand(true);
   };
 
+  const handleAllClear = () => {
+    setDisplayValue('0');
+    setFirstOperand(null);
+    setOperator(null);
+    setWaitingForSecondOperand(false);
+  };
+
+  const handleClearEntry = () => {
+    setDisplayValue('0');
+  }
+
+  const handleBackspace = () => {
+      if (waitingForSecondOperand) return;
+      setDisplayValue(prev => prev.length > 1 ? prev.slice(0, -1) : '0');
+  }
+  
+  const handlePercent = () => {
+      const currentValue = parseFloat(displayValue);
+      if (firstOperand !== null && operator) {
+           setDisplayValue(String((firstOperand * currentValue) / 100));
+      } else {
+          setDisplayValue(String(currentValue/100));
+      }
+  }
+
   const buttons = [
-    '7', '8', '9', '÷',
-    '4', '5', '6', '×',
-    '1', '2', '3', '-',
-    '0', '.', '=', '+',
+    { id: 'clear-entry', label: 'CE', onClick: handleClearEntry, variant: 'destructive' },
+    { id: 'all-clear', label: 'C', onClick: handleAllClear, variant: 'destructive' },
+    { id: 'percent', label: '%', icon: Percent, onClick: handlePercent, variant: 'secondary' },
+    { id: 'divide', label: '÷', icon: Divide, onClick: () => handleOperatorClick('÷'), variant: 'accent' },
+    { id: '7', label: '7', onClick: () => handleDigitClick('7'), variant: 'outline' },
+    { id: '8', label: '8', onClick: () => handleDigitClick('8'), variant: 'outline' },
+    { id: '9', label: '9', onClick: () => handleDigitClick('9'), variant: 'outline' },
+    { id: 'multiply', label: '×', icon: X, onClick: () => handleOperatorClick('×'), variant: 'accent' },
+    { id: '4', label: '4', onClick: () => handleDigitClick('4'), variant: 'outline' },
+    { id: '5', label: '5', onClick: () => handleDigitClick('5'), variant: 'outline' },
+    { id: '6', label: '6', onClick: () => handleDigitClick('6'), variant: 'outline' },
+    { id: 'subtract', label: '-', icon: Minus, onClick: () => handleOperatorClick('-'), variant: 'accent' },
+    { id: '1', label: '1', onClick: () => handleDigitClick('1'), variant: 'outline' },
+    { id: '2', label: '2', onClick: () => handleDigitClick('2'), variant: 'outline' },
+    { id: '3', label: '3', onClick: () => handleDigitClick('3'), variant: 'outline' },
+    { id: 'add', label: '+', icon: Plus, onClick: () => handleOperatorClick('+'), variant: 'accent' },
+    { id: 'backspace', label: '⌫', icon: Eraser, onClick: handleBackspace, variant: 'secondary' },
+    { id: '0', label: '0', onClick: () => handleDigitClick('0'), variant: 'outline' },
+    { id: 'decimal', label: '.', onClick: handleDecimalClick, variant: 'outline' },
+    { id: 'equals', label: '=', icon: Equal, onClick: handleEquals, variant: 'default' },
   ];
 
   return (
-    <Card className="shadow-lg">
-      <CardContent className="flex flex-col items-center gap-2 p-4">
-        <div className="w-full rounded-lg border bg-muted p-3 text-right text-2xl font-mono text-foreground transition-all duration-300">
+    <Card className="shadow-lg max-w-xs mx-auto">
+      <CardContent className="flex flex-col items-center gap-2 p-3">
+        <div className="w-full rounded-lg border bg-muted p-4 text-right text-3xl font-mono text-foreground break-all">
           {displayValue}
         </div>
         <div className="grid w-full grid-cols-4 gap-2">
-          <Button variant="destructive" className="col-span-2 text-lg" onClick={handleClear}>C</Button>
-          {buttons.map((btn) => {
-            const isOperator = ['÷', '×', '-', '+'].includes(btn);
-            const isEquals = btn === '=';
-            return (
-              <Button
-                key={btn}
-                variant={isOperator ? 'secondary' : isEquals ? 'default' : 'outline'}
-                className={`text-lg h-14 ${isEquals ? 'bg-primary hover:bg-primary/90' : isOperator ? 'bg-accent text-accent-foreground hover:bg-accent/90' : ''}`}
-                onClick={() => {
-                  if (isEquals) handleEquals();
-                  else if (isOperator) handleOperatorClick(btn);
-                  else handleButtonClick(btn);
-                }}
-              >
-                {btn}
-              </Button>
-            );
-          })}
+          {buttons.map((btn) => (
+            <Button
+              key={btn.id}
+              variant={btn.variant as any}
+              className={cn("text-xl h-14", btn.id === 'equals' && 'bg-primary hover:bg-primary/90')}
+              onClick={btn.onClick}
+              aria-label={btn.label}
+            >
+              {btn.icon ? <btn.icon className="h-5 w-5" /> : btn.label}
+            </Button>
+          ))}
         </div>
       </CardContent>
     </Card>
   );
 }
+
+    
