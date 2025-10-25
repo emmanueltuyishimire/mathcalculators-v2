@@ -33,7 +33,7 @@ export default function MatrixCalculatorPage() {
                     <li><strong>Random</strong> → fill with random numbers (great for practice or testing)</li>
                 </ul>
                 <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
-                    <strong>Tip:</strong> For large matrices, using the Random button can help quickly test multiplication, determinant, or inverse functions.
+                    <strong>Actionable Tip:</strong> For large matrices, using the Random button can help quickly test multiplication, determinant, or inverse functions.
                 </p>
 
                 <h2 className="text-3xl font-bold">2. Understanding Matrix Operations</h2>
