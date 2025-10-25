@@ -60,7 +60,7 @@ export function AppFooter() {
                     </div>
                 </div>
                  <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    © {year} Math Calculators. All rights reserved.
+                    © {year} calculation.site. All rights reserved.
                 </div>
             </div>
         </footer>
