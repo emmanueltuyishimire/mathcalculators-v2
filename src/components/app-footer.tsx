@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export function AppFooter() {
-    const [year, setYear] = useState(new Date().getFullYear());
+    const [year, setYear] = useState<number | null>(null);
 
     useEffect(() => {
         setYear(new Date().getFullYear());
@@ -60,7 +60,7 @@ export function AppFooter() {
                     </div>
                 </div>
                  <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    © {year} calculation.site. All rights reserved.
+                    © {year || new Date().getFullYear()} calculation.site. All rights reserved.
                 </div>
             </div>
         </footer>
