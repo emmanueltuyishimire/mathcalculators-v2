@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -61,7 +62,7 @@ export function AppFooter() {
                     </div>
                 </div>
                  <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    {isClient && (
+                    {isClient ? (
                         <>
                             © {year}{' '}
                             <a
@@ -74,6 +75,9 @@ export function AppFooter() {
                             </a>
                             . All rights reserved.
                         </>
+                    ) : (
+                        // Render a placeholder or nothing on the server and initial client render
+                        <>&nbsp;</>
                     )}
                 </div>
             </div>
