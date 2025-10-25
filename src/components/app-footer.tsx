@@ -76,7 +76,7 @@ export function AppFooter() {
                             . All rights reserved.
                         </>
                     ) : (
-                        // Render a placeholder or nothing on the server and initial client render
+                        // Render a placeholder on the server and initial client render to prevent hydration mismatch
                         <>&nbsp;</>
                     )}
                 </div>
