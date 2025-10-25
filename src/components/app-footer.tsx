@@ -6,14 +6,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export function AppFooter() {
-    const [year, setYear] = useState<number | null>(null);
-    const [isClient, setIsClient] = useState(false);
-
-    useEffect(() => {
-        setIsClient(true);
-        setYear(new Date().getFullYear());
-    }, []);
-
     return (
         <footer className="border-t bg-background">
             <div className="container mx-auto py-8 px-4 md:px-6">
@@ -60,25 +52,6 @@ export function AppFooter() {
                             <li><Link href="/site-directory" className="text-muted-foreground hover:text-primary">Sitemap</Link></li>
                         </ul>
                     </div>
-                </div>
-                 <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    {isClient ? (
-                        <>
-                            © {year}{' '}
-                            <a
-                                href="https://calculation.site"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:underline text-primary"
-                            >
-                                calculation.site
-                            </a>
-                            . All rights reserved.
-                        </>
-                    ) : (
-                        // Render a placeholder on the server and initial client render to prevent hydration mismatch
-                        <>&nbsp;</>
-                    )}
                 </div>
             </div>
         </footer>
