@@ -32,7 +32,7 @@ export default function MatrixCalculatorPage() {
                     <li><strong>1 All</strong> → fill all cells with ones</li>
                     <li><strong>Random</strong> → fill with random numbers (great for practice or testing)</li>
                 </ul>
-                <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                <p className="p-4 bg-accent/10 text-accent rounded-md">
                     <strong>Actionable Tip:</strong> For large matrices, using the Random button can help quickly test multiplication, determinant, or inverse functions.
                 </p>
 
@@ -44,7 +44,7 @@ export default function MatrixCalculatorPage() {
                            Only possible if matrices have the same dimensions.
                         </p>
                         <p className="font-mono text-center my-2 text-lg">C[i][j] = A[i][j] ± B[i][j]</p>
-                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                         <p className="p-4 bg-accent/10 text-accent rounded-md">
                             <strong>Actionable Tip:</strong> Always double-check the dimensions of the matrices before pressing A + B or A – B. If dimensions mismatch, the operation will fail.
                         </p>
                     </div>
@@ -54,7 +54,7 @@ export default function MatrixCalculatorPage() {
                             Matrix multiplication is valid if columns of A = rows of B.
                         </p>
                          <p className="font-mono text-center my-2 text-lg">C[i][j] = Σ A[i][k] * B[k][j]</p>
-                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                         <p className="p-4 bg-accent/10 text-accent rounded-md">
                             <strong>Actionable Tip:</strong> Use the swap button (A ↔ B) if the multiplication fails due to incompatible dimensions. This is helpful for experimenting with different combinations.
                         </p>
                     </div>
@@ -64,7 +64,7 @@ export default function MatrixCalculatorPage() {
                            Only square matrices have determinants.
                         </p>
                          <p className="font-mono text-center my-2 text-lg">det([[a, b], [c, d]]) = a*d – b*c</p>
-                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                         <p className="p-4 bg-accent/10 text-accent rounded-md">
                             <strong>Actionable Tip:</strong> Check determinant before calculating the inverse. If det(A) = 0, the matrix does not have an inverse.
                         </p>
                     </div>
@@ -74,7 +74,7 @@ export default function MatrixCalculatorPage() {
                            Only for square matrices with non-zero determinant can be inverted.
                         </p>
                         <p className="font-mono text-center my-2 text-lg">A⁻¹ = 1/det(A) * adj(A)</p>
-                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                         <p className="p-4 bg-accent/10 text-accent rounded-md">
                            <strong>Actionable Tip:</strong> Use the step-by-step output (if available) to learn how inverses are calculated. This helps you understand linear algebra concepts instead of just getting the result.
                         </p>
                     </div>
@@ -83,7 +83,7 @@ export default function MatrixCalculatorPage() {
                         <p className="text-muted-foreground mt-2">
                            Swap rows and columns with A<sup>T</sup>. Useful for solving systems of equations, dot products, and orthogonal matrices.
                         </p>
-                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                         <p className="p-4 bg-accent/10 text-accent rounded-md">
                            <strong>Actionable Tip:</strong> Use transpose to convert row vectors to column vectors when preparing matrices for multiplication.
                         </p>
                     </div>
@@ -92,7 +92,7 @@ export default function MatrixCalculatorPage() {
                         <p className="text-muted-foreground mt-2">
                            Multiply a square matrix by itself n times. Valid only for square matrices.
                         </p>
-                        <p className="p-4 bg-accent/10 text-accent-foreground rounded-md">
+                        <p className="p-4 bg-accent/10 text-accent rounded-md">
                            <strong>Actionable Tip:</strong> Use this to quickly calculate matrix powers for repeated transformations, such as rotation matrices in graphics.
                         </p>
                     </div>

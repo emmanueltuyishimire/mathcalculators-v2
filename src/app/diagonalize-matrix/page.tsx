@@ -99,7 +99,7 @@ export default function DiagonalizeMatrixPage() {
                   <div>
                     <h3 className="text-2xl font-semibold text-foreground">Step 1: Input Your Matrix</h3>
                     <p>Select the size of your square matrix (e.g., 2×2, 3×3). Enter the matrix elements manually into the grid.</p>
-                    <p><strong>Tip:</strong> Only square matrices (same number of rows and columns) can be diagonalized.</p>
+                    <p className="p-4 bg-accent/10 text-accent-foreground rounded-md"><strong>Actionable Tip:</strong> Only square matrices (same number of rows and columns) can be diagonalized.</p>
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-foreground">Step 2: Calculate Eigenvalues</h3>
@@ -108,7 +108,7 @@ export default function DiagonalizeMatrixPage() {
                   <div>
                     <h3 className="text-2xl font-semibold text-foreground">Step 3: Calculate Eigenvectors</h3>
                     <p>Click <strong>Calculate Eigenvectors</strong>. For each eigenvalue, the calculator solves (A – λI)v = 0 to find the corresponding eigenvector. Eigenvectors are displayed as columns in matrix P.</p>
-                     <p><strong>Tip:</strong> Ensure eigenvectors are linearly independent; otherwise, the matrix may not be diagonalizable.</p>
+                     <p className="p-4 bg-accent/10 text-accent-foreground rounded-md"><strong>Actionable Tip:</strong> Ensure eigenvectors are linearly independent; otherwise, the matrix may not be diagonalizable.</p>
                   </div>
                   <div>
                     <h3 className="text-2xl font-semibold text-foreground">Step 4: Diagonalize the Matrix</h3>

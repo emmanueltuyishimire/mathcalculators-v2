@@ -46,7 +46,7 @@ export default function RrefPage() {
                              <li><strong>Multiply Row (k*Ri)</strong> → scale a row by a number</li>
                              <li><strong>Add/Subtract Rows (Ri ± k*Rj)</strong> → standard row operations for elimination</li>
                         </ul>
-                         <p className="p-4 bg-accent/10 text-accent-foreground rounded-md mt-2">
+                         <p className="p-4 bg-accent/10 text-accent rounded-md mt-2">
                             <strong>Tip:</strong> Step-by-step row operations are helpful for learning linear algebra and understanding how RREF is derived.
                         </p>
                     </div>
@@ -68,7 +68,7 @@ export default function RrefPage() {
                            <li><strong>Infinite solutions:</strong> Some variables are free → parametric form</li>
                            <li><strong>No solution:</strong> System is inconsistent → row with [0 … 0 | b ≠ 0]</li>
                         </ul>
-                        <p className="p-4 bg-accent/10 text-accent-foreground rounded-md mt-2">
+                        <p className="p-4 bg-accent/10 text-accent rounded-md mt-2">
                             <strong>Tip:</strong> Verify your solution by plugging values back into the original equations.
                         </p>
                     </div>
