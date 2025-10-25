@@ -131,7 +131,7 @@ export default function MatrixCalculatorPage() {
                     </ul>
                 </div>
 
-                <div className="p-4 bg-primary/10 text-primary-foreground rounded-md">
+                <div className="p-4 bg-primary/10 text-primary rounded-md">
                     <h3 className="font-bold text-lg">✅ Pro Tip:</h3>
                     <p>Combining multiple operations, such as Transpose → Multiply → Inverse, can be done quickly with this calculator and helps reinforce understanding of linear algebra concepts.</p>
                 </div>
