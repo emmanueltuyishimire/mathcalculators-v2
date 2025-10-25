@@ -138,7 +138,7 @@ export default function RrefPage() {
                     </div>
                 </div>
                 
-                <div className="p-4 bg-primary/10 text-primary-foreground rounded-md">
+                <div className="p-4 bg-primary/10 text-primary rounded-md">
                     <h3 className="font-bold text-lg">✅ Pro Tip:</h3>
                     <p>Combine manual row operations with automatic RREF calculation to learn linear algebra concepts while getting fast results. This tool is ideal for students, teachers, and professionals alike.</p>
                 </div>
