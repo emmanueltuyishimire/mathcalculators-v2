@@ -10,8 +10,8 @@ export function AppFooter() {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setYear(new Date().getFullYear());
         setIsClient(true);
+        setYear(new Date().getFullYear());
     }, []);
 
     return (
