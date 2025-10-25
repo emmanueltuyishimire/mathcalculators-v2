@@ -103,7 +103,6 @@ const calculatorCategories = [
             { href: '/rref', label: 'RREF Calculator', icon: Sigma },
             { href: '/desmos-matrix', label: 'Desmos Matrix Calculator', icon: Table },
             { href: '/diagonalize-matrix', label: 'Diagonalize Matrix Calculator', icon: Table },
-            { href: '/converter', label: 'Unit Converter', icon: Replace },
             { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
             { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
             { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
