@@ -1,283 +1,283 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-<url>
-  <loc>https://maths.calculation.site/</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/calculators</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/algebra</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/matrix</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/geometry</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/trigonometry</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.90</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/basic</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/scientific</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/fraction</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/percentage</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/random</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/percent-error</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/exponent</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/binary</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/hex</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/half-life</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/log</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/ratio</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/root</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/lcm</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/gcf</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/factor</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/rounding</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/matrix/calculator</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/scientific-notation</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/big-number</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/pythagorean</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/right-triangle</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/slope</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/distance</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/geometry/area</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/geometry/volume</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/geometry/surface-area</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/geometry/circle</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/mean-median-mode</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/standard-deviation</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/sample-size</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/probability</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/permutation-combination</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/z-score</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/confidence-interval</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/statistics/sequences</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/calculus</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/rref</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/desmos-matrix</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/diagonalize-matrix</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/converter</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/destiny-matrix</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/about</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/contact</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.70</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/privacy-policy</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.50</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/terms-of-service</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.50</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/disclaimer</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.50</priority>
-</url>
-<url>
-  <loc>https://maths.calculation.site/site-directory</loc>
-  <lastmod>2024-07-31T00:00:00+00:00</lastmod>
-  <priority>0.50</priority>
-</url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://maths.calculation.site/</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/calculators</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/about</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/contact</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/basic</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/algebra</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/algebra/guide</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/geometry</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/geometry/area</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/geometry/volume</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+   <url>
+    <loc>https://maths.calculation.site/geometry/surface-area</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/geometry/circle</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/statistics</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.90</priority>
+  </url>
+   <url>
+    <loc>https://maths.calculation.site/statistics/mean-median-mode</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/statistics/standard-deviation</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+   <url>
+    <loc>https://maths.calculation.site/statistics/sample-size</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+   <url>
+    <loc>https://maths.calculation.site/statistics/probability</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/statistics/permutation-combination</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/statistics/z-score</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+   <url>
+    <loc>https://maths.calculation.site/statistics/confidence-interval</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/statistics/sequences</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/matrix</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/matrix/calculator</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/rref</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/desmos-matrix</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/diagonalize-matrix</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/scientific</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/fraction</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/percentage</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/random</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/percent-error</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/exponent</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/binary</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/hex</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/half-life</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/log</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/ratio</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/root</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/lcm</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/gcf</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/factor</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/rounding</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/matrix</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/scientific-notation</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/big-number</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/pythagorean</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/right-triangle</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/slope</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/distance</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/calculus</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/destiny-matrix</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/unit-converter</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/privacy-policy</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/terms-of-service</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://maths.calculation.site/disclaimer</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.50</priority>
+  </url>
+   <url>
+    <loc>https://maths.calculation.site/site-directory</loc>
+    <lastmod>2024-07-27</lastmod>
+    <priority>0.70</priority>
+  </url>
 </urlset>

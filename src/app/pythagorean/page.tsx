@@ -9,6 +9,49 @@ import Link from 'next/link';
 import { PythagoreanDiagram } from '@/components/pythagorean-diagram';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pythagorean Theorem Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "A free online calculator to solve for the missing side of a right-angled triangle using the Pythagorean theorem a² + b² = c².",
+  "url": "https://maths.calculation.site/pythagorean",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0",
+  "offers": {
+    "@type": "Offer",
+    "price": "0"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Pythagorean Theorem Calculator",
+    "item": "https://maths.calculation.site/pythagorean"
+  }]
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -113,10 +156,19 @@ const FaqSection = () => (
 
 export default function PythagoreanPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Pythagorean Theorem Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+       <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Pythagorean Theorem Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
             <section className="text-center">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                     Pythagorean Theorem Calculator
@@ -150,8 +202,9 @@ export default function PythagoreanPage() {
                     </Button>
                 </div>
             </section>
-        </div>
-      </main>
-    </div>
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

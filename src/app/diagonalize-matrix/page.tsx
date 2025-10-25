@@ -45,12 +45,37 @@ const faqSchema = {
   ]
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Diagonalize Matrix Calculator",
+    "item": "https://maths.calculation.site/diagonalize-matrix"
+  }]
+};
+
 export default function DiagonalizeMatrixPage() {
   return (
     <>
     <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+    />
+    <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
     />
     <div className="flex flex-1 flex-col">
       <PageHeader title="Diagonalize Matrix Calculator" />

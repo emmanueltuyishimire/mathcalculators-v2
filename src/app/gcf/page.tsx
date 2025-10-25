@@ -22,7 +22,32 @@ const pageSchema = {
   },
   "inLanguage": "en",
   "datePublished": "2024-07-26",
-  "softwareVersion": "1.0.0"
+  "softwareVersion": "1.0.0",
+  "offers": {
+    "@type": "Offer",
+    "price": "0"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "GCF Calculator",
+    "item": "https://maths.calculation.site/gcf"
+  }]
 };
 
 const HowToUseGuide = () => (
@@ -113,6 +138,10 @@ export default function GcfPage() {
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+       <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Greatest Common Factor Calculator" />

@@ -127,39 +127,37 @@ export default function Home() {
 
         <section id="tools" className="space-y-12">
             {calculatorCategories.map((category, catIndex) => (
-                 <React.Fragment key={category.title}>
-                    <div>
-                        <div className="relative h-40 w-full rounded-xl overflow-hidden mb-6 shadow-lg" role="presentation">
-                            {category.image && (
-                                <Image
-                                    src={category.image.src}
-                                    alt={category.image.alt || `${category.title} category background`}
-                                    data-ai-hint={category.image.hint}
-                                    fill
-                                    className="object-cover"
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                />
-                            )}
-                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                                <h2 className="text-3xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-                            {category.tools.map((tool) => (
-                                <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
-                                <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                                    <CardHeader className="flex flex-col items-center text-center p-3">
-                                    <div className="mb-2 rounded-full bg-primary/10 p-2 text-primary">
-                                        <tool.icon className="h-5 w-5" aria-hidden="true" />
-                                    </div>
-                                    <CardTitle className="text-sm">{tool.label}</CardTitle>
-                                    </CardHeader>
-                                </Card>
-                                </Link>
-                            ))}
+                 <div key={category.title} aria-labelledby={`category-heading-${catIndex}`}>
+                    <div className="relative h-40 w-full rounded-xl overflow-hidden mb-6 shadow-lg" role="presentation">
+                        {category.image && (
+                            <Image
+                                src={category.image.src}
+                                alt={category.image.alt || `${category.title} category background`}
+                                data-ai-hint={category.image.hint}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                        )}
+                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <h2 id={`category-heading-${catIndex}`} className="text-3xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
                         </div>
                     </div>
-                 </React.Fragment>
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                        {category.tools.map((tool) => (
+                            <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label} calculator`}>
+                            <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                                <CardHeader className="flex flex-col items-center text-center p-3">
+                                <div className="mb-2 rounded-full bg-primary/10 p-2 text-primary">
+                                    <tool.icon className="h-5 w-5" aria-hidden="true" />
+                                </div>
+                                <CardTitle className="text-sm">{tool.label}</CardTitle>
+                                </CardHeader>
+                            </Card>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             ))}
         </section>
       </main>

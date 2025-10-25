@@ -31,7 +31,33 @@ const pageSchema = {
         "text": "The calculator will display your Destiny Matrix and provide an interpretation based on the numbers present. Pay attention to key numbers and their meanings related to personality, challenges, and talents."
       }
     ]
-  }
+  },
+   "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Destiny Matrix Calculator",
+    "item": "https://maths.calculation.site/destiny-matrix"
+  }]
 };
 
 const FaqSection = () => (
@@ -88,6 +114,10 @@ export default function DestinyMatrixPage() {
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+       <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Destiny Matrix Calculator" />

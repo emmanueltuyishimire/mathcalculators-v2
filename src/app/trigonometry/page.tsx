@@ -10,6 +10,27 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Trigonometry Calculator",
+    "item": "https://maths.calculation.site/trigonometry"
+  }]
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -125,6 +146,10 @@ const FaqSection = () => (
 export default function TrigonometryPage() {
   return (
     <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="flex flex-1 flex-col">
         <PageHeader title="Trigonometry Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">

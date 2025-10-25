@@ -80,6 +80,7 @@ export default function CalculatorsPage() {
     <div className="flex flex-1 flex-col">
       <section
         className="relative w-full h-64 bg-cover bg-center"
+        aria-labelledby="calculators-page-heading"
       >
         <Image
             src={heroImage?.src || ''}
@@ -90,7 +91,7 @@ export default function CalculatorsPage() {
             className="object-cover"
         />
         <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
-          <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
+          <h1 id="calculators-page-heading" className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
             Math Calculators
           </h1>
           <p className="mx-auto max-w-[700px] text-gray-200 md:text-xl mt-4" style={{ textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)' }}>
@@ -102,9 +103,8 @@ export default function CalculatorsPage() {
       <main className="flex-1 p-4 md:p-6 lg:p-12">
         <section className="space-y-16">
           {calculatorCategories.map((category, catIndex) => (
-            <React.Fragment key={category.title}>
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">{category.title}</h2>
+            <div key={category.title} aria-labelledby={`category-heading-${catIndex}`}>
+                <h2 id={`category-heading-${catIndex}`} className="text-3xl md:text-4xl font-bold text-center mb-8">{category.title}</h2>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                   {category.tools.map((tool) => (
                     <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label}`}>
@@ -119,8 +119,7 @@ export default function CalculatorsPage() {
                     </Link>
                   ))}
                 </div>
-              </div>
-            </React.Fragment>
+            </div>
           ))}
         </section>
       </main>

@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -446,7 +446,7 @@ export default function ScientificCalculator() {
     }
     setCurrentNumber(String(constantValue));
   };
-
+  
   const handlePercent = () => {
     if(resetError() || currentNumber === '') return;
     
@@ -480,8 +480,8 @@ export default function ScientificCalculator() {
   
   const handleExp = () => {
     if(resetError()) return;
-    if (currentNumber.includes('E')) return;
-    setCurrentNumber(prev => (prev || '0') + 'E');
+    if (currentNumber.includes('e')) return;
+    setCurrentNumber(prev => (prev || '0') + 'e');
   };
 
   const buttonRows = [
@@ -565,23 +565,28 @@ export default function ScientificCalculator() {
         </div>
         
         <div className="w-full grid grid-cols-5 gap-1">
-          {buttonRows.flat().map((btn, i) => (
-            <Button 
-                key={`${btn.label}-${i}`} 
-                size="sm" 
-                className={cn(
-                    'h-9 text-xs rounded-md relative transition-all duration-100 ease-in-out',
-                    'border-b-4 active:border-b-0 active:translate-y-1',
-                    'text-white',
-                    colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
-                    btn.active && 'ring-2 ring-cyan-400 ring-inset',
-                    btn.className
-                )}
-                onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
-                disabled={(btn as any).disabled}
-            >
-              {btn.label}
-            </Button>
+          {buttonRows.map((row, rowIndex) => (
+            <React.Fragment key={rowIndex}>
+              {row.map((btn, btnIndex) => (
+                 <Button 
+                    key={`${btn.label}-${rowIndex}-${btnIndex}`} 
+                    size="sm" 
+                    className={cn(
+                        'h-9 text-xs rounded-md relative transition-all duration-100 ease-in-out',
+                        'border-b-4 active:border-b-0 active:translate-y-1',
+                        'text-white',
+                        colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
+                        btn.active && 'ring-2 ring-cyan-400 ring-inset',
+                        btn.className
+                    )}
+                    onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
+                    disabled={(btn as any).disabled}
+                    aria-label={btn.label}
+                >
+                  {btn.label}
+                </Button>
+              ))}
+            </React.Fragment>
           ))}
         </div>
       </CardContent>

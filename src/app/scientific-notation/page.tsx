@@ -6,6 +6,49 @@ import ScientificNotationCalculator from '@/components/calculators/scientific-no
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Scientific Notation Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "Convert numbers to scientific, engineering, and E-notation, and perform arithmetic operations with our free online Scientific Notation Calculator.",
+  "url": "https://maths.calculation.site/scientific-notation",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  },
+  "inLanguage": "en",
+  "datePublished": "2024-07-26",
+  "softwareVersion": "1.0.0",
+  "offers": {
+    "@type": "Offer",
+    "price": "0"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Scientific Notation Calculator",
+    "item": "https://maths.calculation.site/scientific-notation"
+  }]
+};
+
 const HowToUseGuide = () => (
     <Card>
         <CardHeader>
@@ -106,26 +149,36 @@ const EducationalContent = () => (
 
 export default function ScientificNotationPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <PageHeader title="Scientific Notation Calculator" />
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Scientific Notation Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                   Free online calculators for converting numbers to scientific notation and performing arithmetic with them.
-                </p>
-            </section>
-            
-            <ScientificNotationCalculator />
-
-            <HowToUseGuide />
-
-            <EducationalContent />
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <PageHeader title="Scientific Notation Calculator" />
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-2xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Scientific Notation Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                     Free online calculators for converting numbers to scientific notation and performing arithmetic with them.
+                  </p>
+              </section>
+              
+              <ScientificNotationCalculator />
+  
+              <HowToUseGuide />
+  
+              <EducationalContent />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }
