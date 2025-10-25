@@ -60,7 +60,16 @@ export function AppFooter() {
                     </div>
                 </div>
                  <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    © {year || new Date().getFullYear()} calculation.site. All rights reserved.
+                    © {year || new Date().getFullYear()}{' '}
+                    <a
+                        href="https://calculation.site"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline text-primary"
+                    >
+                        calculation.site
+                    </a>
+                    . All rights reserved.
                 </div>
             </div>
         </footer>
