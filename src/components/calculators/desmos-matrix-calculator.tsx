@@ -476,6 +476,9 @@ export default function DesmosMatrixCalculator() {
           newMatrix = transpose(matrix);
           newName = `${name}ᵀ`;
       } else { // inverse
+          if (matrix.length !== matrix[0].length) {
+              throw new Error("Matrix must be square for inverse.");
+          }
           const det = determinant(matrix);
           if (Math.abs(det) < 1e-9) throw new Error("Matrix is not invertible (determinant is 0).");
           

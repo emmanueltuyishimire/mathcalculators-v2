@@ -4,10 +4,12 @@
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 export default function BasicCalculator() {
   const [displayValue, setDisplayValue] = useState('0');
   const [isResult, setIsResult] = useState(false);
+  const { toast } = useToast();
 
   const handleButtonClick = (value: string) => {
     if (isResult) {
@@ -15,12 +17,12 @@ export default function BasicCalculator() {
       setIsResult(false);
       return;
     }
-    setDisplayValue(prev => (prev === '0' ? value : prev + value));
+    setDisplayValue(prev => (prev === '0' && value !== '.' ? value : prev + value));
   };
 
   const handleOperatorClick = (operator: string) => {
     setIsResult(false);
-    setDisplayValue(prev => `${prev} ${operator} `);
+    setDisplayValue(prev => `${prev.trim()} ${operator} `);
   };
 
   const handleClear = () => {
@@ -30,18 +32,22 @@ export default function BasicCalculator() {
 
   const handleEquals = () => {
     try {
-      const expression = displayValue.replace(/×/g, '*').replace(/÷/g, '/');
-      if (/[+\-*/]$/.test(expression.trim())) {
+      const expression = displayValue.replace(/×/g, '*').replace(/÷/g, '/').trim();
+      if (/[+\-*/]$/.test(expression)) {
         throw new Error("Invalid expression");
       }
-      // Note: Using eval() is insecure for production apps.
-      // This is a simplified example. A real app should use a safe math expression parser.
+      // Using new Function for safer eval
       const result = new Function('return ' + expression)();
       setDisplayValue(String(result));
       setIsResult(true);
     } catch (error) {
       setDisplayValue('Error');
       setIsResult(true);
+      toast({
+          variant: "destructive",
+          title: "Invalid Expression",
+          description: "Please check your calculation.",
+      });
     }
   };
 

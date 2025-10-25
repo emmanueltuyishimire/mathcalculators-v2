@@ -44,6 +44,7 @@ export default function RoundingCalculator() {
 
     useEffect(() => {
         calculate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [number, method, precision, customPrecision]);
     
     const calculate = () => {

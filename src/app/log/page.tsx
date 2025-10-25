@@ -18,8 +18,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const LogEquationCalculator = () => {
     const { toast } = useToast();
     const [base, setBase] = useState('');
-    const [number, setNumber] = useState('');
-    const [result, setResult] = useState('');
+    const [number, setNumber] = useState('8');
+    const [result, setResult] = useState('3');
     
     const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
         let newValues = { base, number, result };
@@ -78,16 +78,12 @@ const LogEquationCalculator = () => {
     };
     
     useEffect(() => {
-        // Trigger calculation on mount for initial example
-        if (base === '' && number === '8' && result === '3') {
-            calculate();
-        } else if (base === '2' && number === '' && result === '3') {
-            calculate();
-        } else if (base === '2' && number === '8' && result === '') {
+        const knownCount = [base, number, result].filter(Boolean).length;
+        if (knownCount === 2) {
             calculate();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [base, number, result]);
 
     const handleClear = () => {
         setBase('');

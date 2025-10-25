@@ -22,9 +22,9 @@ const inverseTrigFunctions: { [key: string]: (val: number) => number } = {
   asin: (val) => Math.asin(val),
   acos: (val) => Math.acos(val),
   atan: (val) => Math.atan(val),
-  acot: (val) => Math.PI / 2 - Math.atan(val),
-  asec: (val) => Math.acos(1 / val),
-  acsc: (val) => Math.asin(1 / val),
+  acot: (val) => Math.atan(1/val),
+  asec: (val) => Math.acos(1/val),
+  acsc: (val) => Math.asin(1/val),
 };
 
 // Unified dispatcher function
@@ -37,6 +37,9 @@ export function calculate(funcName: string, value: number, unit = "deg"): number
   try {
     let result: number;
     if (isInverse) {
+      if(value < -1 || value > 1) {
+        if(funcName === 'asin' || funcName === 'acos') throw new Error("Input must be between -1 and 1.");
+      }
       result = inverseTrigFunctions[funcName](value);
       if (unit === 'deg') result = toDegrees(result);
     } else {

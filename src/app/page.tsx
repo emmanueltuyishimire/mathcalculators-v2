@@ -67,7 +67,6 @@ const calculatorCategories = [
         image: placeholderImages.find(p => p.id === 'categoryGeometry'),
         tools: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
-            { href: '/trigonometry', label: 'Trigonometry Calculator', icon: Sigma },
             { href: '/pythagorean', label: 'Pythagorean Theorem Calculator', icon: Sigma },
             { href: '/right-triangle', label: 'Right Triangle Calculator', icon: Triangle },
             { href: '/slope', label: 'Slope Calculator', icon: TrendingUp },
@@ -120,7 +119,7 @@ export default function Home() {
       <main className="flex-1 p-4 md:p-6 lg:p-8">
         <section id="quick-calculator" className="mb-12">
             <h2 className="text-3xl font-bold text-center mb-6">Quick Scientific Calculator</h2>
-            <div className="max-w-md mx-auto">
+            <div className="max-w-sm mx-auto">
               <ScientificCalculator />
             </div>
         </section>

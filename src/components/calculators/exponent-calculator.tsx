@@ -48,6 +48,7 @@ export default function ExponentCalculator() {
                 }
             } else if (isNaN(baseNum) && !useE) {
                 if (resNum < 0 && expNum % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
+                if (resNum === 1 && expNum === 0) throw new Error("1^0 is ambiguous, typically 1. Please provide base and exponent.");
                 const newBase = Math.pow(resNum, 1 / expNum);
                 setBase(newBase.toString());
                 setSteps(`a = ${resNum}^(1/${expNum}) = ${newBase}`);
@@ -67,7 +68,11 @@ export default function ExponentCalculator() {
     };
     
     useEffect(() => {
-        calculate();
+        const knownCount = [base, exponent, result].filter(Boolean).length;
+        if(useE) knownCount++;
+        if (knownCount === 2) {
+            calculate();
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [useE, base, exponent, result]);
     

@@ -116,7 +116,7 @@ export default function PythagoreanCalculator() {
     useEffect(() => {
         calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [a, b, c]);
+    }, []);
     
     const handleClear = () => {
       setA('');

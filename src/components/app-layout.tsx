@@ -37,7 +37,6 @@ const navItems = [
   { href: '/matrix', label: 'Matrix', icon: Table },
   { href: '/geometry', label: 'Geometry', icon: Square },
   { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
-  { href: '/trigonometry', label: 'Trigonometry', icon: Sigma },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {

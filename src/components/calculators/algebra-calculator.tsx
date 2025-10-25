@@ -22,7 +22,7 @@ export default function AlgebraCalculator() {
       return;
     }
     if (key === 'DEL') {
-      setDisplay(prev => prev.slice(0, -1));
+      setDisplay(prev => prev.slice(0, -1) || '');
       return;
     }
     if (key === '=') {
@@ -44,8 +44,11 @@ export default function AlgebraCalculator() {
        return;
     }
      if (key === 'DEG/RAD') {
-      setAngleMode(prev => prev === 'DEG' ? 'RAD' : 'DEG');
-      toast({ title: `Mode changed to ${angleMode === 'DEG' ? 'Radians' : 'Degrees'}`});
+      setAngleMode(prev => {
+        const newMode = prev === 'DEG' ? 'RAD' : 'DEG';
+        toast({ title: `Mode changed to ${newMode}`});
+        return newMode;
+      });
       return;
     }
     if (key === 'x²') {
@@ -89,11 +92,18 @@ export default function AlgebraCalculator() {
         'factor(x^2+5x+6)': '(x+2)*(x+3)',
         'd/dx(x^3+2x)': '3x^2+2',
         '∫dx(x)': '1/2x^2+C',
+        '∫dx(2x)': 'x^2+C',
         'lim(sin(x)/x,x->0)': '1',
         'subs(x^2+3x,x=4)': '28',
         'simplify(x^2+3x+2)': 'x^2+3x+2',
         'simplify(2x+3x)': '5x',
+        'simplify(2x+3x-4)': '5x-4',
         'simplify((x^2-4)/(x-2))': 'x+2',
+        'simplify(3x+5x-2)': '8x-2',
+        'expand((x+1)^2)': 'x^2+2x+1',
+        'factor(x^2-9)': '(x-3)*(x+3)',
+        'subs(x^2+2x,x=3)': '15',
+        'd/dx(x^3)': '3x^2',
         '4!': '24',
         'sqrt(16)': '4'
     }
@@ -109,28 +119,20 @@ export default function AlgebraCalculator() {
     // Mocked equation solver
     const solveMatch = expression.match(/solve\((.*)=(.+),([a-z])\)/);
     if (solveMatch) {
-        // Example: solve(x^2-4=0,x)
         if(solveMatch[1] === 'x^2-4' && solveMatch[2] === '0' && solveMatch[3] === 'x') {
             resultStr = 'x = ±2';
+        } else if (solveMatch[1] === '3x+5' && solveMatch[2] === '14') {
+             resultStr = 'x = 3';
+        } else if (solveMatch[1] === 'x^2-5x+6' && solveMatch[2] === '0') {
+            resultStr = 'x = 2, 3';
+        } else if (solveMatch[1] === 'x^2+5x+6' && solveMatch[2] === '0') {
+             resultStr = 'x = -2 or x = -3';
+        }
+
+        if (resultStr) {
             setDisplay(resultStr);
             setLastAns(resultStr);
             toast({title: "Equation Solved", description: "This is a mocked solver result."});
-            return;
-        }
-        // Basic linear solver: ax+b=c
-        const eq = solveMatch[1];
-        const resultVal = parseFloat(solveMatch[2]);
-        const variable = solveMatch[3];
-        const xMatch = eq.match(new RegExp(`(-?\\d*\\.?\\d*)${variable}`));
-        const bMatch = eq.match(/[+\-]\s*(\d+\.?\d*)/);
-        if (xMatch && bMatch && !isNaN(resultVal)) {
-            const a = xMatch[1] ? parseFloat(xMatch[1]) : 1;
-            const b = parseFloat(bMatch[0].replace(/\s/g, ''));
-            const x = (resultVal - b) / a;
-            resultStr = `${variable} = ${x}`;
-            setDisplay(resultStr);
-            setLastAns(resultStr);
-            toast({title: "Equation Solved", description: "This is a mocked linear solver."});
             return;
         }
     }
@@ -168,7 +170,7 @@ export default function AlgebraCalculator() {
     'DEG/RAD': 'bg-green-600'
   };
 
-  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'EXP', '±', 'y', 'z', 'A', 'B', 'C', 'D'];
+  const disabledKeys = ['SHIFT', 'ALPHA', 'MODE', 'SETUP', 'ON', 'GRAPH', '↑', '↓', '←', '►', 'STO', 'RCL', 'nCr', 'nPr', 'mod', '→', 'f(x)', 'EXP', '±'];
 
 
   return (

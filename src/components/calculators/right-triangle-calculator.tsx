@@ -93,9 +93,9 @@ export default function RightTriangleCalculator() {
         const knownCount = knownValues.filter(Boolean).length;
         const sideCount = [!isNaN(numA), !isNaN(numB), !isNaN(numC)].filter(Boolean).length;
 
-        if (knownCount !== 2 || sideCount === 0) {
+        if (knownCount < 2 || sideCount === 0) {
             if (Object.values(values).some(v => v !== '')) {
-                toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please provide exactly two values, including at least one side.' });
+                 toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please provide exactly two values, including at least one side.' });
             }
             setResults(null);
             return;
@@ -123,7 +123,7 @@ export default function RightTriangleCalculator() {
             } else { // 1 side, 1 angle
                 if (isNaN(numAlpha) && !isNaN(numBeta)) { numAlpha = 90 - numBeta; }
                 else if (!isNaN(numAlpha) && isNaN(numBeta)) { numBeta = 90 - numAlpha; }
-                else { throw new Error("Please provide one side and one angle."); }
+                else if (isNaN(numAlpha) && isNaN(numBeta)) { throw new Error("Please provide one angle.")}
 
                 if (numAlpha <= 0 || numAlpha >= 90) throw new Error("Angles must be between 0 and 90 degrees.");
 

@@ -58,6 +58,8 @@ const TwoDCalculator = () => {
             yIntercept = y1 - slope * x1;
             equation = `y = ${slope.toFixed(4)}x + ${yIntercept.toFixed(4)}`;
             xIntercept = Math.abs(slope) > 1e-9 ? -yIntercept / slope : 'none';
+        } else {
+            angleDeg = (deltaY > 0 ? 90 : (deltaY < 0 ? -90 : 0));
         }
 
         setResult({

@@ -169,7 +169,7 @@ const DecToBinConverter = () => {
                 setBinary('');
                 return;
             }
-            setBinary(num.toString(2));
+            setBinary(Math.abs(num).toString(2));
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
             setBinary('');
