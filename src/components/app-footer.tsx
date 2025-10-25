@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -7,9 +6,11 @@ import { useEffect, useState } from 'react';
 
 export function AppFooter() {
     const [year, setYear] = useState<number | null>(null);
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setYear(new Date().getFullYear());
+        setIsClient(true);
     }, []);
 
     return (
@@ -60,16 +61,20 @@ export function AppFooter() {
                     </div>
                 </div>
                  <div className="mt-8 border-t pt-4 text-center text-xs text-muted-foreground">
-                    © {year}{' '}
-                    <a
-                        href="https://calculation.site"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:underline text-primary"
-                    >
-                        calculation.site
-                    </a>
-                    . All rights reserved.
+                    {isClient && (
+                        <>
+                            © {year}{' '}
+                            <a
+                                href="https://calculation.site"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline text-primary"
+                            >
+                                calculation.site
+                            </a>
+                            . All rights reserved.
+                        </>
+                    )}
                 </div>
             </div>
         </footer>
