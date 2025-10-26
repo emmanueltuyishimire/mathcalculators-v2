@@ -1,19 +1,16 @@
 
 'use client';
-import { PageHeader } from '@/components/page-header';
-import SlopeCalculator from '@/components/calculators/slope-calculator';
+
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { RightTriangleDiagram } from '../right-triangle-diagram';
+import { Button } from '@/components/ui/button';
 
 
 interface TwoPointResult {
@@ -90,11 +87,6 @@ const TwoPointsCalculator = () => {
       });
     }
   };
-  
-  useEffect(() => {
-    calculate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [p1, p2]);
 
   return (
     <Card className="border-none shadow-none">
@@ -218,11 +210,6 @@ const OnePointSlopeCalculator = () => {
             xIntercept
         });
     }
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
     <Card className="border-none shadow-none">

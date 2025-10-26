@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { RightTriangleDiagram } from '../right-triangle-diagram';
+import { RightTriangleDiagram } from '@/components/right-triangle-diagram';
 
 
 interface TwoPointResult {
