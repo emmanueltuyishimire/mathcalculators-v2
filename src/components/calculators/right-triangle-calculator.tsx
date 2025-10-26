@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -181,11 +181,11 @@ export default function RightTriangleCalculator() {
         if (!results || !results.inputs) return '';
         const parts: string[] = [];
         const { a, b, c, alpha, beta } = results.inputs;
-        if (a !== null && !isNaN(a)) parts.push(`a=${a}`);
-        if (b !== null && !isNaN(b)) parts.push(`b=${b}`);
-        if (c !== null && !isNaN(c)) parts.push(`c=${c}`);
-        if (alpha !== null && !isNaN(alpha)) parts.push(`α=${alpha}°`);
-        if (beta !== null && !isNaN(beta)) parts.push(`β=${beta}°`);
+        if (a != null && !isNaN(a)) parts.push(`a=${a}`);
+        if (b != null && !isNaN(b)) parts.push(`b=${b}`);
+        if (c != null && !isNaN(c)) parts.push(`c=${c}`);
+        if (alpha != null && !isNaN(alpha)) parts.push(`α=${alpha}°`);
+        if (beta != null && !isNaN(beta)) parts.push(`β=${beta}°`);
         return `Given ${parts.join(' and ')}`;
     }
 

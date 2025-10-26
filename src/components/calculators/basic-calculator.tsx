@@ -47,6 +47,7 @@ export default function BasicCalculator() {
       setFirstOperand(inputValue);
     } else if (operator) {
       const result = performCalculation();
+      if (result === null) return;
       setDisplayValue(String(result));
       setFirstOperand(result);
     }
@@ -67,7 +68,7 @@ export default function BasicCalculator() {
           case '÷':
               if (secondOperand === 0) {
                   toast({ variant: 'destructive', title: "Error", description: "Cannot divide by zero."});
-                  return 0;
+                  return null;
               }
               result = firstOperand / secondOperand;
               break;
@@ -78,10 +79,11 @@ export default function BasicCalculator() {
   const handleEquals = () => {
     if (!operator) return;
     const result = performCalculation();
+    if (result === null) return;
     setDisplayValue(String(result));
     setFirstOperand(null);
     setOperator(null);
-    setWaitingForSecondOperand(true);
+    setWaitingForSecondOperand(false);
   };
 
   const handleAllClear = () => {
@@ -155,5 +157,3 @@ export default function BasicCalculator() {
     </Card>
   );
 }
-
-    
