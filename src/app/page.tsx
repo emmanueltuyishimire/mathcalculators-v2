@@ -28,6 +28,7 @@ function HeroSection() {
         data-ai-hint={heroImage?.hint}
         fill
         priority
+        fetchPriority="high"
         className="object-cover"
         sizes="100vw"
         />
