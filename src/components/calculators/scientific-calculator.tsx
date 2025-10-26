@@ -18,6 +18,12 @@ const associativity: { [key: string]: 'left' | 'right' } = {
   '+': 'left', '-': 'left', '×': 'left', '÷': 'left', '%': 'left', '^': 'right',
 };
 
+const trigFunctions: { [key: string]: (...args: number[]) => number } = {
+    sin: Math.sin, cos: Math.cos, tan: Math.tan,
+    asin: Math.asin, acos: Math.acos, atan: Math.atan,
+    sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
+};
+
 const isOperator = (token: Token): token is string => typeof token === 'string' && ['+', '-', '×', '÷', '^', '%'].includes(token);
 const isFunction = (token: Token): token is string => typeof token === 'string' && !!trigFunctions[token as keyof typeof trigFunctions];
 const isNumber = (token: Token): token is number => typeof token === 'number';
@@ -70,12 +76,6 @@ const shuntingYard = (tokens: Token[]): Token[] => {
     return outputQueue;
 };
 
-const trigFunctions: { [key: string]: (...args: number[]) => number } = {
-    sin: Math.sin, cos: Math.cos, tan: Math.tan,
-    asin: Math.asin, acos: Math.acos, atan: Math.atan,
-    sinh: Math.sinh, cosh: Math.cosh, tanh: Math.tanh,
-};
-
 
 const evaluateRPN = (rpnQueue: Token[], angleMode: AngleMode): number => {
     const stack: number[] = [];
@@ -103,7 +103,8 @@ const evaluateRPN = (rpnQueue: Token[], angleMode: AngleMode): number => {
             const func = trigFunctions[token as keyof typeof trigFunctions];
             if (!func) throw new Error(`Unknown function: ${token}`);
             
-            const isInverse = token.startsWith('a') && !token.startsWith('asinh');
+            const stringToken = token as string;
+            const isInverse = stringToken.startsWith('a') && !stringToken.startsWith('asinh');
 
             let result;
             if (isInverse) {
@@ -591,3 +592,5 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
+
+    
