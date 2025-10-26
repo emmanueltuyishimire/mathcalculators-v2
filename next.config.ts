@@ -1,3 +1,4 @@
+
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
@@ -16,7 +17,6 @@ const nextConfig: NextConfig = {
       '*.cloudworkstations.dev',
     ],
   },
-  trailingSlash: true,
 };
 
 export default nextConfig;
