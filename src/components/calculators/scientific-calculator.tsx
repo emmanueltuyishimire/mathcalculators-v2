@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -150,7 +150,6 @@ const factorial = (n: number): number => {
 // #endregion
 
 export default function ScientificCalculator() {
-  const [displayValue, setDisplayValue] = useState('0');
   const [expressionTokens, setExpressionTokens] = useState<Token[]>([]);
   const [currentNumber, setCurrentNumber] = useState('');
   const [isResult, setIsResult] = useState(false);
@@ -160,7 +159,7 @@ export default function ScientificCalculator() {
   const [errorState, setErrorState] = useState<string | null>(null);
   const [show2nd, setShow2nd] = useState(false);
   
-  useEffect(() => {
+  const displayValue = useMemo(() => {
     const exprString = expressionTokens.map(t => {
         if (typeof t === 'number') return formatResult(t);
         if (isFunction(t)) return `${t}(`;
@@ -168,7 +167,7 @@ export default function ScientificCalculator() {
     }).join(' ');
 
     const fullDisplay = `${exprString} ${currentNumber}`.trim();
-    setDisplayValue(errorState || (fullDisplay || '0'));
+    return errorState || (fullDisplay || '0');
   }, [expressionTokens, currentNumber, errorState]);
   
   const resetError = () => {
@@ -283,7 +282,6 @@ export default function ScientificCalculator() {
     setErrorState(null);
     setExpressionTokens([]);
     setCurrentNumber('');
-    setDisplayValue('0');
     setIsResult(false);
     setLastResult(0);
   };
