@@ -36,7 +36,9 @@ const bigIntGcd = (a: bigint, b: bigint): bigint => {
 
 const bigIntLcm = (a: bigint, b: bigint): bigint => {
     if (a === 0n || b === 0n) return 0n;
-    return (a * b) / bigIntGcd(a, b);
+    const absA = a > 0n ? a : -a;
+    const absB = b > 0n ? b : -b;
+    return (absA * absB) / bigIntGcd(absA, absB);
 }
 
 const bigIntFactorial = (n: bigint): bigint => {
@@ -53,23 +55,33 @@ export default function BigNumberCalculator() {
     const { toast } = useToast();
     const [x, setX] = useState('12345678901234567890');
     const [y, setY] = useState('98765432109876543210');
-    const [precision, setPrecision] = useState('20');
     const [result, setResult] = useState('');
 
     const parseBigInt = (str: string): bigint | null => {
         try {
-            str = str.toLowerCase();
+            str = str.toLowerCase().trim();
+            if (str === '') return null;
             if (str.includes('e')) {
                 const parts = str.split('e');
-                // Handle cases like 'e18' where the base is missing
                 const baseStr = parts[0] || '1';
-                const base = parseFloat(baseStr);
                 const exp = parseInt(parts[1], 10);
-                if (isNaN(base) || isNaN(exp)) return null;
-                // Using BigInt constructor with string to avoid precision loss for large numbers
-                return BigInt(base) * (10n ** BigInt(exp));
+                if (isNaN(exp)) return null;
+                
+                // Handle decimal in base for E-notation
+                const baseDecimalParts = baseStr.split('.');
+                const integerPart = baseDecimalParts[0];
+                const fractionalPart = baseDecimalParts[1] || '';
+                
+                const combinedStr = integerPart + fractionalPart;
+                const newExp = exp - fractionalPart.length;
+
+                return BigInt(combinedStr) * (10n ** BigInt(newExp));
             }
-             // For regular numbers, just convert to BigInt
+            // For regular numbers without E-notation but with decimal
+            if(str.includes('.')) {
+                return BigInt(str.split('.')[0]);
+            }
+             // For regular integers
             return BigInt(str);
         } catch {
             return null;

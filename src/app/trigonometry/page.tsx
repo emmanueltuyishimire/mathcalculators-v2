@@ -5,7 +5,7 @@ import { PageHeader } from '@/components/page-header';
 import BasicTrigCalculator from '@/components/calculators/trigonometry-calculator';
 import RightTriangleSolver from '@/components/calculators/right-triangle-solver';
 import ObliqueTriangleSolver from '@/components/calculators/oblique-triangle-solver';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';

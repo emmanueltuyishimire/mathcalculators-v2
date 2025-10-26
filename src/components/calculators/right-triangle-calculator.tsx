@@ -30,7 +30,6 @@ interface CalculationResult {
 const evalRad = (str: string) => {
     try {
         str = str.toLowerCase().replace('pi', String(Math.PI));
-        // Allow simple fractions like pi/2, but prevent arbitrary code execution
         if (/^(\d*\.?\d*\*?)?pi(\/\d+\.?\d*)?$/.test(str.replace(/\s/g, '')) || /^\d*\.?\d+$/.test(str)) {
             return new Function('return ' + str)();
         }
@@ -109,15 +108,15 @@ export default function RightTriangleCalculator() {
                 if (!isNaN(numA) && !isNaN(numB)) {
                     if (numA <= 0 || numB <= 0) throw new Error("Sides 'a' and 'b' must be positive.");
                     numC = Math.sqrt(numA**2 + numB**2);
-                    steps.c = `c = √(a² + b²) = √(${numA}² + ${numB}²) = ${numC.toFixed(4)}`;
+                    steps.c = `c = √(a² + b²) = √(${numA}² + ${numB}²) = √(${(numA**2 + numB**2).toFixed(4)}) = ${numC.toFixed(4)}`;
                 } else if (!isNaN(numA) && !isNaN(numC)) {
                     if (numC <= numA) throw new Error("Hypotenuse c must be > side a");
                     numB = Math.sqrt(numC**2 - numA**2);
-                     steps.b = `b = √(c² - a²) = √(${numC}² - ${numA}²) = ${numB.toFixed(4)}`;
+                     steps.b = `b = √(c² - a²) = √(${numC}² - ${numA}²) = √(${(numC**2 - numA**2).toFixed(4)}) = ${numB.toFixed(4)}`;
                 } else { // b, c known
                     if (numC <= numB) throw new Error("Hypotenuse c must be > side b");
                     numA = Math.sqrt(numC**2 - numB**2);
-                     steps.a = `a = √(c² - b²) = √(${numC}² - ${numB}²) = ${numA.toFixed(4)}`;
+                     steps.a = `a = √(c² - b²) = √(${numC}² - ${numB}²) = √(${(numC**2 - numB**2).toFixed(4)}) = ${numA.toFixed(4)}`;
                 }
                 numAlpha = toDeg(Math.atan(numA / numB));
                 numBeta = 90 - numAlpha;
@@ -261,9 +260,10 @@ export default function RightTriangleCalculator() {
                                     <AccordionTrigger>Show Calculation Steps</AccordionTrigger>
                                     <AccordionContent>
                                         <div className="p-4 bg-muted rounded-md font-mono text-xs space-y-2 break-words">
-                                            {Object.entries(results.steps).map(([key, value]) => (
-                                                (value && typeof value === 'string') && <p key={key} dangerouslySetInnerHTML={{ __html: value }} />
-                                            ))}
+                                            {Object.entries(results.steps).map(([key, value]) => {
+                                                const valStr = String(value);
+                                                return valStr ? <p key={key} dangerouslySetInnerHTML={{ __html: valStr }} /> : null;
+                                            })}
                                         </div>
                                     </AccordionContent>
                                 </AccordionItem>
