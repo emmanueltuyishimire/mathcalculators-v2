@@ -557,8 +557,8 @@ export default function ScientificCalculator() {
     "gray-dark": "bg-gray-700 border-gray-900 hover:bg-gray-800",
     orange: "bg-orange-500 border-orange-700 hover:bg-orange-600",
     red: "bg-red-600 border-red-800 hover:bg-red-700",
-    green: "bg-green-600 border-green-800 hover:bg-green-700",
-    yellow: "bg-yellow-500 border-yellow-700 hover:bg-yellow-600",
+    green: "bg-green-700 border-green-900 hover:bg-green-800 text-white",
+    yellow: "bg-yellow-600 border-yellow-800 hover:bg-yellow-700 text-black",
   }
 
   return (
