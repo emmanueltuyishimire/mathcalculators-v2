@@ -32,24 +32,15 @@ const ScientificLogCalculator = () => {
 
 const LogEquationCalculator = () => {
     const { toast } = useToast();
-    const [base, setBase] = useState('');
+    const [base, setBase] = useState('2');
     const [number, setNumber] = useState('8');
-    const [result, setResult] = useState('3');
+    const [result, setResult] = useState('');
     
     const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
         let newValues = { base, number, result };
-        newValues[field] = value;
-        
-        const emptyFields = Object.keys(newValues).filter(key => newValues[key as keyof typeof newValues] === '');
-        
-        if(emptyFields.length !== 1) {
-            newValues = { base: '', number: '', result: '' };
-            newValues[field] = value;
-        }
-
-        setBase(newValues.base);
-        setNumber(newValues.number);
-        setResult(newValues.result);
+        if (field === 'base') setBase(value);
+        if (field === 'number') setNumber(value);
+        if (field === 'result') setResult(value);
     }
 
 
@@ -58,24 +49,21 @@ const LogEquationCalculator = () => {
         const numberVal = parseFloat(number);
         const resultVal = parseFloat(result);
 
-        const knownValues = [!isNaN(baseVal), !isNaN(numberVal), !isNaN(resultVal)].filter(Boolean).length;
-
-        if (knownValues !== 2) {
-            if (base || number || result) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Invalid Input',
-                    description: 'Please provide exactly two values to solve for the third.',
-                });
-            }
+        const filledFields = [base, number, result].filter(v => v !== '');
+        if (filledFields.length !== 2) {
+            toast({
+                variant: 'destructive',
+                title: 'Invalid Input',
+                description: 'Please provide exactly two values to solve for the third.',
+            });
             return;
         }
 
         try {
-            if (isNaN(resultVal)) { // Calculate result (y)
+            if (result === '') { // Calculate result (y)
                 if(baseVal <= 0 || baseVal === 1 || numberVal <= 0) throw new Error("Logarithm requires base > 0 (and not 1) and number > 0.");
                 setResult((Math.log(numberVal) / Math.log(baseVal)).toString());
-            } else if (isNaN(numberVal)) { // Calculate number (x)
+            } else if (number === '') { // Calculate number (x)
                 setNumber(Math.pow(baseVal, resultVal).toString());
             } else { // Calculate base (b)
                 if(numberVal < 0 && resultVal % 2 === 0) throw new Error("Cannot take an even root of a negative number.");

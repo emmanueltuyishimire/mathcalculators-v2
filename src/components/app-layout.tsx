@@ -46,6 +46,30 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const isMobile = useIsMobile();
 
+  // Render a consistent header on the server and during initial client render
+  // before the isMobile hook has determined the screen size.
+  if (isMobile === null) {
+    return (
+      <div className="flex min-h-screen w-full flex-col">
+         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
+           <Link
+              href="/"
+              className="flex items-center gap-2 text-lg font-semibold"
+              aria-label="Math Calculators Home"
+            >
+              <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
+              <span>Math Calculators</span>
+            </Link>
+            <div className="flex w-full items-center justify-end gap-4">
+              <ThemeToggle />
+            </div>
+         </header>
+         <div className="flex flex-1 flex-col">{children}</div>
+         <AppFooter />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
