@@ -584,7 +584,7 @@ export default function ScientificCalculator() {
                         'border-b-4 active:border-b-0 active:translate-y-1',
                         'text-white',
                         colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
-                        (btn as CalculatorButton).active && 'ring-2 ring-cyan-400 ring-inset',
+                        btn.active && 'ring-2 ring-cyan-400 ring-inset',
                         btn.className
                     )}
                     onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}
@@ -601,5 +601,3 @@ export default function ScientificCalculator() {
     </Card>
   );
 }
-
-    

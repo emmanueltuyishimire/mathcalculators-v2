@@ -12,11 +12,6 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  devIndicators: {
-    allowedDevOrigins: [
-      '*.cloudworkstations.dev',
-    ],
-  },
 };
 
 export default nextConfig;

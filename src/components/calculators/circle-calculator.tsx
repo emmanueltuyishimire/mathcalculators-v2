@@ -19,10 +19,10 @@ interface CircleValues {
 export default function CircleCalculator() {
     const { toast } = useToast();
     const [values, setValues] = useState<CircleValues>({
-        radius: '1',
-        diameter: '2.00000',
-        circumference: '6.28319',
-        area: '3.14159'
+        radius: '',
+        diameter: '',
+        circumference: '',
+        area: ''
     });
 
     const calculateFrom = (changedProperty: CircleProperty, value: string) => {

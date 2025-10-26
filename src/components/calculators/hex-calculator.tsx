@@ -57,11 +57,6 @@ const HexArithmeticCalculator = () => {
             setDecimalResult('');
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [val1, val2, op]);
 
     return (
         <Card>
@@ -125,11 +120,6 @@ const HexToDecConverter = () => {
         }
     };
 
-    useEffect(() => {
-        convert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [hex]);
-
     return (
         <Card>
             <CardHeader>
@@ -140,6 +130,7 @@ const HexToDecConverter = () => {
                     <Label htmlFor="hex-input">Hex Value</Label>
                     <Input id="hex-input" value={hex} onChange={e => setHex(e.target.value.toUpperCase())} className="font-mono" />
                 </div>
+                <Button onClick={convert} className="w-full">Convert</Button>
                 {decimal && (
                      <div className="space-y-2">
                         <Label>Decimal Result</Label>
@@ -171,11 +162,6 @@ const DecToHexConverter = () => {
         }
     };
     
-    useEffect(() => {
-        convert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [decimal]);
-
     return (
         <Card>
             <CardHeader>
@@ -186,6 +172,7 @@ const DecToHexConverter = () => {
                     <Label htmlFor="decimal-input">Decimal Value</Label>
                     <Input id="decimal-input" value={decimal} onChange={e => setDecimal(e.target.value)} className="font-mono" type="text" />
                 </div>
+                <Button onClick={convert} className="w-full">Convert</Button>
                 {hex && (
                     <div className="space-y-2">
                         <Label>Hex Result</Label>
