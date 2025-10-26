@@ -261,7 +261,7 @@ export default function RightTriangleCalculator() {
                                     <AccordionContent>
                                         <div className="p-4 bg-muted rounded-md font-mono text-xs space-y-2 break-words">
                                             {Object.entries(results.steps).map(([key, value]) => (
-                                                value && <p key={key} dangerouslySetInnerHTML={{ __html: String(value) }} />
+                                                (value && typeof value === 'string') && <p key={key} dangerouslySetInnerHTML={{ __html: value }} />
                                             ))}
                                         </div>
                                     </AccordionContent>
