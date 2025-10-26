@@ -8,6 +8,48 @@ import React from 'react';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
 import { Button } from '@/components/ui/button';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Algebra Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "An online algebra calculator that provides step-by-step solutions to algebraic problems. It can simplify expressions, expand brackets, factor polynomials, and solve equations.",
+  "url": "https://maths.calculation.site/algebra",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  },
+  "inLanguage": "en",
+  "softwareVersion": "1.0.0",
+  "offers": {
+    "@type": "Offer",
+    "price": "0"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Algebra Calculators",
+    "item": "https://maths.calculation.site/algebra"
+  }]
+};
+
 const basicTools = [
   { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
   { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
@@ -32,51 +74,61 @@ const basicTools = [
 
 export default function BasicCategoryPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Algebra Calculators
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A collection of essential algebra and math calculators for everyday problems.
-                </p>
-            </section>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-4xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Algebra Calculators
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A collection of essential algebra and math calculators for everyday problems.
+                  </p>
+              </section>
 
-            <div className="max-w-2xl mx-auto">
-                <AlgebraCalculator />
-                <div className="text-center mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/algebra/guide">
-                            <HelpCircle className="mr-2 h-4 w-4" />
-                            How to Use the Algebra Calculator
-                        </Link>
-                    </Button>
-                </div>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
-              {basicTools.map((tool, index) => (
-                <React.Fragment key={tool.label}>
-                  <Link href={tool.href} className="group">
-                    <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                      <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                         <div className="rounded-full bg-primary/10 p-3 text-primary">
-                          <tool.icon className="h-6 w-6" />
-                        </div>
-                        <CardTitle>{tool.label}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </React.Fragment>
-              ))}
-            </div>
-        </div>
-      </main>
-    </div>
+              <div className="max-w-2xl mx-auto">
+                  <AlgebraCalculator />
+                  <div className="text-center mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/algebra/guide">
+                              <HelpCircle className="mr-2 h-4 w-4" />
+                              How to Use the Algebra Calculator
+                          </Link>
+                      </Button>
+                  </div>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
+                {basicTools.map((tool, index) => (
+                  <React.Fragment key={tool.label}>
+                    <Link href={tool.href} className="group">
+                      <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                        <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                           <div className="rounded-full bg-primary/10 p-3 text-primary">
+                            <tool.icon className="h-6 w-6" />
+                          </div>
+                          <CardTitle>{tool.label}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </React.Fragment>
+                ))}
+              </div>
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

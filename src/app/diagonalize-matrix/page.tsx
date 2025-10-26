@@ -6,6 +6,27 @@ import DiagonalizeMatrixCalculator from '@/components/calculators/diagonalize-ma
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Diagonalize Matrix Calculator",
+  "operatingSystem": "All",
+  "applicationCategory": "EducationalApplication",
+  "description": "An online calculator to find the eigenvalues, eigenvectors, and diagonal form of a square matrix. Supports step-by-step calculations for learning purposes.",
+  "url": "https://maths.calculation.site/diagonalize-matrix",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  },
+  "inLanguage": "en",
+  "softwareVersion": "1.0.0",
+  "offers": {
+    "@type": "Offer",
+    "price": "0"
+  }
+};
+
 const faqSchema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -69,6 +90,10 @@ const breadcrumbSchema = {
 export default function DiagonalizeMatrixPage() {
   return (
     <>
+    <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+    />
     <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

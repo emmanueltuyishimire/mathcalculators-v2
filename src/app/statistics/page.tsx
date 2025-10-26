@@ -8,6 +8,40 @@ import StatisticsCalculator from '@/components/calculators/statistics-calculator
 import { Button } from '@/components/ui/button';
 import React from 'react';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Statistics Calculators",
+  "description": "A comprehensive suite of free online statistics calculators for various analyses, including mean, median, mode, standard deviation, probability, and more.",
+  "url": "https://maths.calculation.site/statistics",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Statistics Calculators",
+    "item": "https://maths.calculation.site/statistics"
+  }]
+};
+
 const statisticsTools = [
   {
     href: '/statistics/mean-median-mode',
@@ -102,43 +136,53 @@ const HowToUseGuide = () => (
 
 export default function StatisticsCategoryPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Statistics Calculators
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A comprehensive suite of free online statistics calculators for all your statistical analysis needs.
-                </p>
-            </section>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-4xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Statistics Calculators
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A comprehensive suite of free online statistics calculators for all your statistical analysis needs.
+                  </p>
+              </section>
 
-            <StatisticsCalculator />
-            
-            <HowToUseGuide />
+              <StatisticsCalculator />
+              
+              <HowToUseGuide />
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {statisticsTools.map((tool, index) => (
-                <React.Fragment key={tool.href}>
-                  <Link href={tool.href} className="group" aria-label={`Go to ${tool.label} calculator`}>
-                    <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                      <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                         <div className="rounded-full bg-primary/10 p-3 text-primary">
-                          <tool.icon className="h-6 w-6" />
-                        </div>
-                        <CardTitle>{tool.label}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground">{tool.description}</p>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </React.Fragment>
-              ))}
-            </div>
-        </div>
-      </main>
-    </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {statisticsTools.map((tool, index) => (
+                  <React.Fragment key={tool.href}>
+                    <Link href={tool.href} className="group" aria-label={`Go to ${tool.label} calculator`}>
+                      <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                        <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                           <div className="rounded-full bg-primary/10 p-3 text-primary">
+                            <tool.icon className="h-6 w-6" />
+                          </div>
+                          <CardTitle>{tool.label}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm text-muted-foreground">{tool.description}</p>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  </React.Fragment>
+                ))}
+              </div>
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

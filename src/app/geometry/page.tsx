@@ -5,6 +5,40 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Square, Waves, Volume, Circle, Triangle, TrendingUp, Move3d, Sigma } from 'lucide-react';
 import React from 'react';
 
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Geometry Calculators",
+  "description": "A comprehensive set of free online geometry calculators for area, volume, surface area, slope, distance, and other geometric properties.",
+  "url": "https://maths.calculation.site/geometry",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Math Calculators",
+    "url": "https://maths.calculation.site"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://maths.calculation.site"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Calculators",
+    "item": "https://maths.calculation.site/calculators"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Geometry Calculators",
+    "item": "https://maths.calculation.site/geometry"
+  }]
+};
+
 const geometryTools = [
   {
     href: '/geometry/area',
@@ -59,39 +93,49 @@ const geometryTools = [
 
 export default function GeometryPage() {
   return (
-    <div className="flex flex-1 flex-col">
-      <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Geometry Calculators
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A comprehensive set of free online geometry calculators for area, volume, surface area, and other geometric properties.
-                </p>
-            </section>
-            
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {geometryTools.map((tool, index) => (
-                 <React.Fragment key={tool.label}>
-                    <Link href={tool.href} className="group">
-                      <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                        <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                           <div className="rounded-full bg-primary/10 p-3 text-primary">
-                            <tool.icon className="h-6 w-6" />
-                          </div>
-                          <CardTitle>{tool.label}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm text-muted-foreground">{tool.description}</p>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                 </React.Fragment>
-              ))}
-            </div>
-        </div>
-      </main>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="flex flex-1 flex-col">
+        <main className="flex-1 p-4 md:p-6 lg:p-8">
+          <div className="mx-auto max-w-4xl space-y-8">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Geometry Calculators
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A comprehensive set of free online geometry calculators for area, volume, surface area, and other geometric properties.
+                  </p>
+              </section>
+              
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {geometryTools.map((tool, index) => (
+                   <React.Fragment key={tool.label}>
+                      <Link href={tool.href} className="group">
+                        <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                          <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                             <div className="rounded-full bg-primary/10 p-3 text-primary">
+                              <tool.icon className="h-6 w-6" />
+                            </div>
+                            <CardTitle>{tool.label}</CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <p className="text-sm text-muted-foreground">{tool.description}</p>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                   </React.Fragment>
+                ))}
+              </div>
+          </div>
+        </main>
+      </div>
+    </>
   );
 }
