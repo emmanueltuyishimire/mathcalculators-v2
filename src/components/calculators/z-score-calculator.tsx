@@ -38,11 +38,6 @@ function ZScoreFormulaCalculator() {
         setZScore(z);
     };
 
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rawScore, mean, stdDev]);
-
     return (
         <Card>
             <CardHeader>
@@ -103,11 +98,6 @@ function ZScoreProbabilityConverter() {
         setResults({ p_less, p_greater, p_0_to_z, p_between, p_outside });
     };
 
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [zScore]);
-
     return (
         <Card>
             <CardHeader>
@@ -159,11 +149,6 @@ function ZScoreRangeCalculator() {
         const prob = jStat.normal.cdf(z2_num, 0, 1) - jStat.normal.cdf(z1_num, 0, 1);
         setResult(prob);
     };
-
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [z1, z2]);
 
     return (
         <Card>

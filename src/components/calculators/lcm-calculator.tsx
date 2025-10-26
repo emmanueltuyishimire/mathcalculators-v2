@@ -160,11 +160,6 @@ export default function LcmCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [input]);
-
     const formatFactors = (factors: Map<bigint, number>) => {
         if (factors.size === 0) return '1';
         const expandedFactors: bigint[] = [];

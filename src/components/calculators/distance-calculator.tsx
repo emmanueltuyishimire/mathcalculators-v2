@@ -74,15 +74,6 @@ const TwoDCalculator = () => {
         });
     };
 
-    useEffect(() => {
-        if(p1.x && p1.y && p2.x && p2.y) {
-            calculate();
-        } else {
-            setResult(null);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [p1, p2]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -118,6 +109,7 @@ const TwoDCalculator = () => {
                         </div>
                     </fieldset>
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result !== null && (
                 <CardFooter className="flex-col items-start gap-4 p-4">
@@ -184,15 +176,6 @@ const ThreeDCalculator = () => {
         setResult({ distance, deltaX, deltaY, deltaZ });
     };
 
-    useEffect(() => {
-        if (p1.x && p1.y && p1.z && p2.x && p2.y && p2.z) {
-            calculate();
-        } else {
-            setResult(null);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [p1, p2]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -218,6 +201,7 @@ const ThreeDCalculator = () => {
                         </div>
                     </fieldset>
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result !== null && (
                 <CardFooter className="p-4">
@@ -276,15 +260,6 @@ const LatLongCalculator = () => {
         setDistance({ km, miles });
     };
 
-    useEffect(() => {
-        if (p1.lat && p1.lon && p2.lat && p2.lon) {
-            calculate();
-        } else {
-            setDistance(null);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [p1, p2]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -308,6 +283,7 @@ const LatLongCalculator = () => {
                         </div>
                     </fieldset>
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {distance && (
                 <CardFooter className="p-4">

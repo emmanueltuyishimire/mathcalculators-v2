@@ -11,6 +11,15 @@ import { useToast } from '@/hooks/use-toast';
 type Token = string | number;
 type AngleMode = 'RAD' | 'DEG';
 
+type CalculatorButton = {
+  label: string;
+  onClick: () => void;
+  color: string;
+  active?: boolean;
+  className?: string;
+};
+
+
 const precedence: { [key: string]: number } = {
   '+': 1, '-': 1, '×': 2, '÷': 2, '%': 2, '^': 3,
 };
@@ -483,7 +492,7 @@ export default function ScientificCalculator() {
     setCurrentNumber(prev => (prev || '0') + 'e');
   };
 
-  const buttonRows = [
+  const buttonRows: CalculatorButton[][] = [
     [
       { label: "2nd", onClick: () => setShow2nd(!show2nd), color: "blue", active: show2nd },
       { label: "(", onClick: () => handleParenthesis('('), color: "gray-dark" },
@@ -575,7 +584,7 @@ export default function ScientificCalculator() {
                         'border-b-4 active:border-b-0 active:translate-y-1',
                         'text-white',
                         colorVariants[btn.color as keyof typeof colorVariants] || 'bg-gray-700 border-gray-800',
-                        btn.active && 'ring-2 ring-cyan-400 ring-inset',
+                        (btn as CalculatorButton).active && 'ring-2 ring-cyan-400 ring-inset',
                         btn.className
                     )}
                     onClick={btn.onClick as React.MouseEventHandler<HTMLButtonElement>}

@@ -138,11 +138,6 @@ function BasicFractionCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [f1, f2, op]);
-
     return (
         <Card>
             <CardContent className="pt-6">
@@ -308,11 +303,6 @@ function MixedNumbersCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [m1, m2, op]);
-
      return (
         <Card>
             <CardHeader className="p-4">
@@ -387,11 +377,6 @@ function SimplifyFractionCalculator() {
         }
     };
     
-     useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [frac]);
-
     return (
         <Card>
             <CardHeader className="p-4"><CardTitle className="text-xl">Simplify Fractions Calculator</CardTitle></CardHeader>
@@ -456,11 +441,6 @@ function DecimalToFraction() {
       }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dec]);
-    
     return (
         <Card>
             <CardHeader className="p-4"><CardTitle className="text-xl">Decimal to Fraction</CardTitle></CardHeader>
@@ -521,11 +501,6 @@ function FractionToDecimal() {
       }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [frac]);
-
     return (
         <Card>
             <CardHeader className="p-4"><CardTitle className="text-xl">Fraction to Decimal</CardTitle></CardHeader>
@@ -580,11 +555,6 @@ function BigNumberFractionCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [f1, f2, op]);
-
     return (
         <Card>
             <CardHeader className="p-4">

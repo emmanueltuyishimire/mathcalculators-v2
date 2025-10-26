@@ -101,10 +101,6 @@ const CommonPhrasesCalculator = () => {
          else setVal3({...val3, r: ''});
     }
     
-    useEffect(calc1, [val1.p, val1.w]);
-    useEffect(calc2, [val2.part, val2.whole]);
-    useEffect(calc3, [val3.part, val3.p]);
-
     return (
         <Card className="w-full">
             <CardHeader className="p-4">
@@ -121,6 +117,7 @@ const CommonPhrasesCalculator = () => {
                         <span>?</span>
                     </div>
                      <div className="flex items-center gap-2">
+                        <Button size="sm" onClick={calc1}>Calculate</Button>
                         <Input readOnly value={val1.r} className="bg-muted w-28" aria-label="Result for what is phrase" />
                     </div>
                 </div>
@@ -136,6 +133,7 @@ const CommonPhrasesCalculator = () => {
                         <span>?</span>
                     </div>
                     <div className="flex items-center gap-2">
+                        <Button size="sm" onClick={calc2}>Calculate</Button>
                         <Input readOnly value={val2.r} className="bg-muted w-28" aria-label="Result for is what percent phrase" />
                     </div>
                 </div>
@@ -151,6 +149,7 @@ const CommonPhrasesCalculator = () => {
                         <span>% of what?</span>
                     </div>
                     <div className="flex items-center gap-2">
+                        <Button size="sm" onClick={calc3}>Calculate</Button>
                         <Input readOnly value={val3.r} className="bg-muted w-28" aria-label="Result for is percent of what phrase" />
                     </div>
                 </div>
@@ -181,11 +180,6 @@ const PercentageDifferenceCalculator = () => {
         setResult(diff.toFixed(2));
     };
 
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [val1, val2]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -197,6 +191,7 @@ const PercentageDifferenceCalculator = () => {
                     <span className="font-semibold">and</span>
                     <Input className="flex-1 min-w-[80px]" type="number" value={val2} onChange={e => setVal2(e.target.value)} aria-label="Value 2"/>
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
                 {result && (
                     <Input readOnly value={`${result}%`} className="bg-muted text-center font-semibold" aria-label="Percentage difference result" />
                 )}
@@ -233,11 +228,6 @@ const PercentageChangeCalculator = () => {
         setFinal(finalValue.toFixed(2));
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initial, change, direction]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -255,6 +245,7 @@ const PercentageChangeCalculator = () => {
                     <Button onClick={() => setDirection('increase')} variant={direction === 'increase' ? 'default' : 'secondary'} className="w-full">Increase</Button>
                     <Button onClick={() => setDirection('decrease')} variant={direction === 'decrease' ? 'default' : 'secondary'} className="w-full">Decrease</Button>
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
         </Card>
     );

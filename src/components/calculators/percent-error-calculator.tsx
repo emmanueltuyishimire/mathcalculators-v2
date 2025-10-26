@@ -73,11 +73,6 @@ export default function PercentErrorCalculator() {
         });
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [observed, trueVal]);
-
     return (
         <Card className="shadow-lg">
             <CardHeader>

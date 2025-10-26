@@ -51,12 +51,6 @@ function ProportionCalculator() {
             toast({ variant: 'destructive', title: "Calculation Error", description: e.message });
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [values.a, values.b, values.c, values.d]);
-
 
     return (
         <Card>
@@ -117,11 +111,6 @@ function RatioScalingCalculator() {
         setResult(`${resA.toFixed(4)} : ${resB.toFixed(4)}`);
     }
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [valA, valB, factor, operation]);
-
     return (
         <Card>
             <CardHeader>

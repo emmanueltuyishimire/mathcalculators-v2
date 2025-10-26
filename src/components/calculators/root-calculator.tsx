@@ -32,11 +32,6 @@ function SquareRootCalculator() {
         setResult(Math.sqrt(num).toFixed(6));
     };
 
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -47,6 +42,7 @@ function SquareRootCalculator() {
                     <span className="font-bold text-2xl">√</span>
                     <Input type="number" value={value} onChange={e => setValue(e.target.value)} className="w-full" placeholder="Enter number" aria-label="Number for square root" />
                 </div>
+                <Button onClick={calculate} className="w-full">Calculate</Button>
                 {result && (
                     <div className="p-2 bg-muted rounded-md text-center font-mono font-bold">{result}</div>
                 )}
@@ -74,11 +70,6 @@ function CubeRootCalculator() {
         setResult(Math.cbrt(num).toFixed(6));
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -89,6 +80,7 @@ function CubeRootCalculator() {
                     <span className="font-bold text-2xl">∛</span>
                     <Input type="number" value={value} onChange={e => setValue(e.target.value)} className="w-full" placeholder="Enter number" aria-label="Number for cube root" />
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
                 {result && (
                      <div className="p-2 bg-muted rounded-md text-center font-mono font-bold">{result}</div>
                 )}
@@ -139,11 +131,6 @@ function GeneralRootCalculator() {
         setResult(calculatedResult.toFixed(6));
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [root, number]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -155,6 +142,7 @@ function GeneralRootCalculator() {
                     <span className="font-bold text-3xl ml-1">√</span>
                     <Input aria-label="Number for root" type="number" value={number} onChange={e => setNumber(e.target.value)} className="w-full" placeholder="Enter number" />
                 </div>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
                  {result && (
                      <div className="p-2 bg-muted rounded-md text-center font-mono font-bold">{result}</div>
                 )}

@@ -69,8 +69,7 @@ const CalculatorCard: React.FC<AreaCalculatorProps> = ({ shape, inputs, calculat
     };
     
     useEffect(() => {
-        handleCalculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        setArea('');
     }, [unit]);
 
     return (
