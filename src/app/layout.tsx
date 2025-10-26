@@ -45,6 +45,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          crossOrigin="anonymous"
+        ></script>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={cn(inter.variable, "font-sans antialiased")} suppressHydrationWarning>
@@ -73,13 +78,6 @@ export default function RootLayout({
             gtag('config', 'G-5VPXQ1TJ3X');
           `}
         </Script>
-        {/* Google AdSense Auto Ads */}
-        <Script
-          id="adsbygoogle-init"
-          strategy="lazyOnload"
-          crossOrigin="anonymous"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
-        />
       </body>
     </html>
   );
