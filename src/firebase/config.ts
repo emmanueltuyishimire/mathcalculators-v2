@@ -7,8 +7,18 @@ export const getFirebaseConfig = () => {
     const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
     const messagingSenderId = process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID;
     const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
+    const measurementId = process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID;
 
-    if (!apiKey || !authDomain || !projectId || !storageBucket || !messagingSenderId || !appId) {
+    // Check if all required environment variables are present.
+    const allVarsPresent = 
+        apiKey && 
+        authDomain && 
+        projectId && 
+        storageBucket && 
+        messagingSenderId && 
+        appId;
+
+    if (!allVarsPresent) {
         // This error will be caught by the developer in their local environment
         // if the .env.local file is missing or variables are not set.
         console.error(
@@ -23,6 +33,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=...
 
 Firebase features will be disabled until the configuration is provided.`
         );
+        // Return null to indicate that Firebase cannot be initialized.
         return null;
     }
 
@@ -33,6 +44,6 @@ Firebase features will be disabled until the configuration is provided.`
         storageBucket,
         messagingSenderId,
         appId,
-        measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+        measurementId,
     };
 };

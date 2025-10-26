@@ -37,7 +37,6 @@ const LogEquationCalculator = () => {
     const [result, setResult] = useState('');
     
     const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
-        let newValues = { base, number, result };
         if (field === 'base') setBase(value);
         if (field === 'number') setNumber(value);
         if (field === 'result') setResult(value);
