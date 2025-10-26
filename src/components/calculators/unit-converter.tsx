@@ -44,6 +44,11 @@ const unitConfigTo = {
   },
 }
 
+// Type guard to check if a value is a function
+function isFunction(value: any): value is Function {
+  return typeof value === 'function';
+}
+
 
 type UnitCategory = keyof typeof unitConfig;
 
@@ -74,14 +79,14 @@ export default function UnitConverter() {
     const toUnitConf = unitConfigTo[category][toUnit as keyof typeof unitConfigTo[UnitCategory]];
 
     let baseValue;
-    if (typeof fromUnitConf === 'function') {
+    if (isFunction(fromUnitConf)) {
       baseValue = fromUnitConf(fromValNum);
     } else {
       baseValue = fromValNum * fromUnitConf;
     }
 
     let convertedValue;
-    if (typeof toUnitConf === 'function') {
+    if (isFunction(toUnitConf)) {
       convertedValue = toUnitConf(baseValue);
     } else {
       convertedValue = baseValue / toUnitConf;

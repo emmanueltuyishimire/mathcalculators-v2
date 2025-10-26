@@ -38,7 +38,11 @@ const NotationConverter = () => {
     const convert = () => {
         const num = parseScientific(input);
         if (num === null) {
-            setResults({ scientific: 'Invalid', eNotation: 'Invalid', engineering: 'Invalid', real: 'Invalid' });
+            if (input) {
+                setResults({ scientific: 'Invalid', eNotation: 'Invalid', engineering: 'Invalid', real: 'Invalid' });
+            } else {
+                setResults({ scientific: '', eNotation: '', engineering: '', real: '' });
+            }
             return;
         }
 
@@ -53,11 +57,6 @@ const NotationConverter = () => {
         });
     }
 
-    useEffect(() => {
-        convert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [input]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -71,6 +70,7 @@ const NotationConverter = () => {
                     placeholder="e.g., 3.5x10^-12"
                     className="font-mono text-center"
                 />
+                 <Button onClick={convert} className="w-full mt-4">Convert</Button>
             </CardContent>
             <CardFooter className="flex flex-col items-start gap-3 p-4">
                 <div className="w-full space-y-1">

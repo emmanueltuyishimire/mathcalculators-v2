@@ -56,11 +56,6 @@ const BinaryArithmeticCalculator = () => {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [val1, val2, op]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -124,12 +119,7 @@ const BinToDecConverter = () => {
             setDecimal('');
         }
     };
-
-    useEffect(() => {
-        convert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [binary]);
-
+    
     return (
         <Card>
             <CardHeader className="p-4">
@@ -140,6 +130,7 @@ const BinToDecConverter = () => {
                     <Label htmlFor="binary-input">Binary Value</Label>
                     <Input id="binary-input" value={binary} onChange={e => setBinary(e.target.value)} className="font-mono" />
                 </div>
+                <Button onClick={convert} className="w-full">Convert</Button>
                 {decimal && (
                      <div className="space-y-2">
                         <Label>Decimal Result</Label>
@@ -176,11 +167,6 @@ const DecToBinConverter = () => {
         }
     };
     
-    useEffect(() => {
-        convert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [decimal]);
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -191,6 +177,7 @@ const DecToBinConverter = () => {
                     <Label htmlFor="decimal-input">Decimal Value</Label>
                     <Input id="decimal-input" value={decimal} onChange={e => setDecimal(e.target.value)} className="font-mono" type="number" />
                 </div>
+                <Button onClick={convert} className="w-full">Convert</Button>
                 {binary && (
                     <div className="space-y-2">
                         <Label>Binary Result</Label>
