@@ -86,13 +86,13 @@ export default function AboutPage() {
                 <CardHeader>
                     <CardTitle>Get in Touch</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-2">
                     <p className="text-muted-foreground">
                         We are always looking to improve and expand our offerings. If you have any feedback, suggestions for new calculators, or questions, please do not hesitate to contact us. Your input is invaluable as we continue to build Math Calculators into the best possible resource for the community.
                     </p>
-                    <p className="mt-2">
+                    <div className="pt-2">
                         <Link href="/contact" className="text-primary hover:underline font-semibold">Contact us</Link>
-                    </p>
+                    </div>
                 </CardContent>
             </Card>
 

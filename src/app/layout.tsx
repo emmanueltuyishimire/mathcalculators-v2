@@ -11,8 +11,6 @@ import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://maths.calculation.site'),
   title: {
@@ -45,7 +43,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
       <head>
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
@@ -65,9 +63,9 @@ export default function RootLayout({
         {/* Google tag (gtag.js) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-5VPXQ1TJ3X"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -78,7 +76,7 @@ export default function RootLayout({
         {/* Google AdSense Auto Ads */}
         <Script
           id="adsbygoogle-init"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
         />

@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export function AppFooter() {
-    const [isClient, setIsClient] = useState(false)
- 
+    const [year, setYear] = useState<number | null>(null);
+
     useEffect(() => {
-        setIsClient(true)
-    }, [])
+        setYear(new Date().getFullYear());
+    }, []);
 
     return (
         <footer className="border-t bg-background">
@@ -62,7 +62,7 @@ export function AppFooter() {
             </div>
             <div className="border-t py-4">
                 <div className="container mx-auto text-center text-xs text-muted-foreground">
-                    {isClient ? `© ${new Date().getFullYear()} ` : `© 2025 `}
+                    © {year || new Date().getFullYear()}{' '}
                     <a
                         href="https://calculation.site"
                         target="_blank"
