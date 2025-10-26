@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation';
 import {
   Calculator,
   Square,
-  Sigma,
   Menu,
   BarChartHorizontal,
   Table,
@@ -31,6 +30,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { AppFooter } from './app-footer';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
@@ -44,49 +44,52 @@ const navItems = [
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-50">
         <div className="flex items-center gap-2">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="shrink-0 md:hidden"
-                aria-label="Toggle navigation menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-              <nav className="grid gap-6 text-lg font-medium">
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 text-lg font-semibold"
-                  onClick={() => setOpen(false)}
-                  aria-label="Math Calculators Home"
+          {isMobile && (
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="shrink-0"
+                  aria-label="Toggle navigation menu"
                 >
-                  <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
-                   <span>Math Calculators</span>
-                </Link>
-                {navItems.map((item) => (
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <nav className="grid gap-6 text-lg font-medium">
                   <Link
-                    key={item.href}
-                    href={item.href}
+                    href="/"
+                    className="flex items-center gap-2 text-lg font-semibold"
                     onClick={() => setOpen(false)}
-                    className={cn(
-                      "hover:text-foreground",
-                      pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic') ? "text-foreground" : "text-muted-foreground"
-                    )}
+                    aria-label="Math Calculators Home"
                   >
-                    {item.label}
+                    <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
+                     <span>Math Calculators</span>
                   </Link>
-                ))}
-              </nav>
-            </SheetContent>
-          </Sheet>
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "hover:text-foreground",
+                        pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic') ? "text-foreground" : "text-muted-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          )}
            <Link
             href="/"
             className="flex items-center gap-2 text-lg font-semibold"
@@ -98,19 +101,21 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
         
         <div className="flex w-full items-center justify-end gap-4">
-             <NavigationMenu className="hidden md:flex">
-                <NavigationMenuList>
-                    {navItems.map((item) => (
-                    <NavigationMenuItem key={item.href}>
-                        <NavigationMenuLink asChild active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic')}>
-                            <Link href={item.href} className={navigationMenuTriggerStyle()}>
-                                {item.label}
-                            </Link>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                    ))}
-                </NavigationMenuList>
-            </NavigationMenu>
+             {!isMobile && (
+              <NavigationMenu>
+                  <NavigationMenuList>
+                      {navItems.map((item) => (
+                      <NavigationMenuItem key={item.href}>
+                          <NavigationMenuLink asChild active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic')}>
+                              <Link href={item.href} className={navigationMenuTriggerStyle()}>
+                                  {item.label}
+                              </Link>
+                          </NavigationMenuLink>
+                      </NavigationMenuItem>
+                      ))}
+                  </NavigationMenuList>
+              </NavigationMenu>
+             )}
             <ThemeToggle />
         </div>
       </header>
