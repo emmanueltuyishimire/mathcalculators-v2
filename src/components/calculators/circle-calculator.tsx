@@ -20,9 +20,9 @@ export default function CircleCalculator() {
     const { toast } = useToast();
     const [values, setValues] = useState<CircleValues>({
         radius: '1',
-        diameter: '',
-        circumference: '',
-        area: ''
+        diameter: '2.00000',
+        circumference: '6.28319',
+        area: '3.14159'
     });
 
     const calculateFrom = (changedProperty: CircleProperty, value: string) => {
@@ -82,10 +82,6 @@ export default function CircleCalculator() {
         const changedProperty = name as CircleProperty;
         calculateFrom(changedProperty, value);
     };
-
-    useEffect(() => {
-        calculateFrom('radius', '1');
-    }, []);
 
     return (
         <Card className="shadow-lg">
