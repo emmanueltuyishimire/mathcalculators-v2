@@ -1,7 +1,6 @@
-
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://maths.calculation.site',
+  siteUrl: 'https://www.maths.calculation.site',
   generateRobotsTxt: true, // (optional)
   // ...other options
 }
