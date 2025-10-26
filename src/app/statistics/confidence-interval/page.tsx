@@ -36,7 +36,7 @@ const EducationalContent = () => (
                         </TableRow>
                         <TableRow>
                             <TableCell>Standard Deviation (σ or s)</TableCell>
-                            <TableCell>Known population SD (σ) or sample SD (s) if n > 30.</TableCell>
+                            <TableCell>Known population SD (σ) or sample SD (s) if n &gt; 30.</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>Confidence Level</TableCell>
