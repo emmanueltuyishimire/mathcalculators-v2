@@ -28,7 +28,7 @@ const confidenceLevels = [
 function FindSampleSize() {
     const { toast } = useToast();
     const [confidence, setConfidence] = useState("1.96");
-    const [marginError, setMarginError] = useState('');
+    const [marginError, setMarginError] = useState('5');
     const [popProp, setPopProp] = useState("50");
     const [popSize, setPopSize] = useState("");
     const [result, setResult] = useState<number | null>(null);
@@ -68,7 +68,7 @@ function FindSampleSize() {
                 <div className="space-y-2">
                     <Label htmlFor="ss-confidence">Confidence Level</Label>
                     <Select value={confidence} onValueChange={setConfidence}>
-                        <SelectTrigger id="ss-confidence"><SelectValue /></SelectTrigger>
+                        <SelectTrigger id="ss-confidence" aria-label="Confidence Level"><SelectValue /></SelectTrigger>
                         <SelectContent>
                             {confidenceLevels.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
                         </SelectContent>
@@ -76,16 +76,16 @@ function FindSampleSize() {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="ss-marginError">Margin of Error (%)</Label>
-                    <Input id="ss-marginError" type="number" value={marginError} onChange={(e) => setMarginError(e.target.value)} />
+                    <Input id="ss-marginError" type="number" value={marginError} onChange={(e) => setMarginError(e.target.value)} aria-label="Margin of Error"/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="ss-popProp">Population Proportion (%)</Label>
-                    <Input id="ss-popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} />
+                    <Input id="ss-popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} aria-label="Population Proportion" />
                     <p className="text-xs text-muted-foreground">Use 50% if not sure</p>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="ss-popSize">Population Size</Label>
-                    <Input id="ss-popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" />
+                    <Input id="ss-popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" aria-label="Population Size" />
                 </div>
                 <Button onClick={calculate} className="w-full">Calculate Sample Size</Button>
             </CardContent>
@@ -103,7 +103,7 @@ function FindSampleSize() {
 function FindMarginOfError() {
     const { toast } = useToast();
     const [confidence, setConfidence] = useState("1.96");
-    const [sampleSize, setSampleSize] = useState("");
+    const [sampleSize, setSampleSize] = useState("1000");
     const [popProp, setPopProp] = useState("50");
     const [popSize, setPopSize] = useState("");
     const [result, setResult] = useState<number | null>(null);
@@ -150,7 +150,7 @@ function FindMarginOfError() {
                  <div className="space-y-2">
                     <Label htmlFor="moe-confidence">Confidence Level</Label>
                     <Select value={confidence} onValueChange={setConfidence}>
-                        <SelectTrigger id="moe-confidence"><SelectValue /></SelectTrigger>
+                        <SelectTrigger id="moe-confidence" aria-label="Confidence Level"><SelectValue /></SelectTrigger>
                         <SelectContent>
                             {confidenceLevels.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
                         </SelectContent>
@@ -158,15 +158,15 @@ function FindMarginOfError() {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="moe-sampleSize">Sample Size</Label>
-                    <Input id="moe-sampleSize" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} />
+                    <Input id="moe-sampleSize" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} aria-label="Sample Size"/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="moe-popProp">Population Proportion (%)</Label>
-                    <Input id="moe-popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} />
+                    <Input id="moe-popProp" type="number" value={popProp} onChange={(e) => setPopProp(e.target.value)} aria-label="Population Proportion"/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="moe-popSize">Population Size</Label>
-                    <Input id="moe-popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" />
+                    <Input id="moe-popSize" type="number" value={popSize} onChange={(e) => setPopSize(e.target.value)} placeholder="Leave blank if unlimited" aria-label="Population Size" />
                 </div>
                 <Button onClick={calculate} className="w-full">Calculate Margin of Error</Button>
             </CardContent>

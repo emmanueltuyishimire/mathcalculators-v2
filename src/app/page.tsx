@@ -7,8 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
 import React from 'react';
-import ScientificCalculator from '@/components/calculators/scientific-calculator';
+import dynamic from 'next/dynamic';
 import placeholderImages from '@/lib/placeholder-images.json';
+
+const ScientificCalculator = dynamic(() => import('@/components/calculators/scientific-calculator'), {
+  ssr: false,
+  loading: () => <div className="h-[500px] w-full max-w-sm mx-auto bg-muted rounded-xl animate-pulse" />
+});
 
 function HeroSection() {
   const heroImage = placeholderImages.find(p => p.id === 'heroImage');

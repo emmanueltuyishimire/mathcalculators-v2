@@ -94,7 +94,7 @@ const TwoPointsCalculator = () => {
   useEffect(() => {
     calculate();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [p1, p2]);
 
   return (
     <Card className="border-none shadow-none">
@@ -105,21 +105,21 @@ const TwoPointsCalculator = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="x1">X1</Label>
-            <Input id="x1" type="number" value={p1.x} onChange={e => setP1({ ...p1, x: e.target.value })} />
+            <Input id="x1" type="number" value={p1.x} onChange={e => setP1({ ...p1, x: e.target.value })} aria-label="X1 coordinate"/>
           </div>
           <div className="space-y-2">
             <Label htmlFor="y1">Y1</Label>
-            <Input id="y1" type="number" value={p1.y} onChange={e => setP1({ ...p1, y: e.target.value })} />
+            <Input id="y1" type="number" value={p1.y} onChange={e => setP1({ ...p1, y: e.target.value })} aria-label="Y1 coordinate"/>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="x2">X2</Label>
-            <Input id="x2" type="number" value={p2.x} onChange={e => setP2({ ...p2, x: e.target.value })} />
+            <Input id="x2" type="number" value={p2.x} onChange={e => setP2({ ...p2, x: e.target.value })} aria-label="X2 coordinate"/>
           </div>
           <div className="space-y-2">
             <Label htmlFor="y2">Y2</Label>
-            <Input id="y2" type="number" value={p2.y} onChange={e => setP2({ ...p2, y: e.target.value })} />
+            <Input id="y2" type="number" value={p2.y} onChange={e => setP2({ ...p2, y: e.target.value })} aria-label="Y2 coordinate"/>
           </div>
         </div>
          <Button onClick={calculate} className="w-full">Calculate Slope</Button>
@@ -236,29 +236,29 @@ const OnePointSlopeCalculator = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="x1_single">X1</Label>
-            <Input id="x1_single" type="number" value={point.x} onChange={e => setPoint({ ...point, x: e.target.value })} />
+            <Input id="x1_single" type="number" value={point.x} onChange={e => setPoint({ ...point, x: e.target.value })} aria-label="X1 coordinate"/>
           </div>
           <div className="space-y-2">
             <Label htmlFor="y1_single">Y1</Label>
-            <Input id="y1_single" type="number" value={point.y} onChange={e => setPoint({ ...point, y: e.target.value })} />
+            <Input id="y1_single" type="number" value={point.y} onChange={e => setPoint({ ...point, y: e.target.value })} aria-label="Y1 coordinate"/>
           </div>
         </div>
         <div className="space-y-2">
             <Label htmlFor="distance">Distance (d)</Label>
-            <Input id="distance" type="number" value={distance} onChange={e => setDistance(e.target.value)} />
+            <Input id="distance" type="number" value={distance} onChange={e => setDistance(e.target.value)} aria-label="Distance"/>
         </div>
         
         <RadioGroup value={inputType} onValueChange={(val) => setInputType(val as 'slope' | 'angle')} className="my-4">
             <div className="flex items-center space-x-2">
                 <RadioGroupItem value="slope" id="r_slope" />
                 <Label htmlFor="r_slope" className="flex-1">Slope (m)</Label>
-                <Input type="number" value={slope} onChange={e => setSlope(e.target.value)} disabled={inputType !== 'slope'} className="max-w-[150px]" />
+                <Input type="number" value={slope} onChange={e => setSlope(e.target.value)} disabled={inputType !== 'slope'} className="max-w-[150px]" aria-label="Slope"/>
             </div>
              <div className="text-center text-xs text-muted-foreground">OR</div>
             <div className="flex items-center space-x-2">
                 <RadioGroupItem value="angle" id="r_angle" />
                 <Label htmlFor="r_angle" className="flex-1">Angle of Incline (θ)</Label>
-                <Input type="number" value={angle} onChange={e => setAngle(e.target.value)} disabled={inputType !== 'angle'} className="max-w-[150px]" />
+                <Input type="number" value={angle} onChange={e => setAngle(e.target.value)} disabled={inputType !== 'angle'} className="max-w-[150px]" aria-label="Angle of Incline"/>
                 <span className="text-sm">°</span>
             </div>
         </RadioGroup>

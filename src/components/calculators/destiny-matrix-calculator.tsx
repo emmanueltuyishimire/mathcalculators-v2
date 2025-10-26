@@ -54,6 +54,9 @@ export default function DestinyMatrixCalculator() {
       if (!year || !month || !day || isNaN(parseInt(day)) || isNaN(parseInt(month)) || isNaN(parseInt(year))) {
         throw new Error("Invalid date format. Please use YYYY-MM-DD.");
       }
+      if (parseInt(year) > new Date().getFullYear()) {
+          throw new Error("Birth year cannot be in the future.");
+      }
 
       const a = sumDigits(day);
       const b = sumDigits(month);
@@ -111,6 +114,7 @@ export default function DestinyMatrixCalculator() {
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
               className="h-10"
+              aria-label="Date of Birth"
             />
           </div>
           <div className="flex items-end gap-2">

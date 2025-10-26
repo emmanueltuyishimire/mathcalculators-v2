@@ -61,11 +61,15 @@ export default function BigNumberCalculator() {
             str = str.toLowerCase();
             if (str.includes('e')) {
                 const parts = str.split('e');
-                const base = BigInt(Math.floor(parseFloat(parts[0])));
+                // Handle cases like 'e18' where the base is missing
+                const baseStr = parts[0] || '1';
+                const base = parseFloat(baseStr);
                 const exp = parseInt(parts[1], 10);
-                if (isNaN(exp)) return null;
-                return base * (10n ** BigInt(exp));
+                if (isNaN(base) || isNaN(exp)) return null;
+                // Using BigInt constructor with string to avoid precision loss for large numbers
+                return BigInt(base) * (10n ** BigInt(exp));
             }
+             // For regular numbers, just convert to BigInt
             return BigInt(str);
         } catch {
             return null;
@@ -75,7 +79,6 @@ export default function BigNumberCalculator() {
     const calculate = (op: 'add' | 'subtract' | 'multiply' | 'divide' | 'power' | 'sqrt' | 'sq' | 'factorial' | 'mod' | 'gcd' | 'lcm') => {
         const xVal = parseBigInt(x);
         const yVal = op !== 'sqrt' && op !== 'sq' && op !== 'factorial' ? parseBigInt(y) : null;
-        const prec = parseInt(precision);
 
         if (xVal === null) {
             toast({ variant: 'destructive', title: 'Invalid Input', description: 'Value X is not a valid large integer.' });
@@ -105,8 +108,7 @@ export default function BigNumberCalculator() {
                 case 'sq': res = xVal * xVal; break;
                 case 'factorial': 
                     if (xVal > 10000n) {
-                         toast({ variant: 'destructive', title: 'Input too large', description: 'Factorial for numbers over 10000 is too slow.' });
-                         return;
+                         toast({ variant: 'destructive', title: 'Input too large', description: 'Factorial for numbers over 10,000 may be slow.' });
                     }
                     res = bigIntFactorial(xVal); break;
                 case 'mod': res = xVal % yVal!; break;
@@ -129,11 +131,11 @@ export default function BigNumberCalculator() {
             <CardContent className="space-y-4 p-4">
                  <div className="space-y-2">
                     <Label htmlFor="x-val">X =</Label>
-                    <Input id="x-val" value={x} onChange={e => setX(e.target.value)} placeholder="e.g., 23E18 or a large integer" />
+                    <Input id="x-val" value={x} onChange={e => setX(e.target.value)} placeholder="e.g., 23E18 or a large integer" aria-label="Value X"/>
                 </div>
                  <div className="space-y-2">
                     <Label htmlFor="y-val">Y =</Label>
-                    <Input id="y-val" value={y} onChange={e => setY(e.target.value)} placeholder="e.g., 3.5e19 or a large integer" />
+                    <Input id="y-val" value={y} onChange={e => setY(e.target.value)} placeholder="e.g., 3.5e19 or a large integer" aria-label="Value Y"/>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                     <Button size="sm" onClick={() => calculate('add')}>X + Y</Button>
@@ -153,7 +155,7 @@ export default function BigNumberCalculator() {
                 <CardFooter className="p-4">
                      <div className="w-full space-y-2">
                         <Label>Result</Label>
-                        <Textarea readOnly value={result} className="bg-muted font-mono h-24" />
+                        <Textarea readOnly value={result} className="bg-muted font-mono h-24" aria-label="Calculation Result"/>
                     </div>
                 </CardFooter>
             )}

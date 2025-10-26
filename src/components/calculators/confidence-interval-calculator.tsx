@@ -39,7 +39,7 @@ export default function ConfidenceIntervalCalculator() {
         const sd = parseFloat(stdDev);
         const z = parseFloat(confidence);
 
-        if ([n, mean, sd].some(isNaN)) {
+        if ([sampleSize, sampleMean, stdDev].some(v => v === '') || [n, mean, sd].some(isNaN)) {
              setResult(null);
              if (sampleSize || sampleMean || stdDev) {
                 toast({
@@ -55,7 +55,7 @@ export default function ConfidenceIntervalCalculator() {
             toast({
                 variant: 'destructive',
                 title: "Invalid Input",
-                description: "Please check your inputs. Sample size must be positive and standard deviation non-negative.",
+                description: "Sample size must be positive and standard deviation non-negative.",
             });
             setResult(null);
             return;
@@ -82,20 +82,20 @@ export default function ConfidenceIntervalCalculator() {
             <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
                 <div className="space-y-2">
                     <Label htmlFor="sample-size">Sample Size (n)</Label>
-                    <Input id="sample-size" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} min="1" />
+                    <Input id="sample-size" type="number" value={sampleSize} onChange={(e) => setSampleSize(e.target.value)} min="1" aria-label="Sample Size"/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="sample-mean">Sample Mean (X̄)</Label>
-                    <Input id="sample-mean" type="number" value={sampleMean} onChange={(e) => setSampleMean(e.target.value)} />
+                    <Input id="sample-mean" type="number" value={sampleMean} onChange={(e) => setSampleMean(e.target.value)} aria-label="Sample Mean" />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="std-dev">Standard Deviation (σ or s)</Label>
-                    <Input id="std-dev" type="number" value={stdDev} onChange={(e) => setStdDev(e.target.value)} min="0" />
+                    <Input id="std-dev" type="number" value={stdDev} onChange={(e) => setStdDev(e.target.value)} min="0" aria-label="Standard Deviation"/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="confidence-level">Confidence Level</Label>
                     <Select value={confidence} onValueChange={setConfidence}>
-                        <SelectTrigger id="confidence-level"><SelectValue /></SelectTrigger>
+                        <SelectTrigger id="confidence-level" aria-label="Confidence Level"><SelectValue /></SelectTrigger>
                         <SelectContent>
                             {confidenceLevels.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
                         </SelectContent>
