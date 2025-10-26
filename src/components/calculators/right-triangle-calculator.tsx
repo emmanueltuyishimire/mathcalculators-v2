@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -172,11 +172,6 @@ export default function RightTriangleCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const handleClear = () => {
         setValues({ a: '', b: '', c: '', alpha: '', beta: ''});
         setResults(null);
@@ -184,7 +179,7 @@ export default function RightTriangleCalculator() {
 
     const givenString = () => {
         if (!results || !results.inputs) return '';
-        const parts = [];
+        const parts: string[] = [];
         const { a, b, c, alpha, beta } = results.inputs;
         if (a !== null && !isNaN(a)) parts.push(`a=${a}`);
         if (b !== null && !isNaN(b)) parts.push(`b=${b}`);
