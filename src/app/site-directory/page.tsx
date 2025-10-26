@@ -103,8 +103,8 @@ export default function SitemapPage() {
         <PageHeader title="Site Directory" />
         <main className="flex-1 p-4 md:p-6 lg:p-12">
           <div className="mx-auto max-w-6xl space-y-12">
-            <section className="text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <section className="text-center" aria-labelledby="sitemap-heading">
+              <h1 id="sitemap-heading" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                 Site Directory
               </h1>
               <p className="mt-4 text-lg text-muted-foreground">
@@ -114,8 +114,8 @@ export default function SitemapPage() {
             
             <div className="space-y-12">
               {sitemapData.map((category) => (
-                <div key={category.category}>
-                    <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                <section key={category.category} aria-labelledby={`category-title-${category.category.replace(/\s+/g, '-').toLowerCase()}`}>
+                    <h2 id={`category-title-${category.category.replace(/\s+/g, '-').toLowerCase()}`} className="text-2xl font-bold mb-4 flex items-center gap-2">
                         <category.icon className="h-6 w-6 text-primary" aria-hidden="true" />
                         {category.category}
                     </h2>
@@ -133,7 +133,7 @@ export default function SitemapPage() {
                          </Link>
                       ))}
                     </div>
-                </div>
+                </section>
               ))}
             </div>
           </div>

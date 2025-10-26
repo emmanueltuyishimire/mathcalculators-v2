@@ -1,9 +1,17 @@
+
 "use client";
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export function AppFooter() {
+    const [isClient, setIsClient] = useState(false)
+ 
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
+
     return (
         <footer className="border-t bg-background">
             <div className="container mx-auto py-8 px-4 md:px-6">
@@ -54,7 +62,7 @@ export function AppFooter() {
             </div>
             <div className="border-t py-4">
                 <div className="container mx-auto text-center text-xs text-muted-foreground">
-                    © 2025{' '}
+                    {isClient ? `© ${new Date().getFullYear()} ` : `© 2025 `}
                     <a
                         href="https://calculation.site"
                         target="_blank"

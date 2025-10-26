@@ -1,3 +1,4 @@
+
 "use client";
 
 import { PageHeader } from '@/components/page-header';
@@ -12,8 +13,8 @@ export default function AboutPage() {
         <PageHeader title="About Math Calculators" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-4xl space-y-12">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <section className="text-center" aria-labelledby="about-heading">
+                <h1 id="about-heading" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                     Welcome to Math Calculators
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
@@ -25,7 +26,7 @@ export default function AboutPage() {
                 <CardHeader>
                     <CardTitle>
                         <div className="flex items-center gap-2">
-                            <Target className="h-6 w-6 text-primary" />
+                            <Target className="h-6 w-6 text-primary" aria-hidden="true" />
                             <span>Our Mission</span>
                         </div>
                     </CardTitle>
@@ -45,7 +46,7 @@ export default function AboutPage() {
                     <CardHeader>
                         <CardTitle>
                              <div className="flex items-center gap-2">
-                                <Users className="h-6 w-6 text-primary" />
+                                <Users className="h-6 w-6 text-primary" aria-hidden="true" />
                                 <span>Who We Are For</span>
                             </div>
                         </CardTitle>
@@ -64,7 +65,7 @@ export default function AboutPage() {
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-2">
-                                <Zap className="h-6 w-6 text-primary" />
+                                <Zap className="h-6 w-6 text-primary" aria-hidden="true" />
                                 <span>Our Commitment</span>
                             </div>
                         </CardTitle>
@@ -89,7 +90,9 @@ export default function AboutPage() {
                     <p className="text-muted-foreground">
                         We are always looking to improve and expand our offerings. If you have any feedback, suggestions for new calculators, or questions, please do not hesitate to contact us. Your input is invaluable as we continue to build Math Calculators into the best possible resource for the community.
                     </p>
-                    <Link href="/contact" className="text-primary hover:underline">Contact us</Link>
+                    <p className="mt-2">
+                        <Link href="/contact" className="text-primary hover:underline font-semibold">Contact us</Link>
+                    </p>
                 </CardContent>
             </Card>
 

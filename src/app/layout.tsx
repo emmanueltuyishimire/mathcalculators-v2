@@ -46,11 +46,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
       <head>
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-        {/* Google AdSense Meta */}
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={cn(inter.variable, "font-body antialiased")} suppressHydrationWarning>
+      <body className={cn(inter.variable, "font-sans antialiased")} suppressHydrationWarning>
         <FirebaseClientProvider>
           <ThemeProvider
             attribute="class"
@@ -78,10 +77,10 @@ export default function RootLayout({
         </Script>
         {/* Google AdSense Auto Ads */}
         <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
-          crossOrigin="anonymous"
+          id="adsbygoogle-init"
           strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
         />
       </body>
     </html>

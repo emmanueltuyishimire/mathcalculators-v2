@@ -105,8 +105,8 @@ export default function GeometryPage() {
       <div className="flex flex-1 flex-col">
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="mx-auto max-w-4xl space-y-8">
-              <section className="text-center">
-                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+              <section className="text-center" aria-labelledby="page-title">
+                  <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Geometry Calculators
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
@@ -115,7 +115,7 @@ export default function GeometryPage() {
               </section>
               
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {geometryTools.map((tool, index) => (
+                {geometryTools.map((tool) => (
                    <React.Fragment key={tool.label}>
                       <Link href={tool.href} className="group">
                         <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">

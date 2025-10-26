@@ -127,16 +127,18 @@ export default function CalculatorsPage() {
                   <h2 id={`category-heading-${catIndex}`} className="text-3xl md:text-4xl font-bold text-center mb-8">{category.title}</h2>
                   <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                     {category.tools.map((tool) => (
-                      <Link href={tool.href} key={tool.label} className="group" aria-label={`Go to ${tool.label}`}>
-                        <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                          <CardHeader className="flex flex-col items-center text-center p-4">
-                            <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
-                              <tool.icon className="h-6 w-6" aria-hidden="true" />
-                            </div>
-                            <CardTitle className="text-base">{tool.label}</CardTitle>
-                          </CardHeader>
-                        </Card>
-                      </Link>
+                      <React.Fragment key={tool.label}>
+                        <Link href={tool.href} className="group" aria-label={`Go to ${tool.label}`}>
+                          <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                            <CardHeader className="flex flex-col items-center text-center p-4">
+                              <div className="mb-2 rounded-full bg-primary/10 p-3 text-primary">
+                                <tool.icon className="h-6 w-6" aria-hidden="true" />
+                              </div>
+                              <CardTitle className="text-base">{tool.label}</CardTitle>
+                            </CardHeader>
+                          </Card>
+                        </Link>
+                      </React.Fragment>
                     ))}
                   </div>
               </div>

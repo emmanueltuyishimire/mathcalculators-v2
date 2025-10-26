@@ -125,7 +125,8 @@ export default function Home() {
             </div>
         </section>
 
-        <section id="tools" className="space-y-12">
+        <section id="tools" aria-labelledby="tools-heading" className="space-y-12">
+            <h2 id="tools-heading" className="sr-only">Calculator Categories</h2>
             {calculatorCategories.map((category, catIndex) => (
                  <div key={category.title} aria-labelledby={`category-heading-${catIndex}`}>
                     <div className="relative h-40 w-full rounded-xl overflow-hidden mb-6 shadow-lg" role="presentation">
