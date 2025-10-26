@@ -1,5 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
-Disallow:
+Allow: /
 
-Sitemap: /sitemap.xml
+# Host
+Host: https://maths.calculation.site
+
+# Sitemaps
+Sitemap: https://maths.calculation.site/sitemap.xml
