@@ -54,7 +54,7 @@ export function AppFooter() {
             </div>
             <div className="border-t py-4">
                 <div className="container mx-auto text-center text-xs text-muted-foreground">
-                    © 2024{' '}
+                    © 2025{' '}
                     <a
                         href="https://calculation.site"
                         target="_blank"
