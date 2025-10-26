@@ -6,8 +6,13 @@ import { AppLayout } from '@/components/app-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
-import { FirebaseClientProvider } from '@/firebase';
+import dynamic from 'next/dynamic';
 import Script from 'next/script';
+
+const FirebaseClientProvider = dynamic(
+  () => import('@/firebase/client-provider').then((mod) => mod.FirebaseClientProvider),
+  { ssr: false }
+);
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
@@ -44,7 +49,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
-        <meta name="google-adsense-account" content="ca-pub-3042243846300811" />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
