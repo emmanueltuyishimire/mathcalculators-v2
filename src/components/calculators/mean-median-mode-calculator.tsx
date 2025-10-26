@@ -82,11 +82,6 @@ export default function MeanMedianModeCalculator() {
     });
   };
   
-  useEffect(() => {
-    calculate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
-
   return (
     <div className="space-y-4">
         <Card className="shadow-lg">

@@ -68,11 +68,6 @@ export default function ConfidenceIntervalCalculator() {
         setResult({ marginOfError, lowerBound, upperBound });
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [confidence, sampleSize, sampleMean, stdDev]);
-
     return (
         <Card className="shadow-lg">
             <CardHeader className="p-4">
@@ -100,6 +95,9 @@ export default function ConfidenceIntervalCalculator() {
                             {confidenceLevels.map(c => <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>)}
                         </SelectContent>
                     </Select>
+                </div>
+                <div className="sm:col-span-2">
+                    <Button onClick={calculate} className="w-full">Calculate</Button>
                 </div>
             </CardContent>
             {result !== null && (

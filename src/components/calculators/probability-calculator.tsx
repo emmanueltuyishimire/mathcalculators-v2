@@ -33,7 +33,9 @@ function TwoEventsCalculator() {
     const pB_num = parseFloat(pB);
 
     if (isNaN(pA_num) || isNaN(pB_num) || pA_num < 0 || pA_num > 1 || pB_num < 0 || pB_num > 1) {
-      toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please input valid probabilities between 0 and 1.' });
+      if (pA || pB) {
+        toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please input valid probabilities between 0 and 1.' });
+      }
       return;
     }
 
@@ -49,11 +51,6 @@ function TwoEventsCalculator() {
 
     setResults({ pAnot, pBnot, pAandB, pAorB, pXorB, pNeither, pAnotB, pBnotA });
   };
-  
-  useEffect(() => {
-    calculate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   
   const resultEntries = useMemo(() => {
     if (!results) return [];
@@ -235,11 +232,6 @@ function NormalDistributionCalculator() {
 
         setResult({ probBetween, probOutside, probLeft, probRight });
     }
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     
     const confidenceTable = useMemo(() => {
         const mean_num = parseFloat(mean);

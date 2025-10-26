@@ -96,11 +96,6 @@ export default function FactorCalculator() {
         }
     };
     
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [input]);
-
     return (
         <Card className="shadow-lg">
             <CardHeader className="p-4">
@@ -118,6 +113,7 @@ export default function FactorCalculator() {
                         type="number"
                     />
                 </div>
+                <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result && (
                 <CardFooter className="flex-col items-start gap-3 p-4">

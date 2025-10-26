@@ -113,9 +113,8 @@ export default function StandardDeviationCalculator() {
   };
   
   useEffect(() => {
-    calculate();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, type]);
+    // This is now triggered by the button click, not automatically
+  }, []);
   
   const stats = calculatedStats;
 
