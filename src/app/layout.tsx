@@ -7,7 +7,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import Script from 'next/script';
-import { FirebaseClientProviderWrapper } from '@/firebase/client-provider-wrapper';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 
@@ -54,7 +53,6 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={cn(inter.variable, "font-sans antialiased")} suppressHydrationWarning>
-        <FirebaseClientProviderWrapper>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -64,7 +62,6 @@ export default function RootLayout({
             <AppLayout>{children}</AppLayout>
             <Toaster />
           </ThemeProvider>
-        </FirebaseClientProviderWrapper>
 
         {/* Google tag (gtag.js) */}
         <Script
