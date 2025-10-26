@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -42,6 +41,7 @@ export function AppFooter() {
                         <ul className="space-y-2 text-sm">
                             <li><Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link></li>
                             <li><Link href="/contact" className="text-muted-foreground hover:text-primary">Contact</Link></li>
+                            <li><Link href="/sitemap.xml" className="text-muted-foreground hover:text-primary">Sitemap</Link></li>
                         </ul>
                     </div>
                     <div>
