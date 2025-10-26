@@ -108,6 +108,7 @@ export default function CalculatorsPage() {
                   fill
                   priority
                   className="object-cover"
+                  sizes="100vw"
               />
           )}
           <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">

@@ -24,6 +24,7 @@ function HeroSection() {
         fill
         priority
         className="object-cover"
+        sizes="100vw"
         />
       <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
         <h1 id="hero-heading" className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>

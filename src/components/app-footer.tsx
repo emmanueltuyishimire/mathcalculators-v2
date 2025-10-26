@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export function AppFooter() {
-    const [year, setYear] = useState<number | null>(null);
+    const [year, setYear] = useState(new Date().getFullYear());
 
     useEffect(() => {
-        setYear(new Date().getFullYear());
+        setYear(2025);
     }, []);
 
     return (
@@ -55,14 +55,13 @@ export function AppFooter() {
                             <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
                             <li><Link href="/terms-of-service" className="text-muted-foreground hover:text-primary">Terms of Service</Link></li>
                             <li><Link href="/disclaimer" className="text-muted-foreground hover:text-primary">Disclaimer</Link></li>
-                            <li><Link href="/site-directory" className="text-muted-foreground hover:text-primary">Sitemap</Link></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div className="border-t py-4">
                 <div className="container mx-auto text-center text-xs text-muted-foreground">
-                    © {year || new Date().getFullYear()}{' '}
+                    © {year}{' '}
                     <a
                         href="https://calculation.site"
                         target="_blank"

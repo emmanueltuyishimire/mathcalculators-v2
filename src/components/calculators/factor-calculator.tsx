@@ -61,11 +61,13 @@ export default function FactorCalculator() {
         const num = parseInt(input, 10);
 
         if (isNaN(num)) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Input',
-                description: 'Please enter a valid integer.',
-            });
+            if(input) {
+              toast({
+                  variant: 'destructive',
+                  title: 'Invalid Input',
+                  description: 'Please enter a valid integer.',
+              });
+            }
             setResult(null);
             return;
         }
@@ -111,12 +113,11 @@ export default function FactorCalculator() {
                         id="number-input"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && calculate()}
                         placeholder="e.g., 120"
                         className="font-mono"
+                        type="number"
                     />
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {result && (
                 <CardFooter className="flex-col items-start gap-3 p-4">

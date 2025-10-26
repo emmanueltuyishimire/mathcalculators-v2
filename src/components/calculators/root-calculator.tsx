@@ -45,9 +45,8 @@ function SquareRootCalculator() {
             <CardContent className="space-y-4 p-4">
                 <div className="flex items-center gap-2 text-lg">
                     <span className="font-bold text-2xl">√</span>
-                    <Input type="number" value={value} onChange={e => setValue(e.target.value)} className="w-full" placeholder="Enter number" />
+                    <Input type="number" value={value} onChange={e => setValue(e.target.value)} className="w-full" placeholder="Enter number" aria-label="Number for square root" />
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
                 {result && (
                     <div className="p-2 bg-muted rounded-md text-center font-mono font-bold">{result}</div>
                 )}
@@ -88,9 +87,8 @@ function CubeRootCalculator() {
             <CardContent className="space-y-4 p-4">
                 <div className="flex items-center gap-2 text-lg">
                     <span className="font-bold text-2xl">∛</span>
-                    <Input type="number" value={value} onChange={e => setValue(e.target.value)} className="w-full" placeholder="Enter number" />
+                    <Input type="number" value={value} onChange={e => setValue(e.target.value)} className="w-full" placeholder="Enter number" aria-label="Number for cube root" />
                 </div>
-                <Button onClick={calculate} className="w-full">Calculate</Button>
                 {result && (
                      <div className="p-2 bg-muted rounded-md text-center font-mono font-bold">{result}</div>
                 )}
@@ -153,11 +151,10 @@ function GeneralRootCalculator() {
             </CardHeader>
             <CardContent className="space-y-4 p-4">
                 <div className="relative flex items-center gap-1 text-lg">
-                     <Input type="number" value={root} onChange={e => setRoot(e.target.value)} className="w-12 h-6 text-xs absolute -top-3 left-0" placeholder="n" />
+                     <Input aria-label="Degree of root" type="number" value={root} onChange={e => setRoot(e.target.value)} className="w-12 h-6 text-xs absolute -top-3 left-0" placeholder="n" />
                     <span className="font-bold text-3xl ml-1">√</span>
-                    <Input type="number" value={number} onChange={e => setNumber(e.target.value)} className="w-full" placeholder="Enter number" />
+                    <Input aria-label="Number for root" type="number" value={number} onChange={e => setNumber(e.target.value)} className="w-full" placeholder="Enter number" />
                 </div>
-                 <Button onClick={calculate} className="w-full">Calculate</Button>
                  {result && (
                      <div className="p-2 bg-muted rounded-md text-center font-mono font-bold">{result}</div>
                 )}

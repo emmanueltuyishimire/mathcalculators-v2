@@ -20,13 +20,11 @@ export default function ExponentCalculator() {
 
     const calculate = () => {
         setSteps(null);
-        const baseNum = useE ? Math.E : parseFloat(base);
-        const expNum = parseFloat(exponent);
-        const resNum = parseFloat(result);
+        const baseVal = useE ? Math.E.toString() : base;
+        
+        const filledCount = [baseVal, exponent, result].filter(v => v !== '').length;
 
-        const knownValues = [!isNaN(baseNum) && !useE, !isNaN(expNum), !isNaN(resNum)].filter(Boolean).length + (useE ? 1 : 0);
-
-        if (knownValues !== 2) {
+        if (filledCount !== 2) {
              if (Object.values({base, exponent, result}).some(v => v !== '')) {
                 toast({
                     variant: 'destructive',
@@ -37,8 +35,13 @@ export default function ExponentCalculator() {
             return;
         }
 
+        const baseNum = parseFloat(baseVal);
+        const expNum = parseFloat(exponent);
+        const resNum = parseFloat(result);
+
         try {
-            if (isNaN(resNum)) {
+            if (result === '') {
+                if (isNaN(baseNum) || isNaN(expNum)) return;
                 const newResult = Math.pow(baseNum, expNum);
                 setResult(newResult.toString());
                 if (Number.isInteger(expNum) && expNum > 0 && expNum <= 10) {
@@ -46,13 +49,15 @@ export default function ExponentCalculator() {
                 } else {
                      setSteps(`${baseNum}^${expNum} = ${newResult}`);
                 }
-            } else if (isNaN(baseNum) && !useE) {
+            } else if (baseVal === '' && !useE) {
+                if(isNaN(expNum) || isNaN(resNum)) return;
                 if (resNum < 0 && expNum % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
                 if (resNum === 1 && expNum === 0) throw new Error("1^0 is ambiguous, typically 1. Please provide base and exponent.");
                 const newBase = Math.pow(resNum, 1 / expNum);
                 setBase(newBase.toString());
                 setSteps(`a = ${resNum}^(1/${expNum}) = ${newBase}`);
-            } else if (isNaN(expNum)) {
+            } else if (exponent === '') {
+                if(isNaN(baseNum) || isNaN(resNum)) return;
                 if (baseNum <= 0 || resNum <= 0) throw new Error("Logarithms require positive base and result.");
                 const newExponent = Math.log(resNum) / Math.log(baseNum);
                 setExponent(newExponent.toString());
@@ -68,11 +73,7 @@ export default function ExponentCalculator() {
     };
     
     useEffect(() => {
-        const knownCount = [base, exponent, result].filter(Boolean).length;
-        if(useE) knownCount++;
-        if (knownCount === 2) {
-            calculate();
-        }
+        calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [useE, base, exponent, result]);
     
@@ -117,7 +118,7 @@ export default function ExponentCalculator() {
                     </div>
                 </div>
                  <div className="flex items-center space-x-2 pt-2">
-                    <Switch id="use-e" checked={useE} onCheckedChange={handleUseEChange} />
+                    <Switch id="use-e" checked={useE} onCheckedChange={handleUseEChange} aria-label="Use e as base" />
                     <Label htmlFor="use-e">Use e as base</Label>
                 </div>
                 <div className="flex gap-2 pt-2">
