@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { PageHeader } from '@/components/page-header';
-import LogCalculator from '@/components/calculators/log-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
@@ -14,6 +13,22 @@ import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+// This is a placeholder for a real scientific calculator logic
+const ScientificLogCalculator = () => {
+    return (
+        <Card>
+            <CardHeader className="p-4">
+                <CardTitle>Scientific Log Calculator</CardTitle>
+                <CardDescription>This is a placeholder. For a full scientific calculator, see the <Link href="/scientific" className="text-primary hover:underline">Scientific Calculator page</Link>.</CardDescription>
+            </CardHeader>
+            <CardContent className="p-4">
+                <div className="p-4 bg-muted rounded-md text-center text-muted-foreground">
+                    Scientific Calculator UI would be here.
+                </div>
+            </CardContent>
+        </Card>
+    );
+};
 
 const LogEquationCalculator = () => {
     const { toast } = useToast();
@@ -76,21 +91,6 @@ const LogEquationCalculator = () => {
             });
         }
     };
-    
-    useEffect(() => {
-        const knownCount = [base, number, result].filter(Boolean).length;
-        if (knownCount === 3) {
-             const emptyField = Object.keys({base, number, result}).find(key => values[key as keyof typeof values] === '') as 'base' | 'number' | 'result' | undefined;
-             if(emptyField) {
-                const newValues = {...values};
-                newValues[emptyField] = '';
-                setBase(newValues.base);
-                setNumber(newValues.number);
-                setResult(newValues.result);
-             }
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [base, number, result]);
 
     const handleClear = () => {
         setBase('');
@@ -98,8 +98,6 @@ const LogEquationCalculator = () => {
         setResult('');
     }
     
-    const values = { base, number, result };
-
     return (
         <Card>
             <CardHeader className="p-4">
@@ -245,7 +243,7 @@ export default function LogPage() {
                 </p>
             </section>
             
-            <LogCalculator />
+            <ScientificLogCalculator />
 
             <div className="py-4">
                 <LogEquationCalculator />

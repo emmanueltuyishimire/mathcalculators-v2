@@ -185,11 +185,12 @@ export default function RightTriangleCalculator() {
     const givenString = () => {
         if (!results || !results.inputs) return '';
         const parts = [];
-        if (!isNaN(results.inputs.a)) parts.push(`a=${results.inputs.a}`);
-        if (!isNaN(results.inputs.b)) parts.push(`b=${results.inputs.b}`);
-        if (!isNaN(results.inputs.c)) parts.push(`c=${results.inputs.c}`);
-        if (!isNaN(results.inputs.alpha)) parts.push(`α=${results.inputs.alpha}°`);
-        if (!isNaN(results.inputs.beta)) parts.push(`β=${results.inputs.beta}°`);
+        const { a, b, c, alpha, beta } = results.inputs;
+        if (a != null && !isNaN(a)) parts.push(`a=${a}`);
+        if (b != null && !isNaN(b)) parts.push(`b=${b}`);
+        if (c != null && !isNaN(c)) parts.push(`c=${c}`);
+        if (alpha != null && !isNaN(alpha)) parts.push(`α=${alpha}°`);
+        if (beta != null && !isNaN(beta)) parts.push(`β=${beta}°`);
         return `Given ${parts.join(' and ')}`;
     }
 
