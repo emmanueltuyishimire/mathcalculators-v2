@@ -1,184 +1,18 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import React, { useState, useEffect } from 'react';
+import { PageHeader } from '@/components/page-header';
+import LogCalculator from '@/components/calculators/log-calculator';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
+import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
-const ScientificCalculator = () => {
-  const [displayValue, setDisplayValue] = useState('log_2(8)');
-  const [isResult, setIsResult] = useState(false);
-  const { toast } = useToast();
-  
-  useEffect(() => {
-    handleEquals();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const handleButtonClick = (value: string) => {
-    if (isResult) {
-      setDisplayValue(value);
-      setIsResult(false);
-      return;
-    }
-    setDisplayValue(prev => (prev === '0' && value !== '.' ? value : prev + value));
-  };
-
-  const handleOperatorClick = (operator: string) => {
-    setIsResult(false);
-    setDisplayValue(prev => `${prev} ${operator} `);
-  };
-
-  const handleClear = () => {
-    setDisplayValue('0');
-    setIsResult(false);
-  };
-  
-  const handleAllClear = () => {
-    handleClear();
-  };
-
-  const handleBackspace = () => {
-    if (isResult) {
-      handleClear();
-      return;
-    }
-    setDisplayValue(prev => prev.length > 1 ? prev.slice(0, -1) : '0');
-  };
-
-  const handleFunctionClick = (func: string) => {
-     if (isResult) {
-      setDisplayValue(`${func}(`);
-      setIsResult(false);
-    } else {
-       setDisplayValue(prev => (prev === '0' ? `${func}(` : `${prev}${func}(`));
-    }
-  };
-
-  const applyImmediateFunction = (fn: (x: number) => number | string, funcName: string) => {
-    try {
-        const result = fn(parseFloat(displayValue));
-        if (isNaN(Number(result)) || !isFinite(Number(result))) throw new Error(`Invalid result from ${funcName}`);
-        setDisplayValue(String(result));
-        setIsResult(true);
-    } catch (e: any) {
-        toast({
-            variant: "destructive",
-            title: "Function Error",
-            description: e.message || `Could not apply ${funcName}.`,
-        });
-        setIsResult(true);
-    }
-  };
-
-  const handleEquals = () => {
-    try {
-      let expression = displayValue
-        .replace(/×/g, '*')
-        .replace(/÷/g, '/')
-        .replace(/\^/g, '**')
-        .replace(/log\(/g, 'Math.log10(')
-        .replace(/ln\(/g, 'Math.log(');
-
-      // Handle custom log_b(x) using change of base: log_b(x) = log(x)/log(b)
-      expression = expression.replace(/log_(\d+)\((.*?)\)/g, '(Math.log($2)/Math.log($1))');
-      
-      if (displayValue.split('(').length !== displayValue.split(')').length) {
-        // Silently add closing parentheses
-        const open = displayValue.split('(').length - 1;
-        const close = displayValue.split(')').length - 1;
-        expression += ')'.repeat(open - close);
-      }
-      
-      const result = new Function('return ' + expression)();
-      setDisplayValue(String(result));
-      setIsResult(true);
-    } catch (error: any) {
-       toast({
-        variant: "destructive",
-        title: "Invalid Expression",
-        description: error.message || "Please check your input.",
-      });
-      setIsResult(true);
-    }
-  };
-
-  const buttonLayout = [
-    { label: '(', type: 'char', variant: 'secondary' },
-    { label: ')', type: 'char', variant: 'secondary' },
-    { label: 'C', type: 'clear', variant: 'destructive' },
-    { label: 'AC', type: 'all-clear', variant: 'destructive' },
-    { label: '⌫', type: 'backspace', variant: 'destructive' },
-
-    { label: 'xʸ', type: 'op', value: '^', variant: 'secondary' },
-    { label: 'log', type: 'func', variant: 'secondary' },
-    { label: '7', type: 'char' },
-    { label: '8', type: 'char' },
-    { label: '9', type: 'char' },
-
-    { label: 'eˣ', type: 'func_imm', fn: (x:number) => Math.exp(x), variant: 'secondary' },
-    { label: 'ln', type: 'func', variant: 'secondary' },
-    { label: '4', type: 'char' },
-    { label: '5', type: 'char' },
-    { label: '6', type: 'char' },
-
-    { label: '1/x', type: 'func_imm', fn: (x:number) => 1/x, variant: 'secondary' },
-    { label: 'log_b', type: 'func', value: 'log_', variant: 'secondary' },
-    { label: '1', type: 'char' },
-    { label: '2', type: 'char' },
-    { label: '3', type: 'char' },
-    
-    { label: '÷', type: 'op', variant: 'accent' },
-    { label: '×', type: 'op', variant: 'accent' },
-    { label: '-', type: 'op', variant: 'accent' },
-    { label: '+', type: 'op', variant: 'accent' },
-    { label: '=', type: 'equals', variant: 'default' },
-
-    { label: '0', type: 'char' },
-    { label: '.', type: 'char' },
-  ];
-
-  const renderButton = (btnConfig: any) => {
-    const { label, type, value, variant, fn } = btnConfig;
-
-    let onClick;
-    switch (type) {
-      case 'op': onClick = () => handleOperatorClick(value || label); break;
-      case 'char': onClick = () => handleButtonClick(label); break;
-      case 'func': onClick = () => handleFunctionClick(value || label); break;
-      case 'func_imm': onClick = () => applyImmediateFunction(fn, label); break;
-      case 'clear': onClick = handleClear; break;
-      case 'all-clear': onClick = handleAllClear; break;
-      case 'backspace': onClick = handleBackspace; break;
-      case 'equals': onClick = handleEquals; break;
-      default: onClick = () => handleButtonClick(label);
-    }
-    
-    return <Button key={label} variant={variant || 'outline'} size="sm" className="h-10 text-base" onClick={onClick}>{label}</Button>;
-  }
-
-  return (
-    <Card className="shadow-lg max-w-sm mx-auto">
-        <CardContent className="p-2">
-            <Input 
-                readOnly 
-                value={displayValue} 
-                className="mb-2 h-14 text-right text-3xl font-mono bg-muted" 
-                aria-label="Calculator display"
-            />
-            <div className="grid grid-cols-5 gap-2">
-                {buttonLayout.map(renderButton)}
-                <div className="col-span-2">{renderButton({ label: '0', type: 'char' })}</div>
-                {renderButton({ label: '.', type: 'char' })}
-            </div>
-        </CardContent>
-    </Card>
-  );
-};
+import { useToast } from '@/hooks/use-toast';
+import { Switch } from '@/components/ui/switch';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 
 const LogEquationCalculator = () => {
@@ -187,6 +21,23 @@ const LogEquationCalculator = () => {
     const [number, setNumber] = useState('8');
     const [result, setResult] = useState('3');
     
+    const handleInputChange = (field: 'base' | 'number' | 'result', value: string) => {
+        let newValues = { base, number, result };
+        newValues[field] = value;
+        
+        const emptyFields = Object.keys(newValues).filter(key => newValues[key as keyof typeof newValues] === '');
+        
+        if(emptyFields.length !== 1) {
+            newValues = { base: '', number: '', result: '' };
+            newValues[field] = value;
+        }
+
+        setBase(newValues.base);
+        setNumber(newValues.number);
+        setResult(newValues.result);
+    }
+
+
     const calculate = () => {
         const baseVal = base.toLowerCase() === 'e' ? Math.E : parseFloat(base);
         const numberVal = parseFloat(number);
@@ -206,15 +57,12 @@ const LogEquationCalculator = () => {
         }
 
         try {
-            if (result === '') { // Calculate result (y)
-                if(isNaN(baseVal) || isNaN(numberVal)) return;
+            if (isNaN(resultVal)) { // Calculate result (y)
                 if(baseVal <= 0 || baseVal === 1 || numberVal <= 0) throw new Error("Logarithm requires base > 0 (and not 1) and number > 0.");
                 setResult((Math.log(numberVal) / Math.log(baseVal)).toString());
-            } else if (number === '') { // Calculate number (x)
-                if(isNaN(baseVal) || isNaN(resultVal)) return;
+            } else if (isNaN(numberVal)) { // Calculate number (x)
                 setNumber(Math.pow(baseVal, resultVal).toString());
             } else { // Calculate base (b)
-                if(isNaN(numberVal) || isNaN(resultVal)) return;
                 if(numberVal < 0 && resultVal % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
                 if(numberVal === 1 && resultVal !== 0) throw new Error("If number is 1, result must be 0.");
                 if(numberVal !== 1 && resultVal === 0) throw new Error("If result is 0, number must be 1.");
@@ -230,9 +78,16 @@ const LogEquationCalculator = () => {
     };
     
     useEffect(() => {
-        const knownCount = [base, number, result].filter(v => v !== '').length;
-        if (knownCount === 2) {
-            calculate();
+        const knownCount = [base, number, result].filter(Boolean).length;
+        if (knownCount === 3) {
+             const emptyField = Object.keys({base, number, result}).find(key => values[key as keyof typeof values] === '') as 'base' | 'number' | 'result' | undefined;
+             if(emptyField) {
+                const newValues = {...values};
+                newValues[emptyField] = '';
+                setBase(newValues.base);
+                setNumber(newValues.number);
+                setResult(newValues.result);
+             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [base, number, result]);
@@ -242,6 +97,8 @@ const LogEquationCalculator = () => {
         setNumber('');
         setResult('');
     }
+    
+    const values = { base, number, result };
 
     return (
         <Card>
@@ -253,16 +110,16 @@ const LogEquationCalculator = () => {
                 <div className="flex flex-wrap items-end gap-2 text-lg font-semibold">
                     <span className="mb-2">log</span>
                     <div className="relative">
-                        <Input id="base" value={base} onChange={(e) => setBase(e.target.value)} className="w-20 text-sm text-center pt-5"/>
+                        <Input id="base" value={base} onChange={(e) => handleInputChange('base', e.target.value)} className="w-20 text-sm text-center pt-5"/>
                         <Label htmlFor="base" className="absolute text-xs left-1/2 -translate-x-1/2 top-1 text-muted-foreground">base (b)</Label>
                     </div>
                      <div className="relative">
-                        <Input id="number" value={number} onChange={(e) => setNumber(e.target.value)} className="w-24 text-center"/>
+                        <Input id="number" value={number} onChange={(e) => handleInputChange('number', e.target.value)} className="w-24 text-center"/>
                         <Label htmlFor="number" className="absolute text-xs left-1/2 -translate-x-1/2 -top-4 text-muted-foreground">number (x)</Label>
                     </div>
                     <span>=</span>
                      <div className="relative">
-                        <Input id="result" value={result} onChange={(e) => setResult(e.target.value)} className="w-24 text-center"/>
+                        <Input id="result" value={result} onChange={(e) => handleInputChange('result', e.target.value)} className="w-24 text-center"/>
                         <Label htmlFor="result" className="absolute text-xs left-1/2 -translate-x-1/2 -top-4 text-muted-foreground">result (y)</Label>
                     </div>
                 </div>
@@ -275,13 +132,143 @@ const LogEquationCalculator = () => {
     )
 }
 
-export default function LogCalculator() {
-    return (
-        <div className="space-y-4">
-            <ScientificCalculator />
+const HowToUseGuide = () => (
+    <Card>
+      <CardHeader className="p-4">
+        <CardTitle>How to Use the Calculators</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4 text-muted-foreground p-4">
+        <div>
+            <h3 className="font-semibold text-foreground">Scientific Log Calculator</h3>
+            <ol className="list-decimal list-inside space-y-1 mt-2 text-sm">
+            <li>
+                <strong>Basic:</strong> Use number keys. Use `log` for base 10, `ln` for base e.
+            </li>
+            <li>
+                <strong>Custom Base (log_b):</strong> Type `log_BASE(NUMBER)` (e.g., `log_2(8)`).
+            </li>
+            </ol>
+        </div>
+        <div>
+            <h3 className="font-semibold text-foreground">Logarithm Equation Solver</h3>
+             <ol className="list-decimal list-inside space-y-1 mt-2 text-sm">
+                <li>
+                    Fill any two fields: base (b), number (x), or result (y).
+                </li>
+                <li>
+                    Click "Calculate" to solve for the empty field. You can type 'e' for Euler's number as the base.
+                </li>
+             </ol>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+
+const EducationalContent = () => (
+    <Card>
+        <CardHeader className="p-4">
+            <CardTitle>Logarithm Calculator Guide</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 p-4">
+            <div>
+                <h3 className="text-lg font-semibold text-foreground">1. Logarithm Basics</h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                    A logarithm answers: If `bˣ = y`, then `logₐ(y) = x`.
+                </p>
+            </div>
+            
+            <div>
+                <h3 className="text-lg font-semibold text-foreground">2. Logarithm Properties</h3>
+                <Table>
+                    <TableBody className="text-sm">
+                        <TableRow><TableCell>Product</TableCell><TableCell className="font-mono">logₐ(M·N) = logₐ(M) + logₐ(N)</TableCell></TableRow>
+                        <TableRow><TableCell>Quotient</TableCell><TableCell className="font-mono">logₐ(M/N) = logₐ(M) - logₐ(N)</TableCell></TableRow>
+                        <TableRow><TableCell>Power</TableCell><TableCell className="font-mono">logₐ(Mᵏ) = k·logₐ(M)</TableCell></TableRow>
+                        <TableRow><TableCell>Change of Base</TableCell><TableCell className="font-mono">logₐ(y) = logₖ(y) / logₖ(b)</TableCell></TableRow>
+                    </TableBody>
+                </Table>
+            </div>
+        </CardContent>
+    </Card>
+);
+
+const FaqSection = () => (
+    <Card>
+        <CardHeader className="p-4">
+            <CardTitle>Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent className="p-4 pt-0">
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>What is the difference between log and ln?</AccordionTrigger>
+                    <AccordionContent>
+                        - **log** usually refers to the logarithm with base 10 (log₁₀), also known as the common logarithm.<br/>
+                        - **ln** refers to the logarithm with base 'e' (logₑ), also known as the natural logarithm. 'e' is Euler's number, approximately 2.718.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Why can't I take the log of a negative number?</AccordionTrigger>
+                    <AccordionContent>
+                        In the equation `logᵦ(x) = y`, `x` is the result of `bʸ`. Since a positive base `b` raised to any real power `y` can never be negative, the logarithm is not defined for negative numbers in the real number system.
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                    <AccordionTrigger>What is the "Change of Base" formula?</AccordionTrigger>
+                    <AccordionContent>
+                        The Change of Base formula allows you to calculate a logarithm with any base using a calculator that only has `log` (base 10) and `ln` (base e). The formula is: `logᵦ(x) = logₐ(x) / logₐ(b)`. For example, `log₂(8)` can be calculated as `log(8) / log(2)` or `ln(8) / ln(2)`.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="item-4">
+                    <AccordionTrigger>How does the equation solver work?</AccordionTrigger>
+                    <AccordionContent>
+                        It uses the fundamental relationship between exponents and logarithms. By providing any two values in the equation `logᵦ(x) = y` (which is equivalent to `bʸ = x`), it can algebraically solve for the third unknown value.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
+
+export default function LogPage() {
+  return (
+    <div className="flex flex-1 flex-col">
+      <PageHeader title="Log Calculator" />
+      <main className="flex-1 p-4 md:p-6 lg:p-8">
+        <div className="mx-auto max-w-2xl space-y-4">
+            <section className="text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                    Logarithm Calculator
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                    A powerful calculator for logarithmic and exponential functions.
+                </p>
+            </section>
+            
+            <LogCalculator />
+
             <div className="py-4">
                 <LogEquationCalculator />
             </div>
+
+            <HowToUseGuide />
+            
+            <section className="text-center">
+                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                <div className="flex flex-wrap justify-center gap-2 mt-4">
+                    <Button asChild variant="outline">
+                        <Link href="/scientific">Scientific Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link href="/exponent">Exponent Calculator</Link>
+                    </Button>
+                </div>
+            </section>
+            
+            <EducationalContent />
+            <FaqSection />
         </div>
-    )
+      </main>
+    </div>
+  );
 }
