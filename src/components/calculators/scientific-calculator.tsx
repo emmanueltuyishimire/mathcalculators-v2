@@ -536,7 +536,7 @@ export default function ScientificCalculator() {
     ],
      [
       { label: "EXP", onClick: handleExp, color: "yellow" },
-      { label: "Rnd", onClick: () => setCurrentNumber(Math.random().toString()), color: "yellow" },
+      { label: "Rnd", onClick: () => { if(resetError()) return; setCurrentNumber(Math.random().toString()); }, color: "yellow" },
       { label: "π", onClick: () => handleConstant('π'), color: "yellow" },
       { label: "e", onClick: () => handleConstant('e'), color: "yellow" },
       { label: "=", onClick: handleEquals, color: "orange", className: "col-span-1" },

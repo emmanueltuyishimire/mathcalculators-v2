@@ -21,7 +21,7 @@ const ThreeFieldCalculator = () => {
 
         const knownValues = [!isNaN(numPart), !isNaN(numWhole), !isNaN(numPercent)].filter(Boolean).length;
         if (knownValues !== 2) {
-            if (part || whole || percent) {
+             if (part || whole || percent) {
                 toast({
                     variant: 'destructive',
                     title: 'Invalid Input',
@@ -46,11 +46,6 @@ const ThreeFieldCalculator = () => {
              toast({ variant: 'destructive', title: 'Error', description: e.message });
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     
     const handleClear = () => {
         setPart('');
@@ -91,21 +86,24 @@ const CommonPhrasesCalculator = () => {
         const p = parseFloat(val1.p);
         const w = parseFloat(val1.w);
         if(!isNaN(p) && !isNaN(w)) setVal1({...val1, r: ((p/100) * w).toFixed(2)});
+        else setVal1({...val1, r: ''});
     }
     const calc2 = () => {
         const part = parseFloat(val2.part);
         const whole = parseFloat(val2.whole);
         if(!isNaN(part) && !isNaN(whole) && whole !== 0) setVal2({...val2, r: ((part/whole) * 100).toFixed(2)});
+         else setVal2({...val2, r: ''});
     }
      const calc3 = () => {
         const part = parseFloat(val3.part);
         const p = parseFloat(val3.p);
         if(!isNaN(part) && !isNaN(p) && p !== 0) setVal3({...val3, r: (part / (p/100)).toFixed(2)});
+         else setVal3({...val3, r: ''});
     }
     
-    useEffect(() => { calc1(); }, [val1.p, val1.w]);
-    useEffect(() => { calc2(); }, [val2.part, val2.whole]);
-    useEffect(() => { calc3(); }, [val3.part, val3.p]);
+    useEffect(calc1, [val1.p, val1.w]);
+    useEffect(calc2, [val2.part, val2.whole]);
+    useEffect(calc3, [val3.part, val3.p]);
 
     return (
         <Card className="w-full">
@@ -212,14 +210,14 @@ const PercentageChangeCalculator = () => {
     const [initial, setInitial] = useState('100');
     const [final, setFinal] = useState('');
     const [change, setChange] = useState('10');
-    const [result, setResult] = useState<string | null>(null);
+    const [direction, setDirection] = useState<'increase'|'decrease'>('increase');
 
-    const calculate = (direction: 'increase' | 'decrease') => {
+    const calculate = () => {
         const numInitial = parseFloat(initial);
         const numChange = parseFloat(change);
 
         if(isNaN(numInitial) || isNaN(numChange)) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for value and percentage.' });
+            if(initial || change) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for value and percentage.' });
             return;
         }
 
@@ -236,9 +234,9 @@ const PercentageChangeCalculator = () => {
     };
     
     useEffect(() => {
-        calculate('increase');
+        calculate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [initial, change, direction]);
 
     return (
         <Card>
@@ -254,8 +252,8 @@ const PercentageChangeCalculator = () => {
                     <Input readOnly value={final} className="bg-muted flex-1 min-w-[80px]" aria-label="Final value" />
                 </div>
                 <div className="flex gap-2">
-                    <Button onClick={() => calculate('increase')} className="w-full">Increase</Button>
-                    <Button onClick={() => calculate('decrease')} variant="secondary" className="w-full">Decrease</Button>
+                    <Button onClick={() => setDirection('increase')} variant={direction === 'increase' ? 'default' : 'secondary'} className="w-full">Increase</Button>
+                    <Button onClick={() => setDirection('decrease')} variant={direction === 'decrease' ? 'default' : 'secondary'} className="w-full">Decrease</Button>
                 </div>
             </CardContent>
         </Card>

@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,9 +20,9 @@ export default function ExponentCalculator() {
 
     const calculate = () => {
         setSteps(null);
-        const baseVal = useE ? Math.E.toString() : base;
+        const baseValStr = useE ? Math.E.toString() : base;
         
-        const filledCount = [baseVal, exponent, result].filter(v => v !== '').length;
+        const filledCount = [baseValStr, exponent, result].filter(v => v !== '').length;
 
         if (filledCount !== 2) {
              if (Object.values({base, exponent, result}).some(v => v !== '')) {
@@ -35,7 +35,7 @@ export default function ExponentCalculator() {
             return;
         }
 
-        const baseNum = parseFloat(baseVal);
+        const baseNum = parseFloat(baseValStr);
         const expNum = parseFloat(exponent);
         const resNum = parseFloat(result);
 
@@ -49,7 +49,7 @@ export default function ExponentCalculator() {
                 } else {
                      setSteps(`${baseNum}^${expNum} = ${newResult}`);
                 }
-            } else if (baseVal === '' && !useE) {
+            } else if (baseValStr === '' && !useE) {
                 if(isNaN(expNum) || isNaN(resNum)) return;
                 if (resNum < 0 && expNum % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
                 if (resNum === 1 && expNum === 0) throw new Error("1^0 is ambiguous, typically 1. Please provide base and exponent.");
@@ -71,11 +71,6 @@ export default function ExponentCalculator() {
             });
         }
     };
-    
-    useEffect(() => {
-        calculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [useE, base, exponent, result]);
     
     const handleClear = () => {
       setBase('');

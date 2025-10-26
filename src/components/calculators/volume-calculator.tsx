@@ -1,7 +1,7 @@
 
 "use client";
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -49,43 +49,25 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
 
     const handleCalculate = () => {
         const conversionFactor = lengthUnits[unit];
-        const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
-            const num = parseFloat(value);
-            if (isNaN(num) && value !== '') {
-                toast({
-                    variant: 'destructive',
-                    title: `Invalid input for ${key}`,
-                    description: 'Please enter a valid number.',
-                });
-                throw new Error('Invalid input');
-            }
-            return { ...acc, [key]: isNaN(num) ? NaN : num * conversionFactor };
-        }, {} as { [key: string]: number });
-        
-        if (shape === 'Spherical Cap') {
-            const providedValues = Object.values(parsedInputs).filter(v => !isNaN(v));
-            if (providedValues.length < 2) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Insufficient Inputs',
-                    description: 'Please provide at least two values for the Spherical Cap calculator.',
-                });
-                return;
-            }
-        } else {
-             if (Object.values(parsedInputs).some(v => isNaN(v))) {
-                if (Object.values(inputValues).some(v => v !== '')) {
-                  toast({
-                      variant: 'destructive',
-                      title: 'Missing Inputs',
-                      description: 'Please fill in all fields for the calculation.',
-                  });
-                }
-                return;
-            }
-        }
-
         try {
+            const parsedInputs = Object.entries(inputValues).reduce((acc, [key, value]) => {
+                const num = parseFloat(value);
+                if (shape !== 'Spherical Cap' && value === '') {
+                     throw new Error(`Missing input for ${key}`);
+                }
+                if (isNaN(num) && value !== '') {
+                    throw new Error(`Invalid input for ${key}`);
+                }
+                return { ...acc, [key]: isNaN(num) ? NaN : num * conversionFactor };
+            }, {} as { [key: string]: number });
+
+            if (shape === 'Spherical Cap') {
+                const providedValues = Object.values(parsedInputs).filter(v => !isNaN(v));
+                if (providedValues.length < 2) {
+                    throw new Error('Please provide at least two values for the Spherical Cap calculator.');
+                }
+            }
+
             const resultInBaseUnit = calculate(parsedInputs);
             const resultInSelectedUnit = typeof resultInBaseUnit === 'number' ? resultInBaseUnit / Math.pow(conversionFactor, 3) : resultInBaseUnit;
             setVolume(typeof resultInSelectedUnit === 'number' ? resultInSelectedUnit.toFixed(4) : resultInSelectedUnit);
@@ -98,11 +80,6 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
             setVolume('');
         }
     };
-    
-    useEffect(() => {
-        handleCalculate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [inputValues, unit]);
 
     return (
         <Card className="overflow-hidden">
@@ -138,6 +115,7 @@ const CalculatorCard: React.FC<VolumeCalculatorProps> = ({ shape, inputs, calcul
                             />
                         </div>
                     ))}
+                    <Button onClick={handleCalculate} className="w-full">Calculate</Button>
                     {volume && (
                         <div className="pt-2">
                             <Label>Volume</Label>

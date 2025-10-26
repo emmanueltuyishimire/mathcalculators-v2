@@ -61,7 +61,7 @@ const EducationalContent = () => (
                 <div className="space-y-2">
                     <h4 className="font-semibold text-foreground">Cone</h4>
                     <p>A cone's surface area is the sum of its circular base and its slanted lateral side. The formulas are:</p>
-                    <ul className="list-disc list-inside pl-4 font-mono text-sm bg-background p-2 rounded-md my-2">
+                     <ul className="list-disc list-inside pl-4 font-mono text-sm bg-background p-2 rounded-md my-2">
                         <li>Base SA = πr²</li>
                         <li>Lateral SA = πr√(r² + h²)</li>
                         <li>Total SA = πr(r + √(r² + h²))</li>

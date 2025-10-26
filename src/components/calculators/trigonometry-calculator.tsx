@@ -48,11 +48,6 @@ export default function BasicTrigCalculator() {
     }
   };
   
-  useEffect(() => {
-    calculateTrig();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [funcName, inputValue, unit]);
-
   return (
     <Card>
       <CardHeader>

@@ -26,7 +26,7 @@ const HowToUseGuide = () => (
                     <span className="font-semibold text-foreground">Enter Dimensions:</span> Fill in the required fields for the shape you are calculating. The labels (e.g., Radius (r), Height (h)) correspond to the diagrams.
                 </li>
                 <li>
-                    <span className="font-semibold text-foreground">Calculate Volume:</span> Click the "Calculate" button. The result will be displayed in the corresponding cubic unit (e.g., m³, ft³, in³).
+                    <span className="font-semibold text-foreground">Calculate Volume:</span> The result will be automatically displayed in the corresponding cubic unit (e.g., m³, ft³, in³).
                 </li>
             </ol>
              <div className="p-4 bg-accent/50 rounded-lg">

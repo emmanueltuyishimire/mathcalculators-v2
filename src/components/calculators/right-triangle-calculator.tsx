@@ -107,6 +107,7 @@ export default function RightTriangleCalculator() {
         try {
             if (sideCount === 2) {
                 if (!isNaN(numA) && !isNaN(numB)) {
+                    if (numA <= 0 || numB <= 0) throw new Error("Sides 'a' and 'b' must be positive.");
                     numC = Math.sqrt(numA**2 + numB**2);
                     steps.c = `c = √(a² + b²) = √(${numA}² + ${numB}²) = ${numC.toFixed(4)}`;
                 } else if (!isNaN(numA) && !isNaN(numC)) {
@@ -186,11 +187,11 @@ export default function RightTriangleCalculator() {
         if (!results || !results.inputs) return '';
         const parts = [];
         const { a, b, c, alpha, beta } = results.inputs;
-        if (a != null && !isNaN(a)) parts.push(`a=${a}`);
-        if (b != null && !isNaN(b)) parts.push(`b=${b}`);
-        if (c != null && !isNaN(c)) parts.push(`c=${c}`);
-        if (alpha != null && !isNaN(alpha)) parts.push(`α=${alpha}°`);
-        if (beta != null && !isNaN(beta)) parts.push(`β=${beta}°`);
+        if (a !== null && !isNaN(a)) parts.push(`a=${a}`);
+        if (b !== null && !isNaN(b)) parts.push(`b=${b}`);
+        if (c !== null && !isNaN(c)) parts.push(`c=${c}`);
+        if (alpha !== null && !isNaN(alpha)) parts.push(`α=${alpha}°`);
+        if (beta !== null && !isNaN(beta)) parts.push(`β=${beta}°`);
         return `Given ${parts.join(' and ')}`;
     }
 
