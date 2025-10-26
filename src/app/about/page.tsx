@@ -2,6 +2,7 @@
 
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 import { Users, Target, Zap } from 'lucide-react';
 
 export default function AboutPage() {
@@ -86,8 +87,9 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                        We are always looking to improve and expand our offerings. If you have any feedback, suggestions for new calculators, or questions, please do not hesitate to <a href="/contact" className="text-primary hover:underline">contact us</a>. Your input is invaluable as we continue to build Math Calculators into the best possible resource for the community.
+                        We are always looking to improve and expand our offerings. If you have any feedback, suggestions for new calculators, or questions, please do not hesitate to contact us. Your input is invaluable as we continue to build Math Calculators into the best possible resource for the community.
                     </p>
+                    <Link href="/contact" className="text-primary hover:underline">Contact us</Link>
                 </CardContent>
             </Card>
 

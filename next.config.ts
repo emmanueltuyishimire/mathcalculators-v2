@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       '*.cloudworkstations.dev',
     ],
   },
+  trailingSlash: true,
 };
 
 export default nextConfig;

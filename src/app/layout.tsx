@@ -76,12 +76,13 @@ export default function RootLayout({
             gtag('config', 'G-5VPXQ1TJ3X');
           `}
         </Script>
-        {/* Google AdSense Auto Ads - Standard script tag to avoid conflicts */}
-        <script
+        {/* Google AdSense Auto Ads */}
+        <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
           crossOrigin="anonymous"
-        ></script>
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

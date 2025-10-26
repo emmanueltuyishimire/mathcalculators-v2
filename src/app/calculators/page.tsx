@@ -82,14 +82,16 @@ export default function CalculatorsPage() {
         className="relative w-full h-64 bg-cover bg-center"
         aria-labelledby="calculators-page-heading"
       >
-        <Image
-            src={heroImage?.src || ''}
-            alt={heroImage?.alt || 'An abstract background image with mathematical symbols'}
-            data-ai-hint={heroImage?.hint}
-            fill
-            priority
-            className="object-cover"
-        />
+        {heroImage && (
+            <Image
+                src={heroImage.src}
+                alt={heroImage.alt}
+                data-ai-hint={heroImage.hint}
+                fill
+                priority
+                className="object-cover"
+            />
+        )}
         <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4">
           <h1 id="calculators-page-heading" className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>
             Math Calculators
