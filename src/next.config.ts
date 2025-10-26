@@ -1,5 +1,5 @@
 
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  devIndicators: {
+    allowedDevOrigins: [
+      '*.cloudworkstations.dev',
+    ],
   },
 };
 
