@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: /sitemap.xml
+Sitemap: https://maths.calculation.site/sitemap.xml

@@ -7,6 +7,7 @@
     "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
@@ -46,6 +47,7 @@
     "jstat": "^1.9.6",
     "lucide-react": "^0.475.0",
     "next": "15.3.3",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.3.0",
     "patch-package": "^8.0.0",
     "react": "^18.3.1",
