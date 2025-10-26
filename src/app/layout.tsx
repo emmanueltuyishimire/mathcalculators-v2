@@ -45,8 +45,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning style={{scrollBehavior:'smooth'}}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         {/* Google AdSense Meta */}
         <meta name="google-adsense-account" content="ca-pub-3042243846300811" />

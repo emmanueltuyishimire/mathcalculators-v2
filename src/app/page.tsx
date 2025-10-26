@@ -43,9 +43,7 @@ function HeroSection() {
 const calculatorCategories = [
     {
         title: "Basic & Algebra",
-        image: placeholderImages.find(p => p.id === 'categoryBasicAlgebra')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'categoryBasicAlgebra')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'categoryBasicAlgebra')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryBasicAlgebra'),
         tools: [
             { href: '/algebra', label: 'Algebra Calculator', icon: Type },
             { href: '/basic', label: 'Basic Calculators', icon: Calculator },
@@ -66,9 +64,7 @@ const calculatorCategories = [
     },
     {
         title: "Geometry & Trigonometry",
-        image: placeholderImages.find(p => p.id === 'categoryGeometry')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'categoryGeometry')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'categoryGeometry')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryGeometry'),
         tools: [
             { href: '/geometry', label: 'Geometry Calculators', icon: Square },
             { href: '/trigonometry', label: 'Trigonometry Calculator', icon: Sigma },
@@ -84,9 +80,7 @@ const calculatorCategories = [
     },
     {
         title: "Statistics & Probability",
-        image: placeholderImages.find(p => p.id === 'categoryStatistics')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'categoryStatistics')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'categoryStatistics')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryStatistics'),
         tools: [
             { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
@@ -102,9 +96,7 @@ const calculatorCategories = [
     },
     {
         title: "Advanced & Specialty",
-        image: placeholderImages.find(p => p.id === 'categoryAdvanced')?.src || '',
-        imageHint: placeholderImages.find(p => p.id === 'categoryAdvanced')?.hint,
-        imageAlt: placeholderImages.find(p => p.id === 'categoryAdvanced')?.alt,
+        image: placeholderImages.find(p => p.id === 'categoryAdvanced'),
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
             { href: '/matrix', label: 'Matrix Calculators', icon: Table },
@@ -139,14 +131,16 @@ export default function Home() {
                  <React.Fragment key={category.title}>
                     <div>
                         <div className="relative h-48 w-full rounded-xl overflow-hidden mb-8 shadow-lg" role="presentation">
-                            <Image
-                                src={category.image}
-                                alt={category.imageAlt || `${category.title} category background`}
-                                data-ai-hint={category.imageHint}
-                                fill
-                                className="object-cover"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                            />
+                            {category.image && (
+                                <Image
+                                    src={category.image.src}
+                                    alt={category.image.alt || `${category.title} category background`}
+                                    data-ai-hint={category.image.hint}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                            )}
                              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                                 <h2 className="text-3xl md:text-4xl font-bold text-center text-white" style={{ textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)' }}>{category.title}</h2>
                             </div>

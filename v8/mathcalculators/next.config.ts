@@ -1,11 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-<<<<<<< HEAD
   output: 'export',
-  basePath: '/mathcalculators',  // <--- Add this line
-=======
->>>>>>> 8ee1d91 (optimize LCP, render blocking, and other things to optimize app performa)
+  basePath: '/mathcalculators',
   images: {
     unoptimized: true,
   },
