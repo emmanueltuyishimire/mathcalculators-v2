@@ -43,13 +43,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://ep1.adtrafficquality.google.com" crossOrigin="anonymous" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
-        ></script>
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={cn(inter.variable, "font-sans antialiased")} suppressHydrationWarning>
@@ -63,7 +57,15 @@ export default function RootLayout({
             <Toaster />
           </ThemeProvider>
 
-        {/* Google tag (gtag.js) */}
+        {/* Google AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3042243846300811"
+          crossOrigin="anonymous"
+          strategy="lazyOnload"
+        />
+        
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-5VPXQ1TJ3X"
           strategy="lazyOnload"
