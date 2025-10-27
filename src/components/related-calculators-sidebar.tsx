@@ -1,14 +1,35 @@
+
 "use client";
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { calculatorCategories, findCategory } from '@/lib/calculator-categories';
+import { calculatorCategories } from '@/lib/calculator-categories';
+
+// A more robust category finder
+const findCategoryForPath = (pathname: string) => {
+    // Exact match for category hub pages
+    const hubMatch = calculatorCategories.find(cat => cat.tools.some(tool => tool.href === pathname));
+    if (hubMatch) return hubMatch;
+
+    // Match for child pages (e.g., /geometry/area should match Geometry category)
+    for (const category of calculatorCategories) {
+        if (pathname.startsWith(`/${category.slug}/`)) {
+            return category;
+        }
+        for (const tool of category.tools) {
+            if (pathname.startsWith(tool.href) && tool.href !== '/') {
+                 return category;
+            }
+        }
+    }
+    return null;
+}
 
 export function RelatedCalculatorsSidebar() {
     const pathname = usePathname();
-    const currentCategory = findCategory(pathname);
+    const currentCategory = findCategoryForPath(pathname);
 
     if (!currentCategory) {
         return null;
