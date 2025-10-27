@@ -118,14 +118,20 @@ export default function AlgebraCalculator() {
 
     // Mocked equation solver
     const solveMatch = expression.match(/solve\((.*)=(.+),([a-z])\)/);
-    if (solveMatch) {
-        if(solveMatch[1] === 'x^2-4' && solveMatch[2] === '0' && solveMatch[3] === 'x') {
+    const simpleSolveMatch = expression.match(/solve\((.+)=(.+)\)/); // For equations like 3x+5=14 without specifying variable
+
+    if (solveMatch || simpleSolveMatch) {
+        const match = solveMatch || simpleSolveMatch;
+        const eqPart1 = match![1];
+        const eqPart2 = match![2];
+
+        if (eqPart1 === 'x^2-4' && eqPart2 === '0') {
             resultStr = 'x = ±2';
-        } else if (solveMatch[1] === '3x+5' && solveMatch[2] === '14') {
+        } else if (eqPart1 === '3x+5' && eqPart2 === '14') {
              resultStr = 'x = 3';
-        } else if (solveMatch[1] === 'x^2-5x+6' && solveMatch[2] === '0') {
+        } else if (eqPart1 === 'x^2-5x+6' && eqPart2 === '0') {
             resultStr = 'x = 2, 3';
-        } else if (solveMatch[1] === 'x^2+5x+6' && solveMatch[2] === '0') {
+        } else if (eqPart1 === 'x^2+5x+6' && eqPart2 === '0') {
              resultStr = 'x = -2 or x = -3';
         }
 
@@ -136,6 +142,7 @@ export default function AlgebraCalculator() {
             return;
         }
     }
+
 
     try {
       // Fallback to numeric evaluation for simple arithmetic
