@@ -7,6 +7,53 @@ import Image from 'next/image';
 export function AppFooter() {
     const year = new Date().getFullYear();
 
+    const calculatorCategories = [
+        {
+            title: "Basic & Algebra",
+            links: [
+                { href: '/algebra', label: 'Algebra Calculator' },
+                { href: '/basic', label: 'Basic Calculator' },
+                { href: '/scientific', label: 'Scientific Calculator' },
+                { href: '/fraction', label: 'Fraction Calculator' },
+                { href: '/percentage', label: 'Percentage Calculator' },
+                { href: '/exponent', label: 'Exponent Calculator' },
+            ]
+        },
+        {
+            title: "Geometry",
+            links: [
+                { href: '/geometry', label: 'Geometry Calculator' },
+                { href: '/pythagorean', label: 'Pythagorean Theorem' },
+                { href: '/slope', label: 'Slope Calculator' },
+                { href: '/distance', label: 'Distance Calculator' },
+                { href: '/geometry/area', label: 'Area Calculator' },
+                { href: '/geometry/volume', label: 'Volume Calculator' },
+            ]
+        },
+        {
+            title: "Statistics",
+            links: [
+                { href: '/statistics', label: 'Statistics Calculator' },
+                { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode' },
+                { href: '/statistics/standard-deviation', label: 'Standard Deviation' },
+                { href: '/statistics/probability', label: 'Probability Calculator' },
+                { href: '/statistics/permutation-combination', label: 'Permutation & Combination' },
+                { href: '/random', label: 'Random Number Generator' },
+            ]
+        },
+        {
+            title: "Advanced",
+            links: [
+                { href: '/calculus', label: 'Calculus Calculator' },
+                { href: '/matrix', label: 'Matrix Calculator' },
+                { href: '/rref', label: 'RREF Calculator' },
+                { href: '/half-life', label: 'Half-Life Calculator' },
+                { href: '/unit-converter', label: 'Unit Converter' },
+                 { href: '/destiny-matrix', label: 'Destiny Matrix' },
+            ]
+        }
+    ];
+
     return (
         <footer className="border-t bg-background">
             <div className="container mx-auto py-8 px-4 md:px-6">
@@ -20,38 +67,43 @@ export function AppFooter() {
                             Providing free, powerful, and easy-to-use online calculators for everyone.
                         </p>
                     </div>
-                    <div>
-                        <h3 className="font-semibold mb-4">Calculators</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="/scientific" className="text-muted-foreground hover:text-primary">Scientific Calculator</Link></li>
-                            <li><Link href="/geometry" className="text-muted-foreground hover:text-primary">Geometry Calculator</Link></li>
-                            <li><Link href="/statistics" className="text-muted-foreground hover:text-primary">Statistics Calculator</Link></li>
-                             <li><Link href="/matrix" className="text-muted-foreground hover:text-primary">Matrix Calculator</Link></li>
-                        </ul>
-                    </div>
-                     <div>
-                        <h3 className="font-semibold mb-4">Our Network</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><a href="https://health.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Health & Fitness Calculator</a></li>
-                            <li><a href="https://finance.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Financial Calculators</a></li>
-                            <li><a href="https://calculation.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Blog</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 className="font-semibold mb-4">Company</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link></li>
-                            <li><Link href="/contact" className="text-muted-foreground hover:text-primary">Contact</Link></li>
-                            <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Sitemap</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 className="font-semibold mb-4">Legal</h3>
-                        <ul className="space-y-2 text-sm">
-                            <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
-                            <li><Link href="/terms-of-service" className="text-muted-foreground hover:text-primary">Terms of Service</Link></li>
-                            <li><Link href="/disclaimer" className="text-muted-foreground hover:text-primary">Disclaimer</Link></li>
-                        </ul>
+                    {calculatorCategories.map(category => (
+                        <div key={category.title}>
+                            <h3 className="font-semibold mb-4">{category.title}</h3>
+                            <ul className="space-y-2 text-sm">
+                                {category.links.map(link => (
+                                     <li key={link.href}><Link href={link.href} className="text-muted-foreground hover:text-primary">{link.label}</Link></li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+                 <div className="mt-8 pt-8 border-t">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                         <div>
+                            <h3 className="font-semibold mb-4">Our Network</h3>
+                            <ul className="space-y-2 text-sm">
+                                <li><a href="https://health.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Health & Fitness Calculator</a></li>
+                                <li><a href="https://finance.calculator.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Financial Calculators</a></li>
+                                <li><a href="https://calculation.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Blog</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold mb-4">Company</h3>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link></li>
+                                <li><Link href="/contact" className="text-muted-foreground hover:text-primary">Contact</Link></li>
+                                <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Sitemap</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold mb-4">Legal</h3>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
+                                <li><Link href="/terms-of-service" className="text-muted-foreground hover:text-primary">Terms of Service</Link></li>
+                                <li><Link href="/disclaimer" className="text-muted-foreground hover:text-primary">Disclaimer</Link></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
