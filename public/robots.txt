@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://maths.calculation.site
+Host: https://www.maths.calculation.site
 
 # Sitemaps
-Sitemap: https://maths.calculation.site/sitemap.xml
+Sitemap: https://www.maths.calculation.site/sitemap.xml
