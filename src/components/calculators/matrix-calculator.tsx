@@ -279,7 +279,7 @@ export default function MatrixCalculator() {
                 break;
             case 'inverse':
                 const det = determinant(matrix);
-                if (det === 0) {
+                if (Math.abs(det) < 1e-9) {
                     throw new Error("Matrix is not invertible (determinant is 0).");
                 }
                 const adj = transpose(cofactor(matrix));
