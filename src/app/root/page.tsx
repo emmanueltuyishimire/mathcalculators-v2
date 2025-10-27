@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -171,33 +172,38 @@ export default function RootPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Root Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Root Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                   Easily calculate square roots, cube roots, and nth roots for any number.
-                </p>
-            </section>
-            <RootCalculator />
-            <HowToUseGuide />
-            <EducationalContent />
-            <FaqSection />
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/exponent">Exponent Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/scientific">Scientific Calculator</Link>
-                    </Button>
-                     <Button asChild variant="outline">
-                        <Link href="/log">Log Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Root Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                       Easily calculate square roots, cube roots, and nth roots for any number.
+                    </p>
+                </section>
+                <RootCalculator />
+                <HowToUseGuide />
+                <EducationalContent />
+                <FaqSection />
+                <section className="text-center">
+                    <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Button asChild variant="outline">
+                            <Link href="/exponent">Exponent Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/scientific">Scientific Calculator</Link>
+                        </Button>
+                         <Button asChild variant="outline">
+                            <Link href="/log">Log Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>

@@ -6,6 +6,7 @@ import FactorCalculator from '@/components/calculators/factor-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -127,7 +128,8 @@ export default function FactorPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Factor Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
               <section className="text-center">
                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                       Factor Calculator
@@ -136,20 +138,24 @@ export default function FactorPage() {
                       A free online calculator to find the factors, factor pairs, and prime factorization of any integer.
                   </p>
               </section>
-            <FactorCalculator />
-            <HowToUseGuide />
-            <section className="text-center">
-              <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-              <div className="flex flex-wrap justify-center gap-2 mt-4">
-                  <Button asChild variant="outline">
-                      <Link href="/lcm">LCM Calculator</Link>
-                  </Button>
-                   <Button asChild variant="outline">
-                      <Link href="/gcf">GCF Calculator</Link>
-                  </Button>
-              </div>
-            </section>
-            <EducationalContent />
+                <FactorCalculator />
+                <HowToUseGuide />
+                <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/lcm">LCM Calculator</Link>
+                      </Button>
+                       <Button asChild variant="outline">
+                          <Link href="/gcf">GCF Calculator</Link>
+                      </Button>
+                  </div>
+                </section>
+                <EducationalContent />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

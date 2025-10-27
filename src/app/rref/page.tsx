@@ -4,6 +4,7 @@
 import { PageHeader } from '@/components/page-header';
 import RrefCalculator from '@/components/calculators/rref-calculator';
 import Link from 'next/link';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -61,7 +62,8 @@ export default function RrefPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Augmented Matrix & RREF Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-4xl space-y-12">
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-12">
               <section className="text-center">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Augmented Matrix & RREF Calculator
@@ -194,6 +196,10 @@ export default function RrefPage() {
                       <p>Combine manual row operations with automatic RREF calculation to learn linear algebra concepts while getting fast results. This tool is ideal for students, teachers, and professionals alike.</p>
                   </div>
               </section>
+            </div>
+            <div className="mt-8 lg:mt-0">
+              <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

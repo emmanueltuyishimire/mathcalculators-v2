@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -102,34 +103,39 @@ export default function LogPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Log Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-4">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Logarithm Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A powerful calculator for logarithmic and exponential functions.
-                </p>
-            </section>
-            
-            <LogCalculator />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-4">
+                <section className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Logarithm Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        A powerful calculator for logarithmic and exponential functions.
+                    </p>
+                </section>
+                
+                <LogCalculator />
 
-            <HowToUseGuide />
-            
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/scientific">Scientific Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/exponent">Exponent Calculator</Link>
-                    </Button>
-                </div>
-            </section>
-            
-            <EducationalContent />
-            <FaqSection />
+                <HowToUseGuide />
+                
+                <section className="text-center">
+                    <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Button asChild variant="outline">
+                            <Link href="/scientific">Scientific Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/exponent">Exponent Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+                
+                <EducationalContent />
+                <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>

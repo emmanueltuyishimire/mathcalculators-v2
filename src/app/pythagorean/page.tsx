@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { PythagoreanDiagram } from '@/components/pythagorean-diagram';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -168,40 +169,45 @@ export default function PythagoreanPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Pythagorean Theorem Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Pythagorean Theorem Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A free online calculator to solve the Pythagorean equation a² + b² = c². Please provide any two values to solve for the third side of a right triangle.
-                </p>
-            </section>
-            
-            <PythagoreanCalculator />
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Pythagorean Theorem Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        A free online calculator to solve the Pythagorean equation a² + b² = c². Please provide any two values to solve for the third side of a right triangle.
+                    </p>
+                </section>
+                
+                <PythagoreanCalculator />
 
-            <PythagoreanDiagram />
+                <PythagoreanDiagram />
 
-            <HowToUseGuide />
+                <HowToUseGuide />
 
-            <EducationalContent />
-            
-            <FaqSection />
+                <EducationalContent />
+                
+                <FaqSection />
 
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/right-triangle">Right Triangle Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/distance">Distance Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/slope">Slope Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+                <section className="text-center">
+                    <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Button asChild variant="outline">
+                            <Link href="/right-triangle">Right Triangle Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/distance">Distance Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/slope">Slope Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

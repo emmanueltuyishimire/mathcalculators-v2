@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/page-header';
 import DestinyMatrixCalculator from '@/components/calculators/destiny-matrix-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -122,7 +123,8 @@ export default function DestinyMatrixPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Destiny Matrix Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-12">
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-12">
               <section className="text-center">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Destiny Matrix Calculator
@@ -166,6 +168,10 @@ export default function DestinyMatrixPage() {
                   
               </section>
               <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+              <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

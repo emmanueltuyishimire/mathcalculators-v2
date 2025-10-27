@@ -6,6 +6,7 @@ import GcfCalculator from '@/components/calculators/gcf-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -146,7 +147,8 @@ export default function GcfPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Greatest Common Factor Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
               <section className="text-center">
                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                       Greatest Common Factor (GCF) Calculator
@@ -155,20 +157,24 @@ export default function GcfPage() {
                       A free online calculator to find the greatest common factor (GCF) of a set of numbers, with step-by-step solutions.
                   </p>
               </section>
-            <GcfCalculator />
-            <HowToUseGuide />
-            <section className="text-center">
-              <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-              <div className="flex flex-wrap justify-center gap-2 mt-4">
-                  <Button asChild variant="outline">
-                      <Link href="/lcm">LCM Calculator</Link>
-                  </Button>
-                   <Button asChild variant="outline">
-                      <Link href="/basic">Basic Calculators</Link>
-                  </Button>
-              </div>
-            </section>
-            <EducationalContent />
+                <GcfCalculator />
+                <HowToUseGuide />
+                <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/lcm">LCM Calculator</Link>
+                      </Button>
+                       <Button asChild variant="outline">
+                          <Link href="/basic">Basic Calculators</Link>
+                      </Button>
+                  </div>
+                </section>
+                <EducationalContent />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

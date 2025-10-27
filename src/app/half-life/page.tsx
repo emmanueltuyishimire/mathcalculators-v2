@@ -6,6 +6,7 @@ import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -200,20 +201,25 @@ export default function HalfLifePage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Half-Life Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Half-Life Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                   A free online calculator for half-life, mean lifetime, and decay constant problems.
-                </p>
-            </section>
-          <HalfLifeCalculator />
-          <HowToUseGuide />
-          <CalculatorLogic />
-          <EducationalContent />
-          <FaqSection />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                     <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                        Half-Life Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                       A free online calculator for half-life, mean lifetime, and decay constant problems.
+                    </p>
+                </section>
+              <HalfLifeCalculator />
+              <HowToUseGuide />
+              <CalculatorLogic />
+              <EducationalContent />
+              <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>

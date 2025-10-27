@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -210,7 +211,8 @@ export default function BinaryPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Binary Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
               <section className="text-center">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Binary Calculator
@@ -235,6 +237,10 @@ export default function BinaryPage() {
               </section>
               <EducationalContent />
               <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

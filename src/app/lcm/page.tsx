@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -192,7 +193,8 @@ export default function LcmPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Least Common Multiple Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
               <section className="text-center">
                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                       Least Common Multiple (LCM) Calculator
@@ -201,21 +203,25 @@ export default function LcmPage() {
                       A free online calculator to find the least common multiple (LCM) of a set of numbers, with step-by-step solutions.
                   </p>
               </section>
-            <LcmCalculator />
-            <HowToUseGuide />
-            <section className="text-center">
-              <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-              <div className="flex flex-wrap justify-center gap-2 mt-4">
-                  <Button asChild variant="outline">
-                      <Link href="/basic">Basic Calculators</Link>
-                  </Button>
-                   <Button asChild variant="outline">
-                      <Link href="/fraction">Fraction Calculator</Link>
-                  </Button>
-              </div>
-            </section>
-            <EducationalContent />
-            <FaqSection />
+                <LcmCalculator />
+                <HowToUseGuide />
+                <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/basic">Basic Calculators</Link>
+                      </Button>
+                       <Button asChild variant="outline">
+                          <Link href="/fraction">Fraction Calculator</Link>
+                      </Button>
+                  </div>
+                </section>
+                <EducationalContent />
+                <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

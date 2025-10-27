@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/page-header';
 import HexCalculator from '@/components/calculators/hex-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HexMultiplicationTable = () => {
     const headers = [...Array(16).keys()].map(i => i.toString(16).toUpperCase());
@@ -131,19 +132,24 @@ export default function HexPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Hexadecimal Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Hex Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A free online hex calculator for hexadecimal arithmetic and conversions between hex and decimal values.
-                </p>
-            </section>
-            
-            <HexCalculator />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                        Hex Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        A free online hex calculator for hexadecimal arithmetic and conversions between hex and decimal values.
+                    </p>
+                </section>
+                
+                <HexCalculator />
 
-            <EducationalContent />
+                <EducationalContent />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>
