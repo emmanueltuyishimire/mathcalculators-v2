@@ -4,6 +4,9 @@
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -62,6 +65,14 @@ export default function AlgebraGuidePage() {
                             <p className="mt-4 text-lg text-muted-foreground">
                                 Welcome to the Algebra Calculator — a smart tool that lets you simplify, solve, and analyze algebraic expressions step-by-step.
                             </p>
+                            <div className="mt-6">
+                                <Button asChild>
+                                    <Link href="/algebra">
+                                        <ArrowLeft className="mr-2 h-4 w-4" />
+                                        Back to Algebra Calculator
+                                    </Link>
+                                </Button>
+                            </div>
                         </section>
 
                         <Card>
