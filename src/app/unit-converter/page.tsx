@@ -73,9 +73,9 @@ export default function UnitConverterPage() {
               </section>
               <UnitConverter />
             </div>
-            <div className="mt-8 lg:mt-0">
+            <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
                 <RelatedCalculatorsSidebar />
-            </div>
+            </aside>
           </div>
         </main>
       </div>

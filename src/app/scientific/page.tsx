@@ -115,7 +115,7 @@ export default function ScientificPage() {
         <PageHeader title="Scientific Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="flex flex-col lg:flex-row lg:gap-8">
-            <div className="flex-1 space-y-12">
+            <div className="flex-1 space-y-8">
               <section className="text-center">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Online Scientific Calculator
@@ -125,11 +125,13 @@ export default function ScientificPage() {
                   </p>
               </section>
               
-              <ScientificCalculator />
+              <div className="max-w-sm mx-auto">
+                <ScientificCalculator />
+              </div>
 
               <HowToUseGuide />
 
-              <section className="space-y-8">
+              <section className="space-y-8 max-w-4xl mx-auto">
                   <h2 className="text-3xl font-bold">What is a Scientific Calculator?</h2>
                   <p className="text-muted-foreground">
                       A scientific calculator is an essential tool for students, engineers, and professionals who need to perform complex mathematical calculations. Unlike a <Link href="/basic" className="text-primary hover:underline">basic calculator</Link>, a scientific calculator includes functions for trigonometry, logarithms, exponents, and more. Our free scientific calculator app provides a powerful and easy-to-use interface right in your browser, with features comparable to leading brands like Casio and Texas Instruments (TI). Whether you're tackling homework or complex engineering problems, this tool is designed to be your reliable companion. The primary benefit of an online calculator is its accessibility—no need to buy a physical device when you have a powerful tool available for free.
@@ -350,9 +352,9 @@ export default function ScientificPage() {
                   </div>
               </section>
             </div>
-             <div className="mt-8 lg:mt-0">
+             <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
                 <RelatedCalculatorsSidebar />
-            </div>
+            </aside>
           </div>
         </main>
       </div>

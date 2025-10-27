@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { ZTable } from '@/components/z-table';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -175,34 +176,39 @@ export default function ProbabilityPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Probability Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Probability Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Tools for calculating two-event probabilities, series of independent events, and normal distribution probabilities.
-                </p>
-            </section>
-            <ProbabilityCalculator />
-            <HowToUseGuide />
-            <EducationalContent />
-            <Separator className="my-12" />
-            <ZTableSection />
-             <section className="text-center text-sm text-muted-foreground">
-                <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center flex-wrap gap-2 mt-2">
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/permutation-combination">Permutation & Combination</Link>
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/z-score">Z-Score Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/confidence-interval">Confidence Interval Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Probability Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        Tools for calculating two-event probabilities, series of independent events, and normal distribution probabilities.
+                    </p>
+                </section>
+                <ProbabilityCalculator />
+                <HowToUseGuide />
+                <EducationalContent />
+                <Separator className="my-12" />
+                <ZTableSection />
+                <section className="text-center text-sm text-muted-foreground">
+                    <h3 className="font-semibold text-foreground">Related Calculators</h3>
+                    <div className="flex justify-center flex-wrap gap-2 mt-2">
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics/permutation-combination">Permutation & Combination</Link>
+                        </Button>
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics/z-score">Z-Score Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics/confidence-interval">Confidence Interval Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+            </div>
+             <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+                <RelatedCalculatorsSidebar />
+            </aside>
         </div>
       </main>
     </div>

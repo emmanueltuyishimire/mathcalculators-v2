@@ -155,7 +155,7 @@ export default function TrigonometryPage() {
         <PageHeader title="Trigonometry Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
           <div className="flex flex-col lg:flex-row lg:gap-8">
-            <div className="flex-1 space-y-12">
+            <div className="flex-1 space-y-8">
               <section className="text-center">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                       Trigonometry Calculator
@@ -186,9 +186,9 @@ export default function TrigonometryPage() {
 
               <FaqSection />
             </div>
-            <div className="mt-8 lg:mt-0">
+            <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
                 <RelatedCalculatorsSidebar />
-            </div>
+            </aside>
           </div>
         </main>
       </div>

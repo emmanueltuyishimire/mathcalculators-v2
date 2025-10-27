@@ -8,6 +8,7 @@ import { ZTable } from '@/components/z-table';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const EducationalContent = () => (
     <Card>
@@ -65,58 +66,63 @@ export default function ZScorePage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Z-Score Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Z-Score Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Compute z-scores, convert between z-scores and probabilities, and find probabilities between two z-scores.
-                </p>
-            </section>
-            
-            <ZScoreCalculator />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Z-Score Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        Compute z-scores, convert between z-scores and probabilities, and find probabilities between two z-scores.
+                    </p>
+                </section>
+                
+                <ZScoreCalculator />
 
-            <EducationalContent />
+                <EducationalContent />
 
-            <section className="space-y-4">
-                <h2 className="text-3xl font-bold text-center">Z-Table (0 to Z)</h2>
-                <p className="text-lg text-muted-foreground text-center">
-                    The values in the table below represent the area between z = 0 and the given z-score.
-                </p>
-                <ZTable />
-                 <Card>
-                    <CardHeader>
-                      <CardTitle>How to Use the Z-Table</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4 text-muted-foreground">
-                      <div>
-                        <h3 className="font-semibold text-foreground">1. Find Your Z-Score</h3>
-                        <p>Your Z-score should be in the format `X.Y` (e.g., 1.23). The row indicates the integer and first decimal place (e.g., `1.2`), and the column gives the second decimal place (e.g., `0.03`).</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground">2. Locate the Value in the Table</h3>
-                        <p>Find the row for `1.2` and the column for `0.03`. The intersecting cell contains the area, which is `0.39065`.</p>
-                      </div>
-                       <div>
-                        <h3 className="font-semibold text-foreground">3. Interpret the Area</h3>
-                        <p>The value `0.39065` means there is a 39.07% probability of a random variable falling between the mean (0) and a Z-score of 1.23.</p>
-                      </div>
-                    </CardContent>
-                </Card>
-            </section>
-            
-            <section className="text-center text-sm text-muted-foreground">
-                <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center flex-wrap gap-2 mt-2">
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/probability">Probability Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+                <section className="space-y-4">
+                    <h2 className="text-3xl font-bold text-center">Z-Table (0 to Z)</h2>
+                    <p className="text-lg text-muted-foreground text-center">
+                        The values in the table below represent the area between z = 0 and the given z-score.
+                    </p>
+                    <ZTable />
+                     <Card>
+                        <CardHeader>
+                          <CardTitle>How to Use the Z-Table</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4 text-muted-foreground">
+                          <div>
+                            <h3 className="font-semibold text-foreground">1. Find Your Z-Score</h3>
+                            <p>Your Z-score should be in the format `X.Y` (e.g., 1.23). The row indicates the integer and first decimal place (e.g., `1.2`), and the column gives the second decimal place (e.g., `0.03`).</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-foreground">2. Locate the Value in the Table</h3>
+                            <p>Find the row for `1.2` and the column for `0.03`. The intersecting cell contains the area, which is `0.39065`.</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-foreground">3. Interpret the Area</h3>
+                            <p>The value `0.39065` means there is a 39.07% probability of a random variable falling between the mean (0) and a Z-score of 1.23.</p>
+                          </div>
+                        </CardContent>
+                    </Card>
+                </section>
+                
+                <section className="text-center text-sm text-muted-foreground">
+                    <h3 className="font-semibold text-foreground">Related Calculators</h3>
+                    <div className="flex justify-center flex-wrap gap-2 mt-2">
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics/probability">Probability Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+            </div>
+             <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+                <RelatedCalculatorsSidebar />
+            </aside>
         </div>
       </main>
     </div>

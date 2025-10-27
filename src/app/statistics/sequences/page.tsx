@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUse = () => (
     <Card>
@@ -184,33 +185,38 @@ export default function SequencesPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Sequence Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-12">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Number Sequence Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    In mathematics, a <b>sequence</b> is an ordered list of numbers that follow a particular pattern. The individual elements in a sequence are called <b>terms</b>, and the number of terms is called its <b>length</b>. Sequences can be finite or infinite and are essential in many areas of math such as algebra, calculus, and analysis.
-                </p>
-            </section>
-            
-            <SequenceCalculators />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                        Number Sequence Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        In mathematics, a <b>sequence</b> is an ordered list of numbers that follow a particular pattern. The individual elements in a sequence are called <b>terms</b>, and the number of terms is called its <b>length</b>. Sequences can be finite or infinite and are essential in many areas of math such as algebra, calculus, and analysis.
+                    </p>
+                </section>
+                
+                <SequenceCalculators />
 
-            <HowToUse />
+                <HowToUse />
 
-            <SequenceEducationalContent />
+                <SequenceEducationalContent />
 
-            <section className="text-center text-sm text-muted-foreground">
-                <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center flex-wrap gap-2 mt-2">
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics">Statistics Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/mean-median-mode">Mean, Median, Mode Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+                <section className="text-center text-sm text-muted-foreground">
+                    <h3 className="font-semibold text-foreground">Related Calculators</h3>
+                    <div className="flex justify-center flex-wrap gap-2 mt-2">
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics">Statistics Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline" size="sm">
+                            <Link href="/statistics/mean-median-mode">Mean, Median, Mode Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+            </div>
+            <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+                <RelatedCalculatorsSidebar />
+            </aside>
         </div>
       </main>
     </div>

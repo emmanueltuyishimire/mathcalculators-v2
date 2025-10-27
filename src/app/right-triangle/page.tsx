@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { RightTriangleDiagram } from '@/components/right-triangle-diagram';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const EducationalContent = () => (
     <Card>
@@ -46,33 +47,38 @@ export default function RightTrianglePage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Right Triangle Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-3xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Right Triangle Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A free online calculator to solve for the missing sides and angles of a right triangle. Please provide any two values to get started.
-                </p>
-            </section>
-            
-            <RightTriangleCalculator />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+          <div className="flex-1 space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Right Triangle Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A free online calculator to solve for the missing sides and angles of a right triangle. Please provide any two values to get started.
+                  </p>
+              </section>
+              
+              <RightTriangleCalculator />
 
-            <RightTriangleDiagram />
+              <RightTriangleDiagram />
 
-            <EducationalContent />
+              <EducationalContent />
 
-            <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/pythagorean">Pythagorean Theorem Calculator</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/trigonometry">Trigonometry Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+              <section className="text-center">
+                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                  <div className="flex flex-wrap justify-center gap-2 mt-4">
+                      <Button asChild variant="outline">
+                          <Link href="/pythagorean">Pythagorean Theorem Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                          <Link href="/trigonometry">Trigonometry Calculator</Link>
+                      </Button>
+                  </div>
+              </section>
+          </div>
+          <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+            <RelatedCalculatorsSidebar />
+          </aside>
         </div>
       </main>
     </div>

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -116,36 +117,41 @@ export default function MeanMedianModePage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Mean, Median, Mode, Range Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Mean, Median, Mode, Range Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide numbers separated by commas to calculate the mean, median, mode, and range.
-                </p>
-            </section>
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+          <div className="flex-1 space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Mean, Median, Mode, Range Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      Please provide numbers separated by commas to calculate the mean, median, mode, and range.
+                  </p>
+              </section>
 
-            <MeanMedianModeCalculator />
+              <MeanMedianModeCalculator />
 
-            <HowToUseGuide />
+              <HowToUseGuide />
 
-            <EducationalContent />
+              <EducationalContent />
 
-            <section className="text-center text-sm text-muted-foreground">
-                <h3 className="font-semibold text-foreground">Related Calculators</h3>
-                <div className="flex justify-center flex-wrap gap-2 mt-2">
-                    <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics">Statistics Calculator</Link>
-                    </Button>
-                     <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
-                    </Button>
-                     <Button asChild variant="outline" size="sm">
-                        <Link href="/statistics/sample-size">Sample Size Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+              <section className="text-center text-sm text-muted-foreground">
+                  <h3 className="font-semibold text-foreground">Related Calculators</h3>
+                  <div className="flex justify-center flex-wrap gap-2 mt-2">
+                      <Button asChild variant="outline" size="sm">
+                          <Link href="/statistics">Statistics Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline" size="sm">
+                          <Link href="/statistics/standard-deviation">Standard Deviation Calculator</Link>
+                      </Button>
+                      <Button asChild variant="outline" size="sm">
+                          <Link href="/statistics/sample-size">Sample Size Calculator</Link>
+                      </Button>
+                  </div>
+              </section>
+          </div>
+          <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+            <RelatedCalculatorsSidebar />
+          </aside>
         </div>
       </main>
     </div>

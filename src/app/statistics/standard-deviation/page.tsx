@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const EducationalContent = () => (
   <Card className="bg-muted/50">
@@ -77,73 +78,78 @@ export default function StandardDeviationPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Standard Deviation Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-          <section className="text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Standard Deviation Calculator
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Please provide numbers separated by commas to calculate the standard deviation, variance, mean, sum, and margin of error.
-            </p>
-          </section>
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+          <div className="flex-1 space-y-8">
+              <section className="text-center">
+                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  Standard Deviation Calculator
+                </h1>
+                <p className="mt-4 text-lg text-muted-foreground">
+                  Please provide numbers separated by commas to calculate the standard deviation, variance, mean, sum, and margin of error.
+                </p>
+              </section>
 
-          <StandardDeviationCalculator />
+              <StandardDeviationCalculator />
 
-          <section className="space-y-6 text-muted-foreground">
-            <h2 className="text-2xl font-bold text-foreground">How to Use the Standard Deviation Calculator</h2>
-            <p>This calculator helps you compute standard deviation, variance, mean, sum, and margin of error from a list of numbers.</p>
-            
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 1: Enter Your Numbers</h3>
-                <p>Type or paste your data into the input box, separating each number with a comma.</p>
-                <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">10, 12, 23, 23, 16, 23, 21, 16</p>
-                <p>You can enter as many numbers as you like — just make sure they’re separated by commas.</p>
-            </div>
-            
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 2: Choose Data Type</h3>
-                <p>Select whether your numbers represent a:</p>
-                <ul className="list-disc list-inside pl-4 mt-2">
-                    <li><strong>Population</strong> — if you have data for everyone in the group.</li>
-                    <li><strong>Sample</strong> — if your numbers are just a subset of a larger population.</li>
-                </ul>
-                <p>This affects the variance and standard deviation formulas.</p>
-            </div>
+              <section className="space-y-6 text-muted-foreground">
+                <h2 className="text-2xl font-bold text-foreground">How to Use the Standard Deviation Calculator</h2>
+                <p>This calculator helps you compute standard deviation, variance, mean, sum, and margin of error from a list of numbers.</p>
+                
+                <div>
+                    <h3 className="text-xl font-semibold text-foreground">Step 1: Enter Your Numbers</h3>
+                    <p>Type or paste your data into the input box, separating each number with a comma.</p>
+                    <p className="font-mono bg-muted p-2 rounded-md my-2 text-center">10, 12, 23, 23, 16, 23, 21, 16</p>
+                    <p>You can enter as many numbers as you like — just make sure they’re separated by commas.</p>
+                </div>
+                
+                <div>
+                    <h3 className="text-xl font-semibold text-foreground">Step 2: Choose Data Type</h3>
+                    <p>Select whether your numbers represent a:</p>
+                    <ul className="list-disc list-inside pl-4 mt-2">
+                        <li><strong>Population</strong> — if you have data for everyone in the group.</li>
+                        <li><strong>Sample</strong> — if your numbers are just a subset of a larger population.</li>
+                    </ul>
+                    <p>This affects the variance and standard deviation formulas.</p>
+                </div>
 
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 3: Read the Results</h3>
-                <p>The calculator will instantly show all the computed values below.</p>
-            </div>
-            
-             <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 4: Understand the Steps</h3>
-                <p>The “Steps” section shows the formula and exact calculations used to get the variance and standard deviation — perfect if you want to check or learn the math behind it.</p>
-            </div>
+                <div>
+                    <h3 className="text-xl font-semibold text-foreground">Step 3: Read the Results</h3>
+                    <p>The calculator will instantly show all the computed values below.</p>
+                </div>
+                
+                <div>
+                    <h3 className="text-xl font-semibold text-foreground">Step 4: Understand the Steps</h3>
+                    <p>The “Steps” section shows the formula and exact calculations used to get the variance and standard deviation — perfect if you want to check or learn the math behind it.</p>
+                </div>
 
-            <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 5: Check the Margin of Error</h3>
-                <p>Below the steps, you’ll see Margin of Error (Confidence Intervals) for various confidence levels (68%, 90%, 95%, etc.). This tells you how much your sample mean might differ from the true population mean.</p>
-            </div>
+                <div>
+                    <h3 className="text-xl font-semibold text-foreground">Step 5: Check the Margin of Error</h3>
+                    <p>Below the steps, you’ll see Margin of Error (Confidence Intervals) for various confidence levels (68%, 90%, 95%, etc.). This tells you how much your sample mean might differ from the true population mean.</p>
+                </div>
 
-             <div>
-                <h3 className="text-xl font-semibold text-foreground">Step 6: Review the Frequency Table</h3>
-                <p>Finally, the Frequency Table shows how many times each unique value appears in your data, along with its percentage share.</p>
-            </div>
-          </section>
+                <div>
+                    <h3 className="text-xl font-semibold text-foreground">Step 6: Review the Frequency Table</h3>
+                    <p>Finally, the Frequency Table shows how many times each unique value appears in your data, along with its percentage share.</p>
+                </div>
+              </section>
 
-          <EducationalContent />
-          
-          <section className="text-center text-sm text-muted-foreground">
-            <h3 className="font-semibold text-foreground">Related</h3>
-            <div className="flex justify-center flex-wrap gap-2 mt-2">
-                <Button asChild variant="outline" size="sm">
-                    <Link href="/statistics">Statistics Calculator</Link>
-                </Button>
-                 <Button asChild variant="outline" size="sm">
-                    <Link href="/statistics/probability">Probability Calculator</Link>
-                </Button>
-            </div>
-          </section>
+              <EducationalContent />
+              
+              <section className="text-center text-sm text-muted-foreground">
+                <h3 className="font-semibold text-foreground">Related</h3>
+                <div className="flex justify-center flex-wrap gap-2 mt-2">
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics">Statistics Calculator</Link>
+                    </Button>
+                    <Button asChild variant="outline" size="sm">
+                        <Link href="/statistics/probability">Probability Calculator</Link>
+                    </Button>
+                </div>
+              </section>
+          </div>
+          <aside className="mt-8 lg:mt-0 lg:w-72 lg:flex-shrink-0">
+            <RelatedCalculatorsSidebar />
+          </aside>
         </div>
       </main>
     </div>
