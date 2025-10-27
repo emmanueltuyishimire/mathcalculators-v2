@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -179,35 +180,40 @@ export default function SurfaceAreaPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Surface Area Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-12">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Surface Area Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    The following is a list of surface area calculators for several common shapes. Please fill in the corresponding fields and click the "Calculate" button.
-                </p>
-            </section>
-            
-            <HowToUseGuide />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-12">
+                <section className="text-center">
+                    <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                        Surface Area Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        The following is a list of surface area calculators for several common shapes. Please fill in the corresponding fields and click the "Calculate" button.
+                    </p>
+                </section>
+                
+                <HowToUseGuide />
 
-            <SurfaceAreaCalculator />
-            
-            <EducationalContent />
-            
-            <FaqSection />
+                <SurfaceAreaCalculator />
+                
+                <EducationalContent />
+                
+                <FaqSection />
 
-             <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/geometry">Geometry Calculators</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/geometry/volume">Volume Calculator</Link>
-                    </Button>
-                </div>
-            </section>
+                <section className="text-center">
+                    <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Button asChild variant="outline">
+                            <Link href="/geometry">Geometry Calculators</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/geometry/volume">Volume Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+            </div>
+             <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>

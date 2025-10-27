@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Square, Waves, Volume, Circle, Triangle, TrendingUp, Move3d, Sigma } from 'lucide-react';
 import React from 'react';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -104,34 +105,39 @@ export default function GeometryPage() {
       />
       <div className="flex flex-1 flex-col">
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-4xl space-y-8">
-              <section className="text-center" aria-labelledby="page-title">
-                  <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                      Geometry Calculator
-                  </h1>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                      A comprehensive set of free online geometry calculators for area, volume, surface area, and other geometric properties.
-                  </p>
-              </section>
-              
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {geometryTools.map((tool) => (
-                   <React.Fragment key={tool.label}>
-                      <Link href={tool.href} className="group">
-                        <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                          <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                             <div className="rounded-full bg-primary/10 p-3 text-primary">
-                              <tool.icon className="h-6 w-6" />
-                            </div>
-                            <CardTitle>{tool.label}</CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <p className="text-sm text-muted-foreground">{tool.description}</p>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                   </React.Fragment>
-                ))}
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+              <div className="flex-1 space-y-8">
+                  <section className="text-center" aria-labelledby="page-title">
+                      <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                          Geometry Calculators
+                      </h1>
+                      <p className="mt-4 text-lg text-muted-foreground">
+                          A comprehensive set of free online geometry calculators for area, volume, surface area, and other geometric properties.
+                      </p>
+                  </section>
+                  
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {geometryTools.map((tool) => (
+                       <React.Fragment key={tool.label}>
+                          <Link href={tool.href} className="group">
+                            <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                                 <div className="rounded-full bg-primary/10 p-3 text-primary">
+                                  <tool.icon className="h-6 w-6" />
+                                </div>
+                                <CardTitle>{tool.label}</CardTitle>
+                              </CardHeader>
+                              <CardContent>
+                                <p className="text-sm text-muted-foreground">{tool.description}</p>
+                              </CardContent>
+                            </Card>
+                          </Link>
+                       </React.Fragment>
+                    ))}
+                  </div>
+              </div>
+              <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
               </div>
           </div>
         </main>

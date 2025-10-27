@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -168,32 +169,37 @@ export default function AreaPage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Area Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-4xl space-y-12">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Area Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    The following are calculators to evaluate the area of seven common shapes. The area of more complex shapes can usually be obtained by breaking them down into their aggregating simple shapes, and totaling their areas. This calculator is especially useful for estimating land area.
-                </p>
-            </section>
-            
-            <AreaCalculator />
-            <HowToUseGuide />
-            <EducationalContent />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-12">
+                <section className="text-center">
+                    <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                        Area Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        The following are calculators to evaluate the area of seven common shapes. The area of more complex shapes can usually be obtained by breaking them down into their aggregating simple shapes, and totaling their areas. This calculator is especially useful for estimating land area.
+                    </p>
+                </section>
+                
+                <AreaCalculator />
+                <HowToUseGuide />
+                <EducationalContent />
 
-             <section className="text-center">
-                <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    <Button asChild variant="outline">
-                        <Link href="/geometry">Geometry Calculators</Link>
-                    </Button>
-                    <Button asChild variant="outline">
-                        <Link href="/geometry/volume">Volume Calculator</Link>
-                    </Button>
-                </div>
-            </section>
-            <FaqSection />
+                <section className="text-center">
+                    <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Button asChild variant="outline">
+                            <Link href="/geometry">Geometry Calculators</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/geometry/volume">Volume Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+                <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>

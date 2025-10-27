@@ -7,6 +7,7 @@ import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binar
 import React from 'react';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
 import { Button } from '@/components/ui/button';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -50,29 +51,7 @@ const breadcrumbSchema = {
   }]
 };
 
-const basicTools = [
-  { href: '/scientific', label: 'Scientific Calculator', icon: Atom },
-  { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
-  { href: '/percentage', label: 'Percentage Calculator', icon: Percent },
-  { href: '/random', label: 'Random Number Generator', icon: Shuffle },
-  { href: '/percent-error', label: 'Percent Error Calculator', icon: AlertTriangle },
-  { href: '/exponent', label: 'Exponent Calculator', icon: Superscript },
-  { href: '/binary', label: 'Binary Calculator', icon: Binary },
-  { href: '/hex', label: 'Hex Calculator', icon: Code },
-  { href: '/half-life', label: 'Half-Life Calculator', icon: Atom },
-  { href: '/log', label: 'Log Calculator', icon: Calculator },
-  { href: '/ratio', label: 'Ratio Calculator', icon: Proportions },
-  { href: '/root', label: 'Root Calculator', icon: Radical },
-  { href: '/lcm', label: 'Least Common Multiple', icon: Gavel },
-  { href: '/gcf', label: 'Greatest Common Factor', icon: Hand },
-  { href: '/factor', label: 'Factor Calculator', icon: Gavel },
-  { href: '/rounding', 'label': 'Rounding Calculator', icon: CheckCircle },
-  { href: '/matrix', label: 'Matrix Calculator', icon: Table },
-  { href: '/scientific-notation', label: 'Scientific Notation', icon: Type },
-  { href: '/big-number', label: 'Big Number Calculator', icon: InfinityIcon },
-];
-
-export default function BasicCategoryPage() {
+export default function AlgebraPage() {
   return (
     <>
       <script
@@ -85,51 +64,33 @@ export default function BasicCategoryPage() {
       />
       <div className="flex flex-1 flex-col">
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-4xl space-y-8">
-              <section className="text-center" aria-labelledby="page-title">
-                  <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                      Algebra Calculator
-                  </h1>
-                  <p className="mt-4 text-lg text-muted-foreground">
-                      A collection of essential algebra and math calculators for everyday problems.
-                  </p>
-              </section>
+            <div className="flex flex-col lg:flex-row lg:gap-8">
+              <div className="flex-1 space-y-8">
+                  <section className="text-center" aria-labelledby="page-title">
+                      <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                          Algebra Calculator
+                      </h1>
+                      <p className="mt-4 text-lg text-muted-foreground">
+                          A collection of essential algebra and math calculators for everyday problems.
+                      </p>
+                  </section>
 
-              <div className="max-w-2xl mx-auto">
-                  <AlgebraCalculator />
-                  <div className="text-center mt-4">
-                      <Button asChild variant="outline">
-                          <Link href="/algebra/guide">
-                              <HelpCircle className="mr-2 h-4 w-4" />
-                              How to Use the Algebra Calculator
-                          </Link>
-                      </Button>
+                  <div className="max-w-2xl mx-auto">
+                      <AlgebraCalculator />
+                      <div className="text-center mt-4">
+                          <Button asChild variant="outline">
+                              <Link href="/algebra/guide">
+                                  <HelpCircle className="mr-2 h-4 w-4" />
+                                  How to Use the Algebra Calculator
+                              </Link>
+                          </Button>
+                      </div>
                   </div>
               </div>
-              
-              <section aria-labelledby="related-tools-title">
-                <h2 id="related-tools-title" className="sr-only">Related Tools</h2>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 pt-8">
-                  {basicTools.map((tool) => (
-                    <React.Fragment key={tool.label}>
-                      <Link href={tool.href} className="group">
-                        <Card className="h-full transition-all group-hover:shadow-lg group-hover:-translate-y-1">
-                          <CardHeader className="flex flex-row items-center gap-4 space-y-0">
-                            <div className="rounded-full bg-primary/10 p-3 text-primary">
-                              <tool.icon className="h-6 w-6" />
-                            </div>
-                            <CardTitle>{tool.label}</CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <p className="text-sm text-muted-foreground">An essential calculation tool.</p>
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    </React.Fragment>
-                  ))}
-                </div>
-              </section>
-          </div>
+              <div className="mt-8 lg:mt-0">
+                  <RelatedCalculatorsSidebar />
+              </div>
+            </div>
         </main>
       </div>
     </>

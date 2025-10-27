@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -153,36 +154,41 @@ export default function TrigonometryPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Trigonometry Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-4xl space-y-12">
-            <section className="text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                    Trigonometry Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A free online trigonometry calculator with a unified suite of tools for all your trigonometry needs, from basic functions to advanced triangle solving.
-                </p>
-            </section>
-            
-            <Tabs defaultValue="functions" className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="functions">Trig Functions</TabsTrigger>
-                    <TabsTrigger value="right-triangle">Right Triangle</TabsTrigger>
-                    <TabsTrigger value="oblique-triangle">Oblique Triangle</TabsTrigger>
-                </TabsList>
-                <TabsContent value="functions" className="mt-6">
-                    <BasicTrigCalculator />
-                </TabsContent>
-                <TabsContent value="right-triangle" className="mt-6">
-                    <RightTriangleSolver />
-                </TabsContent>
-                <TabsContent value="oblique-triangle" className="mt-6">
-                    <ObliqueTriangleSolver />
-                </TabsContent>
-            </Tabs>
-            
-            <HowToUseGuide />
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-12">
+              <section className="text-center">
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                      Trigonometry Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A free online trigonometry calculator with a unified suite of tools for all your trigonometry needs, from basic functions to advanced triangle solving.
+                  </p>
+              </section>
+              
+              <Tabs defaultValue="functions" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                      <TabsTrigger value="functions">Trig Functions</TabsTrigger>
+                      <TabsTrigger value="right-triangle">Right Triangle</TabsTrigger>
+                      <TabsTrigger value="oblique-triangle">Oblique Triangle</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="functions" className="mt-6">
+                      <BasicTrigCalculator />
+                  </TabsContent>
+                  <TabsContent value="right-triangle" className="mt-6">
+                      <RightTriangleSolver />
+                  </TabsContent>
+                  <TabsContent value="oblique-triangle" className="mt-6">
+                      <ObliqueTriangleSolver />
+                  </TabsContent>
+              </Tabs>
+              
+              <HowToUseGuide />
 
-            <FaqSection />
+              <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

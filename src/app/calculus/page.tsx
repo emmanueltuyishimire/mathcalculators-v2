@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -140,29 +141,34 @@ export default function CalculusPage() {
       <div className="flex flex-1 flex-col">
         <PageHeader title="Calculus Calculator" />
         <main className="flex-1 p-4 md:p-6 lg:p-8">
-          <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Calculus Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.
-                </p>
-            </section>
-            <CalculusCalculator />
-            <HowToUseGuide />
-             <section className="text-center">
-                  <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
-                  <div className="flex flex-wrap justify-center gap-2 mt-4">
-                      <Button asChild variant="outline">
-                          <Link href="/scientific">Scientific Calculator</Link>
-                      </Button>
-                      <Button asChild variant="outline">
-                          <Link href="/algebra">Algebra Calculator</Link>
-                      </Button>
-                  </div>
+          <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+              <section className="text-center">
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                      Calculus Calculator
+                  </h1>
+                  <p className="mt-4 text-lg text-muted-foreground">
+                      A free online calculator for solving basic calculus problems, including derivatives, integrals, and limits.
+                  </p>
               </section>
-              <FaqSection />
+              <CalculusCalculator />
+              <HowToUseGuide />
+              <section className="text-center">
+                    <h2 className="text-2xl font-bold text-foreground">Related Calculators</h2>
+                    <div className="flex flex-wrap justify-center gap-2 mt-4">
+                        <Button asChild variant="outline">
+                            <Link href="/scientific">Scientific Calculator</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link href="/algebra">Algebra Calculator</Link>
+                        </Button>
+                    </div>
+                </section>
+                <FaqSection />
+            </div>
+            <div className="mt-8 lg:mt-0">
+              <RelatedCalculatorsSidebar />
+            </div>
           </div>
         </main>
       </div>

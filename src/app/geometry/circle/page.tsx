@@ -6,6 +6,7 @@ import CircleCalculator from '@/components/calculators/circle-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
 
 const HowToUseGuide = () => (
     <Card>
@@ -156,20 +157,25 @@ export default function CirclePage() {
     <div className="flex flex-1 flex-col">
       <PageHeader title="Circle Calculator" />
       <main className="flex-1 p-4 md:p-6 lg:p-8">
-        <div className="mx-auto max-w-2xl space-y-8">
-            <section className="text-center">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    Circle Calculator
-                </h1>
-                <p className="mt-4 text-lg text-muted-foreground">
-                    Please provide any value below to calculate the remaining values of a circle.
-                </p>
-            </section>
-            
-            <CircleCalculator />
-            <HowToUseGuide />
-            <EducationalContent />
-            <FaqSection />
+        <div className="flex flex-col lg:flex-row lg:gap-8">
+            <div className="flex-1 space-y-8">
+                <section className="text-center">
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                        Circle Calculator
+                    </h1>
+                    <p className="mt-4 text-lg text-muted-foreground">
+                        Please provide any value below to calculate the remaining values of a circle.
+                    </p>
+                </section>
+                
+                <CircleCalculator />
+                <HowToUseGuide />
+                <EducationalContent />
+                <FaqSection />
+            </div>
+             <div className="mt-8 lg:mt-0">
+                <RelatedCalculatorsSidebar />
+            </div>
         </div>
       </main>
     </div>
