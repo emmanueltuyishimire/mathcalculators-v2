@@ -67,7 +67,7 @@ const HowToUseGuide = () => (
                     <ul className="list-disc list-inside pl-6 mt-1">
                         <li>For <strong>Derivatives</strong>, enter the function f(x) (e.g., <code className="font-mono bg-muted p-1 rounded-md">x^3</code>).</li>
                         <li>For <strong>Integrals</strong>, enter the function to integrate (e.g., <code className="font-mono bg-muted p-1 rounded-md">3x^2</code>).</li>
-                        <li>For <strong>Limits</strong>, enter the function and the value x approaches (e.g., <code className="font-mono bg-muted p-1 rounded-md">(x^2 - 4)/(x - 2) as x-&gt;2</code>).</li>
+                        <li>For <strong>Limits</strong>, enter the function and the value x approaches (e.g., <code className="font-mono bg-muted p-1 rounded-md">(x^2 - 4)/(x - 2) as x->2</code>).</li>
                     </ul>
                 </li>
                 <li>
