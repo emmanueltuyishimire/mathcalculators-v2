@@ -130,7 +130,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <NavigationMenuList>
                       {navItems.map((item) => (
                       <NavigationMenuItem key={item.href}>
-                          <NavigationMenuLink asChild active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))}>
+                          <NavigationMenuLink asChild active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic')}>
                               <Link href={item.href} className={navigationMenuTriggerStyle()}>
                                   {item.label}
                               </Link>
