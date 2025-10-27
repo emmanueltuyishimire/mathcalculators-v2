@@ -1,12 +1,16 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import GcfCalculator from '@/components/calculators/gcf-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Greatest Common Factor (GCF) Calculator',
+  description: 'Find the greatest common factor (GCF) of a set of numbers with our free online GCF calculator, complete with step-by-step solutions.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

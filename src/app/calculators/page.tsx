@@ -1,11 +1,16 @@
 
-"use client";
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, FunctionSquare, BarChartHorizontal, FlaskConical, Square, MoreVertical, Table, Type, Sigma, Replace, Star, TrendingUp, Move3d, Triangle, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Proportions, Radical, Gavel, Hand, CheckCircle, InfinityIcon, Waves, Volume, ShieldCheck, Milestone, Circle } from 'lucide-react';
 import React from 'react';
 import placeholderImages from '@/lib/placeholder-images.json';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Math Calculators Collection',
+  description: 'Browse a comprehensive collection of free online math calculators for various fields including algebra, geometry, statistics, and more.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

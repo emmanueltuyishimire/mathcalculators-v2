@@ -1,11 +1,15 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import FractionCalculators from '@/components/calculators/fraction-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Fraction Calculator',
+  description: 'A comprehensive set of free online fraction calculators for arithmetic, simplification, and conversion between fractions and decimals.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

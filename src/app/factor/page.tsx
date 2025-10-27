@@ -1,12 +1,16 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import FactorCalculator from '@/components/calculators/factor-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Factor Calculator',
+  description: 'Find all factors, factor pairs, and the prime factorization of any integer with our free online Factor Calculator.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

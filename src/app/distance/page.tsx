@@ -1,11 +1,15 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import DistanceCalculator from '@/components/calculators/distance-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Distance Calculator',
+  description: 'A free online distance calculator to find the distance between two points in 2D or 3D space, or between two geographical coordinates.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

@@ -1,8 +1,13 @@
-"use client";
 
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Mail, MessageSquare, User, Send, Star, Heart, Handshake } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: 'Get in touch with the Math Calculators team. We welcome your feedback, suggestions, and questions to help us improve our free online tools.',
+};
 
 export default function ContactPage() {
   return (

@@ -1,9 +1,13 @@
 
-"use client";
-
 import UnitConverter from '@/components/calculators/unit-converter';
 import { PageHeader } from '@/components/page-header';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Unit Converter',
+  description: 'A free online tool to convert between various units of measurement, including length, mass, and temperature.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

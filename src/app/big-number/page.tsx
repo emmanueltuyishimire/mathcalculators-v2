@@ -1,6 +1,4 @@
 
-"use client";
-
 import BigNumberCalculator from '@/components/calculators/big-number-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -8,6 +6,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Big Number Calculator',
+  description: 'Perform arithmetic on very large numbers with our free online Big Number Calculator. Ideal for cryptography, mathematics, and scientific computations.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

@@ -1,11 +1,15 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import DestinyMatrixCalculator from '@/components/calculators/destiny-matrix-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Destiny Matrix Calculator',
+  description: 'Discover your personality traits, strengths, and life path with our free Destiny Matrix Calculator based on numerology principles.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

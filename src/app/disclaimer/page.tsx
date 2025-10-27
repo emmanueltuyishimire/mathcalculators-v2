@@ -1,6 +1,12 @@
-"use client";
 
 import { PageHeader } from '@/components/page-header';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Disclaimer',
+  description: 'Disclaimer for Math Calculators. The information and tools provided are for educational purposes only and should not be considered professional advice.',
+};
+
 
 export default function DisclaimerPage() {
   return (

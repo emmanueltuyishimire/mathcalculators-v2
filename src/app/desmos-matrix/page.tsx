@@ -1,12 +1,16 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import DesmosMatrixCalculator from '@/components/calculators/desmos-matrix-calculator';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Desmos Style Matrix Calculator',
+  description: 'An interactive, Desmos-style matrix calculator for performing operations like addition, multiplication, transpose, and finding the determinant and inverse.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

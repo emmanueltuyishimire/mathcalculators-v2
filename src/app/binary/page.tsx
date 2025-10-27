@@ -1,6 +1,4 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import BinaryCalculator from '@/components/calculators/binary-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -9,6 +7,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Binary Calculator',
+  description: 'Perform binary arithmetic (add, subtract, multiply, divide) and convert between binary and decimal values with our free online Binary Calculator.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

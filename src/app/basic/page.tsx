@@ -1,11 +1,15 @@
 
-"use client";
-
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
 import BasicCalculator from '@/components/calculators/basic-calculator';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Basic Calculator',
+  description: 'A free online basic calculator for performing simple arithmetic operations like addition, subtraction, multiplication, and division.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

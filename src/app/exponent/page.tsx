@@ -1,6 +1,4 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import ExponentCalculator from '@/components/calculators/exponent-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -8,6 +6,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Exponent Calculator',
+  description: 'Solve for any variable in an exponential equation (aⁿ = y) and learn about exponent laws with our free online exponent calculator.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

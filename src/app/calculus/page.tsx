@@ -1,6 +1,4 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import CalculusCalculator from '@/components/calculators/calculus-calculator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,6 +6,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Calculus Calculator',
+  description: 'Solve derivatives, integrals, and limits with our free online Calculus Calculator. A helpful tool for students learning the fundamentals of calculus.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

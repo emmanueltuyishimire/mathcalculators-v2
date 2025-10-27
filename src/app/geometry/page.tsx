@@ -1,10 +1,15 @@
 
-"use client";
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Square, Waves, Volume, Circle, Triangle, TrendingUp, Move3d, Sigma } from 'lucide-react';
 import React from 'react';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Geometry Calculators',
+  description: 'A comprehensive set of free online geometry calculators for area, volume, surface area, slope, distance, and other geometric properties.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

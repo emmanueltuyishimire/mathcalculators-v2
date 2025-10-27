@@ -1,6 +1,4 @@
 
-"use client";
-
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, Divide, Percent, Shuffle, AlertTriangle, Superscript, Binary, Code, Atom, Sigma, Proportions, Radical, Gavel, Hand, CheckCircle, Table, Type, InfinityIcon, HelpCircle } from 'lucide-react';
@@ -8,6 +6,12 @@ import React from 'react';
 import AlgebraCalculator from '@/components/calculators/algebra-calculator';
 import { Button } from '@/components/ui/button';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Algebra Calculator',
+  description: 'An online algebra calculator that provides step-by-step solutions to algebraic problems. It can simplify expressions, expand brackets, factor polynomials, and solve equations.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

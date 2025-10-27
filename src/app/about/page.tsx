@@ -1,10 +1,15 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Users, Target, Zap } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description: 'Learn about our mission to make mathematics accessible to everyone with our suite of free, powerful, and easy-to-use online math calculators.',
+};
+
 
 export default function AboutPage() {
   return (

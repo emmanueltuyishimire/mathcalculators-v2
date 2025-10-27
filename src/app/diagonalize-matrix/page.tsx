@@ -1,11 +1,15 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import DiagonalizeMatrixCalculator from '@/components/calculators/diagonalize-matrix-calculator';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { RelatedCalculatorsSidebar } from '@/components/related-calculators-sidebar';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Diagonalize Matrix Calculator',
+  description: 'An online calculator to find the eigenvalues, eigenvectors, and diagonal form of a square matrix. Supports step-by-step calculations for learning purposes.',
+};
 
 const pageSchema = {
   "@context": "https://schema.org",

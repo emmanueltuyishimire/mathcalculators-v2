@@ -1,12 +1,16 @@
 
-"use client";
-
 import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Algebra Calculator User Guide',
+  description: 'A step-by-step guide on how to use our online algebra calculator to simplify expressions, solve equations, factor polynomials, and more.',
+};
 
 const howToSchema = {
   "@context": "https://schema.org",
