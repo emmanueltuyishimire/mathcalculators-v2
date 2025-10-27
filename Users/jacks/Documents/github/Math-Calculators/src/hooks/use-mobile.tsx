@@ -5,6 +5,9 @@ import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;
 
+/**
+ * @deprecated This hook is deprecated. Use CSS media queries for responsive design.
+ */
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | null>(null);
 
