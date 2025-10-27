@@ -44,7 +44,7 @@ const breadcrumbSchema = {
   },{
     "@type": "ListItem",
     "position": 3,
-    "name": "Basic Calculators",
+    "name": "Basic Calculator",
     "item": "https://maths.calculation.site/basic"
   }]
 };
@@ -87,7 +87,7 @@ export default function BasicCategoryPage() {
           <div className="mx-auto max-w-4xl space-y-8">
               <section className="text-center" aria-labelledby="page-title">
                   <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                      Basic Calculators
+                      Basic Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
                       A collection of essential calculators for everyday math and science problems.

@@ -37,7 +37,7 @@ const breadcrumbSchema = {
   },{
     "@type": "ListItem",
     "position": 3,
-    "name": "Statistics Calculators",
+    "name": "Statistics Calculator",
     "item": "https://maths.calculation.site/statistics"
   }]
 };
@@ -87,7 +87,7 @@ const statisticsTools = [
   },
   {
     href: '/statistics/sequences',
-    label: 'Sequence Calculators',
+    label: 'Sequence Calculator',
     icon: Milestone,
     description: 'Calculators for arithmetic, geometric, and Fibonacci sequences.',
   },
@@ -150,7 +150,7 @@ export default function StatisticsCategoryPage() {
           <div className="mx-auto max-w-4xl space-y-8">
               <section className="text-center" aria-labelledby="page-title">
                   <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                      Statistics Calculators
+                      Statistics Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
                       A comprehensive suite of free online statistics calculators for all your statistical analysis needs.

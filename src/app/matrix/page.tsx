@@ -9,7 +9,7 @@ import MatrixCalculator from '@/components/calculators/matrix-calculator';
 const pageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Matrix Calculators",
+  "name": "Matrix Calculator",
   "description": "A collection of powerful online matrix calculators for various linear algebra operations, including addition, multiplication, RREF, and diagonalization.",
   "url": "https://maths.calculation.site/matrix",
   "publisher": {
@@ -35,7 +35,7 @@ const breadcrumbSchema = {
   },{
     "@type": "ListItem",
     "position": 3,
-    "name": "Matrix Calculators",
+    "name": "Matrix Calculator",
     "item": "https://maths.calculation.site/matrix"
   }]
 };
@@ -83,7 +83,7 @@ export default function MatrixCategoryPage() {
           <div className="mx-auto max-w-7xl space-y-8">
               <section className="text-center" aria-labelledby="page-title">
                   <h1 id="page-title" className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-                      Matrix Calculators
+                      Matrix Calculator
                   </h1>
                   <p className="mt-4 text-lg text-muted-foreground">
                       A collection of powerful matrix calculators for all your linear algebra needs.

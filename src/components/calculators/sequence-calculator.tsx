@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -99,7 +100,7 @@ function GeometricCalculator() {
             <CardHeader>
                 <CardTitle>Geometric Sequence Calculator</CardTitle>
                 <CardDescription>
-                    <b>Definition:</b> <code>aₙ = a × rⁿ⁻¹</code><br/>
+                    <b>Definition:</b> code>aₙ = a × rⁿ⁻¹</code><br/>
                     <b>Example:</b> 1, 2, 4, 8, 16, 32, 64, 128, ...
                 </CardDescription>
             </CardHeader>

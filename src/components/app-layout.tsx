@@ -34,11 +34,11 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
-  { href: '/algebra', label: 'Algebra', icon: Calculator },
-  { href: '/matrix', label: 'Matrix', icon: Table },
-  { href: '/geometry', label: 'Geometry', icon: Square },
-  { href: '/statistics', label: 'Statistics', icon: BarChartHorizontal },
-  { href: '/unit-converter', label: 'Converter', icon: Replace },
+  { href: '/algebra', label: 'Algebra Calculator', icon: Calculator },
+  { href: '/matrix', label: 'Matrix Calculator', icon: Table },
+  { href: '/geometry', label: 'Geometry Calculator', icon: Square },
+  { href: '/statistics', label: 'Statistics Calculator', icon: BarChartHorizontal },
+  { href: '/unit-converter', label: 'Unit Converter', icon: Replace },
 ];
 
 export function AppLayout({ children }: { children: React.ReactNode }) {

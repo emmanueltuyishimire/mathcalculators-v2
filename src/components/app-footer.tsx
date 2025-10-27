@@ -23,10 +23,10 @@ export function AppFooter() {
                     <div>
                         <h3 className="font-semibold mb-4">Calculators</h3>
                         <ul className="space-y-2 text-sm">
-                            <li><Link href="/scientific" className="text-muted-foreground hover:text-primary">Scientific</Link></li>
-                            <li><Link href="/geometry" className="text-muted-foreground hover:text-primary">Geometry</Link></li>
-                            <li><Link href="/statistics" className="text-muted-foreground hover:text-primary">Statistics</Link></li>
-                             <li><Link href="/matrix" className="text-muted-foreground hover:text-primary">Matrix</Link></li>
+                            <li><Link href="/scientific" className="text-muted-foreground hover:text-primary">Scientific Calculator</Link></li>
+                            <li><Link href="/geometry" className="text-muted-foreground hover:text-primary">Geometry Calculator</Link></li>
+                            <li><Link href="/statistics" className="text-muted-foreground hover:text-primary">Statistics Calculator</Link></li>
+                             <li><Link href="/matrix" className="text-muted-foreground hover:text-primary">Matrix Calculator</Link></li>
                         </ul>
                     </div>
                      <div>

@@ -22,10 +22,10 @@ const pageSchema = {
 
 const calculatorCategories = [
     {
-        title: "Basic & Algebra",
+        title: "Basic & Algebra Calculators",
         tools: [
             { href: '/algebra', label: 'Algebra Calculator', icon: Type },
-            { href: '/basic', label: 'Basic Calculators', icon: Calculator },
+            { href: '/basic', label: 'Basic Calculator', icon: Calculator },
             { href: '/scientific', label: 'Scientific Calculator', icon: FlaskConical },
             { href: '/fraction', label: 'Fraction Calculator', icon: Divide },
             { href: '/percentage', label: 'Percentage Calculator', icon: Percent },
@@ -42,9 +42,9 @@ const calculatorCategories = [
         ]
     },
     {
-        title: "Geometry & Trigonometry",
+        title: "Geometry & Trigonometry Calculators",
         tools: [
-            { href: '/geometry', label: 'Geometry Calculators', icon: Square },
+            { href: '/geometry', label: 'Geometry Calculator', icon: Square },
             { href: '/pythagorean', label: 'Pythagorean Theorem Calculator', icon: Sigma },
             { href: '/right-triangle', label: 'Right Triangle Calculator', icon: Triangle },
             { href: '/slope', label: 'Slope Calculator', icon: TrendingUp },
@@ -56,9 +56,9 @@ const calculatorCategories = [
         ]
     },
     {
-        title: "Statistics & Probability",
+        title: "Statistics & Probability Calculators",
         tools: [
-            { href: '/statistics', label: 'Statistics Calculators', icon: BarChartHorizontal },
+            { href: '/statistics', label: 'Statistics Calculator', icon: BarChartHorizontal },
             { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode Calculator', icon: BarChartHorizontal },
             { href: '/statistics/standard-deviation', label: 'Standard Deviation Calculator', icon: Sigma },
             { href: '/statistics/sample-size', label: 'Sample Size Calculator', icon: Percent },
@@ -66,15 +66,15 @@ const calculatorCategories = [
             { href: '/statistics/permutation-combination', label: 'Permutation & Combination Calculator', icon: FunctionSquare },
             { href: '/statistics/z-score', label: 'Z-Score Calculator', icon: Sigma },
             { href: '/statistics/confidence-interval', label: 'Confidence Interval Calculator', icon: ShieldCheck },
-            { href: '/statistics/sequences', label: 'Sequence Calculators', icon: Milestone },
+            { href: '/statistics/sequences', label: 'Sequence Calculator', icon: Milestone },
              { href: '/random', label: 'Random Number Generator', icon: Shuffle },
         ]
     },
     {
-        title: "Advanced & Specialty",
+        title: "Advanced & Specialty Calculators",
         tools: [
             { href: '/calculus', label: 'Calculus Calculator', icon: Sigma },
-            { href: '/matrix', label: 'Matrix Calculators', icon: Table },
+            { href: '/matrix', label: 'Matrix Calculator', icon: Table },
             { href: '/rref', label: 'RREF Calculator', icon: Sigma },
             { href: '/desmos-matrix', label: 'Desmos Matrix Calculator', icon: Table },
             { href: '/diagonalize-matrix', label: 'Diagonalize Matrix Calculator', icon: Table },

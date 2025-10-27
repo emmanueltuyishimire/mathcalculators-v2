@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://maths.calculation.site'),
   title: {
     default: 'Math Calculators | Free Online Tools for Math, Algebra, & Geometry',
-    template: '%s | Math Calculators',
+    template: '%s | Math Calculator',
   },
   description: 'Explore a comprehensive suite of free online math calculators for algebra, geometry, statistics, and more. Get instant, accurate results for everything from basic arithmetic to advanced calculus and matrix operations.',
   openGraph: {
