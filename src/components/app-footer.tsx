@@ -3,9 +3,15 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 
 export function AppFooter() {
-    const year = new Date().getFullYear();
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
+
 
     const calculatorCategories = [
         {
