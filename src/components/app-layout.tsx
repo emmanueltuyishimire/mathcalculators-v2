@@ -64,7 +64,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               <ThemeToggle />
             </div>
          </header>
-         <div className="flex flex-1 flex-col">{children}</div>
+         <main className="flex-1">{children}</main>
          <AppFooter />
       </div>
     );
@@ -86,16 +86,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
-                <nav className="grid gap-6 text-lg font-medium">
+              <SheetContent side="left" className="p-4">
+                <nav className="grid gap-2 text-base font-medium">
                   <Link
                     href="/"
-                    className="flex items-center gap-2 text-lg font-semibold"
+                    className="flex items-center gap-4 px-2.5 py-2 text-lg font-semibold"
                     onClick={() => setOpen(false)}
                     aria-label="Math Calculators Home"
                   >
                     <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
-                     <span>Math Calculators</span>
+                     <span className="sr-only">Math Calculators</span>
                   </Link>
                   {navItems.map((item) => (
                     <Link
@@ -103,10 +103,11 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                       href={item.href}
                       onClick={() => setOpen(false)}
                       className={cn(
-                        "hover:text-foreground",
-                        pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic') ? "text-foreground" : "text-muted-foreground"
+                        "flex items-center gap-4 px-2.5 py-2 rounded-lg hover:text-foreground",
+                        pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) ? "bg-muted text-foreground" : "text-muted-foreground"
                       )}
                     >
+                      <item.icon className="h-5 w-5" />
                       {item.label}
                     </Link>
                   ))}
@@ -120,7 +121,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             aria-label="Math Calculators Home"
           >
             <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} priority />
-            <span>Math Calculators</span>
+            <span className="hidden sm:inline-block">Math Calculators</span>
           </Link>
         </div>
         
@@ -130,11 +131,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <NavigationMenuList>
                       {navItems.map((item) => (
                       <NavigationMenuItem key={item.href}>
-                          <NavigationMenuLink asChild active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href)) || (item.href === '/algebra' && pathname === '/basic')}>
-                              <Link href={item.href} className={navigationMenuTriggerStyle()}>
-                                  {item.label}
-                              </Link>
-                          </NavigationMenuLink>
+                          <Link href={item.href} legacyBehavior passHref>
+                            <NavigationMenuLink
+                                className={navigationMenuTriggerStyle()}
+                                active={pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href))}>
+                                {item.label}
+                            </NavigationMenuLink>
+                          </Link>
                       </NavigationMenuItem>
                       ))}
                   </NavigationMenuList>
@@ -143,7 +146,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <ThemeToggle />
         </div>
       </header>
-      <div className="flex flex-1 flex-col">{children}</div>
+      <main className="flex-1">{children}</main>
       <AppFooter />
     </div>
   );

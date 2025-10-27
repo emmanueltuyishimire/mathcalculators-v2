@@ -4,6 +4,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
+import { calculatorCategories } from '@/lib/calculator-categories';
 
 export function AppFooter() {
     const [year, setYear] = useState(new Date().getFullYear());
@@ -11,54 +12,6 @@ export function AppFooter() {
     useEffect(() => {
         setYear(new Date().getFullYear());
     }, []);
-
-
-    const calculatorCategories = [
-        {
-            title: "Basic & Algebra",
-            links: [
-                { href: '/algebra', label: 'Algebra Calculator' },
-                { href: '/basic', label: 'Basic Calculator' },
-                { href: '/scientific', label: 'Scientific Calculator' },
-                { href: '/fraction', label: 'Fraction Calculator' },
-                { href: '/percentage', label: 'Percentage Calculator' },
-                { href: '/exponent', label: 'Exponent Calculator' },
-            ]
-        },
-        {
-            title: "Geometry",
-            links: [
-                { href: '/geometry', label: 'Geometry Calculator' },
-                { href: '/pythagorean', label: 'Pythagorean Theorem' },
-                { href: '/slope', label: 'Slope Calculator' },
-                { href: '/distance', label: 'Distance Calculator' },
-                { href: '/geometry/area', label: 'Area Calculator' },
-                { href: '/geometry/volume', label: 'Volume Calculator' },
-            ]
-        },
-        {
-            title: "Statistics",
-            links: [
-                { href: '/statistics', label: 'Statistics Calculator' },
-                { href: '/statistics/mean-median-mode', label: 'Mean, Median, Mode' },
-                { href: '/statistics/standard-deviation', label: 'Standard Deviation' },
-                { href: '/statistics/probability', label: 'Probability Calculator' },
-                { href: '/statistics/permutation-combination', label: 'Permutation & Combination' },
-                { href: '/random', label: 'Random Number Generator' },
-            ]
-        },
-        {
-            title: "Advanced",
-            links: [
-                { href: '/calculus', label: 'Calculus Calculator' },
-                { href: '/matrix', label: 'Matrix Calculator' },
-                { href: '/rref', label: 'RREF Calculator' },
-                { href: '/half-life', label: 'Half-Life Calculator' },
-                { href: '/unit-converter', label: 'Unit Converter' },
-                 { href: '/destiny-matrix', label: 'Destiny Matrix' },
-            ]
-        }
-    ];
 
     return (
         <footer className="border-t bg-background">
@@ -77,7 +30,7 @@ export function AppFooter() {
                         <div key={category.title}>
                             <h3 className="font-semibold mb-4">{category.title}</h3>
                             <ul className="space-y-2 text-sm">
-                                {category.links.map(link => (
+                                {category.tools.slice(0, 5).map(link => (
                                      <li key={link.href}><Link href={link.href} className="text-muted-foreground hover:text-primary">{link.label}</Link></li>
                                 ))}
                             </ul>
