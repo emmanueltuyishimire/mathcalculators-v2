@@ -2,6 +2,7 @@
 module.exports = {
   siteUrl: 'https://www.maths.calculation.site',
   generateRobotsTxt: true, // (optional)
+  generateIndexSitemap: false, // This will prevent splitting into sitemap-0.xml
   additionalPaths: async (config) => {
     const paths = [
       '/about',
