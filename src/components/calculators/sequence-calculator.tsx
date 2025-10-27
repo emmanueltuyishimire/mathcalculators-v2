@@ -6,12 +6,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
 function ArithmeticCalculator() {
-    const [a1, setA1] = useState('');
-    const [d, setD] = useState('');
-    const [n, setN] = useState('');
+    const [a1, setA1] = useState('2');
+    const [d, setD] = useState('5');
+    const [n, setN] = useState('20');
     const [result, setResult] = useState<{ an: number; sum: number } | null>(null);
+    const { toast } = useToast();
 
     const handleCalculate = () => {
         const firstTerm = parseFloat(a1);
@@ -19,6 +21,13 @@ function ArithmeticCalculator() {
         const termN = parseInt(n, 10);
 
         if (isNaN(firstTerm) || isNaN(diff) || isNaN(termN)) {
+            if(a1 || d || n) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all fields.' });
+            setResult(null);
+            return;
+        }
+        
+        if (!Number.isInteger(termN) || termN < 1) {
+            toast({ variant: 'destructive', title: 'Invalid Input', description: '"The nth number" must be a positive integer.' });
             setResult(null);
             return;
         }
@@ -70,10 +79,11 @@ function ArithmeticCalculator() {
 }
 
 function GeometricCalculator() {
-    const [g1, setG1] = useState('');
-    const [r, setR] = useState('');
-    const [n, setN] = useState('');
+    const [g1, setG1] = useState('2');
+    const [r, setR] = useState('5');
+    const [n, setN] = useState('12');
     const [result, setResult] = useState<{ an: number; sum: string | number } | null>(null);
+    const { toast } = useToast();
 
     const handleCalculate = () => {
         const firstTerm = parseFloat(g1);
@@ -81,6 +91,13 @@ function GeometricCalculator() {
         const termN = parseInt(n, 10);
         
         if (isNaN(firstTerm) || isNaN(ratio) || isNaN(termN)) {
+            if(g1 || r || n) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter valid numbers for all fields.' });
+            setResult(null);
+            return;
+        }
+
+        if (!Number.isInteger(termN) || termN < 1) {
+            toast({ variant: 'destructive', title: 'Invalid Input', description: '"The nth number" must be a positive integer.' });
             setResult(null);
             return;
         }
@@ -88,7 +105,7 @@ function GeometricCalculator() {
         const an = firstTerm * Math.pow(ratio, termN - 1);
         let sum;
         if (ratio === 1) {
-            sum = "N/A (r = 1)";
+            sum = firstTerm * termN;
         } else {
             sum = firstTerm * (1 - Math.pow(ratio, termN)) / (1 - ratio);
         }
@@ -100,7 +117,7 @@ function GeometricCalculator() {
             <CardHeader>
                 <CardTitle>Geometric Sequence Calculator</CardTitle>
                 <CardDescription>
-                    <b>Definition:</b> code>aₙ = a × rⁿ⁻¹</code><br/>
+                    <b>Definition:</b> <code>aₙ = a × rⁿ⁻¹</code><br/>
                     <b>Example:</b> 1, 2, 4, 8, 16, 32, 64, 128, ...
                 </CardDescription>
             </CardHeader>
@@ -121,7 +138,7 @@ function GeometricCalculator() {
                 {result && (
                     <div className="!mt-4 p-4 border-l-4 border-primary bg-muted rounded-r-lg">
                         <p><b>nth term (aₙ):</b> {result.an}</p>
-                        <p><b>Sum of first {n} terms (Sₙ):</b> {result.sum}</p>
+                        <p><b>Sum of first {n} terms (Sₙ):</b> {typeof result.sum === 'number' ? result.sum.toExponential(4) : result.sum}</p>
                         <p className="text-sm text-muted-foreground mt-2"><b>Formula used:</b> aₙ = a × rⁿ⁻¹</p>
                     </div>
                 )}
@@ -137,17 +154,23 @@ function GeometricCalculator() {
 }
 
 function FibonacciCalculator() {
-    const [n, setN] = useState('');
-    const [result, setResult] = useState<{ fibN: number, sequence: string } | null>(null);
+    const [n, setN] = useState('10');
+    const [result, setResult] = useState<{ fibN: bigint, sequence: string } | null>(null);
+    const { toast } = useToast();
     
     const handleCalculate = () => {
         const termN = parseInt(n, 10);
         if (isNaN(termN) || termN < 0) {
+            if(n) toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please enter a non-negative integer.'});
             setResult(null);
             return;
         }
+
+        if (termN > 1476) {
+            toast({ variant: 'destructive', title: 'Input too large', description: 'Fibonacci numbers beyond the 1476th term exceed JavaScript\'s standard number limits. The result is shown as BigInt.' });
+        }
         
-        let fib = [0, 1];
+        let fib: bigint[] = [0n, 1n];
         if (termN < 2) {
             setResult({
                 fibN: fib[termN],
@@ -162,7 +185,7 @@ function FibonacciCalculator() {
 
         setResult({
             fibN: fib[termN],
-            sequence: fib.slice(0, termN + 1).join(', ')
+            sequence: fib.slice(0, Math.min(termN + 1, 50)).join(', ') + (termN >= 50 ? '...' : '')
         });
     };
 
@@ -182,9 +205,9 @@ function FibonacciCalculator() {
                 </div>
                 <Button onClick={handleCalculate}>Calculate</Button>
                 {result && (
-                    <div className="!mt-4 p-4 border-l-4 border-primary bg-muted rounded-r-lg">
-                        <p><b>{n}th Fibonacci number:</b> {result.fibN}</p>
-                        <p><b>Sequence:</b> {result.sequence}</p>
+                    <div className="!mt-4 p-4 border-l-4 border-primary bg-muted rounded-r-lg space-y-2">
+                        <p><b>{n}th Fibonacci number:</b> <span className="font-mono">{result.fibN.toString()}</span></p>
+                        <p className="text-sm"><b>Sequence (up to 50 terms):</b> {result.sequence}</p>
                     </div>
                 )}
             </CardContent>

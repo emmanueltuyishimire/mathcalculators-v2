@@ -52,13 +52,21 @@ export default function ExponentCalculator() {
             } else if (baseValStr === '' && !useE) {
                 if(isNaN(expNum) || isNaN(resNum)) return;
                 if (resNum < 0 && expNum % 2 === 0) throw new Error("Cannot take an even root of a negative number.");
-                if (resNum === 1 && expNum === 0) throw new Error("1^0 is ambiguous, typically 1. Please provide base and exponent.");
+                if (resNum === 1 && expNum === 0) {
+                  setBase('');
+                  throw new Error("a^0 = 1 is true for any non-zero 'a'. Base is indeterminate.");
+                }
                 const newBase = Math.pow(resNum, 1 / expNum);
                 setBase(newBase.toString());
                 setSteps(`a = ${resNum}^(1/${expNum}) = ${newBase}`);
             } else if (exponent === '') {
                 if(isNaN(baseNum) || isNaN(resNum)) return;
                 if (baseNum <= 0 || resNum <= 0) throw new Error("Logarithms require positive base and result.");
+                if (baseNum === 1 && resNum !== 1) throw new Error("If base is 1, result must also be 1.");
+                if (baseNum === 1 && resNum === 1) {
+                    setExponent('');
+                    throw new Error("1^n = 1 is true for any 'n'. Exponent is indeterminate.");
+                }
                 const newExponent = Math.log(resNum) / Math.log(baseNum);
                 setExponent(newExponent.toString());
                  setSteps(`n = logₐ(y) = log${baseNum.toFixed(2)}(${resNum}) = ${newExponent}`);

@@ -51,7 +51,7 @@ export default function PercentErrorCalculator() {
             toast({
                 variant: 'destructive',
                 title: 'Invalid Input',
-                description: 'True Value cannot be zero.',
+                description: 'True Value cannot be zero as it would cause division by zero.',
             });
             setResult(null);
             setSteps(null);

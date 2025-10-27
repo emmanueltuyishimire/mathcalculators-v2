@@ -31,8 +31,8 @@ const BinaryArithmeticCalculator = () => {
                 setDecimalResult('');
                 return;
             }
-            const num1 = parseInt(val1, 2);
-            const num2 = parseInt(val2, 2);
+            const num1 = BigInt(`0b${val1}`);
+            const num2 = BigInt(`0b${val2}`);
             let resNum;
 
             switch (op) {
@@ -40,14 +40,14 @@ const BinaryArithmeticCalculator = () => {
                 case '-': resNum = num1 - num2; break;
                 case '×': resNum = num1 * num2; break;
                 case '÷':
-                    if (num2 === 0) throw new Error("Division by zero.");
-                    resNum = Math.floor(num1 / num2); // Integer division
+                    if (num2 === 0n) throw new Error("Division by zero.");
+                    resNum = num1 / num2; // BigInt division is integer division
                     break;
                 default: throw new Error("Invalid operator.");
             }
             
             setResult(resNum.toString(2));
-            setDecimalResult(`${num1} ${op} ${num2} = ${resNum}`);
+            setDecimalResult(`${num1.toString()} ${op} ${num2.toString()} = ${resNum.toString()}`);
 
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
@@ -113,7 +113,7 @@ const BinToDecConverter = () => {
                 setDecimal('');
                 return;
             }
-            setDecimal(parseInt(binary, 2).toString());
+            setDecimal(BigInt(`0b${binary}`).toString());
         } catch (e: any) {
             toast({ variant: 'destructive', title: 'Error', description: e.message });
             setDecimal('');
@@ -154,15 +154,10 @@ const DecToBinConverter = () => {
                 setBinary('');
                 return;
             }
-            const num = parseInt(decimal, 10);
-            if (isNaN(num)) {
-                 if (decimal) throw new Error("Input must be a valid integer.");
-                setBinary('');
-                return;
-            }
-            setBinary(Math.abs(num).toString(2));
+            const num = BigInt(decimal);
+            setBinary((num >= 0n ? num : -num).toString(2));
         } catch (e: any) {
-            toast({ variant: 'destructive', title: 'Error', description: e.message });
+            if (decimal) toast({ variant: 'destructive', title: 'Error', description: 'Please enter a valid integer.' });
             setBinary('');
         }
     };
@@ -175,7 +170,7 @@ const DecToBinConverter = () => {
             <CardContent className="space-y-4 p-4">
                  <div className="space-y-2">
                     <Label htmlFor="decimal-input">Decimal Value</Label>
-                    <Input id="decimal-input" value={decimal} onChange={e => setDecimal(e.target.value)} className="font-mono" type="number" />
+                    <Input id="decimal-input" value={decimal} onChange={e => setDecimal(e.target.value)} className="font-mono" type="text" />
                 </div>
                 <Button onClick={convert} className="w-full">Convert</Button>
                 {binary && (

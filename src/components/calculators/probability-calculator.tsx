@@ -36,6 +36,7 @@ function TwoEventsCalculator() {
       if (pA || pB) {
         toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please input valid probabilities between 0 and 1.' });
       }
+      setResults(null);
       return;
     }
 
@@ -132,7 +133,8 @@ function SeriesEventsCalculator() {
         const nB_num = parseInt(nB, 10);
 
         if (isNaN(pA_num) || isNaN(nA_num) || pA_num < 0 || pA_num > 1 || nA_num < 1 || isNaN(pB_num) || isNaN(nB_num) || pB_num < 0 || pB_num > 1 || nB_num < 1) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please check your inputs.' });
+            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Please check your inputs. Probabilities must be between 0 and 1, and repeat times must be a positive integer.' });
+            setResults(null);
             return;
         }
         
@@ -166,7 +168,7 @@ function SeriesEventsCalculator() {
                         <Input id="repeatB" type="number" step="1" min="1" value={nB} onChange={e => setNB(e.target.value)} />
                     </div>
                 </div>
-                 <Button onClick={calculate}>Calculate</Button>
+                 <Button onClick={calculate} className="w-full">Calculate</Button>
             </CardContent>
             {results && (
                  <CardFooter className="flex-col items-start gap-2">
@@ -212,6 +214,7 @@ function NormalDistributionCalculator() {
 
         if (isNaN(mean_num) || isNaN(std_num) || std_num <= 0) {
             toast({ variant: 'destructive', title: 'Invalid Input', description: 'Mean must be a number and Standard Deviation must be positive.' });
+            setResult(null);
             return;
         }
 
@@ -220,6 +223,7 @@ function NormalDistributionCalculator() {
 
         if (isNaN(lb_num) || isNaN(rb_num) || lb_num > rb_num) {
             toast({ variant: 'destructive', title: 'Invalid Bounds', description: 'Left bound cannot be greater than right bound.' });
+            setResult(null);
             return;
         }
 

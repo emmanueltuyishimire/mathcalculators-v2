@@ -8,6 +8,19 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { Percent, Divide, X, Minus, Plus, Equal, Eraser } from 'lucide-react';
 
+// Helper to format results and avoid floating point issues
+const formatResult = (num: number): string => {
+    if (Math.abs(num) > 1e15 || (Math.abs(num) < 1e-9 && num !== 0)) {
+        return num.toExponential(9);
+    }
+    const str = String(num);
+    if (str.length > 15) {
+        return String(parseFloat(num.toPrecision(15)));
+    }
+    return str;
+};
+
+
 export default function BasicCalculator() {
   const [displayValue, setDisplayValue] = useState('0');
   const [firstOperand, setFirstOperand] = useState<number | null>(null);
@@ -48,7 +61,7 @@ export default function BasicCalculator() {
     } else if (operator) {
       const result = performCalculation();
       if (result === null) return;
-      setDisplayValue(String(result));
+      setDisplayValue(formatResult(result));
       setFirstOperand(result);
     }
 
@@ -80,7 +93,7 @@ export default function BasicCalculator() {
     if (!operator) return;
     const result = performCalculation();
     if (result === null) return;
-    setDisplayValue(String(result));
+    setDisplayValue(formatResult(result));
     setFirstOperand(null);
     setOperator(null);
     setWaitingForSecondOperand(false);

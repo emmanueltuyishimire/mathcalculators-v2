@@ -25,7 +25,6 @@ function SquareRootCalculator() {
             return;
         }
         if (num < 0) {
-            toast({ variant: 'destructive', title: 'Invalid Input', description: 'Square root of a negative number is imaginary.' });
             setResult('i' + Math.sqrt(-num).toFixed(6));
             return;
         }
@@ -116,8 +115,7 @@ function GeneralRootCalculator() {
         }
 
         if (num < 0 && n % 2 === 0) {
-             toast({ variant: 'destructive', title: 'Invalid Input', description: 'Cannot take an even root of a negative number.' });
-             setResult('');
+             setResult('Imaginary');
              return;
         }
 

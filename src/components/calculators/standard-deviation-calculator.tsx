@@ -94,21 +94,21 @@ export default function StandardDeviationCalculator() {
        geoMean = Math.pow(numbers.reduce((a,b) => a*b, 1), 1/count);
     }
 
-    const sumOfSquares = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0);
+    const sumOfSquaredDiffs = numbers.reduce((acc, n) => acc + Math.pow(n - mean, 2), 0);
     
     const divisor = type === 'population' ? count : count -1;
-    if (divisor <= 0) {
+    if (divisor <= 0 && type === 'sample') {
         setCalculatedStats(null);
         return;
     };
     
-    const variance = sumOfSquares / divisor;
+    const variance = sumOfSquaredDiffs / divisor;
     const stdDev = Math.sqrt(variance);
     const sem = stdDev / Math.sqrt(count);
 
     setCalculatedStats({ 
         mean, median, mode: modeStr, variance, stdDev, sum, count, largest, smallest, range, geoMean,
-        sumOfSquares, sem, frequency, sortedData: sorted.join(', '), type 
+        sumOfSquares: sumOfSquaredDiffs, sem, frequency, sortedData: sorted.join(', '), type 
     });
   };
   
