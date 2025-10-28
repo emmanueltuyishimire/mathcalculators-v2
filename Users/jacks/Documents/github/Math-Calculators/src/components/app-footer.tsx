@@ -1,0 +1,85 @@
+
+"use client";
+
+import Link from 'next/link';
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { calculatorCategories } from '@/lib/calculator-categories';
+
+export function AppFooter() {
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
+
+    return (
+        <footer className="border-t bg-background">
+            <div className="container mx-auto py-8 px-4 md:px-6">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+                    <div className="space-y-4 col-span-2 md:col-span-1">
+                        <Link href="/" className="flex items-center gap-2 text-lg font-semibold" aria-label="Go to homepage">
+                            <Image src="/logo.webp" alt="Math Calculators Logo" width={56} height={56} />
+                            <span>Math Calculators</span>
+                        </Link>
+                        <p className="text-sm text-muted-foreground">
+                            Providing free, powerful, and easy-to-use online calculators for everyone.
+                        </p>
+                    </div>
+                    {calculatorCategories.map(category => (
+                        <div key={category.title}>
+                            <h3 className="font-semibold mb-4">{category.title}</h3>
+                            <ul className="space-y-2 text-sm">
+                                {category.tools.slice(0, 5).map(link => (
+                                     <li key={link.href}><Link href={link.href} className="text-muted-foreground hover:text-primary">{link.label}</Link></li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+                 <div className="mt-8 pt-8 border-t">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                         <div>
+                            <h3 className="font-semibold mb-4">Our Network</h3>
+                            <ul className="space-y-2 text-sm">
+                                <li><a href="https://health.calculation.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Health & Fitness Calculator</a></li>
+                                <li><a href="https://finance.calculation.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Financial Calculators</a></li>
+                                <li><a href="https://calculation.site" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Blog</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold mb-4">Company</h3>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link></li>
+                                <li><Link href="/contact" className="text-muted-foreground hover:text-primary">Contact</Link></li>
+                                <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary">Sitemap</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="font-semibold mb-4">Legal</h3>
+                            <ul className="space-y-2 text-sm">
+                                <li><Link href="/privacy-policy" className="text-muted-foreground hover:text-primary">Privacy Policy</Link></li>
+                                <li><Link href="/terms-of-service" className="text-muted-foreground hover:text-primary">Terms of Service</Link></li>
+                                <li><Link href="/disclaimer" className="text-muted-foreground hover:text-primary">Disclaimer</Link></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="border-t py-4">
+                <div className="container mx-auto text-center text-xs text-muted-foreground">
+                    © {year}{' '}
+                    <a
+                        href="https://calculation.site"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary underline hover:text-primary/90"
+                    >
+                        calculation.site
+                    </a>
+                    . All rights reserved.
+                </div>
+            </div>
+        </footer>
+    );
+}
