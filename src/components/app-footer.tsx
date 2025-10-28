@@ -73,7 +73,7 @@ export function AppFooter() {
                         href="https://calculation.site"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-primary hover:underline"
+                        className="text-primary underline hover:text-primary/90"
                     >
                         calculation.site
                     </a>
